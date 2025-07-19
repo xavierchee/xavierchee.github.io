@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DuoPharma - Secure Health Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --duopharma-blue: #005EB8;
+            --duopharma-dark-blue: #003F7F;
+            --duopharma-orange: #F37021;
+            --duopharma-light-orange: #FF8C42;
+            --background-white: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --medium-gray: #E9ECEF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6C757D;
+            --shadow-light: rgba(0, 94, 184, 0.08);
+            --shadow-medium: rgba(0, 94, 184, 0.12);
+            --success-green: #28a745;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-white);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Geometric pattern background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(45deg, rgba(0, 94, 184, 0.03) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(0, 94, 184, 0.03) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(243, 112, 33, 0.03) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(243, 112, 33, 0.03) 75%);
+            background-size: 50px 50px;
+            background-position: 0 0, 0 25px, 25px -25px, -25px 0px;
+            z-index: 0;
+        }
+
+        /* Auth container */
+        .auth-container {
+            position: relative;
+            z-index: 10;
+            max-width: 420px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* 3D Model Container */
+        .model-container {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            position: relative;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(0, 94, 184, 0.05), transparent);
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .model-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--light-gray);
+            border-top: 3px solid var(--duopharma-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Company branding */
+        .company-name {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .company-name h1 {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: 6px;
+            color: var(--duopharma-blue);
+            position: relative;
+        }
+
+        .company-name h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--duopharma-blue), var(--duopharma-orange));
+        }
+
+        .tagline {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* Auth card */
+        .auth-card {
+            background: var(--background-white);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--medium-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--duopharma-blue), var(--duopharma-orange));
+        }
+
+        /* Input field */
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--light-gray);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--duopharma-blue);
+            background: var(--background-white);
+            box-shadow: 0 0 0 3px rgba(0, 94, 184, 0.1);
+        }
+
+        /* Thumbprint button */
+        .thumbprint-container {
+            text-align: center;
+        }
+
+        .thumbprint-btn {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 2px solid var(--duopharma-blue);
+            background: var(--background-white);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto 20px;
+            overflow: hidden;
+        }
+
+        .thumbprint-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23005EB8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .thumbprint-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            border-color: var(--duopharma-orange);
+        }
+
+        .thumbprint-btn.scanning {
+            animation: pulse-scan 1.5s ease-in-out;
+        }
+
+        @keyframes pulse-scan {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(0, 94, 184, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 20px rgba(0, 94, 184, 0);
+            }
+        }
+
+        .scan-ripple {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent, rgba(0, 94, 184, 0.3));
+            opacity: 0;
+            animation: ripple 1.5s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 200%;
+                height: 200%;
+                opacity: 0;
+            }
+        }
+
+        .auth-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Success message */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            z-index: 1000;
+        }
+
+        .success-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-content {
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.5s ease;
+        }
+
+        .success-overlay.show .success-content {
+            transform: scale(1);
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border: 3px solid var(--success-green);
+            border-radius: 50%;
+            position: relative;
+            animation: success-pop 0.5s ease;
+        }
+
+        @keyframes success-pop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-icon::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: var(--success-green);
+        }
+
+        .success-message {
+            font-size: 24px;
+            color: var(--duopharma-blue);
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .success-submessage {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--light-gray);
+            border-radius: 2px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--duopharma-blue), var(--duopharma-orange));
+            width: 0;
+            animation: load-progress 2s ease-in-out forwards;
+        }
+
+        @keyframes load-progress {
+            to { width: 100%; }
+        }
+
+        /* Security badges */
+        .security-info {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .security-icon {
+            width: 14px;
+            height: 14px;
+            fill: var(--duopharma-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 15px;
+            }
+            
+            .model-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .company-name h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <!-- 3D Model -->
+        <div class="model-container">
+            <div id="canvas-container">
+                <div class="model-loading">
+                    <div class="loading-spinner"></div>
+                    <p style="font-size: 12px; color: var(--text-secondary);">Loading 3D model...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Branding -->
+        <div class="company-name">
+            <h1>DUOPHARMA</h1>
+        </div>
+        <p class="tagline">Quantum Health Portal</p>
+
+        <!-- Auth Card -->
+        <div class="auth-card">
+            <div class="input-group">
+                <label class="input-label">Username</label>
+                <input type="text" class="input-field" id="username" placeholder="Enter your username" autocomplete="off">
+            </div>
+
+            <div class="thumbprint-container">
+                <button class="thumbprint-btn" id="thumbprint-btn">
+                    <span class="scan-ripple"></span>
+                </button>
+                <p class="auth-label">Touch to Authenticate</p>
+            </div>
+        </div>
+
+        <!-- Security Info -->
+        <div class="security-info">
+            <svg class="security-icon" viewBox="0 0 24 24">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+            </svg>
+            <span>Secured with Quantum Encryption</span>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="success-overlay">
+        <div class="success-content">
+            <div class="success-icon"></div>
+            <h2 class="success-message">User Authenticated</h2>
+            <p class="success-submessage" id="welcome-message">Welcome, User. Here is your health stats today.</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Three.js setup
+        let scene, camera, renderer, model;
+        let isModelLoaded = false;
+
+        function init3D() {
+            const container = document.getElementById('canvas-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = null;
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 0, 5);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 5, 5);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+
+            // Load GLB model
+            const loader = new THREE.GLTFLoader();
+            loader.load(
+                'https://xavierchee.github.io/duopharma_3d.glb',
+                function (gltf) {
+                    model = gltf.scene;
+                    model.scale.set(1.5, 1.5, 1.5);
+                    model.position.set(0, 0, 0);
+                    
+                    // Center the model
+                    const box = new THREE.Box3().setFromObject(model);
+                    const center = box.getCenter(new THREE.Vector3());
+                    model.position.sub(center);
+                    
+                    scene.add(model);
+                    
+                    // Hide loading indicator
+                    document.querySelector('.model-loading').style.display = 'none';
+                    isModelLoaded = true;
+                },
+                function (xhr) {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                function (error) {
+                    console.error('Error loading model:', error);
+                    document.querySelector('.model-loading').innerHTML = '<p style="color: var(--duopharma-orange);">3D model unavailable</p>';
+                }
+            );
+
+            // Animation
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (model && isModelLoaded) {
+                model.rotation.y += 0.005;
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (camera && renderer) {
+                const container = document.getElementById('canvas-container');
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            }
+        });
+
+        // Authentication logic
+        const thumbprintBtn = document.getElementById('thumbprint-btn');
+        const usernameInput = document.getElementById('username');
+        const successOverlay = document.getElementById('success-overlay');
+        const welcomeMessage = document.getElementById('welcome-message');
+
+        thumbprintBtn.addEventListener('click', function() {
+            const username = usernameInput.value.trim();
+            
+            if (!username) {
+                usernameInput.focus();
+                usernameInput.style.borderColor = 'var(--duopharma-orange)';
+                setTimeout(() => {
+                    usernameInput.style.borderColor = '';
+                }, 2000);
+                return;
+            }
+
+            // Start scanning animation
+            this.classList.add('scanning');
+            
+            // Create ripple effect
+            const ripple = document.createElement('span');
+            ripple.className = 'scan-ripple';
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 1500);
+
+            // Show success after scanning
+            setTimeout(() => {
+                this.classList.remove('scanning');
+                welcomeMessage.textContent = `Welcome, ${username}. Here is your health stats today.`;
+                successOverlay.classList.add('show');
+                
+                // Redirect after loading
+                setTimeout(() => {
+                    window.location.href = 'https://xavierchee.github.io/vitacore_v1.html';
+                }, 2500);
+            }, 1500);
+        });
+
+        // Enter key submission
+        usernameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                thumbprintBtn.click();
+            }
+        });
+
+        // Initialize 3D scene
+        window.addEventListener('load', init3D);
+    </script>
+</body>
+</html>
