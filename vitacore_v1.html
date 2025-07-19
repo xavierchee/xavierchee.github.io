@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VitaCore - Your Quantum Health Ecosystem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --duopharma-blue: #005EB8;
+            --duopharma-dark-blue: #003F7F;
+            --duopharma-orange: #F37021;
+            --duopharma-light-orange: #FF8C42;
+            --background-white: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --medium-gray: #E9ECEF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6C757D;
+            --shadow-light: rgba(0, 94, 184, 0.08);
+            --shadow-medium: rgba(0, 94, 184, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-white);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Subtle geometric pattern background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(45deg, rgba(0, 94, 184, 0.03) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(0, 94, 184, 0.03) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(243, 112, 33, 0.03) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(243, 112, 33, 0.03) 75%);
+            background-size: 50px 50px;
+            background-position: 0 0, 0 25px, 25px -25px, -25px 0px;
+            z-index: 0;
+        }
+
+        /* Main container */
+        .app-container {
+            position: relative;
+            z-index: 10;
+            max-width: 420px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding: 20px;
+            background: var(--background-white);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0 30px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: 200;
+            letter-spacing: 8px;
+            color: var(--duopharma-blue);
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--duopharma-blue), var(--duopharma-orange));
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 15px;
+        }
+
+        /* Health Status Card */
+        .health-status {
+            background: var(--background-white);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--medium-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .health-status::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--duopharma-blue), var(--duopharma-orange));
+        }
+
+        .health-score {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .score-ring {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .score-ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 52px;
+            font-weight: 300;
+            color: var(--duopharma-blue);
+        }
+
+        .score-value span {
+            font-size: 24px;
+            color: var(--text-secondary);
+        }
+
+        .score-label {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .score-sublabel {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        /* Bio Metrics */
+        .bio-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .metric-card {
+            background: var(--light-gray);
+            border-radius: 16px;
+            padding: 22px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            border-color: var(--duopharma-blue);
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 5px;
+            color: var(--duopharma-blue);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-trend {
+            font-size: 11px;
+            color: var(--duopharma-orange);
+            margin-top: 5px;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .feature-card {
+            background: var(--background-white);
+            border-radius: 16px;
+            padding: 28px 20px;
+            text-align: center;
+            border: 1px solid var(--medium-gray);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--duopharma-orange), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px var(--shadow-medium);
+            border-color: var(--duopharma-orange);
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--duopharma-blue);
+        }
+
+        .feature-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* AI Assistant */
+        .ai-assistant {
+            background: linear-gradient(135deg, var(--light-gray), var(--background-white));
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--medium-gray);
+            position: relative;
+        }
+
+        .ai-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .ai-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--duopharma-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ai-status {
+            width: 8px;
+            height: 8px;
+            background: var(--duopharma-orange);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(243, 112, 33, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(243, 112, 33, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(243, 112, 33, 0);
+            }
+        }
+
+        .ai-message {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 18px;
+            color: var(--text-primary);
+        }
+
+        .ai-message strong {
+            color: var(--duopharma-blue);
+        }
+
+        .ai-suggestions {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .suggestion-pill {
+            background: var(--background-white);
+            border: 1px solid var(--duopharma-blue);
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 12px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--duopharma-blue);
+        }
+
+        .suggestion-pill:hover {
+            background: var(--duopharma-orange);
+            border-color: var(--duopharma-orange);
+            color: var(--background-white);
+            transform: scale(1.05);
+        }
+
+        /* Recent Activity */
+        .activity-section {
+            margin-bottom: 25px;
+        }
+
+        .section-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            padding-left: 5px;
+        }
+
+        .activity-item {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: var(--background-white);
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .activity-info {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .activity-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--duopharma-orange);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--background-white);
+            border-top: 1px solid var(--medium-gray);
+            padding: 15px 0;
+            z-index: 100;
+            box-shadow: 0 -5px 20px var(--shadow-light);
+        }
+
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px 15px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active .nav-label {
+            color: var(--duopharma-orange);
+        }
+
+        .nav-item:hover .nav-label {
+            color: var(--duopharma-blue);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .app-container {
+                padding: 15px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bio-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">VITACORE</h1>
+            <p class="tagline">Quantum Health Ecosystem</p>
+        </header>
+
+        <!-- Health Status Card -->
+        <div class="health-status">
+            <div class="health-score">
+                <div class="score-ring">
+                    <svg width="160" height="160">
+                        <circle cx="80" cy="80" r="70" fill="none" stroke="#E9ECEF" stroke-width="12"/>
+                        <circle cx="80" cy="80" r="70" fill="none" stroke="url(#gradient)" stroke-width="12" 
+                                stroke-dasharray="440" stroke-dashoffset="88" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#005EB8"/>
+                                <stop offset="100%" stop-color="#F37021"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="score-value">94<span>%</span></div>
+                </div>
+                <div class="score-label">Optimal Health Score</div>
+                <div class="score-sublabel">Updated 2 minutes ago</div>
+            </div>
+        </div>
+
+        <!-- Bio Metrics -->
+        <div class="bio-metrics">
+            <div class="metric-card">
+                <div class="metric-value">68</div>
+                <div class="metric-label">Heart Rate</div>
+                <div class="metric-trend">↓ 2% from average</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">99.2%</div>
+                <div class="metric-label">Cell Health</div>
+                <div class="metric-trend">↑ 0.3% improvement</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">87%</div>
+                <div class="metric-label">Neural Activity</div>
+                <div class="metric-trend">Optimal range</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">High</div>
+                <div class="metric-label">Energy Level</div>
+                <div class="metric-trend">Peak performance</div>
+            </div>
+        </div>
+
+        <!-- AI Assistant -->
+        <div class="ai-assistant">
+            <div class="ai-header">
+                <div class="ai-title">AI Health Twin</div>
+                <div class="ai-status"></div>
+            </div>
+            <div class="ai-message">
+                <strong>Predictive Alert:</strong> Your cortisol levels show a 15% increase pattern. Early stress indicators detected. Three personalized interventions are recommended to optimize your metabolic balance.
+            </div>
+            <div class="ai-suggestions">
+                <div class="suggestion-pill">Neural Calibration</div>
+                <div class="suggestion-pill">Adaptive Nutrition</div>
+                <div class="suggestion-pill">Micro Recovery</div>
+            </div>
+        </div>
+
+        <!-- Feature Grid -->
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-title">Bio Scanner</div>
+                <div class="feature-desc">Real-time molecular analysis with quantum sensors</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">AI Physician</div>
+                <div class="feature-desc">24/7 holographic medical consultations</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">Gene Therapy</div>
+                <div class="feature-desc">Personalized CRISPR treatment protocols</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-title">Health Forecast</div>
+                <div class="feature-desc">12-month predictive health modeling</div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-section">
+            <h2 class="section-header">Recent Analysis</h2>
+            <div class="activity-item">
+                <div class="activity-info">
+                    <div class="activity-title">Blood Chemistry Scan</div>
+                    <div class="activity-time">30 minutes ago</div>
+                </div>
+                <div class="activity-value">Normal</div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-info">
+                    <div class="activity-title">Neural Pattern Analysis</div>
+                    <div class="activity-time">2 hours ago</div>
+                </div>
+                <div class="activity-value">Optimal</div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-info">
+                    <div class="activity-title">Immune Response Check</div>
+                    <div class="activity-time">6 hours ago</div>
+                </div>
+                <div class="activity-value">Strong</div>
+            </div>
+        </div>
+
+        <!-- Spacer for bottom nav -->
+        <div style="height: 80px;"></div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-items">
+            <div class="nav-item active">
+                <div class="nav-label">Dashboard</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-label">Analytics</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-label">Treatment</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-label">Laboratory</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-label">Profile</div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Animate health score on load
+        function animateHealthScore() {
+            let currentScore = 0;
+            const targetScore = 94;
+            const scoreElement = document.querySelector('.score-value');
+            const circle = document.querySelector('circle:last-child');
+            
+            const interval = setInterval(() => {
+                if (currentScore < targetScore) {
+                    currentScore += 2;
+                    scoreElement.innerHTML = currentScore + '<span>%</span>';
+                    const offset = 440 - (440 * currentScore / 100);
+                    circle.style.strokeDashoffset = offset;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 30);
+        }
+
+        // Interactive feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Interactive metric cards
+        document.querySelectorAll('.metric-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Navigation interaction
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Initialize animations
+        setTimeout(animateHealthScore, 500);
+
+        // Simulate real-time updates
+        setInterval(() => {
+            const heartRate = document.querySelector('.metric-card:first-child .metric-value');
+            const currentRate = parseInt(heartRate.textContent);
+            const newRate = currentRate + Math.floor(Math.random() * 5) - 2;
+            heartRate.textContent = Math.max(60, Math.min(75, newRate));
+        }, 3000);
+    </script>
+</body>
+</html>
