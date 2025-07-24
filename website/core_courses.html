@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme Fees - Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Core Courses - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -290,66 +290,59 @@
             font-weight: 400;
         }
         
-        /* Fees Table Styles */
-        .fees-table-container {
-            margin: 40px 0;
-            overflow-x: auto;
+        /* Core Courses Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 50px;
         }
         
-        .fees-table {
-            width: 100%;
-            border-collapse: collapse;
+        .course-card {
             background: white;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-        }
-        
-        .fees-table th {
-            background: #003D7C;
-            color: white;
-            font-weight: 600;
-            padding: 25px 30px;
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 0.3px;
-        }
-        
-        .fees-table td {
-            padding: 35px 30px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #003D7C;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            background: white;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.08);
+            border: 2px solid rgba(0, 61, 124, 0.1);
             transition: all 0.3s ease;
-            white-space: nowrap;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
         }
         
-        .fees-table tr:hover td {
-            background: rgba(255, 107, 53, 0.03);
-            transform: scale(1.02);
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 61, 124, 0.15);
+            border-color: #FF6B35;
         }
         
-        .fees-notes {
-            margin-top: 30px;
+        .course-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .course-card:hover .course-image {
+            transform: scale(1.05);
+        }
+        
+        .course-content {
             padding: 25px;
-            background: rgba(0, 61, 124, 0.03);
-            border-radius: 12px;
-            border-left: 4px solid #003D7C;
         }
         
-        .fees-notes p {
+        .course-title {
+            color: #003D7C;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+        }
+        
+        .course-description {
             color: #5a6c7d;
             font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-        
-        .fees-notes p:last-child {
-            margin-bottom: 0;
+            line-height: 1.6;
         }
         
         /* Sidebar */
@@ -794,30 +787,6 @@
             white-space: normal;
         }
         
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, #003D7C, #001f3f);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 60px;
-            font-size: 14px;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Scroll animations */
-        .scroll-fade {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .scroll-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         /* Mobile adjustments for action buttons */
         @media (max-width: 768px) {
             .action-button {
@@ -862,6 +831,46 @@
             }
         }
         
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #003D7C, #001f3f);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 100px;
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Scroll animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Mobile hamburger menu button */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #003D7C;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+        
         /* Responsive Design */
         @media (max-width: 1600px) {
             .main-content {
@@ -881,6 +890,10 @@
                 padding: 0 40px;
             }
             
+            .courses-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
             .nav-links a {
                 padding: 20px 10px;
                 font-size: 12px;
@@ -893,26 +906,11 @@
             }
         }
         
-        /* Mobile hamburger menu button */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #003D7C;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1001;
-        }
-        
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
                 padding: 0 20px;
+                margin: 30px auto;
             }
             
             .content-section {
@@ -925,23 +923,17 @@
                 margin: 0 auto;
             }
             
+            .courses-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
             .section-header {
                 font-size: 28px;
             }
             
             .section-text {
                 font-size: 15px;
-            }
-            
-            .fees-table th {
-                font-size: 14px;
-                padding: 20px 15px;
-            }
-            
-            .fees-table td {
-                font-size: 20px;
-                padding: 25px 15px;
-                white-space: nowrap;
             }
             
             /* Mobile navigation */
@@ -1048,11 +1040,6 @@
             .top-banner-content {
                 justify-content: center;
             }
-            
-            .main-content {
-                padding: 0 20px;
-                margin: 30px auto;
-            }
         }
     </style>
 </head>
@@ -1076,7 +1063,7 @@
                 <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Programme structure</a>
+                    <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
                         <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
@@ -1084,7 +1071,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Courses</a>
+                    <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
@@ -1093,14 +1080,14 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Capstone projects</a>
+                    <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Admissions</a>
+                    <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
                         <a href="https://xavierchee.github.io/website/application.html">Application</a>
@@ -1109,7 +1096,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Student stories and photos</a>
+                    <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="#student-stories">Student stories</a>
                         <a href="#photos">Photos</a>
@@ -1117,7 +1104,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">About us</a>
+                    <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
                         <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
@@ -1135,46 +1122,103 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Tuition Fees Banner Image -->
+    <!-- Core Courses Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/tuition_fees/tuition_fees_banner.png" 
-             alt="Tuition Fees Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/core_courses/core_courses_banner.png" 
+             alt="Core Courses Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Tuition Fees</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Core Courses</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Programme Fees</h1>
+            <h1 class="section-header scroll-fade">Foundational Core Courses</h1>
+            <p class="section-text scroll-fade">
+                Our six core courses provide comprehensive foundational knowledge in precision medicine, combining cutting-edge technology with practical applications in healthcare. Each course is designed to build expertise in key areas essential for modern precision health professionals.
+            </p>
             
-            <!-- Fees Table -->
-            <div class="fees-table-container scroll-fade">
-                <table class="fees-table">
-                    <thead>
-                        <tr>
-                            <th>International Students</th>
-                            <th>NUS Alumni</th>
-                            <th>Singapore Citizens and Permanent Residents</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SGD 69,400.00</td>
-                            <td>SGD 55,520.00</td>
-                            <td>SGD 41,640.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Fees Notes -->
-            <div class="fees-notes scroll-fade">
-                <p>Rates shown are inclusive of Goods and Service Tax (GST)</p>
-                <p>Rates shown are inclusive of the acceptance fees of SGD 5,450.00</p>
-                <p>Fees are subject to annual review</p>
+            <!-- Core Courses Grid -->
+            <div class="courses-grid scroll-fade">
+                <!-- Human Genomics -->
+                <a href="#" class="course-card">
+                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/human_genomics.jpg" 
+                         alt="Human Genomics" 
+                         class="course-image">
+                    <div class="course-content">
+                        <h3 class="course-title">Human Genomics</h3>
+                        <p class="course-description">
+                            Explore the fundamental principles of human genomics and their applications in personalized medicine and disease understanding.
+                        </p>
+                    </div>
+                </a>
+                
+                <!-- Proteomics and Metabolomics -->
+                <a href="#" class="course-card">
+                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/proteomics_and_metabolomics.png" 
+                         alt="Proteomics and Metabolomics" 
+                         class="course-image">
+                    <div class="course-content">
+                        <h3 class="course-title">Proteomics & Metabolomics</h3>
+                        <p class="course-description">
+                            Understand protein and metabolite analysis techniques for comprehensive molecular profiling in precision health.
+                        </p>
+                    </div>
+                </a>
+                
+                <!-- Applied Statistics -->
+                <a href="#" class="course-card">
+                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/applied_statistics.jpg" 
+                         alt="Applied Statistics" 
+                         class="course-image">
+                    <div class="course-content">
+                        <h3 class="course-title">Applied Statistics</h3>
+                        <p class="course-description">
+                            Master statistical methods and data analysis techniques essential for biomedical research and clinical applications.
+                        </p>
+                    </div>
+                </a>
+                
+                <!-- AI and Machine Learning -->
+                <a href="#" class="course-card">
+                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/ai_and_ml.jpg" 
+                         alt="AI and Machine Learning" 
+                         class="course-image">
+                    <div class="course-content">
+                        <h3 class="course-title">AI & Machine Learning</h3>
+                        <p class="course-description">
+                            Apply artificial intelligence and machine learning algorithms to healthcare data for predictive modeling and insights.
+                        </p>
+                    </div>
+                </a>
+                
+                <!-- High Performance Computing -->
+                <a href="#" class="course-card">
+                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/hpc.jpg" 
+                         alt="High Performance Computing" 
+                         class="course-image">
+                    <div class="course-content">
+                        <h3 class="course-title">High Performance Computing</h3>
+                        <p class="course-description">
+                            Leverage computational infrastructure and parallel processing for large-scale biomedical data analysis.
+                        </p>
+                    </div>
+                </a>
+                
+                <!-- Ethics and Regulation -->
+                <a href="#" class="course-card">
+                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/ethic_reulgation.jpg" 
+                         alt="Ethics and Regulation" 
+                         class="course-image">
+                    <div class="course-content">
+                        <h3 class="course-title">Ethics & Regulation</h3>
+                        <p class="course-description">
+                            Navigate ethical considerations and regulatory frameworks in precision medicine and healthcare innovation.
+                        </p>
+                    </div>
+                </a>
             </div>
         </div>
         
@@ -1219,15 +1263,15 @@
             </div>
         </button>
         <div class="action-items">
-            <a href="#" class="action-button">
+            <a href="https://xavierchee.github.io/website/application.html" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="mailto:mscphm@nus.edu.sg?subject=Join%20Mailing%20List" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>

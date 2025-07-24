@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme Fees - Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Precision Medicine - Master's Programme - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -286,248 +286,75 @@
             color: #5a6c7d;
             font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             font-weight: 400;
         }
         
-        /* Fees Table Styles */
-        .fees-table-container {
-            margin: 40px 0;
-            overflow-x: auto;
+        /* Precision Medicine Specific Styles */
+        .content-subsection {
+            margin-top: 50px;
         }
         
-        .fees-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .fees-table th {
-            background: #003D7C;
-            color: white;
-            font-weight: 600;
-            padding: 25px 30px;
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 0.3px;
-        }
-        
-        .fees-table td {
-            padding: 35px 30px;
-            text-align: center;
+        .subsection-header {
+            color: #003D7C;
             font-size: 28px;
-            font-weight: 700;
-            color: #003D7C;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            background: white;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-        
-        .fees-table tr:hover td {
-            background: rgba(255, 107, 53, 0.03);
-            transform: scale(1.02);
-        }
-        
-        .fees-notes {
-            margin-top: 30px;
-            padding: 25px;
-            background: rgba(0, 61, 124, 0.03);
-            border-radius: 12px;
-            border-left: 4px solid #003D7C;
-        }
-        
-        .fees-notes p {
-            color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-        
-        .fees-notes p:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            flex: 0 0 35%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .info-section {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intake-container {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .events-container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intake-container::before, .events-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(-30px, -30px) scale(1.1);
-            }
-        }
-        
-        .info-section h3 {
-            color: #003D7C;
-            margin-bottom: 30px;
-            font-size: 22px;
-            font-weight: 700;
+            font-weight: 600;
+            margin-bottom: 25px;
             letter-spacing: -0.3px;
-            position: relative;
         }
         
-        .date-info {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .bullet-list li {
             position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            color: #5a6c7d;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        
+        .bullet-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #FF6B35;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .content-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.1);
+            margin: 40px 0;
             transition: transform 0.3s ease;
         }
         
-        .date-info:hover {
-            transform: translateX(5px);
+        .content-image:hover {
+            transform: scale(1.02);
         }
         
-        .date-info:last-of-type {
-            border-bottom: none;
-        }
-        
-        .date-info .date {
-            color: #FF6B35;
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .date-info .description {
-            color: #5a6c7d;
-            line-height: 1.6;
-            font-size: 15px;
-            font-weight: 400;
-        }
-        
-        .apply-button {
-            background: linear-gradient(135deg, #003D7C, #0052A3);
-            color: white;
-            padding: 18px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 35px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Flat images without styling */
+        .content-image-flat {
             width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.3);
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
+            height: auto;
+            margin: 40px 0;
+            display: block;
         }
         
-        .apply-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .apply-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 61, 124, 0.4);
-        }
-        
-        .apply-button:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-        
-        .events-section h3 {
-            color: #003D7C;
-            margin-bottom: 30px;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-        
-        .event-item {
-            margin-bottom: 25px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .event-item:hover {
-            transform: translateX(5px);
-        }
-        
-        .event-item:last-child {
-            border-bottom: none;
-        }
-        
-        .event-date {
-            color: #FF6B35;
-            font-weight: 700;
-            margin-bottom: 10px;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-        }
-        
-        .event-item div:last-child {
+        .image-caption {
+            text-align: center;
             color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.6;
-            font-weight: 400;
+            font-size: 14px;
+            font-style: italic;
+            margin-top: 15px;
+            margin-bottom: 40px;
         }
         
         /* Action Buttons - Fixed Floating Menu */
@@ -794,30 +621,6 @@
             white-space: normal;
         }
         
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, #003D7C, #001f3f);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 60px;
-            font-size: 14px;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Scroll animations */
-        .scroll-fade {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .scroll-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         /* Mobile adjustments for action buttons */
         @media (max-width: 768px) {
             .action-button {
@@ -860,6 +663,208 @@
             .action-button:nth-child(3):hover {
                 --y: -60px;
             }
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            flex: 0 0 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intake-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .events-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intake-container::before, .events-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-30px, -30px) scale(1.1);
+            }
+        }
+        
+        .info-section h3 {
+            color: #003D7C;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            position: relative;
+        }
+        
+        .date-info {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .date-info:hover {
+            transform: translateX(5px);
+        }
+        
+        .date-info:last-of-type {
+            border-bottom: none;
+        }
+        
+        .date-info .date {
+            color: #FF6B35;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .date-info .description {
+            color: #5a6c7d;
+            line-height: 1.6;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        
+        .apply-button {
+            background: linear-gradient(135deg, #003D7C, #0052A3);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 35px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+        
+        .apply-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .apply-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 61, 124, 0.4);
+        }
+        
+        .apply-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .events-section h3 {
+            color: #003D7C;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        
+        .event-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .event-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .event-date {
+            color: #FF6B35;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .event-item div:last-child {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #003D7C, #001f3f);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Scroll animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         /* Responsive Design */
@@ -931,17 +936,6 @@
             
             .section-text {
                 font-size: 15px;
-            }
-            
-            .fees-table th {
-                font-size: 14px;
-                padding: 20px 15px;
-            }
-            
-            .fees-table td {
-                font-size: 20px;
-                padding: 25px 15px;
-                white-space: nowrap;
             }
             
             /* Mobile navigation */
@@ -1135,46 +1129,69 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Tuition Fees Banner Image -->
+    <!-- Precision Medicine Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/tuition_fees/tuition_fees_banner.png" 
-             alt="Tuition Fees Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/precision_med/precision_med_banner.png" 
+             alt="Precision Medicine Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Tuition Fees</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Precision Medicine</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Programme Fees</h1>
+            <h1 class="section-header scroll-fade">Precision Medicine: Healthcare Redefined</h1>
+            <p class="section-text scroll-fade">
+                Precision medicine represents healthcare's new frontier, where AI and data analytics decode your genetic blueprint for truly personalized care.
+            </p>
+            <p class="section-text scroll-fade">
+                By analyzing vast biological datasets, we can predict disease risk, optimize treatments, and prevent illness with remarkable accuracy—transforming medicine from reactive to proactive.
+            </p>
+            <p class="section-text scroll-fade">
+                This powerful combination of computational innovation and clinical expertise creates targeted interventions based on each patient's unique molecular profile.
+            </p>
             
-            <!-- Fees Table -->
-            <div class="fees-table-container scroll-fade">
-                <table class="fees-table">
-                    <thead>
-                        <tr>
-                            <th>International Students</th>
-                            <th>NUS Alumni</th>
-                            <th>Singapore Citizens and Permanent Residents</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SGD 69,400.00</td>
-                            <td>SGD 55,520.00</td>
-                            <td>SGD 41,640.00</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Tailored Treatment Section -->
+            <div class="content-subsection scroll-fade">
+                <h2 class="subsection-header">Tailored Treatment, Transformative Care</h2>
+                <p class="section-text">
+                    Precision medicine represents the transformative shift from standardized care to personalized treatment strategies.
+                </p>
+                
+                <ul class="bullet-list">
+                    <li>Leverages advanced -omics data, artificial intelligence, and comprehensive health analytics</li>
+                    <li>Identifies which interventions will be most effective for each individual patient</li>
+                    <li>Minimizes ineffective treatments while maximizing therapeutic outcomes</li>
+                </ul>
+                
+                <p class="section-text">
+                    This evidence-based approach fundamentally reimagines healthcare delivery for the 21st century and beyond.
+                </p>
+                
+                <img src="https://xavierchee.github.io/website/website_assets/precision_med/reimagine_healthcare_delivery.png" 
+                     alt="Reimagine Healthcare Delivery" 
+                     class="content-image-flat">
             </div>
             
-            <!-- Fees Notes -->
-            <div class="fees-notes scroll-fade">
-                <p>Rates shown are inclusive of Goods and Service Tax (GST)</p>
-                <p>Rates shown are inclusive of the acceptance fees of SGD 5,450.00</p>
-                <p>Fees are subject to annual review</p>
+            <!-- Global Collaboration Section -->
+            <div class="content-subsection scroll-fade">
+                <h2 class="subsection-header">Global Collaboration in Precision Medicine</h2>
+                <p class="section-text">
+                    Precision medicine has emerged as a worldwide priority, with leading biobanks and research initiatives spanning six continents working collaboratively to advance personalized healthcare.
+                </p>
+                <p class="section-text">
+                    This international network represents an unprecedented commitment to transforming healthcare delivery through genetic analysis, AI-driven insights, and population-scale data.
+                </p>
+                
+                <img src="https://xavierchee.github.io/website/website_assets/precision_med/global_network.png" 
+                     alt="Global Network of Biobanks" 
+                     class="content-image-flat">
+                
+                <p class="image-caption">
+                    Global network of major biobanks advancing precision medicine through collaborative genomic research
+                </p>
             </div>
         </div>
         

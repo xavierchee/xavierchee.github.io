@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme Fees - Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Executive and Graduate Certificates - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -290,66 +290,119 @@
             font-weight: 400;
         }
         
-        /* Fees Table Styles */
-        .fees-table-container {
-            margin: 40px 0;
-            overflow-x: auto;
+        /* Certificate Cards */
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
         }
         
-        .fees-table {
-            width: 100%;
-            border-collapse: collapse;
+        .certificate-card {
             background: white;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 61, 124, 0.1);
             box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border-radius: 12px;
             overflow: hidden;
-        }
-        
-        .fees-table th {
-            background: #003D7C;
-            color: white;
-            font-weight: 600;
-            padding: 25px 30px;
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 0.3px;
-        }
-        
-        .fees-table td {
-            padding: 35px 30px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #003D7C;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            background: white;
             transition: all 0.3s ease;
-            white-space: nowrap;
+            position: relative;
         }
         
-        .fees-table tr:hover td {
-            background: rgba(255, 107, 53, 0.03);
-            transform: scale(1.02);
+        .certificate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B35, #FF8554);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
         
-        .fees-notes {
-            margin-top: 30px;
-            padding: 25px;
-            background: rgba(0, 61, 124, 0.03);
-            border-radius: 12px;
-            border-left: 4px solid #003D7C;
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.15);
+            border-color: #FF6B35;
         }
         
-        .fees-notes p {
+        .certificate-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .certificate-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .certificate-content {
+            padding: 30px;
+        }
+        
+        .certificate-title {
+            color: #003D7C;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+        
+        .module-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        
+        .module-list li {
+            padding: 8px 0;
             color: #5a6c7d;
             font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            font-style: italic;
+            position: relative;
+            padding-left: 20px;
         }
         
-        .fees-notes p:last-child {
-            margin-bottom: 0;
+        .module-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #FF6B35;
+            font-weight: 700;
+        }
+        
+        /* Apply Button */
+        .certificate-apply-button {
+            background: linear-gradient(135deg, #003D7C, #0052A3);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0, 61, 124, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .certificate-apply-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 61, 124, 0.4);
+        }
+        
+        /* Content Card */
+        .content-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            margin-bottom: 30px;
         }
         
         /* Sidebar */
@@ -538,7 +591,6 @@
             z-index: 1000;
         }
         
-        /* Closing animation for buttons */
         .action-items:not(.active) .action-button {
             transition: all 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
         }
@@ -818,78 +870,20 @@
             transform: translateY(0);
         }
         
-        /* Mobile adjustments for action buttons */
-        @media (max-width: 768px) {
-            .action-button {
-                width: 85vw;
-                max-width: 350px;
-                padding: 10px 20px 10px 10px;
-                font-size: 14px;
-                gap: 10px;
-            }
-            
-            .action-button-icon {
-                width: 36px;
-                height: 36px;
-            }
-            
-            .action-button-icon::after {
-                font-size: 18px;
-            }
-            
-            .action-items.active .action-button:nth-child(1) {
-                transform: translateY(-190px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(2) {
-                transform: translateY(-125px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(3) {
-                transform: translateY(-60px) scale(1) translateX(0);
-            }
-            
-            .action-button:nth-child(1):hover {
-                --y: -190px;
-            }
-            
-            .action-button:nth-child(2):hover {
-                --y: -125px;
-            }
-            
-            .action-button:nth-child(3):hover {
-                --y: -60px;
-            }
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1600px) {
-            .main-content {
-                padding: 0 60px;
-            }
-        }
-        
-        @media (max-width: 1400px) {
-            .main-content {
-                padding: 0 50px;
-            }
-        }
-        
+        /* Mobile Responsive */
         @media (max-width: 1200px) {
             .main-content {
                 gap: 30px;
                 padding: 0 40px;
             }
             
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .nav-links a {
                 padding: 20px 10px;
                 font-size: 12px;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .main-content {
-                padding: 0 30px;
             }
         }
         
@@ -925,23 +919,16 @@
                 margin: 0 auto;
             }
             
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .section-header {
                 font-size: 28px;
             }
             
             .section-text {
                 font-size: 15px;
-            }
-            
-            .fees-table th {
-                font-size: 14px;
-                padding: 20px 15px;
-            }
-            
-            .fees-table td {
-                font-size: 20px;
-                padding: 25px 15px;
-                white-space: nowrap;
             }
             
             /* Mobile navigation */
@@ -1045,13 +1032,45 @@
                 display: block;
             }
             
-            .top-banner-content {
-                justify-content: center;
+            .action-button {
+                width: 85vw;
+                max-width: 350px;
+                padding: 10px 20px 10px 10px;
+                font-size: 14px;
+                gap: 10px;
             }
             
-            .main-content {
-                padding: 0 20px;
-                margin: 30px auto;
+            .action-button-icon {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .action-button-icon::after {
+                font-size: 18px;
+            }
+            
+            .action-items.active .action-button:nth-child(1) {
+                transform: translateY(-190px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(2) {
+                transform: translateY(-125px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(3) {
+                transform: translateY(-60px) scale(1) translateX(0);
+            }
+            
+            .action-button:nth-child(1):hover {
+                --y: -190px;
+            }
+            
+            .action-button:nth-child(2):hover {
+                --y: -125px;
+            }
+            
+            .action-button:nth-child(3):hover {
+                --y: -60px;
             }
         }
     </style>
@@ -1076,7 +1095,7 @@
                 <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Programme structure</a>
+                    <a href="javascript:void(0)">Programme structure</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
                         <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
@@ -1084,23 +1103,23 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Courses</a>
+                    <a href="javascript:void(0)">Courses</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
-                        <a href="#others">Others</a>
+                        <a href="javascript:void(0)">Others</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Capstone projects</a>
+                    <a href="javascript:void(0)">Capstone projects</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Admissions</a>
+                    <a href="javascript:void(0)">Admissions</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
                         <a href="https://xavierchee.github.io/website/application.html">Application</a>
@@ -1109,15 +1128,15 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Student stories and photos</a>
+                    <a href="javascript:void(0)">Student stories and photos</a>
                     <div class="dropdown-menu">
-                        <a href="#student-stories">Student stories</a>
-                        <a href="#photos">Photos</a>
+                        <a href="javascript:void(0)">Student stories</a>
+                        <a href="javascript:void(0)">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">About us</a>
+                    <a href="javascript:void(0)">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
                         <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
@@ -1135,47 +1154,138 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Tuition Fees Banner Image -->
+    <!-- Hero Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/tuition_fees/tuition_fees_banner.png" 
-             alt="Tuition Fees Banner" 
-             style="width: 100%; height: auto; display: block;">
+        <img src="https://xavierchee.github.io/website/website_assets/ecgc/ecgc_banner.png" 
+             alt="Executive and Graduate Certificates Banner" 
+             style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Tuition Fees</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Executive & Graduate Certificates</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Programme Fees</h1>
+            <h1 class="section-header scroll-fade">Flexible Learning</h1>
+            <p class="section-text scroll-fade">
+                Our specialized programmes empowers healthcare practitioners, researchers, and industry professionals with transformative expertise in precision health and medicine.
+            </p>
+            <p class="section-text scroll-fade">
+                By mastering the revolutionary applications of –omics technologies, advanced diagnostics, and sophisticated data analytics in delivering truly individualized patient care, professionals position themselves at the cutting edge of medical innovation to lead in an era where personalized medicine is reshaping healthcare delivery.
+            </p>
             
-            <!-- Fees Table -->
-            <div class="fees-table-container scroll-fade">
-                <table class="fees-table">
-                    <thead>
-                        <tr>
-                            <th>International Students</th>
-                            <th>NUS Alumni</th>
-                            <th>Singapore Citizens and Permanent Residents</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SGD 69,400.00</td>
-                            <td>SGD 55,520.00</td>
-                            <td>SGD 41,640.00</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <h2 class="section-header scroll-fade">Executive and Graduate Certificates (ECGC)</h2>
+            <p class="section-text scroll-fade">
+                Our Precision Medicine programme offers unparalleled flexibility through two learning paths:
+            </p>
+            <ul style="margin: 20px 0; padding-left: 30px;" class="scroll-fade">
+                <li style="margin-bottom: 10px; color: #5a6c7d; font-size: 17px;"><strong style="color: #003D7C;">Executive Certificates (EC):</strong> Take individual modules as standalone courses to build targeted expertise.</li>
+                <li style="color: #5a6c7d; font-size: 17px;"><strong style="color: #003D7C;">Graduate Certificates (GC):</strong> Bundle two related modules into a comprehensive credential that provides deeper specialization.</li>
+            </ul>
+            
+            <!-- Certificates Grid -->
+            <div class="certificates-grid">
+                <!-- Certificate 1 -->
+                <div class="certificate-card scroll-fade">
+                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/fundamentals_of_pm.png" alt="Fundamentals of Precision Medicine">
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Graduate Certificate in Fundamentals of Precision Medicine</h3>
+                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                        <ul class="module-list">
+                            <li>Human Genomics in Precision Medicine</li>
+                            <li>Proteomics and Metabolomics in Precision Health and Medicine</li>
+                        </ul>
+                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                    </div>
+                </div>
+
+                <!-- Certificate 2 -->
+                <div class="certificate-card scroll-fade">
+                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/big_data_analytics_in_pm.png" alt="Big Data Analytics">
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Graduate Certificate in Big Data Analytics in Precision Medicine</h3>
+                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                        <ul class="module-list">
+                            <li>Applied Statistics in Precision Medicine</li>
+                            <li>High Performance Computing for Precision Medicine</li>
+                        </ul>
+                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                    </div>
+                </div>
+
+                <!-- Certificate 3 -->
+                <div class="certificate-card scroll-fade">
+                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/innovative_pm.png" alt="Innovative Precision Medicine">
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Graduate Certificate in Innovative Precision Medicine</h3>
+                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                        <ul class="module-list">
+                            <li>Causal Inference in Precision Medicine</li>
+                            <li>Technological Innovation in Precision Medicine</li>
+                        </ul>
+                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                    </div>
+                </div>
+
+                <!-- Certificate 4 -->
+                <div class="certificate-card scroll-fade">
+                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/precision_biomarkers_identification.png" alt="Precision Biomarkers">
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Graduate Certificate in Precision Biomarker Identification and Diagnosis/Prognosis</h3>
+                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                        <ul class="module-list">
+                            <li>Precision Biomarkers</li>
+                            <li>Precision Diagnostics</li>
+                        </ul>
+                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                    </div>
+                </div>
+
+                <!-- Certificate 5 -->
+                <div class="certificate-card scroll-fade">
+                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/drug_discovery.png" alt="Drug Discovery">
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Graduate Certificate in Drug Discovery, Pharmacogenomics and Therapeutics</h3>
+                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                        <ul class="module-list">
+                            <li>Precision Drug Discovery and Development</li>
+                            <li>Precision Therapeutics</li>
+                        </ul>
+                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                    </div>
+                </div>
+
+                <!-- Certificate 6 -->
+                <div class="certificate-card scroll-fade">
+                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/clinical_pm.png" alt="Clinical Precision Medicine">
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Graduate Certificate in Clinical Precision Medicine</h3>
+                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                        <ul class="module-list">
+                            <li>Clinical Perspective in Precision Medicine</li>
+                            <li>Precision Oncology</li>
+                            <li>Precision Health and Medicine for Cardiometabolic Diseases</li>
+                        </ul>
+                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                    </div>
+                </div>
             </div>
             
-            <!-- Fees Notes -->
-            <div class="fees-notes scroll-fade">
-                <p>Rates shown are inclusive of Goods and Service Tax (GST)</p>
-                <p>Rates shown are inclusive of the acceptance fees of SGD 5,450.00</p>
-                <p>Fees are subject to annual review</p>
-            </div>
+            <!-- Conversion Section -->
+            <h2 class="section-header scroll-fade" style="margin-top: 60px;">Certificate to Master's Conversion: Building Your Precision Medicine Degree</h2>
+            <p class="section-text scroll-fade">
+                Earn your Master's in Precision Medicine step by step through our Executive Certificates (ECs) and Graduate Certificates (GCs). Working professionals can complete these certificates at their own pace.
+            </p>
+            <p class="section-text scroll-fade">
+                Later, when enrolling in the full Master's programme, any qualifying certificates completed with a minimum Cumulative Average Point (CAP) of 3.5 can count toward degree requirements.
+            </p>
+            <p class="section-text scroll-fade">
+                Please note that ECs and GCs are valid for credit conversion for up to 5 years from completion date, ensuring your knowledge remains current in this rapidly evolving field.
+            </p>
+            <p class="section-text scroll-fade" style="margin-top: 20px;">
+                <strong style="color: #003D7C;">Note:</strong> Some core modules in the Master's programme are exclusively available to enrolled Master's students, including PHM5004 – High Performance Computing for Precision Medicine, PHM5005 – AI and Machine Learning for Precision Medicine and PHM5007 – Seminars in Precision Medicine.
+            </p>
         </div>
         
         <!-- Sidebar -->
@@ -1183,15 +1293,15 @@
             <div class="intake-container scroll-fade">
                 <h3>INTAKE AND APPLICATION</h3>
                 <div class="date-info">
-                    <div class="date">AUG 2026</div>
+                    <div class="date">AUG 2025</div>
                     <div class="description">Next intake</div>
                 </div>
                 <div class="date-info">
-                    <div class="date">01 JUL 2025 - 31 MAY 2026</div>
+                    <div class="date">25 AUG 2024 - 31 MAY 2025</div>
                     <div class="description">Application period for international students</div>
                 </div>
                 <div class="date-info">
-                    <div class="date">01 JUL 2025 - 30 JUN 2026</div>
+                    <div class="date">25 AUG 2024 - 30 JUN 2025</div>
                     <div class="description">Application period for local students</div>
                 </div>
                 <button class="apply-button" onclick="window.open('https://gradapp.nus.edu.sg/portal/app_manage', '_blank')">Apply Now</button>

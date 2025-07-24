@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme Fees - Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Capstone Project - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -290,244 +290,35 @@
             font-weight: 400;
         }
         
-        /* Fees Table Styles */
-        .fees-table-container {
-            margin: 40px 0;
-            overflow-x: auto;
+        /* Capstone Types Section */
+        .capstone-types {
+            margin-top: 60px;
         }
         
-        .fees-table {
-            width: 100%;
-            border-collapse: collapse;
+        .capstone-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+            align-items: stretch;
+        }
+        
+        .capstone-card {
             background: white;
+            border-radius: 12px;
+            padding: 0;
             box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .fees-table th {
-            background: #003D7C;
-            color: white;
-            font-weight: 600;
-            padding: 25px 30px;
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 0.3px;
-        }
-        
-        .fees-table td {
-            padding: 35px 30px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #003D7C;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            background: white;
+            border: 2px solid rgba(0, 61, 124, 0.1);
             transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-        
-        .fees-table tr:hover td {
-            background: rgba(255, 107, 53, 0.03);
-            transform: scale(1.02);
-        }
-        
-        .fees-notes {
-            margin-top: 30px;
-            padding: 25px;
-            background: rgba(0, 61, 124, 0.03);
-            border-radius: 12px;
-            border-left: 4px solid #003D7C;
-        }
-        
-        .fees-notes p {
-            color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-        
-        .fees-notes p:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            flex: 0 0 35%;
+            position: relative;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            min-height: 400px;
         }
         
-        .info-section {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intake-container {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .events-container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intake-container::before, .events-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(-30px, -30px) scale(1.1);
-            }
-        }
-        
-        .info-section h3 {
-            color: #003D7C;
-            margin-bottom: 30px;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            position: relative;
-        }
-        
-        .date-info {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-        
-        .date-info:hover {
-            transform: translateX(5px);
-        }
-        
-        .date-info:last-of-type {
-            border-bottom: none;
-        }
-        
-        .date-info .date {
-            color: #FF6B35;
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .date-info .description {
-            color: #5a6c7d;
-            line-height: 1.6;
-            font-size: 15px;
-            font-weight: 400;
-        }
-        
-        .apply-button {
-            background: linear-gradient(135deg, #003D7C, #0052A3);
-            color: white;
-            padding: 18px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 35px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.3);
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
-        }
-        
-        .apply-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .apply-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 61, 124, 0.4);
-        }
-        
-        .apply-button:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-        
-        .events-section h3 {
-            color: #003D7C;
-            margin-bottom: 30px;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-        
-        .event-item {
-            margin-bottom: 25px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .event-item:hover {
-            transform: translateX(5px);
-        }
-        
-        .event-item:last-child {
-            border-bottom: none;
-        }
-        
-        .event-date {
-            color: #FF6B35;
-            font-weight: 700;
-            margin-bottom: 10px;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-        }
-        
-        .event-item div:last-child {
-            color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.6;
-            font-weight: 400;
+        .capstone-card-content {
+            padding: 25px 30px 30px 30px;
         }
         
         /* Action Buttons - Fixed Floating Menu */
@@ -794,30 +585,6 @@
             white-space: normal;
         }
         
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, #003D7C, #001f3f);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 60px;
-            font-size: 14px;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Scroll animations */
-        .scroll-fade {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .scroll-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         /* Mobile adjustments for action buttons */
         @media (max-width: 768px) {
             .action-button {
@@ -862,6 +629,303 @@
             }
         }
         
+        .capstone-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B35, #FF8554);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        
+        .capstone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.15);
+            border-color: #FF6B35;
+        }
+        
+        .capstone-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .capstone-title {
+            color: #003D7C;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            margin-top: 0;
+            letter-spacing: -0.3px;
+        }
+        
+        /* Capstone card image styling */
+        .capstone-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+            display: block;
+        }
+        
+        .capstone-description {
+            color: #5a6c7d;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* Placeholder Image Styles */
+        .placeholder-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+            border: 2px dashed rgba(0, 61, 124, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .placeholder-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: placeholder-shine 2s infinite;
+        }
+        
+        @keyframes placeholder-shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        .placeholder-text {
+            color: #94a3b8;
+            font-size: 18px;
+            font-weight: 500;
+            z-index: 1;
+        }
+        
+        /* Locations Section */
+        .locations-section {
+            margin-top: 60px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            flex: 0 0 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intake-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .events-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intake-container::before, .events-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-30px, -30px) scale(1.1);
+            }
+        }
+        
+        .info-section h3 {
+            color: #003D7C;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            position: relative;
+        }
+        
+        .date-info {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .date-info:hover {
+            transform: translateX(5px);
+        }
+        
+        .date-info:last-of-type {
+            border-bottom: none;
+        }
+        
+        .date-info .date {
+            color: #FF6B35;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .date-info .description {
+            color: #5a6c7d;
+            line-height: 1.6;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        
+        .apply-button {
+            background: linear-gradient(135deg, #003D7C, #0052A3);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 35px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+        
+        .apply-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .apply-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 61, 124, 0.4);
+        }
+        
+        .apply-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .events-section h3 {
+            color: #003D7C;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        
+        .event-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .event-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .event-date {
+            color: #FF6B35;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .event-item div:last-child {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #003D7C, #001f3f);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Scroll animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         /* Responsive Design */
         @media (max-width: 1600px) {
             .main-content {
@@ -879,6 +943,10 @@
             .main-content {
                 gap: 30px;
                 padding: 0 40px;
+            }
+            
+            .capstone-grid {
+                grid-template-columns: 1fr;
             }
             
             .nav-links a {
@@ -925,23 +993,20 @@
                 margin: 0 auto;
             }
             
+            .capstone-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .capstone-card img {
+                height: 200px;
+            }
+            
             .section-header {
                 font-size: 28px;
             }
             
             .section-text {
                 font-size: 15px;
-            }
-            
-            .fees-table th {
-                font-size: 14px;
-                padding: 20px 15px;
-            }
-            
-            .fees-table td {
-                font-size: 20px;
-                padding: 25px 15px;
-                white-space: nowrap;
             }
             
             /* Mobile navigation */
@@ -1076,7 +1141,7 @@
                 <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Programme structure</a>
+                    <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
                         <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
@@ -1084,7 +1149,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Courses</a>
+                    <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
@@ -1093,14 +1158,14 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Capstone projects</a>
+                    <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Admissions</a>
+                    <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
                         <a href="https://xavierchee.github.io/website/application.html">Application</a>
@@ -1109,7 +1174,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Student stories and photos</a>
+                    <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="#student-stories">Student stories</a>
                         <a href="#photos">Photos</a>
@@ -1117,7 +1182,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">About us</a>
+                    <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
                         <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
@@ -1135,46 +1200,62 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Tuition Fees Banner Image -->
+    <!-- Capstone Project Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/tuition_fees/tuition_fees_banner.png" 
-             alt="Tuition Fees Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/capstone/capstone_banner.png" 
+             alt="Capstone Project Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Tuition Fees</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Capstone Project</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Programme Fees</h1>
+            <h1 class="section-header scroll-fade">Capstone Project: From Concept to Impact</h1>
+            <p class="section-text scroll-fade">
+                The Capstone Project represents the culmination of your precision medicine education—a comprehensive 9-12 months supervised learning experience where theory transforms into practice. This immersive project allows you to apply your multidisciplinary knowledge to real-world precision medicine challenges while working alongside experienced mentors.
+            </p>
+            <p class="section-text scroll-fade">
+                Our capstone projects serve as valuable professional development experiences, enabling students to enhance their CVs, explore diverse career pathways across industries, academic institutions, and organizations, and potentially connect with future employers.
+            </p>
             
-            <!-- Fees Table -->
-            <div class="fees-table-container scroll-fade">
-                <table class="fees-table">
-                    <thead>
-                        <tr>
-                            <th>International Students</th>
-                            <th>NUS Alumni</th>
-                            <th>Singapore Citizens and Permanent Residents</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SGD 69,400.00</td>
-                            <td>SGD 55,520.00</td>
-                            <td>SGD 41,640.00</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Capstone Types Section -->
+            <div class="capstone-types scroll-fade">
+                <div class="capstone-grid">
+                    <div class="capstone-card">
+                        <img src="https://xavierchee.github.io/website/website_assets/capstone/industry_capstone.png" 
+                             alt="Industry Capstone Projects">
+                        <div class="capstone-card-content">
+                            <h3 class="capstone-title">Industry Capstone Projects</h3>
+                            <p class="capstone-description">
+                                Work directly with industry partners under professional supervision to gain industrial experience.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="capstone-card">
+                        <img src="https://xavierchee.github.io/website/website_assets/capstone/academic_capstone.png" 
+                             alt="Academic Capstone Projects">
+                        <div class="capstone-card-content">
+                            <h3 class="capstone-title">Academic Capstone Projects</h3>
+                            <p class="capstone-description">
+                                Work under leading researchers at university laboratories, medical centers, or research institutes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <!-- Fees Notes -->
-            <div class="fees-notes scroll-fade">
-                <p>Rates shown are inclusive of Goods and Service Tax (GST)</p>
-                <p>Rates shown are inclusive of the acceptance fees of SGD 5,450.00</p>
-                <p>Fees are subject to annual review</p>
+            <!-- Locations Section -->
+            <div class="locations-section scroll-fade">
+                <h2 class="section-header">Locations of academic and industry capstone placements</h2>
+                
+                <!-- Location Map Image -->
+                <img src="https://xavierchee.github.io/website/website_assets/capstone/location_of_capstone.png" 
+                     alt="Locations of academic and industry capstone placements" 
+                     style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 61, 124, 0.1);">
             </div>
         </div>
         

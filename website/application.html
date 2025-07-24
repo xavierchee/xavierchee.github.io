@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme Fees - Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Application Process - Master's Programme - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -286,70 +286,344 @@
             color: #5a6c7d;
             font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             font-weight: 400;
         }
         
-        /* Fees Table Styles */
-        .fees-table-container {
-            margin: 40px 0;
-            overflow-x: auto;
+        /* First content after section headers */
+        .section-first-content {
+            margin-top: 20px;
         }
         
-        .fees-table {
+        .application-list {
+            margin-bottom: 30px;
+        }
+        
+        .application-list li {
+            color: #5a6c7d;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            margin-left: 25px;
+        }
+        
+        .application-list li strong {
+            color: #003D7C;
+            font-weight: 600;
+        }
+        
+        .application-link {
+            color: #FF6B35;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .application-link:hover {
+            border-bottom-color: #FF6B35;
+        }
+        
+        .fee-notice {
+            font-style: italic;
+            color: #5a6c7d;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        
+        /* Process Image */
+        .process-image-wrapper {
+            margin: 50px 0;
+            position: relative;
+        }
+        
+        .process-image {
             width: 100%;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border-radius: 12px;
+            height: auto;
+            display: block;
+        }
+        
+        /* Year overlays for the process timeline */
+        .year-overlay {
+            position: absolute;
+            font-weight: 700;
+            font-size: 14px;
+            color: #FF6B35;
+            z-index: 10;
+        }
+        
+        .year-2025 {
+            bottom: 65px;
+            left: 27.5%;
+        }
+        
+        .year-2026 {
+            bottom: 65px;
+            right: 26%;
+        }
+        
+        /* Action Buttons - Fixed Floating Menu */
+        .action-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        /* Closing animation for buttons */
+        .action-items:not(.active) .action-button {
+            transition: all 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        }
+        
+        .action-items:not(.active) .action-button:nth-child(3) {
+            transition-delay: 0.05s;
+        }
+        
+        .action-items:not(.active) .action-button:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        
+        .action-items:not(.active) .action-button:nth-child(1) {
+            transition-delay: 0.15s;
+        }
+        
+        .action-menu-trigger {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: glow-pulse 2s ease-in-out infinite, float-button 3s ease-in-out infinite;
             overflow: hidden;
         }
         
-        .fees-table th {
-            background: #003D7C;
-            color: white;
-            font-weight: 600;
-            padding: 25px 30px;
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 0.3px;
+        @keyframes glow-pulse {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4),
+                           0 0 40px rgba(220, 38, 38, 0.6),
+                           inset 0 0 20px rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(220, 38, 38, 0.6),
+                           0 0 60px rgba(220, 38, 38, 0.8),
+                           inset 0 0 30px rgba(255, 255, 255, 0.3);
+            }
         }
         
-        .fees-table td {
-            padding: 35px 30px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #003D7C;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            background: white;
+        @keyframes float-button {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .action-menu-trigger::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+        
+        .action-menu-trigger:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #b91c1c, #dc2626);
+        }
+        
+        .action-menu-trigger.active {
+            background: linear-gradient(135deg, #991b1b, #b91c1c);
+            transform: rotate(135deg) scale(0.9);
+            animation: none;
+        }
+        
+        .menu-icon {
+            width: 25px;
+            height: 25px;
+            position: relative;
             transition: all 0.3s ease;
-            white-space: nowrap;
         }
         
-        .fees-table tr:hover td {
-            background: rgba(255, 107, 53, 0.03);
-            transform: scale(1.02);
+        .menu-icon span {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            left: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .fees-notes {
-            margin-top: 30px;
-            padding: 25px;
+        .menu-icon span:nth-child(1) {
+            top: 0;
+        }
+        
+        .menu-icon span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .menu-icon span:nth-child(3) {
+            bottom: 0;
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
+        }
+        
+        .action-items {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            pointer-events: none;
+        }
+        
+        .action-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: white;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            padding: 10px 18px 10px 10px;
+            text-decoration: none;
+            color: #003D7C;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            border: 2px solid #dc2626;
+            opacity: 0;
+            transform: scale(0.7) translateX(30px);
+            filter: blur(4px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            overflow: hidden;
+            font-size: 13px;
+            font-weight: 500;
+            width: 300px;
+            gap: 8px;
+            line-height: 1.2;
+        }
+        
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 61, 124, 0.03);
-            border-radius: 12px;
-            border-left: 4px solid #003D7C;
+            border-radius: 50px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
-        .fees-notes p {
-            color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            font-style: italic;
+        .action-button:hover::before {
+            opacity: 1;
         }
         
-        .fees-notes p:last-child {
-            margin-bottom: 0;
+        .action-items.active .action-button {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+            pointer-events: all;
+        }
+        
+        .action-items.active .action-button:nth-child(1) {
+            transform: translateY(-170px) scale(1) translateX(0);
+            transition-delay: 0.15s;
+        }
+        
+        .action-items.active .action-button:nth-child(2) {
+            transform: translateY(-110px) scale(1) translateX(0);
+            transition-delay: 0.3s;
+        }
+        
+        .action-items.active .action-button:nth-child(3) {
+            transform: translateY(-55px) scale(1) translateX(0);
+            transition-delay: 0.45s;
+        }
+        
+        .action-button-icon {
+            width: 32px;
+            height: 32px;
+            background: #dc2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .action-button-icon::after {
+            content: '→';
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .action-button:hover {
+            background: white;
+            color: #003D7C;
+            transform: translateY(var(--y)) translateX(-10px) scale(1.02);
+            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.15);
+            border-color: #ef4444;
+            transition: all 0.3s ease;
+        }
+        
+        .action-button:hover .action-button-icon {
+            background: #ef4444;
+            transform: scale(1.1);
+        }
+        
+        .action-button:nth-child(1):hover {
+            --y: -170px;
+        }
+        
+        .action-button:nth-child(2):hover {
+            --y: -110px;
+        }
+        
+        .action-button:nth-child(3):hover {
+            --y: -55px;
+        }
+        
+        .action-button-text {
+            letter-spacing: 0.2px;
+            flex: 1;
+            text-align: left;
+            white-space: normal;
         }
         
         /* Sidebar */
@@ -530,270 +804,6 @@
             font-weight: 400;
         }
         
-        /* Action Buttons - Fixed Floating Menu */
-        .action-buttons {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-        
-        /* Closing animation for buttons */
-        .action-items:not(.active) .action-button {
-            transition: all 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-        }
-        
-        .action-items:not(.active) .action-button:nth-child(3) {
-            transition-delay: 0.05s;
-        }
-        
-        .action-items:not(.active) .action-button:nth-child(2) {
-            transition-delay: 0.1s;
-        }
-        
-        .action-items:not(.active) .action-button:nth-child(1) {
-            transition-delay: 0.15s;
-        }
-        
-        .action-menu-trigger {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: glow-pulse 2s ease-in-out infinite, float-button 3s ease-in-out infinite;
-            overflow: hidden;
-        }
-        
-        @keyframes glow-pulse {
-            0%, 100% {
-                box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4),
-                           0 0 40px rgba(220, 38, 38, 0.6),
-                           inset 0 0 20px rgba(255, 255, 255, 0.2);
-            }
-            50% {
-                box-shadow: 0 5px 30px rgba(220, 38, 38, 0.6),
-                           0 0 60px rgba(220, 38, 38, 0.8),
-                           inset 0 0 30px rgba(255, 255, 255, 0.3);
-            }
-        }
-        
-        @keyframes float-button {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        .action-menu-trigger::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s ease-in-out infinite;
-        }
-        
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
-        }
-        
-        .action-menu-trigger:hover {
-            transform: scale(1.1);
-            background: linear-gradient(135deg, #b91c1c, #dc2626);
-        }
-        
-        .action-menu-trigger.active {
-            background: linear-gradient(135deg, #991b1b, #b91c1c);
-            transform: rotate(135deg) scale(0.9);
-            animation: none;
-        }
-        
-        .menu-icon {
-            width: 25px;
-            height: 25px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .menu-icon span {
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: white;
-            border-radius: 3px;
-            left: 0;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .menu-icon span:nth-child(1) {
-            top: 0;
-        }
-        
-        .menu-icon span:nth-child(2) {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        
-        .menu-icon span:nth-child(3) {
-            bottom: 0;
-        }
-        
-        .action-menu-trigger.active .menu-icon span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
-        }
-        
-        .action-menu-trigger.active .menu-icon span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .action-menu-trigger.active .menu-icon span:nth-child(3) {
-            transform: rotate(-45deg) translate(10px, -10px);
-        }
-        
-        .action-items {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            pointer-events: none;
-        }
-        
-        .action-button {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: white;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            padding: 12px 25px 12px 12px;
-            text-decoration: none;
-            color: #003D7C;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-            border: 2px solid #dc2626;
-            opacity: 0;
-            transform: scale(0.7) translateX(30px);
-            filter: blur(4px);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: none;
-            overflow: hidden;
-            font-size: 15px;
-            font-weight: 500;
-            width: 380px;
-            gap: 12px;
-            line-height: 1.3;
-        }
-        
-        .action-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 61, 124, 0.03);
-            border-radius: 50px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .action-button:hover::before {
-            opacity: 1;
-        }
-        
-        .action-items.active .action-button {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
-            pointer-events: all;
-        }
-        
-        .action-items.active .action-button:nth-child(1) {
-            transform: translateY(-210px) scale(1) translateX(0);
-            transition-delay: 0.15s;
-        }
-        
-        .action-items.active .action-button:nth-child(2) {
-            transform: translateY(-140px) scale(1) translateX(0);
-            transition-delay: 0.3s;
-        }
-        
-        .action-items.active .action-button:nth-child(3) {
-            transform: translateY(-70px) scale(1) translateX(0);
-            transition-delay: 0.45s;
-        }
-        
-        .action-button-icon {
-            width: 40px;
-            height: 40px;
-            background: #dc2626;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .action-button-icon::after {
-            content: '→';
-            color: white;
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 1;
-        }
-        
-        .action-button:hover {
-            background: white;
-            color: #003D7C;
-            transform: translateY(var(--y)) translateX(-10px) scale(1.02);
-            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.15);
-            border-color: #ef4444;
-            transition: all 0.3s ease;
-        }
-        
-        .action-button:hover .action-button-icon {
-            background: #ef4444;
-            transform: scale(1.1);
-        }
-        
-        .action-button:nth-child(1):hover {
-            --y: -210px;
-        }
-        
-        .action-button:nth-child(2):hover {
-            --y: -140px;
-        }
-        
-        .action-button:nth-child(3):hover {
-            --y: -70px;
-        }
-        
-        .action-button-text {
-            letter-spacing: 0.2px;
-            flex: 1;
-            text-align: left;
-            white-space: normal;
-        }
-        
         /* Footer */
         .footer {
             background: linear-gradient(135deg, #003D7C, #001f3f);
@@ -804,6 +814,253 @@
             font-size: 14px;
             font-weight: 300;
             letter-spacing: 0.5px;
+        }
+        
+        /* Document sections */
+        .document-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .document-section:first-of-type {
+            margin-top: 0;
+        }
+        
+        .document-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B35, #FF8554);
+        }
+        
+        /* Dropdown Header */
+        .dropdown-header {
+            background: white;
+            padding: 30px 40px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-radius: 16px 16px 0 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .dropdown-header:hover {
+            background: rgba(0, 61, 124, 0.02);
+        }
+        
+        .dropdown-header h2 {
+            color: #003D7C;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.3px;
+            flex: 1;
+        }
+        
+        .dropdown-arrow {
+            color: #FF6B35;
+            font-size: 24px;
+            font-weight: 700;
+            transition: transform 0.3s ease;
+            margin-left: 20px;
+        }
+        
+        .dropdown-header.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+        
+        /* Dropdown Content */
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border-radius: 0 0 16px 16px;
+            transform-origin: top;
+        }
+        
+        .dropdown-content.active {
+            max-height: 3000px;
+            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dropdown-content-inner {
+            padding: 0 40px 40px 40px;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
+        }
+        
+        .dropdown-content:not(.active) .dropdown-content-inner {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        
+        .document-section h3 {
+            color: #003D7C;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            margin-top: 35px;
+            letter-spacing: -0.2px;
+        }
+        
+        .document-section h3:first-of-type {
+            margin-top: 0;
+        }
+        
+        .document-intro {
+            color: #5a6c7d;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 107, 53, 0.05);
+            border-left: 4px solid #FF6B35;
+            border-radius: 8px;
+        }
+        
+        .document-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .document-list > li {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(0, 61, 124, 0.02);
+            border-radius: 10px;
+            border-left: 4px solid #003D7C;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .document-list > li:hover {
+            transform: translateX(5px);
+            background: rgba(0, 61, 124, 0.04);
+            box-shadow: 0 2px 15px rgba(0, 61, 124, 0.1);
+        }
+        
+        .document-list > li::before {
+            content: counter(doc-counter);
+            counter-increment: doc-counter;
+            position: absolute;
+            left: -15px;
+            top: 20px;
+            background: #003D7C;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .compulsory-docs {
+            counter-reset: doc-counter;
+        }
+        
+        .optional-docs {
+            counter-reset: doc-counter;
+        }
+        
+        .document-list strong {
+            color: #003D7C;
+            font-weight: 600;
+        }
+        
+        .document-list ul {
+            margin-top: 12px;
+            margin-left: 20px;
+        }
+        
+        .document-list ul li {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .document-list ul li::before {
+            content: '•';
+            color: #FF6B35;
+            font-weight: 700;
+            position: absolute;
+            left: 0;
+        }
+        
+        .document-warning {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border: 2px solid rgba(220, 38, 38, 0.2);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .document-warning::before {
+            content: '⚠️';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 20px;
+        }
+        
+        .document-warning p {
+            color: #7c2d12;
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 0;
+            padding-left: 45px;
+            font-weight: 500;
+        }
+        
+        .document-warning strong {
+            color: #991b1b;
+            font-weight: 700;
+        }
+        
+        .document-notes {
+            margin-top: 35px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(0, 61, 124, 0.05) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+        
+        .document-notes p {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        .document-notes p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .document-notes strong {
+            color: #003D7C;
+            font-weight: 600;
         }
         
         /* Scroll animations */
@@ -818,97 +1075,7 @@
             transform: translateY(0);
         }
         
-        /* Mobile adjustments for action buttons */
-        @media (max-width: 768px) {
-            .action-button {
-                width: 85vw;
-                max-width: 350px;
-                padding: 10px 20px 10px 10px;
-                font-size: 14px;
-                gap: 10px;
-            }
-            
-            .action-button-icon {
-                width: 36px;
-                height: 36px;
-            }
-            
-            .action-button-icon::after {
-                font-size: 18px;
-            }
-            
-            .action-items.active .action-button:nth-child(1) {
-                transform: translateY(-190px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(2) {
-                transform: translateY(-125px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(3) {
-                transform: translateY(-60px) scale(1) translateX(0);
-            }
-            
-            .action-button:nth-child(1):hover {
-                --y: -190px;
-            }
-            
-            .action-button:nth-child(2):hover {
-                --y: -125px;
-            }
-            
-            .action-button:nth-child(3):hover {
-                --y: -60px;
-            }
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1600px) {
-            .main-content {
-                padding: 0 60px;
-            }
-        }
-        
-        @media (max-width: 1400px) {
-            .main-content {
-                padding: 0 50px;
-            }
-        }
-        
-        @media (max-width: 1200px) {
-            .main-content {
-                gap: 30px;
-                padding: 0 40px;
-            }
-            
-            .nav-links a {
-                padding: 20px 10px;
-                font-size: 12px;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .main-content {
-                padding: 0 30px;
-            }
-        }
-        
-        /* Mobile hamburger menu button */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #003D7C;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1001;
-        }
-        
+        /* Mobile adjustments */
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
@@ -933,18 +1100,69 @@
                 font-size: 15px;
             }
             
-            .fees-table th {
+            .year-overlay {
+                font-size: 12px;
+            }
+            
+            .action-button {
+                width: 85vw;
+                max-width: 280px;
+                padding: 8px 15px 8px 8px;
+                font-size: 12px;
+                gap: 8px;
+            }
+            
+            .action-button-icon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .action-button-icon::after {
                 font-size: 14px;
-                padding: 20px 15px;
             }
             
-            .fees-table td {
-                font-size: 20px;
-                padding: 25px 15px;
-                white-space: nowrap;
+            .action-items.active .action-button:nth-child(1) {
+                transform: translateY(-150px) scale(1) translateX(0);
             }
             
-            /* Mobile navigation */
+            .action-items.active .action-button:nth-child(2) {
+                transform: translateY(-95px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(3) {
+                transform: translateY(-45px) scale(1) translateX(0);
+            }
+            
+            .action-button:nth-child(1):hover {
+                --y: -150px;
+            }
+            
+            .action-button:nth-child(2):hover {
+                --y: -95px;
+            }
+            
+            .action-button:nth-child(3):hover {
+                --y: -45px;
+            }
+        }
+        
+        /* Mobile hamburger menu button */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #003D7C;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+        
+        @media (max-width: 768px) {
             .mobile-menu-toggle {
                 display: block;
             }
@@ -1076,7 +1294,7 @@
                 <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Programme structure</a>
+                    <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
                         <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
@@ -1084,7 +1302,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Courses</a>
+                    <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
@@ -1093,14 +1311,14 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Capstone projects</a>
+                    <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Admissions</a>
+                    <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
                         <a href="https://xavierchee.github.io/website/application.html">Application</a>
@@ -1109,7 +1327,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Student stories and photos</a>
+                    <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="#student-stories">Student stories</a>
                         <a href="#photos">Photos</a>
@@ -1117,7 +1335,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">About us</a>
+                    <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
                         <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
@@ -1135,46 +1353,169 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Tuition Fees Banner Image -->
+    <!-- Application Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/tuition_fees/tuition_fees_banner.png" 
-             alt="Tuition Fees Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/application/application_banner.png" 
+             alt="Application Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Tuition Fees</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Application Process</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Programme Fees</h1>
-            
-            <!-- Fees Table -->
-            <div class="fees-table-container scroll-fade">
-                <table class="fees-table">
-                    <thead>
-                        <tr>
-                            <th>International Students</th>
-                            <th>NUS Alumni</th>
-                            <th>Singapore Citizens and Permanent Residents</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SGD 69,400.00</td>
-                            <td>SGD 55,520.00</td>
-                            <td>SGD 41,640.00</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Application Process Section -->
+            <div class="document-section scroll-fade">
+                <div class="dropdown-header" onclick="toggleDropdown(this)">
+                    <h2>Application Process</h2>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-content">
+                    <div class="dropdown-content-inner">
+                        <p class="section-text section-first-content">
+                            The application period for August 2025 intake is now open, and closes on:
+                        </p>
+                        
+                        <ul class="application-list">
+                            <li><strong>31 May 2026</strong> for international applicants</li>
+                            <li><strong>30 June 2026</strong> for local applicants.</li>
+                        </ul>
+                        
+                        <p class="section-text">
+                            Please visit the <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="application-link">Graduate Admission System</a> to apply online.
+                        </p>
+                        
+                        <p class="section-text">
+                            You can refer to the <a href="#" class="application-link">Applicant Guide</a> to the Graduate Admission System.
+                        </p>
+                        
+                        <p class="fee-notice">
+                            A non-refundable, non-transferable application fee of S$50.47 applies.
+                        </p>
+                        
+                        <!-- Process Timeline Image -->
+                        <div class="process-image-wrapper">
+                            <img src="https://xavierchee.github.io/website/website_assets/application/application_process.png" 
+                                 alt="Application Process Timeline" 
+                                 class="process-image">
+                            <div class="year-overlay year-2025">2025</div>
+                            <div class="year-overlay year-2026">2026</div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <!-- Fees Notes -->
-            <div class="fees-notes scroll-fade">
-                <p>Rates shown are inclusive of Goods and Service Tax (GST)</p>
-                <p>Rates shown are inclusive of the acceptance fees of SGD 5,450.00</p>
-                <p>Fees are subject to annual review</p>
+            <!-- Application Documents Section -->
+            <div class="document-section scroll-fade">
+                <div class="dropdown-header" onclick="toggleDropdown(this)">
+                    <h2>Application Documents</h2>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-content">
+                    <div class="dropdown-content-inner">
+                        <div class="document-intro section-first-content">
+                            <strong>Instructions for Uploading Application Documents</strong><br>
+                            Documents in languages other than English must include certified English translations. Incomplete or inaccurate applications will not be processed.<br><br>
+                            Please upload all supporting documents to the Graduate Admission System under "Document Upload" in PDF format only.<br><br>
+                            You may be contacted via email if additional documentation is required for your application.
+                        </div>
+                        
+                        <div class="document-warning">
+                            <p>Applicants must ensure all application information and supporting documents are <strong>truthful and accurate</strong>. NUS reserves the right to verify any information provided. <strong>False or misleading information in applications</strong> (including test scores, resumes, certificates, transcripts, etc.) <strong>will result in rejection, revocation of admission, and/or dismissal from the University</strong>.</p>
+                        </div>
+                        
+                        <h3>Compulsory Documents</h3>
+                        <ol class="document-list compulsory-docs">
+                            <li>
+                                Your <strong>resume/CV</strong> detailing educational background, internships, work experience, achievements, etc.
+                            </li>
+                            <li>
+                                Your <strong>identification documents</strong>:
+                                <ul>
+                                    <li>Singapore Citizens and Permanent Residents: NRIC (front and back)</li>
+                                    <li>International applicants: Passport (identification page) and Employment Pass (if applicable)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                Certified copies of <strong>transcripts/mark sheets</strong> and <strong>degree certificate</strong>
+                            </li>
+                            <li>
+                                Your <strong>TOEFL/IELTS scores</strong> (Required if English is not your native language or medium of university instruction)
+                            </li>
+                            <li>
+                                A <strong>Statement of Purpose</strong> explaining your reasons for applying to this programme
+                            </li>
+                        </ol>
+                        
+                        <h3>Optional Documents</h3>
+                        <ol class="document-list optional-docs">
+                            <li>
+                                <strong>Test scores (e.g., GRE)</strong>
+                            </li>
+                            <li>
+                                <strong>Participation and awards in quantitative competitions (e.g., Math Olympiad)</strong>
+                            </li>
+                            <li>
+                                <strong>Certificate of completion in basic programming (e.g., R or Python) and/or basic statistics course</strong> (reputable online courses acceptable)
+                            </li>
+                            <li>
+                                <strong>Reference letters</strong>
+                            </li>
+                        </ol>
+                        
+                        <div class="document-notes">
+                            <p><strong>Note 6:</strong> Financial assistance requires reference letters to be submitted directly by professional referees through the Graduate Admission System. Designate at least one referee who will receive automated email instructions for submission. Recommended referees include university faculty members or direct work supervisors. Reference letters from family members, friends, or relatives will not be accepted.</p>
+                            
+                            <p><strong>Note 7:</strong> Students will only be considered for financial assistance after acceptance of their offer.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Application Outcome Section -->
+            <div class="document-section scroll-fade">
+                <div class="dropdown-header" onclick="toggleDropdown(this)">
+                    <h2>Application Outcome</h2>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-content">
+                    <div class="dropdown-content-inner">
+                        <p class="section-text section-first-content">
+                            Applications are processed on a rolling basis, with outcomes released in batches. Candidates may receive offers after the application closing date, and the selection process does not strictly adhere to the order of submission or interview dates.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Acceptance Section -->
+            <div class="document-section scroll-fade">
+                <div class="dropdown-header" onclick="toggleDropdown(this)">
+                    <h2>Acceptance</h2>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-content">
+                    <div class="dropdown-content-inner">
+                        <h3 class="section-first-content">Before accepting:</h3>
+                        <ul class="application-list">
+                            <li><strong>Self-supporting students</strong> must upload financial documents (bank statement or recent pay slip)</li>
+                            <li><strong>Sponsored students</strong> must upload a confirmation letter from their sponsor with proof of financial status</li>
+                            <li><strong>Financial proof</strong> must certify ability to cover tuition, student fees, and living expenses of S$18,000 per year for the entire MSc programme</li>
+                            <li><strong>Failure to provide proper documentation</strong> will delay processing or disqualify your application</li>
+                        </ul>
+                        
+                        <h3>When accepting:</h3>
+                        <ul class="application-list">
+                            <li>Pay the <strong>non-refundable, non-transferable acceptance fee of SGD 5,450.00</strong> (including 9% GST) through the Graduate admission system</li>
+                            <li>This fee will be <strong>credited toward tuition fees</strong></li>
+                        </ul>
+                        
+                        <div class="document-notes">
+                            <p><strong>Note:</strong> Scholarship or tuition fee waiver decisions are made separately from admissions offers and may be communicated later.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -1332,6 +1673,43 @@
         document.querySelectorAll('.scroll-fade').forEach(el => {
             observer.observe(el);
         });
+        
+        // Dropdown toggle functionality
+        function toggleDropdown(headerElement) {
+            const content = headerElement.nextElementSibling;
+            const arrow = headerElement.querySelector('.dropdown-arrow');
+            const contentInner = content.querySelector('.dropdown-content-inner');
+            
+            // Toggle active class
+            headerElement.classList.toggle('active');
+            
+            if (!content.classList.contains('active')) {
+                // Opening dropdown
+                content.classList.add('active');
+                // Force reflow
+                content.offsetHeight;
+                // Set max-height to actual content height for smooth animation
+                content.style.maxHeight = contentInner.scrollHeight + 80 + "px";
+            } else {
+                // Closing dropdown
+                content.style.maxHeight = "0px";
+                // Remove active class after animation
+                setTimeout(() => {
+                    content.classList.remove('active');
+                }, 600);
+            }
+        }
+        
+        // Initialize - show first dropdown by default
+        // COMMENTED OUT: Now all dropdowns start closed until user clicks
+        /*
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstDropdown = document.querySelector('.dropdown-header');
+            if (firstDropdown) {
+                toggleDropdown(firstDropdown);
+            }
+        });
+        */
         
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

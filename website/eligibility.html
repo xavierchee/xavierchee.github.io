@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme Fees - Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Master's Programme - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -286,81 +286,13 @@
             color: #5a6c7d;
             font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             font-weight: 400;
         }
         
-        /* Fees Table Styles */
-        .fees-table-container {
-            margin: 40px 0;
-            overflow-x: auto;
-        }
-        
-        .fees-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .fees-table th {
-            background: #003D7C;
-            color: white;
-            font-weight: 600;
-            padding: 25px 30px;
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 0.3px;
-        }
-        
-        .fees-table td {
-            padding: 35px 30px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #003D7C;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            background: white;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-        
-        .fees-table tr:hover td {
-            background: rgba(255, 107, 53, 0.03);
-            transform: scale(1.02);
-        }
-        
-        .fees-notes {
-            margin-top: 30px;
-            padding: 25px;
-            background: rgba(0, 61, 124, 0.03);
-            border-radius: 12px;
-            border-left: 4px solid #003D7C;
-        }
-        
-        .fees-notes p {
-            color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-        
-        .fees-notes p:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            flex: 0 0 35%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .info-section {
+        /* Admission Requirements Styles */
+        .requirement-section {
+            margin-bottom: 40px;
             background: white;
             padding: 30px;
             border-radius: 12px;
@@ -370,164 +302,164 @@
             overflow: hidden;
         }
         
-        .intake-container {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .events-container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intake-container::before, .events-container::before {
+        .requirement-section::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -50%;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(-30px, -30px) scale(1.1);
-            }
-        }
-        
-        .info-section h3 {
-            color: #003D7C;
-            margin-bottom: 30px;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            position: relative;
-        }
-        
-        .date-info {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            position: relative;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B35, #FF8554);
+            transform: translateX(-100%);
             transition: transform 0.3s ease;
         }
         
-        .date-info:hover {
-            transform: translateX(5px);
+        .requirement-section:hover::before {
+            transform: translateX(0);
         }
         
-        .date-info:last-of-type {
-            border-bottom: none;
-        }
-        
-        .date-info .date {
-            color: #FF6B35;
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .date-info .description {
-            color: #5a6c7d;
-            line-height: 1.6;
-            font-size: 15px;
-            font-weight: 400;
-        }
-        
-        .apply-button {
-            background: linear-gradient(135deg, #003D7C, #0052A3);
-            color: white;
-            padding: 18px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 35px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.3);
+        /* Special highlighted section for Applicant Background and Preparation */
+        .requirement-section.highlighted {
+            border: 2px solid #dc2626;
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.2),
+                        0 5px 15px rgba(220, 38, 38, 0.1),
+                        inset 0 0 20px rgba(220, 38, 38, 0.03);
+            animation: pulseGlow 3s ease-in-out infinite;
             position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
         }
         
-        .apply-button::before {
-            content: '';
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(220, 38, 38, 0.2),
+                           0 5px 15px rgba(220, 38, 38, 0.1),
+                           inset 0 0 20px rgba(220, 38, 38, 0.03);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(220, 38, 38, 0.3),
+                           0 8px 20px rgba(220, 38, 38, 0.15),
+                           inset 0 0 25px rgba(220, 38, 38, 0.05);
+            }
+        }
+        
+        .requirement-section.highlighted::before {
+            background: linear-gradient(90deg, #dc2626, #ef4444);
+            transform: translateX(0);
+            height: 5px;
+            animation: shimmerBar 3s linear infinite;
+        }
+        
+        @keyframes shimmerBar {
+            0% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+        
+        .requirement-section.highlighted::after {
+            content: '⚠️ Important';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            top: -3px;
+            right: 30px;
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3);
         }
         
-        .apply-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 61, 124, 0.4);
+        .requirement-section.highlighted .requirement-title {
+            color: #dc2626;
         }
         
-        .apply-button:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-        
-        .events-section h3 {
+        .requirement-title {
             color: #003D7C;
-            margin-bottom: 30px;
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
             letter-spacing: -0.3px;
         }
         
-        .event-item {
-            margin-bottom: 25px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .requirement-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
         
-        .event-item:hover {
-            transform: translateX(5px);
-        }
-        
-        .event-item:last-child {
-            border-bottom: none;
-        }
-        
-        .event-date {
-            color: #FF6B35;
-            font-weight: 700;
-            margin-bottom: 10px;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-        }
-        
-        .event-item div:last-child {
+        .requirement-list li {
+            padding: 12px 0;
             color: #5a6c7d;
             font-size: 15px;
+            position: relative;
+            padding-left: 25px;
             line-height: 1.6;
-            font-weight: 400;
+        }
+        
+        .requirement-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #FF6B35;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 1;
+        }
+        
+        .requirement-note {
+            background: rgba(255, 107, 53, 0.05);
+            border-left: 3px solid #FF6B35;
+            padding: 12px 20px;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #5a6c7d;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight-box {
+            background: rgba(0, 61, 124, 0.03);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 15px;
+            color: #2c3e50;
+            line-height: 1.8;
+        }
+        
+        /* Study Pathways Section */
+        .study-pathways {
+            margin-top: 60px;
+        }
+        
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .pathway-card {
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 2px solid rgba(0, 61, 124, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pathway-card-content {
+            padding: 0 30px 30px 30px;
         }
         
         /* Action Buttons - Fixed Floating Menu */
@@ -794,30 +726,6 @@
             white-space: normal;
         }
         
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, #003D7C, #001f3f);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 60px;
-            font-size: 14px;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Scroll animations */
-        .scroll-fade {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .scroll-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         /* Mobile adjustments for action buttons */
         @media (max-width: 768px) {
             .action-button {
@@ -862,6 +770,290 @@
             }
         }
         
+        .pathway-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FF6B35, #FF8554);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .pathway-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.15);
+            border-color: #FF6B35;
+        }
+        
+        .pathway-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .pathway-title {
+            color: #003D7C;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            letter-spacing: -0.3px;
+        }
+        
+        .pathway-detail {
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: #5a6c7d;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .pathway-detail strong {
+            color: #003D7C;
+            font-weight: 600;
+            min-width: 140px;
+        }
+        
+        .pathway-modules {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 61, 124, 0.08);
+        }
+        
+        .pathway-modules-title {
+            color: #FF6B35;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .pathway-modules ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .pathway-modules li {
+            padding: 6px 0;
+            color: #5a6c7d;
+            font-size: 14px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .pathway-modules li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #FF6B35;
+            font-weight: 700;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            flex: 0 0 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intake-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .events-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intake-container::before, .events-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-30px, -30px) scale(1.1);
+            }
+        }
+        
+        .info-section h3 {
+            color: #003D7C;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            position: relative;
+        }
+        
+        .date-info {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .date-info:hover {
+            transform: translateX(5px);
+        }
+        
+        .date-info:last-of-type {
+            border-bottom: none;
+        }
+        
+        .date-info .date {
+            color: #FF6B35;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .date-info .description {
+            color: #5a6c7d;
+            line-height: 1.6;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        
+        .apply-button {
+            background: linear-gradient(135deg, #003D7C, #0052A3);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 35px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+        
+        .apply-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .apply-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 61, 124, 0.4);
+        }
+        
+        .apply-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .events-section h3 {
+            color: #003D7C;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        
+        .event-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .event-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .event-date {
+            color: #FF6B35;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .event-item div:last-child {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #003D7C, #001f3f);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Scroll animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         /* Responsive Design */
         @media (max-width: 1600px) {
             .main-content {
@@ -879,6 +1071,10 @@
             .main-content {
                 gap: 30px;
                 padding: 0 40px;
+            }
+            
+            .pathways-grid {
+                grid-template-columns: 1fr;
             }
             
             .nav-links a {
@@ -925,23 +1121,16 @@
                 margin: 0 auto;
             }
             
+            .pathways-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .section-header {
                 font-size: 28px;
             }
             
             .section-text {
                 font-size: 15px;
-            }
-            
-            .fees-table th {
-                font-size: 14px;
-                padding: 20px 15px;
-            }
-            
-            .fees-table td {
-                font-size: 20px;
-                padding: 25px 15px;
-                white-space: nowrap;
             }
             
             /* Mobile navigation */
@@ -1076,7 +1265,7 @@
                 <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Programme structure</a>
+                    <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
                         <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
@@ -1084,7 +1273,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Courses</a>
+                    <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
@@ -1093,14 +1282,14 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Capstone projects</a>
+                    <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Admissions</a>
+                    <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
                         <a href="https://xavierchee.github.io/website/application.html">Application</a>
@@ -1109,7 +1298,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Student stories and photos</a>
+                    <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="#student-stories">Student stories</a>
                         <a href="#photos">Photos</a>
@@ -1117,7 +1306,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">About us</a>
+                    <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
                         <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
@@ -1135,46 +1324,94 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Tuition Fees Banner Image -->
+    <!-- Admission Requirements Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/tuition_fees/tuition_fees_banner.png" 
-             alt="Tuition Fees Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/eligibility/eligibility_banner.png" 
+             alt="Course Pathway Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Tuition Fees</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Admission Requirements</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Programme Fees</h1>
+            <h1 class="section-header scroll-fade">Admission Requirements</h1>
+            <p class="section-text scroll-fade">
+                Admissions to the NUS MSc in Precision Health and Medicine programme is competitive and selective.
+            </p>
+            <p class="section-text scroll-fade">
+                While meeting the minimum requirements outlined below establishes eligibility, final admission decisions reflect the programme's commitment to assembling a diverse cohort of exceptional candidates.
+            </p>
             
-            <!-- Fees Table -->
-            <div class="fees-table-container scroll-fade">
-                <table class="fees-table">
-                    <thead>
-                        <tr>
-                            <th>International Students</th>
-                            <th>NUS Alumni</th>
-                            <th>Singapore Citizens and Permanent Residents</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SGD 69,400.00</td>
-                            <td>SGD 55,520.00</td>
-                            <td>SGD 41,640.00</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Academic Requirements Section -->
+            <div class="requirement-section scroll-fade">
+                <h2 class="requirement-title">Academic</h2>
+                <p style="color: #5a6c7d; margin-bottom: 20px;">Successful applicants typically possess:</p>
+                <ul class="requirement-list">
+                    <li><strong>A Bachelor's degree in Medicine</strong> (M.B.B.S.)</li>
+                    <li><strong>Any STEMM discipline</strong> (Science, Technology, Engineering, Mathematics, Medicine) or related field.</li>
+                </ul>
+                <div class="requirement-note">
+                    <strong>Note 1:</strong> Honours degrees are preferred.
+                </div>
+                <div class="requirement-note">
+                    <strong>Note 2:</strong> Candidates with other qualifications will be evaluated on a case-by-case basis, subject to approval of the Programme Committee.
+                </div>
             </div>
             
-            <!-- Fees Notes -->
-            <div class="fees-notes scroll-fade">
-                <p>Rates shown are inclusive of Goods and Service Tax (GST)</p>
-                <p>Rates shown are inclusive of the acceptance fees of SGD 5,450.00</p>
-                <p>Fees are subject to annual review</p>
+            <!-- Skills and Experience Section -->
+            <div class="requirement-section scroll-fade">
+                <h2 class="requirement-title">Skills and Experience</h2>
+                <div class="highlight-box">
+                    <strong>As MScPHM is an interdisciplinary Master's programme, the ideal candidate for our Master's programme would possess foundational knowledge in both quantitative sciences and biological/biomedical fields.</strong>
+                </div>
+                
+                <h3 style="color: #003D7C; font-size: 18px; margin: 25px 0 15px 0; font-weight: 600;">For applicants with no quantitative or programming undergraduate backgrounds, aptitude in quantitative sciences can be demonstrated through:</h3>
+                <ul class="requirement-list">
+                    <li><strong>Completion of basic programming (R/Python) or statistics courses</strong></li>
+                    <li><strong>Participation/awards in quantitative competitions</strong> (e.g., Math Olympiad)</li>
+                    <li><strong>Relevant work experience in data science fields</strong> (advantageous)</li>
+                </ul>
+                
+                <h3 style="color: #003D7C; font-size: 18px; margin: 25px 0 15px 0; font-weight: 600;">For applicants with no biological/biomedical undergraduate backgrounds, aptitude in the field can be demonstrated through:</h3>
+                <ul class="requirement-list">
+                    <li><strong>Completion of basic biology courses</strong> (online courses are acceptable)</li>
+                    <li><strong>Participation/awards in bio-related competitions</strong></li>
+                    <li><strong>Relevant work experience or internships or research in biological/biomedical fields</strong> (advantageous)</li>
+                </ul>
+            </div>
+            
+            <!-- Applicant Background and Preparation Section - HIGHLIGHTED -->
+            <div class="requirement-section highlighted scroll-fade">
+                <h2 class="requirement-title">Applicant Background and Preparation</h2>
+                <p style="color: #5a6c7d; margin-bottom: 20px;">
+                    A majority of the successful applicants typically come from <strong>EITHER</strong> biological/biomedical backgrounds <strong>OR</strong> programming/computational fields. Prior to joining the Master's programme, we would recommend students to prepare themselves by:
+                </p>
+                <ul class="requirement-list">
+                    <li>Studying relevant <strong>reference books</strong> in programming or bio-related subjects (depending on your background)</li>
+                    <li>Participating in available <strong>online courses</strong> through platforms (e.g. YouTube or Coursera)</li>
+                    <li>Enrolling in <strong>preparatory/bridging courses</strong> specifically organized by the MScPHM programme.</li>
+                </ul>
+            </div>
+            
+            <!-- English Language Section -->
+            <div class="requirement-section scroll-fade">
+                <h2 class="requirement-title">English Language</h2>
+                <p style="color: #5a6c7d; margin-bottom: 20px;">
+                    For applicants whose native language or medium of university instruction is not English, proof of English proficiency is required through either:
+                </p>
+                <ul class="requirement-list">
+                    <li><strong>TOEFL:</strong> Minimum score of 85 (Internet-based) or</li>
+                    <li><strong>IELTS:</strong> Minimum Academic score of 6.0</li>
+                </ul>
+                <div class="requirement-note">
+                    <strong>Note 4:</strong> Test scores must be valid (taken within the last two years) at time of application.
+                </div>
+                <div class="requirement-note">
+                    <strong>Note 5:</strong> Additional test scores (e.g. GRE) may be submitted to strengthen your application but are not required.
+                </div>
             </div>
         </div>
         
