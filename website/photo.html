@@ -1,17 +1,22 @@
-<!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 27, 2025 - 09:36 PM
-    ============================================
-    
-    Recent Changes:
-    - Updated Photos link to point to https://xavierchee.github.io/website/photo.html
-    - Added Vision and mission as first subsection under About us, linking to https://xavierchee.github.io/website/vision_mission.html
+===========================================
+CHANGES DOCUMENTATION
+===========================================
+Date: 2025-02-02
+Timestamp: 7:45 PM SGT
+
+CHANGES MADE:
+1. Updated Photos link in navigation to point to https://xavierchee.github.io/website/photo.html
+2. Added Vision and mission as first item under About us dropdown, linking to https://xavierchee.github.io/website/vision_mission.html
+===========================================
 -->
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Student Photos - Master's Programme - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -298,484 +303,28 @@
             font-weight: 400;
         }
         
-        /* Admission Requirements Styles */
-        .requirement-section {
-            margin-bottom: 40px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .requirement-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #FF6B35, #FF8554);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .requirement-section:hover::before {
-            transform: translateX(0);
-        }
-        
-        /* Special highlighted section for Applicant Background and Preparation */
-        .requirement-section.highlighted {
-            border: 2px solid #dc2626;
-            background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
-            box-shadow: 0 0 30px rgba(220, 38, 38, 0.2),
-                        0 5px 15px rgba(220, 38, 38, 0.1),
-                        inset 0 0 20px rgba(220, 38, 38, 0.03);
-            animation: pulseGlow 3s ease-in-out infinite;
-            position: relative;
-        }
-        
-        @keyframes pulseGlow {
-            0%, 100% {
-                box-shadow: 0 0 30px rgba(220, 38, 38, 0.2),
-                           0 5px 15px rgba(220, 38, 38, 0.1),
-                           inset 0 0 20px rgba(220, 38, 38, 0.03);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(220, 38, 38, 0.3),
-                           0 8px 20px rgba(220, 38, 38, 0.15),
-                           inset 0 0 25px rgba(220, 38, 38, 0.05);
-            }
-        }
-        
-        .requirement-section.highlighted::before {
-            background: linear-gradient(90deg, #dc2626, #ef4444);
-            transform: translateX(0);
-            height: 5px;
-            animation: shimmerBar 3s linear infinite;
-        }
-        
-        @keyframes shimmerBar {
-            0% {
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0.7;
-            }
-        }
-        
-        .requirement-section.highlighted::after {
-            content: '⚠️ Important';
-            position: absolute;
-            top: -3px;
-            right: 30px;
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3);
-        }
-        
-        .requirement-section.highlighted .requirement-title {
-            color: #dc2626;
-        }
-        
-        .requirement-title {
-            color: #003D7C;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: -0.3px;
-        }
-        
-        .requirement-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .requirement-list li {
-            padding: 12px 0;
-            color: #5a6c7d;
-            font-size: 15px;
-            position: relative;
-            padding-left: 25px;
-            line-height: 1.6;
-        }
-        
-        .requirement-list li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: #FF6B35;
-            font-weight: 700;
-            font-size: 20px;
-            line-height: 1;
-        }
-        
-        .requirement-note {
-            background: rgba(255, 107, 53, 0.05);
-            border-left: 3px solid #FF6B35;
-            padding: 12px 20px;
-            margin: 15px 0;
-            font-size: 14px;
-            color: #5a6c7d;
-            font-style: italic;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .highlight-box {
-            background: rgba(0, 61, 124, 0.03);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            font-size: 15px;
-            color: #2c3e50;
-            line-height: 1.8;
-        }
-        
-        /* Study Pathways Section */
-        .study-pathways {
-            margin-top: 60px;
-        }
-        
-        .pathways-grid {
+        /* Photo Grid */
+        .photo-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
             margin-top: 40px;
         }
         
-        .pathway-card {
+        .photo-card {
             background: white;
-            border-radius: 12px;
-            padding: 0;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 2px solid rgba(0, 61, 124, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
+            border-radius: 16px;
             overflow: hidden;
-        }
-        
-        .pathway-card-content {
-            padding: 0 30px 30px 30px;
-        }
-        
-        /* Action Buttons - Fixed Floating Menu */
-        .action-buttons {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-        
-        /* Closing animation for buttons */
-        .action-items:not(.active) .action-button {
-            transition: all 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-        }
-        
-        .action-items:not(.active) .action-button:nth-child(3) {
-            transition-delay: 0.05s;
-        }
-        
-        .action-items:not(.active) .action-button:nth-child(2) {
-            transition-delay: 0.1s;
-        }
-        
-        .action-items:not(.active) .action-button:nth-child(1) {
-            transition-delay: 0.15s;
-        }
-        
-        .action-menu-trigger {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            border-radius: 50%;
-            border: none;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: glow-pulse 2s ease-in-out infinite, float-button 3s ease-in-out infinite;
-            overflow: hidden;
-        }
-        
-        @keyframes glow-pulse {
-            0%, 100% {
-                box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4),
-                           0 0 40px rgba(220, 38, 38, 0.6),
-                           inset 0 0 20px rgba(255, 255, 255, 0.2);
-            }
-            50% {
-                box-shadow: 0 5px 30px rgba(220, 38, 38, 0.6),
-                           0 0 60px rgba(220, 38, 38, 0.8),
-                           inset 0 0 30px rgba(255, 255, 255, 0.3);
-            }
-        }
-        
-        @keyframes float-button {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        .action-menu-trigger::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s ease-in-out infinite;
-        }
-        
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
-        }
-        
-        .action-menu-trigger:hover {
-            transform: scale(1.1);
-            background: linear-gradient(135deg, #b91c1c, #dc2626);
-        }
-        
-        .action-menu-trigger.active {
-            background: linear-gradient(135deg, #991b1b, #b91c1c);
-            transform: rotate(135deg) scale(0.9);
-            animation: none;
-        }
-        
-        .menu-icon {
-            width: 30px;
-            height: 30px;
             position: relative;
-            transition: all 0.3s ease;
+            max-width: 450px;
+            justify-self: start;
         }
         
-        .menu-icon::before,
-        .menu-icon::after {
-            content: '';
-            position: absolute;
-            background: white;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .menu-icon::before {
-            width: 100%;
-            height: 3px;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-        }
-        
-        .menu-icon::after {
-            width: 3px;
-            height: 100%;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .action-menu-trigger.active .menu-icon::before {
-            transform: translateY(-50%) rotate(45deg);
-        }
-        
-        .action-menu-trigger.active .menu-icon::after {
-            transform: translateX(-50%) rotate(45deg);
-        }
-        
-        .action-items {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            pointer-events: none;
-        }
-        
-        .action-button {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: white;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            padding: 12px 25px 12px 12px;
-            text-decoration: none;
-            color: #003D7C;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-            border: 2px solid #dc2626;
-            opacity: 0;
-            transform: scale(0.7) translateX(30px);
-            filter: blur(4px);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: none;
-            overflow: hidden;
-            font-size: 15px;
-            font-weight: 500;
-            width: 380px;
-            gap: 12px;
-            line-height: 1.3;
-        }
-        
-        .action-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 61, 124, 0.03);
-            border-radius: 50px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .action-button:hover::before {
-            opacity: 1;
-        }
-        
-        .action-items.active .action-button {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
-            pointer-events: all;
-        }
-        
-        .action-items.active .action-button:nth-child(1) {
-            transform: translateY(-210px) scale(1) translateX(0);
-            transition-delay: 0.15s;
-        }
-        
-        .action-items.active .action-button:nth-child(2) {
-            transform: translateY(-140px) scale(1) translateX(0);
-            transition-delay: 0.3s;
-        }
-        
-        .action-items.active .action-button:nth-child(3) {
-            transform: translateY(-70px) scale(1) translateX(0);
-            transition-delay: 0.45s;
-        }
-        
-        .action-button-icon {
-            width: 40px;
-            height: 40px;
-            background: #dc2626;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .action-button-icon::after {
-            content: '→';
-            color: white;
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 1;
-        }
-        
-        .action-button:hover {
-            background: white;
-            color: #003D7C;
-            transform: translateY(var(--y)) translateX(-10px) scale(1.02);
-            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.15);
-            border-color: #ef4444;
-            transition: all 0.3s ease;
-        }
-        
-        .action-button:hover .action-button-icon {
-            background: #ef4444;
-            transform: scale(1.1);
-        }
-        
-        .action-button:nth-child(1):hover {
-            --y: -210px;
-        }
-        
-        .action-button:nth-child(2):hover {
-            --y: -140px;
-        }
-        
-        .action-button:nth-child(3):hover {
-            --y: -70px;
-        }
-        
-        .action-button-text {
-            letter-spacing: 0.2px;
-            flex: 1;
-            text-align: left;
-            white-space: normal;
-        }
-        
-        /* Mobile adjustments for action buttons */
-        @media (max-width: 768px) {
-            .action-button {
-                width: 85vw;
-                max-width: 350px;
-                padding: 10px 20px 10px 10px;
-                font-size: 14px;
-                gap: 10px;
-            }
-            
-            .action-button-icon {
-                width: 36px;
-                height: 36px;
-            }
-            
-            .action-button-icon::after {
-                font-size: 18px;
-            }
-            
-            .action-items.active .action-button:nth-child(1) {
-                transform: translateY(-190px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(2) {
-                transform: translateY(-125px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(3) {
-                transform: translateY(-60px) scale(1) translateX(0);
-            }
-            
-            .action-button:nth-child(1):hover {
-                --y: -190px;
-            }
-            
-            .action-button:nth-child(2):hover {
-                --y: -125px;
-            }
-            
-            .action-button:nth-child(3):hover {
-                --y: -60px;
-            }
-        }
-        
-        .pathway-card::before {
+        .photo-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -783,78 +332,61 @@
             width: 100%;
             height: 4px;
             background: linear-gradient(90deg, #FF6B35, #FF8554);
-            transform: translateX(-100%);
+            transform: translateY(-100%);
             transition: transform 0.3s ease;
         }
         
-        .pathway-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.15);
-            border-color: #FF6B35;
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 61, 124, 0.15);
         }
         
-        .pathway-card:hover::before {
-            transform: translateX(0);
+        .photo-card:hover::before {
+            transform: translateY(0);
         }
         
-        .pathway-title {
+        .photo-image-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .photo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-card:hover .photo-image {
+            transform: scale(1.05);
+        }
+        
+        .photo-content {
+            padding: 25px;
+        }
+        
+        .photo-title {
             color: #003D7C;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            margin-top: 20px;
-            letter-spacing: -0.3px;
-        }
-        
-        .pathway-detail {
-            margin-bottom: 12px;
-            font-size: 15px;
-            color: #5a6c7d;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .pathway-detail strong {
-            color: #003D7C;
-            font-weight: 600;
-            min-width: 140px;
-        }
-        
-        .pathway-modules {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(0, 61, 124, 0.08);
-        }
-        
-        .pathway-modules-title {
-            color: #FF6B35;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 600;
             margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            line-height: 1.4;
         }
         
-        .pathway-modules ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .pathway-modules li {
-            padding: 6px 0;
-            color: #5a6c7d;
-            font-size: 14px;
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .pathway-modules li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
+        .photo-date {
             color: #FF6B35;
-            font-weight: 700;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .photo-date::before {
+            content: '📅';
+            font-size: 16px;
         }
         
         /* Sidebar */
@@ -1035,13 +567,305 @@
             font-weight: 400;
         }
         
+        /* Year Divider */
+        .year-divider {
+            margin: 60px 0 40px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .year-divider h2 {
+            color: #003D7C;
+            font-size: 32px;
+            font-weight: 700;
+            background: white;
+            display: inline-block;
+            padding: 0 30px;
+            position: relative;
+        }
+        
+        .year-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #003D7C, transparent);
+            z-index: -1;
+        }
+        
+        /* Action Buttons - Fixed Floating Menu */
+        .action-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        /* Closing animation for buttons */
+        .action-items:not(.active) .action-button {
+            transition: all 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        }
+        
+        .action-items:not(.active) .action-button:nth-child(3) {
+            transition-delay: 0.05s;
+        }
+        
+        .action-items:not(.active) .action-button:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        
+        .action-items:not(.active) .action-button:nth-child(1) {
+            transition-delay: 0.15s;
+        }
+        
+        .action-menu-trigger {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: glow-pulse 2s ease-in-out infinite, float-button 3s ease-in-out infinite;
+            overflow: hidden;
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4),
+                           0 0 40px rgba(220, 38, 38, 0.6),
+                           inset 0 0 20px rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(220, 38, 38, 0.6),
+                           0 0 60px rgba(220, 38, 38, 0.8),
+                           inset 0 0 30px rgba(255, 255, 255, 0.3);
+            }
+        }
+        
+        @keyframes float-button {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .action-menu-trigger::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+        
+        .action-menu-trigger:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #b91c1c, #dc2626);
+        }
+        
+        .action-menu-trigger.active {
+            background: linear-gradient(135deg, #991b1b, #b91c1c);
+            transform: rotate(135deg) scale(0.9);
+            animation: none;
+        }
+        
+        .menu-icon {
+            width: 25px;
+            height: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-icon span {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            left: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .menu-icon span:nth-child(1) {
+            top: 0;
+        }
+        
+        .menu-icon span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .menu-icon span:nth-child(3) {
+            bottom: 0;
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
+        }
+        
+        .action-items {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            pointer-events: none;
+        }
+        
+        .action-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: white;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            padding: 12px 25px 12px 12px;
+            text-decoration: none;
+            color: #003D7C;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            border: 2px solid #dc2626;
+            opacity: 0;
+            transform: scale(0.7) translateX(30px);
+            filter: blur(4px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            overflow: hidden;
+            font-size: 15px;
+            font-weight: 500;
+            width: 380px;
+            gap: 12px;
+            line-height: 1.3;
+        }
+        
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 61, 124, 0.03);
+            border-radius: 50px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .action-button:hover::before {
+            opacity: 1;
+        }
+        
+        .action-items.active .action-button {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+            pointer-events: all;
+        }
+        
+        .action-items.active .action-button:nth-child(1) {
+            transform: translateY(-210px) scale(1) translateX(0);
+            transition-delay: 0.15s;
+        }
+        
+        .action-items.active .action-button:nth-child(2) {
+            transform: translateY(-140px) scale(1) translateX(0);
+            transition-delay: 0.3s;
+        }
+        
+        .action-items.active .action-button:nth-child(3) {
+            transform: translateY(-70px) scale(1) translateX(0);
+            transition-delay: 0.45s;
+        }
+        
+        .action-button-icon {
+            width: 40px;
+            height: 40px;
+            background: #dc2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .action-button-icon::after {
+            content: '→';
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .action-button:hover {
+            background: white;
+            color: #003D7C;
+            transform: translateY(var(--y)) translateX(-10px) scale(1.02);
+            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.15);
+            border-color: #ef4444;
+            transition: all 0.3s ease;
+        }
+        
+        .action-button:hover .action-button-icon {
+            background: #ef4444;
+            transform: scale(1.1);
+        }
+        
+        .action-button:nth-child(1):hover {
+            --y: -210px;
+        }
+        
+        .action-button:nth-child(2):hover {
+            --y: -140px;
+        }
+        
+        .action-button:nth-child(3):hover {
+            --y: -70px;
+        }
+        
+        .action-button-text {
+            letter-spacing: 0.2px;
+            flex: 1;
+            text-align: left;
+            white-space: normal;
+        }
+        
         /* Footer */
         .footer {
             background: linear-gradient(135deg, #003D7C, #001f3f);
             color: white;
             text-align: center;
             padding: 30px 20px;
-            margin-top: 60px;
+            margin-top: 80px;
             font-size: 14px;
             font-weight: 300;
             letter-spacing: 0.5px;
@@ -1057,41 +881,6 @@
         .scroll-fade.visible {
             opacity: 1;
             transform: translateY(0);
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1600px) {
-            .main-content {
-                padding: 0 60px;
-            }
-        }
-        
-        @media (max-width: 1400px) {
-            .main-content {
-                padding: 0 50px;
-            }
-        }
-        
-        @media (max-width: 1200px) {
-            .main-content {
-                gap: 30px;
-                padding: 0 40px;
-            }
-            
-            .pathways-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-links a {
-                padding: 20px 10px;
-                font-size: 12px;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .main-content {
-                padding: 0 30px;
-            }
         }
         
         /* Mobile hamburger menu button */
@@ -1110,6 +899,41 @@
             z-index: 1001;
         }
         
+        /* Responsive Design */
+        @media (max-width: 1600px) {
+            .main-content {
+                padding: 0 60px;
+            }
+        }
+        
+        @media (max-width: 1400px) {
+            .main-content {
+                padding: 0 50px;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content {
+                padding: 0 40px;
+            }
+            
+            .nav-links a {
+                padding: 20px 10px;
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .main-content {
+                padding: 0 30px;
+            }
+            
+            .photo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 25px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
@@ -1126,16 +950,13 @@
                 margin: 0 auto;
             }
             
-            .pathways-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .section-header {
-                font-size: 28px;
+                font-size: 32px;
             }
             
-            .section-text {
-                font-size: 15px;
+            .photo-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
             
             /* Mobile navigation */
@@ -1243,9 +1064,46 @@
                 justify-content: center;
             }
             
-            .main-content {
-                padding: 0 20px;
-                margin: 30px auto;
+            /* Mobile adjustments for action buttons */
+            .action-button {
+                width: 85vw;
+                max-width: 350px;
+                padding: 10px 20px 10px 10px;
+                font-size: 14px;
+                gap: 10px;
+            }
+            
+            .action-button-icon {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .action-button-icon::after {
+                font-size: 18px;
+            }
+            
+            .action-items.active .action-button:nth-child(1) {
+                transform: translateY(-190px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(2) {
+                transform: translateY(-125px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(3) {
+                transform: translateY(-60px) scale(1) translateX(0);
+            }
+            
+            .action-button:nth-child(1):hover {
+                --y: -190px;
+            }
+            
+            .action-button:nth-child(2):hover {
+                --y: -125px;
+            }
+            
+            .action-button:nth-child(3):hover {
+                --y: -60px;
             }
         }
     </style>
@@ -1254,8 +1112,8 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://medicine.nus.edu.sg/bch/">
-                <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
+            <a href="https://xchee-01.github.io/website/">
+                <img src="https://xchee-01.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
     </div>
@@ -1267,21 +1125,21 @@
                 <span id="menu-icon">☰</span>
             </button>
             <ul class="nav-links">
-                <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
+                <li><a href="#home">Home</a></li>
                 
                 <li class="has-dropdown">
                     <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
-                        <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
+                        <a href="#programme-pathways">Programme pathways</a>
+                        <a href="#graduate-certificate">Graduate certificate</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
-                        <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
+                        <a href="#core-courses">Core courses</a>
+                        <a href="#elective-courses">Elective courses</a>
                         <a href="#others">Others</a>
                     </div>
                 </li>
@@ -1289,16 +1147,16 @@
                 <li class="has-dropdown">
                     <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
+                        <a href="#capstone-pathways">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
-                        <a href="https://xavierchee.github.io/website/application.html">Application</a>
-                        <a href="https://xavierchee.github.io/website/tuition_fee.html">Tuition fees</a>
+                        <a href="#eligibility">Eligibility</a>
+                        <a href="#application">Application</a>
+                        <a href="#tuition-fees">Tuition fees</a>
                     </div>
                 </li>
                 
@@ -1314,8 +1172,8 @@
                     <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/vision_mission.html">Vision and mission</a>
-                        <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
-                        <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
+                        <a href="#what-is-precision-medicine">What is precision medicine?</a>
+                        <a href="#meet-our-team">Meet our team</a>
                     </div>
                 </li>
             </ul>
@@ -1330,95 +1188,140 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Admission Requirements Banner Image -->
+    <!-- Photos Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/eligibility/eligibility_banner.png" 
-             alt="Course Pathway Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/photos/banner_photo.png" 
+             alt="Photos Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Admission Requirements</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Photos</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Admission Requirements</h1>
+            <h1 class="section-header scroll-fade">Photos and Memories</h1>
             <p class="section-text scroll-fade">
-                Admissions to the NUS MSc in Precision Health and Medicine programme is competitive and selective.
+                This gallery showcases the energy and spirit of our precision medicine programme—from intense lab sessions to celebratory milestones.
             </p>
             <p class="section-text scroll-fade">
-                While meeting the minimum requirements outlined below establishes eligibility, final admission decisions reflect the programme's commitment to assembling a diverse cohort of exceptional candidates.
+                These photos tell the story of friendships formed, knowledge gained, and memories created along the way. Each image reflects not just an event, but the shared experience that makes our programme special. Dive in and picture yourself as part of our next chapter!
             </p>
+        
+                    <!-- 2025 Events -->
+            <div class="year-divider scroll-fade">
+                <h2>2025</h2>
+            </div>
             
-            <!-- Academic Requirements Section -->
-            <div class="requirement-section scroll-fade">
-                <h2 class="requirement-title">Academic</h2>
-                <p style="color: #5a6c7d; margin-bottom: 20px;">Successful applicants typically possess:</p>
-                <ul class="requirement-list">
-                    <li><strong>A Bachelor's degree in Medicine</strong> (M.B.B.S.)</li>
-                    <li><strong>Any STEMM discipline</strong> (Science, Technology, Engineering, Mathematics, Medicine) or related field.</li>
-                </ul>
-                <div class="requirement-note">
-                    <strong>Note 1:</strong> Honours degrees are preferred.
-                </div>
-                <div class="requirement-note">
-                    <strong>Note 2:</strong> Candidates with other qualifications will be evaluated on a case-by-case basis, subject to approval of the Programme Committee.
+            <div class="photo-grid">
+                <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                    <div class="photo-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/photos/2025_commencement.png" alt="2025 Commencement" class="photo-image">
+                    </div>
+                    <div class="photo-content">
+                        <h3 class="photo-title">2025 Commencement</h3>
+                        <p class="photo-date">10 July 2025</p>
+                    </div>
                 </div>
             </div>
             
-            <!-- Skills and Experience Section -->
-            <div class="requirement-section scroll-fade">
-                <h2 class="requirement-title">Skills and Experience</h2>
-                <div class="highlight-box">
-                    <strong>As MScPHM is an interdisciplinary Master's programme, the ideal candidate for our Master's programme would possess foundational knowledge in both quantitative sciences and biological/biomedical fields.</strong>
+            <!-- 2024 Events -->
+        <div class="year-divider scroll-fade">
+            <h2>2024</h2>
+        </div>
+        
+        <div class="photo-grid">
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/end_of_year_dinner.png" alt="End of the Year Dinner Celebration" class="photo-image">
                 </div>
-                
-                <h3 style="color: #003D7C; font-size: 18px; margin: 25px 0 15px 0; font-weight: 600;">For applicants with no quantitative or programming undergraduate backgrounds, aptitude in quantitative sciences can be demonstrated through:</h3>
-                <ul class="requirement-list">
-                    <li><strong>Completion of basic programming (R/Python) or statistics courses</strong></li>
-                    <li><strong>Participation/awards in quantitative competitions</strong> (e.g., Math Olympiad)</li>
-                    <li><strong>Relevant work experience in data science fields</strong> (advantageous)</li>
-                </ul>
-                
-                <h3 style="color: #003D7C; font-size: 18px; margin: 25px 0 15px 0; font-weight: 600;">For applicants with no biological/biomedical undergraduate backgrounds, aptitude in the field can be demonstrated through:</h3>
-                <ul class="requirement-list">
-                    <li><strong>Completion of basic biology courses</strong> (online courses are acceptable)</li>
-                    <li><strong>Participation/awards in bio-related competitions</strong></li>
-                    <li><strong>Relevant work experience or internships or research in biological/biomedical fields</strong> (advantageous)</li>
-                </ul>
+                <div class="photo-content">
+                    <h3 class="photo-title">End of the Year Dinner Celebration</h3>
+                    <p class="photo-date">28 November 2024</p>
+                </div>
             </div>
             
-            <!-- Applicant Background and Preparation Section - HIGHLIGHTED -->
-            <div class="requirement-section highlighted scroll-fade">
-                <h2 class="requirement-title">Applicant Background and Preparation</h2>
-                <p style="color: #5a6c7d; margin-bottom: 20px;">
-                    A majority of the successful applicants typically come from <strong>EITHER</strong> biological/biomedical backgrounds <strong>OR</strong> programming/computational fields. Prior to joining the Master's programme, we would recommend students to prepare themselves by:
-                </p>
-                <ul class="requirement-list">
-                    <li>Studying relevant <strong>reference books</strong> in programming or bio-related subjects (depending on your background)</li>
-                    <li>Participating in available <strong>online courses</strong> through platforms (e.g. YouTube or Coursera)</li>
-                    <li>Enrolling in <strong>preparatory/bridging courses</strong> specifically organized by the MScPHM programme.</li>
-                </ul>
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/path_museum.png" alt="Pathology Museum Exploration" class="photo-image">
+                </div>
+                <div class="photo-content">
+                    <h3 class="photo-title">Pathology Museum Exploration</h3>
+                    <p class="photo-date">14 November 2024</p>
+                </div>
             </div>
             
-            <!-- English Language Section -->
-            <div class="requirement-section scroll-fade">
-                <h2 class="requirement-title">English Language</h2>
-                <p style="color: #5a6c7d; margin-bottom: 20px;">
-                    For applicants whose native language or medium of university instruction is not English, proof of English proficiency is required through either:
-                </p>
-                <ul class="requirement-list">
-                    <li><strong>TOEFL:</strong> Minimum score of 85 (Internet-based) or</li>
-                    <li><strong>IELTS:</strong> Minimum Academic score of 6.0</li>
-                </ul>
-                <div class="requirement-note">
-                    <strong>Note 4:</strong> Test scores must be valid (taken within the last two years) at time of application.
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/thermofisher_visit.png" alt="ThermoFisher Industry Insights" class="photo-image">
                 </div>
-                <div class="requirement-note">
-                    <strong>Note 5:</strong> Additional test scores (e.g. GRE) may be submitted to strengthen your application but are not required.
+                <div class="photo-content">
+                    <h3 class="photo-title">ThermoFisher Industry Insights</h3>
+                    <p class="photo-date">12 November 2024</p>
                 </div>
             </div>
+            
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/mirxes_visit.png" alt="MIRXES Research Seminars" class="photo-image">
+                </div>
+                <div class="photo-content">
+                    <h3 class="photo-title">MIRXES Research Seminars</h3>
+                    <p class="photo-date">2 October 2024</p>
+                </div>
+            </div>
+            
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/precise_ihcc.png" alt="PRECISE-IHCC Conference" class="photo-image">
+                </div>
+                <div class="photo-content">
+                    <h3 class="photo-title">PRECISE-IHCC Conference</h3>
+                    <p class="photo-date">2 October 2024</p>
+                </div>
+            </div>
+            
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/msd_visit.png" alt="Industry Engagement with MSD Singapore" class="photo-image">
+                </div>
+                <div class="photo-content">
+                    <h3 class="photo-title">Industry Engagement with MSD Singapore</h3>
+                    <p class="photo-date">20 September 2024</p>
+                </div>
+            </div>
+            
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/Astar_visit.png" alt="Visitation to A*Star Infectious Disease Labs" class="photo-image">
+                </div>
+                <div class="photo-content">
+                    <h3 class="photo-title">Visitation to A*Star Infectious Disease Labs</h3>
+                    <p class="photo-date">20 September 2024</p>
+                </div>
+            </div>
+            
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/cohesion_event.png" alt="Cohesion Event" class="photo-image">
+                </div>
+                <div class="photo-content">
+                    <h3 class="photo-title">Cohesion Event</h3>
+                    <p class="photo-date">19 April 2024</p>
+                </div>
+            </div>
+            
+            <div class="photo-card scroll-fade" onclick="window.open('#', '_blank')">
+                <div class="photo-image-container">
+                    <img src="https://xavierchee.github.io/website/website_assets/photos/inaugural_welcome_event.png" alt="Inaugural Welcome Event" class="photo-image">
+                </div>
+                <div class="photo-content">
+                    <h3 class="photo-title">Inaugural Welcome Event</h3>
+                    <p class="photo-date">17 January 2024</p>
+                </div>
+            </div>
+        </div>
         </div>
         
         <!-- Sidebar -->
@@ -1451,22 +1354,27 @@
             </div>
         </div>
     </div>
+    </div>
     
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon"></div>
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </button>
         <div class="action-items">
-            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>
@@ -1588,3 +1496,4 @@
     </script>
 </body>
 </html>
+

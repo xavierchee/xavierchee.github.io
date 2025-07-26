@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!-- 
+    CHANGE LOG - Last Updated: July 26, 2025 - 3:30 PM
+    ============================================
+    
+    Recent Changes:
+    - Linked Photos subsection to https://xchee-01.github.io/website/photo.html
+    - Added Vision and mission as first subsection under About us, linking to https://xchee-01.github.io/website/vision_mission.html
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -459,45 +467,42 @@
         }
         
         .menu-icon {
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             position: relative;
             transition: all 0.3s ease;
         }
         
-        .menu-icon span {
+        .menu-icon::before,
+        .menu-icon::after {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 3px;
             background: white;
-            border-radius: 3px;
-            left: 0;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .menu-icon span:nth-child(1) {
-            top: 0;
-        }
-        
-        .menu-icon span:nth-child(2) {
+        .menu-icon::before {
+            width: 100%;
+            height: 3px;
             top: 50%;
+            left: 0;
             transform: translateY(-50%);
         }
         
-        .menu-icon span:nth-child(3) {
-            bottom: 0;
+        .menu-icon::after {
+            width: 3px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
+        .action-menu-trigger.active .menu-icon::before {
+            transform: translateY(-50%) rotate(45deg);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .action-menu-trigger.active .menu-icon span:nth-child(3) {
-            transform: rotate(-45deg) translate(10px, -10px);
+        .action-menu-trigger.active .menu-icon::after {
+            transform: translateX(-50%) rotate(45deg);
         }
         
         .action-items {
@@ -1039,26 +1044,18 @@
             font-weight: 700;
         }
         
-        .document-notes {
-            margin-top: 35px;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(0, 61, 124, 0.05) 100%);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 107, 53, 0.2);
-        }
-        
-        .document-notes p {
+        .requirement-note {
+            background: rgba(255, 107, 53, 0.05);
+            border-left: 3px solid #FF6B35;
+            padding: 12px 20px;
+            margin: 15px 0;
+            font-size: 14px;
             color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.7;
-            margin-bottom: 15px;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
         }
         
-        .document-notes p:last-child {
-            margin-bottom: 0;
-        }
-        
-        .document-notes strong {
+        .requirement-note strong {
             color: #003D7C;
             font-weight: 600;
         }
@@ -1278,8 +1275,8 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://xavierchee.github.io/website/">
-                <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
+            <a href="https://medicine.nus.edu.sg/bch/">
+                <img src="https://xchee-01.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
     </div>
@@ -1291,21 +1288,21 @@
                 <span id="menu-icon">☰</span>
             </button>
             <ul class="nav-links">
-                <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
+                <li><a href="https://xchee-01.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
                     <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
-                        <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
+                        <a href="https://xchee-01.github.io/website/course_pathway.html">Programme pathways</a>
+                        <a href="https://xchee-01.github.io/website/ecgc.html">Graduate certificate</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
-                        <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
+                        <a href="https://xchee-01.github.io/website/core_courses.html">Core courses</a>
+                        <a href="https://xchee-01.github.io/website/elective_courses.html">Elective courses</a>
                         <a href="#others">Others</a>
                     </div>
                 </li>
@@ -1313,16 +1310,16 @@
                 <li class="has-dropdown">
                     <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
+                        <a href="https://xchee-01.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
-                        <a href="https://xavierchee.github.io/website/application.html">Application</a>
-                        <a href="https://xavierchee.github.io/website/tuition_fee.html">Tuition fees</a>
+                        <a href="https://xchee-01.github.io/website/eligibility.html">Eligibility</a>
+                        <a href="https://xchee-01.github.io/website/application.html">Application</a>
+                        <a href="https://xchee-01.github.io/website/tuition_fee.html">Tuition fees</a>
                     </div>
                 </li>
                 
@@ -1330,15 +1327,16 @@
                     <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="#student-stories">Student stories</a>
-                        <a href="#photos">Photos</a>
+                        <a href="https://xchee-01.github.io/website/photo.html">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#about">About us</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
-                        <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
+                        <a href="https://xchee-01.github.io/website/vision_mission.html">Vision and mission</a>
+                        <a href="https://xchee-01.github.io/website/precision_med.html">What is precision medicine?</a>
+                        <a href="https://xchee-01.github.io/website/meet_the_team.html">Meet our team</a>
                     </div>
                 </li>
             </ul>
@@ -1355,7 +1353,7 @@
     
     <!-- Application Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/application/application_banner.png" 
+        <img src="https://xchee-01.github.io/website/website_assets/application/application_banner.png" 
              alt="Application Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
@@ -1388,7 +1386,7 @@
                         </p>
                         
                         <p class="section-text">
-                            You can refer to the <a href="#" class="application-link">Applicant Guide</a> to the Graduate Admission System.
+                            You can refer to the <a href="https://nusgs.nus.edu.sg/wp-content/uploads/2024/04/GDA3-Applicant-User-Guide.pdf" target="_blank" class="application-link">Applicant Guide</a> to the Graduate Admission System.
                         </p>
                         
                         <p class="fee-notice">
@@ -1397,7 +1395,7 @@
                         
                         <!-- Process Timeline Image -->
                         <div class="process-image-wrapper">
-                            <img src="https://xavierchee.github.io/website/website_assets/application/application_process.png" 
+                            <img src="https://xchee-01.github.io/website/website_assets/application/application_process.png" 
                                  alt="Application Process Timeline" 
                                  class="process-image">
                             <div class="year-overlay year-2025">2025</div>
@@ -1465,10 +1463,12 @@
                             </li>
                         </ol>
                         
-                        <div class="document-notes">
-                            <p><strong>Note 6:</strong> Financial assistance requires reference letters to be submitted directly by professional referees through the Graduate Admission System. Designate at least one referee who will receive automated email instructions for submission. Recommended referees include university faculty members or direct work supervisors. Reference letters from family members, friends, or relatives will not be accepted.</p>
-                            
-                            <p><strong>Note 7:</strong> Students will only be considered for financial assistance after acceptance of their offer.</p>
+                        <div class="requirement-note">
+                            <strong>Note 6:</strong> Financial assistance requires reference letters to be submitted directly by professional referees through the Graduate Admission System. Designate at least one referee who will receive automated email instructions for submission. Recommended referees include university faculty members or direct work supervisors. Reference letters from family members, friends, or relatives will not be accepted.
+                        </div>
+                        
+                        <div class="requirement-note">
+                            <strong>Note 7:</strong> Students will only be considered for financial assistance after acceptance of their offer.
                         </div>
                     </div>
                 </div>
@@ -1511,8 +1511,8 @@
                             <li>This fee will be <strong>credited toward tuition fees</strong></li>
                         </ul>
                         
-                        <div class="document-notes">
-                            <p><strong>Note:</strong> Scholarship or tuition fee waiver decisions are made separately from admissions offers and may be communicated later.</p>
+                        <div class="requirement-note">
+                            <strong>Note 8:</strong> Scholarship or tuition fee waiver decisions are made separately from admissions offers and may be communicated later.
                         </div>
                     </div>
                 </div>
@@ -1553,22 +1553,18 @@
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="menu-icon"></div>
         </button>
         <div class="action-items">
-            <a href="#" class="action-button">
+            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>

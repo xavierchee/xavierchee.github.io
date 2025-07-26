@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!-- 
+    CHANGE LOG - Last Updated: July 26, 2025 - 3:30 PM
+    ============================================
+    
+    Recent Changes:
+    - Linked Photos subsection to https://xchee-01.github.io/website/photo.html
+    - Added Vision and mission as first subsection under About us, linking to https://xchee-01.github.io/website/vision_mission.html
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -290,6 +298,125 @@
             font-weight: 400;
         }
         
+        /* Programme Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px 40px;
+            margin: 60px 0;
+            justify-items: center;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 0.8s ease forwards;
+            max-width: 320px;
+            width: 100%;
+        }
+        
+        /* Stagger animation for sequential appearance */
+        .feature-item:nth-child(1) { animation-delay: 0.1s; }
+        .feature-item:nth-child(2) { animation-delay: 0.2s; }
+        .feature-item:nth-child(3) { animation-delay: 0.3s; }
+        .feature-item:nth-child(4) { animation-delay: 0.4s; }
+        .feature-item:nth-child(5) { animation-delay: 0.5s; }
+        .feature-item:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+        
+        .hexagon-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .hexagon-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.4) 45%, 
+                rgba(255, 255, 255, 0.6) 50%, 
+                rgba(255, 255, 255, 0.4) 55%, 
+                transparent 100%);
+            transform: translateX(-200%);
+            pointer-events: none;
+            animation: autoShimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes autoShimmer {
+            0%, 90% {
+                transform: translateX(-200%);
+            }
+            95% {
+                transform: translateX(200%);
+            }
+            100% {
+                transform: translateX(200%);
+            }
+        }
+        
+        .hexagon-icon:hover::before {
+            animation: metalShimmer 0.8s ease-in-out forwards;
+        }
+        
+        @keyframes metalShimmer {
+            0% {
+                transform: translateX(-200%);
+            }
+            100% {
+                transform: translateX(200%);
+            }
+        }
+        
+        .hexagon-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+        
+        .hexagon-icon svg {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-title {
+            color: #003D7C;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+        
+        .feature-description {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
         /* Study Pathways Section */
         .study-pathways {
             margin-top: 60px;
@@ -414,45 +541,42 @@
         }
         
         .menu-icon {
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             position: relative;
             transition: all 0.3s ease;
         }
         
-        .menu-icon span {
+        .menu-icon::before,
+        .menu-icon::after {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 3px;
             background: white;
-            border-radius: 3px;
-            left: 0;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .menu-icon span:nth-child(1) {
-            top: 0;
-        }
-        
-        .menu-icon span:nth-child(2) {
+        .menu-icon::before {
+            width: 100%;
+            height: 3px;
             top: 50%;
+            left: 0;
             transform: translateY(-50%);
         }
         
-        .menu-icon span:nth-child(3) {
-            bottom: 0;
+        .menu-icon::after {
+            width: 3px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
+        .action-menu-trigger.active .menu-icon::before {
+            transform: translateY(-50%) rotate(45deg);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .action-menu-trigger.active .menu-icon span:nth-child(3) {
-            transform: rotate(-45deg) translate(10px, -10px);
+        .action-menu-trigger.active .menu-icon::after {
+            transform: translateX(-50%) rotate(45deg);
         }
         
         .action-items {
@@ -936,6 +1060,12 @@
                 padding: 20px 10px;
                 font-size: 12px;
             }
+            
+            /* Adjust features grid for tablets */
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px 30px;
+            }
         }
         
         @media (max-width: 992px) {
@@ -986,6 +1116,16 @@
             
             .section-text {
                 font-size: 15px;
+            }
+            
+            /* Adjust features grid for mobile */
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .feature-item {
+                max-width: 400px;
             }
             
             /* Mobile navigation */
@@ -1104,7 +1244,7 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://xavierchee.github.io/website/">
+            <a href="https://medicine.nus.edu.sg/bch/">
                 <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
@@ -1156,13 +1296,14 @@
                     <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="#student-stories">Student stories</a>
-                        <a href="#photos">Photos</a>
+                        <a href="https://xchee-01.github.io/website/photo.html">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#about">About us</a>
                     <div class="dropdown-menu">
+                        <a href="https://xchee-01.github.io/website/vision_mission.html">Vision and mission</a>
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
                         <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
                     </div>
@@ -1194,15 +1335,174 @@
         <div class="content-section">
             <h1 class="section-header scroll-fade">Asia's First Multi-disciplinary Graduate Programme in Precision Medicine</h1>
             <p class="section-text scroll-fade">
-                At the intersection of healthcare's most transformative disciplines, our Precision Medicine programme bridges traditional boundaries to prepare tomorrow's leaders.
+                Master the future of healthcare through Asia's pioneering precision medicine programme—where genomics meets AI, and research transforms patient care.
             </p>
-            <p class="section-text scroll-fade">
-                Our programme's uniquely integrated approach features modules co-taught by distinguished faculty from NUS YLL, alongside leaders from Singapore's premier research centres, industry and hospitals. This academic excellence is further enhanced by guest lectures from pioneering international biotechnology firms, providing you direct exposure to industry innovations and emerging opportunities.
-            </p>
+            
+            <!-- Programme Features Grid -->
+            <div class="features-grid scroll-fade">
+                <div class="feature-item">
+                    <div class="hexagon-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
+                            <!-- Branching paths -->
+                            <g transform="translate(50, 50)">
+                                <path d="M0,15 L0,0" stroke="white" stroke-width="3" fill="none"/>
+                                <path d="M0,0 L-15,-15" stroke="white" stroke-width="3" fill="none"/>
+                                <path d="M0,0 L15,-15" stroke="white" stroke-width="3" fill="none"/>
+                                <path d="M0,0 L0,-20" stroke="white" stroke-width="3" fill="none"/>
+                                <circle cx="0" cy="15" r="4" fill="white"/>
+                                <circle cx="0" cy="0" r="4" fill="white"/>
+                                <circle cx="-15" cy="-15" r="4" fill="white"/>
+                                <circle cx="15" cy="-15" r="4" fill="white"/>
+                                <circle cx="0" cy="-20" r="4" fill="white"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Flexible Learning Pathways</h3>
+                    <p class="feature-description">Designed for diverse student backgrounds—whether you're a fresh graduate, working professional, or career changer</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="hexagon-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
+                            <!-- Book merged with gear -->
+                            <g transform="translate(50, 50)">
+                                <!-- Book -->
+                                <rect x="-20" y="-15" width="15" height="25" fill="white" rx="2"/>
+                                <rect x="-18" y="-12" width="11" height="2" fill="#003D7C"/>
+                                <rect x="-18" y="-8" width="11" height="1" fill="#003D7C"/>
+                                <rect x="-18" y="-5" width="11" height="1" fill="#003D7C"/>
+                                <!-- Gear -->
+                                <circle cx="10" cy="0" r="10" fill="none" stroke="white" stroke-width="2"/>
+                                <circle cx="10" cy="0" r="4" fill="white"/>
+                                <rect x="8" y="-12" width="4" height="5" fill="white"/>
+                                <rect x="8" y="7" width="4" height="5" fill="white"/>
+                                <rect x="-2" y="-2" width="5" height="4" fill="white"/>
+                                <rect x="17" y="-2" width="5" height="4" fill="white"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Hybrid Programme Model</h3>
+                    <p class="feature-description">Neither purely coursework nor research—a unique blend combining rigorous academics with practical application</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="hexagon-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
+                            <!-- Gear icon -->
+                            <g transform="translate(50, 50)">
+                                <!-- Main gear circle -->
+                                <circle cx="0" cy="0" r="18" fill="none" stroke="white" stroke-width="3"/>
+                                <!-- Center circle -->
+                                <circle cx="0" cy="0" r="7" fill="white"/>
+                                <!-- Gear teeth -->
+                                <rect x="-4" y="-24" width="8" height="10" fill="white"/>
+                                <rect x="-4" y="14" width="8" height="10" fill="white"/>
+                                <rect x="-24" y="-4" width="10" height="8" fill="white"/>
+                                <rect x="14" y="-4" width="10" height="8" fill="white"/>
+                                <!-- Diagonal teeth -->
+                                <g transform="rotate(45)">
+                                    <rect x="-3" y="-22" width="6" height="8" fill="white"/>
+                                    <rect x="-3" y="14" width="6" height="8" fill="white"/>
+                                    <rect x="-22" y="-3" width="8" height="6" fill="white"/>
+                                    <rect x="14" y="-3" width="8" height="6" fill="white"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Real-World Problem Solving</h3>
+                    <p class="feature-description">Tackle actual healthcare challenges through Capstone projects in academic research or industry internships</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="hexagon-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
+                            <!-- Stethoscope forming infinity symbol -->
+                            <g transform="translate(50, 50)">
+                                <!-- Infinity symbol made with stethoscope -->
+                                <path d="M-15,0 C-15,-8 -8,-8 0,-8 C8,-8 15,-8 15,0 C15,8 8,8 0,8 C-8,8 -15,8 -15,0 Z" fill="none" stroke="white" stroke-width="3"/>
+                                <!-- Stethoscope earpieces -->
+                                <circle cx="-15" cy="-12" r="3" fill="white"/>
+                                <circle cx="15" cy="-12" r="3" fill="white"/>
+                                <!-- Connecting lines -->
+                                <path d="M-15,-12 L-15,-8" stroke="white" stroke-width="2"/>
+                                <path d="M15,-12 L15,-8" stroke="white" stroke-width="2"/>
+                                <!-- Chest piece -->
+                                <circle cx="0" cy="12" r="5" fill="white"/>
+                                <path d="M0,8 L0,12" stroke="white" stroke-width="2"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Transformative Healthcare Education</h3>
+                    <p class="feature-description">Develop core and advanced skills in key Precision Medicine disciplines to reshape patient care</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="hexagon-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
+                            <!-- Hospital with network connections -->
+                            <g transform="translate(50, 50)">
+                                <!-- Hospital building -->
+                                <rect x="-15" y="-10" width="30" height="25" fill="white"/>
+                                <!-- Hospital cross -->
+                                <rect x="-3" y="-5" width="6" height="15" fill="#003D7C"/>
+                                <rect x="-8" y="0" width="16" height="5" fill="#003D7C"/>
+                                <!-- Network nodes -->
+                                <circle cx="-25" cy="-10" r="3" fill="white"/>
+                                <circle cx="25" cy="-10" r="3" fill="white"/>
+                                <circle cx="-25" cy="10" r="3" fill="white"/>
+                                <circle cx="25" cy="10" r="3" fill="white"/>
+                                <!-- Network connections -->
+                                <line x1="-15" y1="-5" x2="-22" y2="-10" stroke="white" stroke-width="1.5"/>
+                                <line x1="15" y1="-5" x2="22" y2="-10" stroke="white" stroke-width="1.5"/>
+                                <line x1="-15" y1="10" x2="-22" y2="10" stroke="white" stroke-width="1.5"/>
+                                <line x1="15" y1="10" x2="22" y2="10" stroke="white" stroke-width="1.5"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Clinical Practice Integration</h3>
+                    <p class="feature-description">Learn directly from healthcare professionals on how Precision Medicine is applied clinically</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="hexagon-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
+                            <!-- Building skyline -->
+                            <g transform="translate(50, 50)">
+                                <!-- Building 1 -->
+                                <rect x="-25" y="-5" width="12" height="20" fill="white"/>
+                                <rect x="-23" y="-3" width="3" height="3" fill="#003D7C"/>
+                                <rect x="-18" y="-3" width="3" height="3" fill="#003D7C"/>
+                                <rect x="-23" y="2" width="3" height="3" fill="#003D7C"/>
+                                <rect x="-18" y="2" width="3" height="3" fill="#003D7C"/>
+                                <!-- Building 2 (tallest) -->
+                                <rect x="-6" y="-15" width="12" height="30" fill="white"/>
+                                <rect x="-4" y="-13" width="3" height="3" fill="#003D7C"/>
+                                <rect x="1" y="-13" width="3" height="3" fill="#003D7C"/>
+                                <rect x="-4" y="-8" width="3" height="3" fill="#003D7C"/>
+                                <rect x="1" y="-8" width="3" height="3" fill="#003D7C"/>
+                                <!-- Building 3 -->
+                                <rect x="13" y="-10" width="12" height="25" fill="white"/>
+                                <rect x="15" y="-8" width="3" height="3" fill="#003D7C"/>
+                                <rect x="20" y="-8" width="3" height="3" fill="#003D7C"/>
+                                <rect x="15" y="-3" width="3" height="3" fill="#003D7C"/>
+                                <rect x="20" y="-3" width="3" height="3" fill="#003D7C"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Industry Excellence</h3>
+                    <p class="feature-description">Learn from distinguished faculty from NUS Medicine, alongside leaders from Singapore's premier research centres, industries and hospitals</p>
+                </div>
+            </div>
             
             <!-- Asia First Image -->
             <div style="margin: 40px 0;">
-                <img src="https://xavierchee.github.io/website/website_assets/course_pathway/asia_first.jpg" 
+                <img src="https://xavierchee.github.io/website/website_assets/course_pathway/asia_first.png" 
                      alt="Asia's First Multi-disciplinary Graduate Programme" 
                      style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 61, 124, 0.1);">
             </div>
@@ -1333,22 +1633,18 @@
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="menu-icon"></div>
         </button>
         <div class="action-items">
-            <a href="#" class="action-button">
+            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>

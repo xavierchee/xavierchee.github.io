@@ -1,17 +1,9 @@
 <!DOCTYPE html>
-<!-- 
-    CHANGE LOG - Last Updated: January 27, 2025 - 3:47 PM
-    ============================================
-    
-    Recent Changes:
-    - Updated Photos subsection link to point to photo.html (https://xavierchee.github.io/website/photo.html)
-    - Added Vision and mission subsection as first item under About us linking to vision_mission.html (https://xavierchee.github.io/website/vision_mission.html)
--->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master of Science in Precision Health & Medicine - NUS</title>
+    <title>Vision & Mission - Master's Programme in Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -234,243 +226,6 @@
             transform: translateX(0);
         }
         
-        /* Hero Section */
-        /* CHANGES MADE - January 31, 2025:
-         * 1. HERO CONTENT REPOSITIONING:
-         *    - Changed .hero-content from relative to absolute positioning
-         *    - Added centering with top: 50%, left: 50%, transform: translate(-50%, -50%)
-         *    - Added width: 90% for responsive sizing
-         *    - This centers all text content within the video background
-         * 
-         * 2. ANIMATION UPDATES:
-         *    - Updated fadeInUp animation to work with centered positioning
-         *    - Created new fadeInElement animation for child elements
-         *    - Applied fadeInElement to h1, p, and CTA button
-         *    - Maintains smooth staggered entrance effects (0.2s, 0.4s, 0.8s)
-         */
-        .hero-section {
-            position: relative;
-            overflow: hidden;
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            min-height: calc(100vh - 170px); /* Subtract header and banner heights */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .hero-video-background {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            z-index: -2;
-            filter: brightness(0.7);
-        }
-        
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 61, 124, 0.85) 0%, rgba(0, 61, 124, 0.7) 50%, rgba(255, 107, 53, 0.2) 100%);
-            z-index: -1;
-        }
-        
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: absolute; /* Changed from relative to absolute for centering */
-            top: 42%; /* Moved up from 50% for better visual centering */
-            left: 50%; /* Center horizontally */
-            transform: translate(-50%, -50%); /* Perfect centering adjustment */
-            z-index: 1;
-            animation: fadeInUp 1s ease-out;
-            width: 90%; /* Added for responsive sizing */
-        }
-        
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            animation: fadeInFloat 2s ease-out 1.5s forwards;
-        }
-        
-        .scroll-indicator::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(5px);
-            border-radius: 50%;
-            transition: all 0.4s ease;
-        }
-        
-        .scroll-indicator:hover::before {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.2);
-        }
-        
-        .scroll-indicator svg {
-            width: 30px;
-            height: 30px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .scroll-indicator .chevron-down {
-            stroke: rgba(255, 255, 255, 0.9);
-            stroke-width: 2;
-            fill: none;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-            transition: all 0.4s ease;
-        }
-        
-        .scroll-indicator:hover .chevron-down {
-            stroke: rgba(255, 255, 255, 1);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-            transform: translateY(2px);
-        }
-        
-        @keyframes fadeInFloat {
-            0% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-        
-        @keyframes elegantFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
-        }
-        
-        .scroll-indicator .chevron-down:first-child {
-            animation: elegantFloat 3s ease-in-out infinite;
-        }
-        
-        .scroll-indicator .chevron-down:last-child {
-            animation: elegantFloat 3s ease-in-out infinite 0.3s;
-        }
-        
-        @keyframes fadeInUp {
-            /* Updated animation to work with absolute centered positioning */
-            from {
-                opacity: 0;
-                transform: translate(-50%, -37%); /* Start slightly above new center position */
-                filter: blur(5px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%); /* End at centering transform */
-                filter: blur(0);
-            }
-        }
-        
-        .hero-section h1 {
-            font-size: 52px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -1px;
-            animation: fadeInElement 1s ease-out 0.2s both; /* Changed from fadeInUp */
-        }
-        
-        .hero-section p {
-            font-size: 20px;
-            margin-bottom: 15px;
-            line-height: 1.4;
-            opacity: 0.95;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 300;
-            animation: fadeInElement 1s ease-out 0.4s both; /* Changed from fadeInUp */
-        }
-        
-        @keyframes fadeInElement {
-            /* New animation for individual text elements within centered container */
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, #FF6B35, #FF8554);
-            color: white;
-            padding: 18px 50px;
-            border: none;
-            border-radius: 50px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 30px;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
-            position: relative;
-            overflow: hidden;
-            animation: fadeInElement 1.2s ease-out 0.8s both, glow 2s ease-in-out infinite 1.8s; /* Changed from fadeInUp */
-        }
-        
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3), 0 0 30px rgba(255, 107, 53, 0.3); }
-            50% { box-shadow: 0 10px 30px rgba(255, 107, 53, 0.5), 0 0 50px rgba(255, 107, 53, 0.5); }
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
-            transition: all 0.3s ease;
-        }
-        
-        .cta-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
         /* Application Banner */
         .application-banner {
             background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
@@ -505,98 +260,357 @@
             }
         }
         
-        /* Main Content Grid */
+        /* Vision Mission Banner Image */
+        .banner-image-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .banner-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .banner-overlay {
+            position: absolute;
+            top: 50%;
+            left: 80px;
+            transform: translateY(-50%);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        
+        .banner-overlay h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+        
+        /* Main Content */
         .main-content {
             max-width: 1400px;
-            margin: 40px auto;
+            margin: 60px auto;
             padding: 0 80px;
             display: flex;
             gap: 40px;
         }
         
-        .content-grid-container {
-            flex: 0 0 65%;
+        .content-section {
+            flex: 1;
         }
         
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .content-card {
+        /* Vision and Mission Cards */
+        .vm-card {
             background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.08);
             border: 2px solid rgba(0, 61, 124, 0.1);
-            height: 280px;
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
         
-        .content-card::before {
+        .vm-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 61, 124, 0.15);
+        }
+        
+        .vm-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 61, 124, 0.02), rgba(255, 107, 53, 0.02));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, #FF6B35, #FF8554);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            transform-origin: top;
         }
         
-        .content-card:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 61, 124, 0.25);
-            border-color: #FF6B35;
-            border-width: 3px;
+        .vm-card:hover::before {
+            transform: scaleY(1);
         }
         
-        .content-card:hover::before {
-            opacity: 1;
-        }
-        
-        .card-image {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            position: relative;
-        }
-        
-        .card-title {
-            padding: 20px 15px;
-            font-size: 15px;
-            font-weight: 600;
-            text-align: center;
+        .vm-title {
             color: #003D7C;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            background: white;
-            letter-spacing: 0.3px;
-            transition: all 0.3s ease;
-        }
-        
-        .content-card:hover .card-title {
-            color: #FF6B35;
-        }
-        
-        .card-title.highlight {
-            color: #FF6B35;
+            font-size: 42px;
             font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+            position: relative;
         }
         
-        /* Sidebar Section */
+        .vm-title.mission {
+            color: #003D7C;
+        }
+        
+        .vm-content {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #2c3e50;
+            position: relative;
+        }
+        
+        .highlight {
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight.blue {
+            color: #003D7C;
+        }
+        
+        .highlight.orange {
+            color: #FF6B35;
+        }
+        
+        /* Why Interdisciplinary Section */
+        .interdisciplinary-section {
+            margin-top: 60px;
+        }
+        
+        .section-header {
+            color: #003D7C;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+        
+        .interdisciplinary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        /* Flip Card Styles */
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 280px;
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.1);
+            border: 2px solid rgba(0, 61, 124, 0.08);
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .flip-card-front {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .flip-card-back {
+            background: linear-gradient(135deg, #003D7C 0%, #0052A3 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-title {
+            color: #003D7C;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+        
+        .flip-card-subtitle {
+            color: #5a6c7d;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .flip-card-back .flip-card-title {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .flip-card-back-text {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        
+        /* Call to Action Section - Enhanced */
+        .cta-section {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8554 100%);
+            padding: 60px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.3);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 10px 40px rgba(255, 107, 53, 0.3),
+                           0 0 60px rgba(255, 107, 53, 0.2);
+            }
+            50% {
+                box-shadow: 0 15px 60px rgba(255, 107, 53, 0.4),
+                           0 0 80px rgba(255, 107, 53, 0.3);
+            }
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            animation: rotateGlow 8s linear infinite;
+        }
+        
+        @keyframes rotateGlow {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmerDiagonal 3s infinite;
+        }
+        
+        @keyframes shimmerDiagonal {
+            0% {
+                transform: translateX(-100%) translateY(-100%);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%);
+            }
+        }
+        
+        .cta-title {
+            color: white;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2),
+                            0 0 20px rgba(255, 255, 255, 0.3);
+            }
+            to {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2),
+                            0 0 30px rgba(255, 255, 255, 0.5),
+                            0 0 40px rgba(255, 255, 255, 0.3);
+            }
+        }
+        
+        .cta-text {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 18px;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #FF6B35;
+            padding: 18px 45px;
+            border: 3px solid transparent;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            background: #FFF9F5;
+            border-color: white;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Sidebar */
         .sidebar {
             flex: 0 0 35%;
             display: flex;
@@ -871,42 +885,45 @@
         }
         
         .menu-icon {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             position: relative;
             transition: all 0.3s ease;
         }
         
-        .menu-icon::before,
-        .menu-icon::after {
-            content: '';
+        .menu-icon span {
             position: absolute;
+            width: 100%;
+            height: 3px;
             background: white;
+            border-radius: 3px;
+            left: 0;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .menu-icon::before {
-            width: 100%;
-            height: 3px;
+        .menu-icon span:nth-child(1) {
+            top: 0;
+        }
+        
+        .menu-icon span:nth-child(2) {
             top: 50%;
-            left: 0;
             transform: translateY(-50%);
         }
         
-        .menu-icon::after {
-            width: 3px;
-            height: 100%;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+        .menu-icon span:nth-child(3) {
+            bottom: 0;
         }
         
-        .action-menu-trigger.active .menu-icon::before {
-            transform: translateY(-50%) rotate(45deg);
+        .action-menu-trigger.active .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
         }
         
-        .action-menu-trigger.active .menu-icon::after {
-            transform: translateX(-50%) rotate(45deg);
+        .action-menu-trigger.active .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
         }
         
         .action-items {
@@ -1035,50 +1052,6 @@
             white-space: normal;
         }
         
-        /* Mobile adjustments for action buttons */
-        @media (max-width: 768px) {
-            .action-button {
-                width: 85vw;
-                max-width: 350px;
-                padding: 10px 20px 10px 10px;
-                font-size: 14px;
-                gap: 10px;
-            }
-            
-            .action-button-icon {
-                width: 36px;
-                height: 36px;
-            }
-            
-            .action-button-icon::after {
-                font-size: 18px;
-            }
-            
-            .action-items.active .action-button:nth-child(1) {
-                transform: translateY(-190px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(2) {
-                transform: translateY(-125px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(3) {
-                transform: translateY(-60px) scale(1) translateX(0);
-            }
-            
-            .action-button:nth-child(1):hover {
-                --y: -190px;
-            }
-            
-            .action-button:nth-child(2):hover {
-                --y: -125px;
-            }
-            
-            .action-button:nth-child(3):hover {
-                --y: -60px;
-            }
-        }
-        
         /* Footer */
         .footer {
             background: linear-gradient(135deg, #003D7C, #001f3f);
@@ -1103,7 +1076,7 @@
             transform: translateY(0);
         }
         
-        /* Responsive Design */
+        /* Mobile responsive styles */
         @media (max-width: 1600px) {
             .main-content {
                 padding: 0 60px;
@@ -1122,8 +1095,8 @@
                 padding: 0 40px;
             }
             
-            .content-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .interdisciplinary-grid {
+                grid-template-columns: 1fr;
             }
             
             .nav-links a {
@@ -1155,12 +1128,16 @@
         }
         
         @media (max-width: 768px) {
+            .banner-overlay h1 {
+                font-size: 36px;
+            }
+            
             .main-content {
                 flex-direction: column;
                 padding: 0 20px;
             }
             
-            .content-grid-container {
+            .content-section {
                 flex: 0 0 100%;
             }
             
@@ -1170,20 +1147,44 @@
                 margin: 0 auto;
             }
             
-            .content-grid {
-                grid-template-columns: 1fr;
+            .vm-card {
+                padding: 30px;
             }
             
-            .hero-section {
-                min-height: calc(100vh - 120px); /* Adjust for mobile without nav */
+            .vm-title {
+                font-size: 32px;
             }
             
-            .hero-section h1 {
-                font-size: 36px;
-            }
-            
-            .hero-section p {
+            .vm-content {
                 font-size: 16px;
+            }
+            
+            .section-header {
+                font-size: 28px;
+            }
+            
+            .cta-section {
+                padding: 35px 25px;
+            }
+            
+            .cta-title {
+                font-size: 26px;
+            }
+            
+            .cta-text {
+                font-size: 16px;
+            }
+            
+            .flip-card {
+                height: 320px;
+            }
+            
+            .flip-card-title {
+                font-size: 20px;
+            }
+            
+            .flip-card-subtitle {
+                font-size: 14px;
             }
             
             /* Mobile navigation */
@@ -1295,15 +1296,62 @@
                 padding: 0 20px;
                 margin: 30px auto;
             }
+            
+            /* Mobile adjustments for action buttons */
+            .action-button {
+                width: 85vw;
+                max-width: 350px;
+                padding: 10px 20px 10px 10px;
+                font-size: 14px;
+                gap: 10px;
+            }
+            
+            .action-button-icon {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .action-button-icon::after {
+                font-size: 18px;
+            }
+            
+            .action-items.active .action-button:nth-child(1) {
+                transform: translateY(-190px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(2) {
+                transform: translateY(-125px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(3) {
+                transform: translateY(-60px) scale(1) translateX(0);
+            }
+            
+            .action-button:nth-child(1):hover {
+                --y: -190px;
+            }
+            
+            .action-button:nth-child(2):hover {
+                --y: -125px;
+            }
+            
+            .action-button:nth-child(3):hover {
+                --y: -60px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Changes made on 2 Feb 2025, 7:45 PM SGT
+    - Updated Photos link in navigation to point to https://xavierchee.github.io/website/photo.html
+    - Added Vision and mission as first item under About us dropdown, linking to https://xavierchee.github.io/website/vision_mission.html
+    -->
+    
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://medicine.nus.edu.sg/bch/">
-                <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
+            <a href="https://xchee-01.github.io/website/">
+                <img src="https://xchee-01.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
     </div>
@@ -1315,21 +1363,21 @@
                 <span id="menu-icon">☰</span>
             </button>
             <ul class="nav-links">
-                <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
+                <li><a href="#home">Home</a></li>
                 
                 <li class="has-dropdown">
                     <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
-                        <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
+                        <a href="#programme-pathways">Programme pathways</a>
+                        <a href="#graduate-certificate">Graduate certificate</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
-                        <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
+                        <a href="#core-courses">Core courses</a>
+                        <a href="#elective-courses">Elective courses</a>
                         <a href="#others">Others</a>
                     </div>
                 </li>
@@ -1337,16 +1385,16 @@
                 <li class="has-dropdown">
                     <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
+                        <a href="#capstone-pathways">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
-                        <a href="https://xavierchee.github.io/website/application.html">Application</a>
-                        <a href="https://xavierchee.github.io/website/tuition_fee.html">Tuition fees</a>
+                        <a href="#eligibility">Eligibility</a>
+                        <a href="#application">Application</a>
+                        <a href="#tuition-fees">Tuition fees</a>
                     </div>
                 </li>
                 
@@ -1362,8 +1410,8 @@
                     <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/vision_mission.html">Vision and mission</a>
-                        <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
-                        <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
+                        <a href="#what-is-precision-medicine">What is precision medicine?</a>
+                        <a href="#meet-our-team">Meet our team</a>
                     </div>
                 </li>
             </ul>
@@ -1378,65 +1426,112 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Hero Section with Video Background -->
-    <section class="hero-section">
-        <!-- Try multiple video sources -->
-        <video class="hero-video-background" autoplay muted loop playsinline>
-            <!-- Local path option - update this to your actual video location -->
-            <source src="video_homepage.mp4" type="video/mp4">
-            <!-- GitHub hosted option -->
-            <source src="https://xavierchee.github.io/website/website_assets/homepage/video_homepage.mp4" type="video/mp4">
-            <!-- Fallback message -->
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Master of Science in<br>Precision Health & Medicine</h1>
-            <p>Transform healthcare through mastering AI-driven personalized medicine.</p>
-            <p>Join the next generation of healthcare innovators.</p>
-            <button class="cta-button" onclick="window.location.href='https://xavierchee.github.io/website/course_pathway.html'">I am interested to find out more!</button>
+    <!-- Vision Mission Banner Image -->
+    <div class="banner-image-container">
+        <img src="https://xavierchee.github.io/website/website_assets/vision_mission/banner_vision_mission.png" 
+             alt="Vision & Mission Banner" 
+             class="banner-image">
+        <div class="banner-overlay">
+            <h1>Vision & Mission</h1>
         </div>
-        <div class="scroll-indicator">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <polyline class="chevron-down" points="4 7 12 15 20 7"></polyline>
-                <polyline class="chevron-down" points="4 1 12 9 20 1"></polyline>
-            </svg>
-        </div>
-    </section>
+    </div>
     
     <!-- Main Content -->
     <div class="main-content">
-        <div class="content-grid-container">
-            <div class="content-grid">
-                <div class="content-card scroll-fade" onclick="window.location.href='https://xavierchee.github.io/website/course_pathway.html'">
-                    <img src="https://xavierchee.github.io/website/website_assets/homepage/button_career_prospects.png" alt="Programme structure" class="card-image">
-                    <div class="card-title">Programme Structure</div>
-                </div>
+        <div class="content-section">
+            <!-- Vision Card (now first) -->
+            <div class="vm-card scroll-fade">
+                <h2 class="vm-title">Vision</h2>
+                <p class="vm-content">
+                    To be a <span class="highlight orange">global leader</span> in Precision Health and Medicine education, establishing Singapore as a <span class="highlight orange">premier hub</span> for talent and innovation, and empowering graduates to <span class="highlight orange">drive transformative change</span> in healthcare worldwide.
+                </p>
+            </div>
+            
+            <!-- Mission Card (now second) -->
+            <div class="vm-card scroll-fade">
+                <h2 class="vm-title mission">Mission</h2>
+                <p class="vm-content">
+                    To cultivate <span class="highlight orange">world-class leaders</span> in Precision Health and Medicine through <span class="highlight orange">cutting-edge education</span> and <span class="highlight orange">interdisciplinary training with emphasis on AI</span>, addressing the immediate need for skilled professionals while shaping the future of personalized healthcare.
+                </p>
+            </div>
+            
+            <!-- Why Interdisciplinary Section -->
+            <div class="interdisciplinary-section scroll-fade">
+                <h2 class="section-header">Why Interdisciplinary Education Matters</h2>
+                <p style="text-align: center; color: #5a6c7d; font-size: 17px; margin-bottom: 40px;">
+                    Precision Medicine isn't just about medicine—it's where biology meets big data, where AI transforms patient care, and where ethics guides innovation.
+                </p>
                 
-                <div class="content-card scroll-fade" onclick="window.location.href='https://xavierchee.github.io/website/core_courses.html'">
-                    <img src="https://xavierchee.github.io/website/website_assets/homepage/button_student_stories.png" alt="Courses" class="card-image">
-                    <div class="card-title">Courses</div>
+                <div class="interdisciplinary-grid">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3 class="flip-card-title">Breaking Down Silos</h3>
+                                <p class="flip-card-subtitle">Unite diverse disciplines for groundbreaking healthcare innovations</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3 class="flip-card-title">Breaking Down Silos</h3>
+                                <p class="flip-card-back-text">
+                                    Healthcare's biggest breakthroughs happen at the intersection of disciplines. Our programme brings together biomedical sciences, computational biology, AI, and engineering under one roof, creating professionals who speak multiple "languages" of science.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3 class="flip-card-title">AI-Powered Healthcare</h3>
+                                <p class="flip-card-subtitle">Master the fusion of artificial intelligence and medical sciences</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3 class="flip-card-title">AI-Powered Healthcare</h3>
+                                <p class="flip-card-back-text">
+                                    With AI revolutionizing diagnostics, drug discovery, and treatment planning, tomorrow's healthcare leaders need to understand both the human body and machine learning. Our emphasis on AI ensures you're ready for medicine's digital transformation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3 class="flip-card-title">Real-World Impact</h3>
+                                <p class="flip-card-subtitle">Transform healthcare from prevention to personalized treatment</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3 class="flip-card-title">Real-World Impact</h3>
+                                <p class="flip-card-back-text">
+                                    From preventing diseases before they occur to discovering novel treatments, precision medicine touches every aspect of healthcare. Our interdisciplinary approach ensures you can contribute meaningfully across the entire healthcare continuum.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3 class="flip-card-title">Future-Ready Skills</h3>
+                                <p class="flip-card-subtitle">Build competencies for careers that don't yet exist</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3 class="flip-card-title">Future-Ready Skills</h3>
+                                <p class="flip-card-back-text">
+                                    The healthcare landscape is evolving rapidly. By mastering multiple disciplines, you'll be equipped not just for today's challenges, but for careers and opportunities that don't even exist yet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="content-card scroll-fade" onclick="window.location.href='https://xavierchee.github.io/website/capstone.html'">
-                    <img src="https://xavierchee.github.io/website/website_assets/homepage/button_what_is_precision_medicine.png" alt="Capstone Projects" class="card-image">
-                    <div class="card-title">Capstone projects</div>
-                </div>
-                
-                <div class="content-card scroll-fade" onclick="window.location.href='https://xavierchee.github.io/website/eligibility.html'">
-                    <img src="https://xavierchee.github.io/website/website_assets/homepage/button_admissions_and_applications.png" alt="Admissions and Application" class="card-image">
-                    <div class="card-title">Admissions and application</div>
-                </div>
-                
-                <div class="content-card scroll-fade" onclick="alert('Student Stories page coming soon!')">
-                    <img src="https://xavierchee.github.io/website/website_assets/homepage/button_photos_and_memories.jpg" alt="Student Stories and Photos" class="card-image">
-                    <div class="card-title">Student stories and photos</div>
-                </div>
-                
-                <div class="content-card scroll-fade" onclick="window.location.href='https://xavierchee.github.io/website/meet_the_team.html'">
-                    <img src="https://xavierchee.github.io/website/website_assets/homepage/button_meet_the_team.png" alt="About Us" class="card-image">
-                    <div class="card-title">About us</div>
-                </div>
+            </div>
+            
+            <!-- Call to Action Section -->
+            <div class="cta-section scroll-fade">
+                <h2 class="cta-title">Be Part of the Healthcare Revolution</h2>
+                <p class="cta-text">
+                    Join Asia's first and most comprehensive precision medicine programme. Shape the future of healthcare while building a career at the forefront of medical innovation.
+                </p>
+                <a href="https://xavierchee.github.io/website/course_pathway.html" class="cta-button">Explore Our Programme</a>
             </div>
         </div>
         
@@ -1474,18 +1569,22 @@
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon"></div>
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </button>
         <div class="action-items">
-            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>
@@ -1602,81 +1701,6 @@
                         block: 'start'
                     });
                 }
-            });
-        });
-        
-        // Scroll indicator functionality
-        const scrollIndicator = document.querySelector('.scroll-indicator');
-        if (scrollIndicator) {
-            scrollIndicator.addEventListener('click', () => {
-                window.scrollTo({
-                    top: window.innerHeight,
-                    behavior: 'smooth'
-                });
-            });
-            
-            // Hide scroll indicator when user starts scrolling
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    scrollIndicator.style.opacity = '0';
-                    scrollIndicator.style.pointerEvents = 'none';
-                } else {
-                    scrollIndicator.style.opacity = '1';
-                    scrollIndicator.style.pointerEvents = 'auto';
-                }
-            });
-        }
-        
-        // Remove parallax effect to prevent white gaps
-        // Parallax disabled to fix white mask issue
-        
-        // Debug video loading
-        const video = document.querySelector('.hero-video-background');
-        if (video) {
-            video.addEventListener('loadeddata', () => {
-                console.log('Video loaded successfully');
-            });
-            video.addEventListener('error', (e) => {
-                console.error('Video loading error:', e);
-                // Only add background color if video fails to load
-                document.querySelector('.hero-section').style.backgroundColor = '#003D7C';
-            });
-        }
-        
-        // Magnetic Effect for Content Cards
-        const cards = document.querySelectorAll('.content-card');
-        
-        cards.forEach(card => {
-            let bounds;
-            
-            function rotateToMouse(e) {
-                bounds = card.getBoundingClientRect();
-                const mouseX = e.clientX;
-                const mouseY = e.clientY;
-                const leftX = mouseX - bounds.x;
-                const topY = mouseY - bounds.y;
-                const center = {
-                    x: leftX - bounds.width / 2,
-                    y: topY - bounds.height / 2
-                }
-                const distance = Math.sqrt(center.x**2 + center.y**2);
-                
-                // Magnetic pull effect
-                const pull = Math.min(distance / 100, 1);
-                const pullX = center.x / 20 * pull;
-                const pullY = center.y / 20 * pull;
-                
-                card.style.transform = `translate(${pullX}px, ${pullY}px) translateY(-8px) scale(1.05)`;
-            }
-            
-            card.addEventListener('mouseenter', () => {
-                bounds = card.getBoundingClientRect();
-                document.addEventListener('mousemove', rotateToMouse);
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                document.removeEventListener('mousemove', rotateToMouse);
-                card.style.transform = '';
             });
         });
     </script>

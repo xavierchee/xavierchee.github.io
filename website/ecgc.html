@@ -1,5 +1,33 @@
 <!DOCTYPE html>
+<!-- 
+    CHANGE LOG - Last Updated: July 26, 2025 - 3:30 PM
+    ============================================
+    
+    Recent Changes:
+    - Linked Photos subsection to https://xchee-01.github.io/website/photo.html
+    - Added Vision and mission as first subsection under About us, linking to https://xchee-01.github.io/website/vision_mission.html
+-->
 <html lang="en">
+<script>
+    // ============================================
+    // APPLICATION PERIOD CONFIGURATION
+    // ============================================
+    const APPLICATION_CONFIG = {
+        // Application period dates
+        startDate: new Date('2026-01-01'),  // January 1, 2026
+        endDate: new Date('2026-06-01'),    // June 1, 2026
+        
+        // Closed period message
+        closedMessage: 'Applications will open on January 1, 2026',
+        
+        // Check if applications are currently open
+        isApplicationOpen: function() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);  // Reset time to midnight for date comparison
+            return today >= this.startDate && today <= this.endDate;
+        }
+    };
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -306,6 +334,9 @@
             overflow: hidden;
             transition: all 0.3s ease;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
         }
         
         .certificate-card::before {
@@ -336,8 +367,24 @@
             object-fit: cover;
         }
         
+        
         .certificate-content {
             padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .certificate-main-content {
+            flex: 1;
+        }
+        
+        .certificate-actions {
+            margin-top: auto;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .certificate-title {
@@ -345,6 +392,7 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 20px;
+            margin-top: 0;
             letter-spacing: -0.3px;
         }
         
@@ -380,7 +428,7 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: auto;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 5px 15px rgba(0, 61, 124, 0.3);
             position: relative;
@@ -388,11 +436,125 @@
             letter-spacing: 0.5px;
             text-decoration: none;
             display: inline-block;
+            align-self: center;
         }
         
-        .certificate-apply-button:hover {
+        /* Hide Apply button when applications are closed */
+        .application-closed .certificate-apply-button {
+            display: none;
+        }
+        
+        .certificate-apply-button:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0, 61, 124, 0.4);
+        }
+        
+        .certificate-apply-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .certificate-apply-button:disabled:hover {
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 61, 124, 0.3);
+        }
+        
+        /* Closed Period Notice */
+        .application-closed-notice {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 2px solid #fca5a5;
+            border-radius: 50px;
+            padding: 12px 25px;
+            margin: 0;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(220, 38, 38, 0.15);
+            transition: all 0.3s ease;
+            width: auto;
+            max-width: 280px;
+            align-self: center;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .application-closed-notice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.25);
+            border-color: #f87171;
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+        }
+        
+        .application-closed-notice::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: rotate(45deg);
+            animation: shimmerSlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmerSlow {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+        
+        .application-closed-notice-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .application-closed-notice-icon {
+            display: none;
+        }
+        
+        .application-closed-notice-text {
+            color: #991b1b;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+        }
+        
+        .application-closed .application-closed-notice {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* Content Card */
@@ -679,45 +841,42 @@
         }
         
         .menu-icon {
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             position: relative;
             transition: all 0.3s ease;
         }
         
-        .menu-icon span {
+        .menu-icon::before,
+        .menu-icon::after {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 3px;
             background: white;
-            border-radius: 3px;
-            left: 0;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .menu-icon span:nth-child(1) {
-            top: 0;
-        }
-        
-        .menu-icon span:nth-child(2) {
+        .menu-icon::before {
+            width: 100%;
+            height: 3px;
             top: 50%;
+            left: 0;
             transform: translateY(-50%);
         }
         
-        .menu-icon span:nth-child(3) {
-            bottom: 0;
+        .menu-icon::after {
+            width: 3px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
+        .action-menu-trigger.active .menu-icon::before {
+            transform: translateY(-50%) rotate(45deg);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .action-menu-trigger.active .menu-icon span:nth-child(3) {
-            transform: rotate(-45deg) translate(10px, -10px);
+        .action-menu-trigger.active .menu-icon::after {
+            transform: translateX(-50%) rotate(45deg);
         }
         
         .action-items {
@@ -1079,7 +1238,7 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://xavierchee.github.io/website/">
+            <a href="https://medicine.nus.edu.sg/bch/">
                 <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
@@ -1131,13 +1290,14 @@
                     <a href="javascript:void(0)">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="javascript:void(0)">Student stories</a>
-                        <a href="javascript:void(0)">Photos</a>
+                        <a href="https://xchee-01.github.io/website/photo.html">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="javascript:void(0)">About us</a>
                     <div class="dropdown-menu">
+                        <a href="https://xchee-01.github.io/website/vision_mission.html">Vision and mission</a>
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
                         <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
                     </div>
@@ -1190,13 +1350,23 @@
                 <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/fundamentals_of_pm.png" alt="Fundamentals of Precision Medicine">
                     <div class="certificate-content">
-                        <h3 class="certificate-title">Graduate Certificate in Fundamentals of Precision Medicine</h3>
-                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                        <ul class="module-list">
-                            <li>Human Genomics in Precision Medicine</li>
-                            <li>Proteomics and Metabolomics in Precision Health and Medicine</li>
-                        </ul>
-                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        <div class="certificate-main-content">
+                            <h3 class="certificate-title">Graduate Certificate in Fundamentals of Precision Medicine</h3>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <ul class="module-list">
+                                <li>Human Genomics in Precision Medicine</li>
+                                <li>Proteomics and Metabolomics in Precision Health and Medicine</li>
+                            </ul>
+                        </div>
+                        <div class="certificate-actions">
+                            <div class="application-closed-notice">
+                                <div class="application-closed-notice-content">
+                                    <span class="application-closed-notice-icon"></span>
+                                    <span class="application-closed-notice-text"></span>
+                                </div>
+                            </div>
+                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        </div>
                     </div>
                 </div>
 
@@ -1204,13 +1374,23 @@
                 <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/big_data_analytics_in_pm.png" alt="Big Data Analytics">
                     <div class="certificate-content">
-                        <h3 class="certificate-title">Graduate Certificate in Big Data Analytics in Precision Medicine</h3>
-                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                        <ul class="module-list">
-                            <li>Applied Statistics in Precision Medicine</li>
-                            <li>High Performance Computing for Precision Medicine</li>
-                        </ul>
-                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        <div class="certificate-main-content">
+                            <h3 class="certificate-title">Graduate Certificate in Big Data Analytics in Precision Medicine</h3>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <ul class="module-list">
+                                <li>Applied Statistics in Precision Medicine</li>
+                                <li>High Performance Computing for Precision Medicine</li>
+                            </ul>
+                        </div>
+                        <div class="certificate-actions">
+                            <div class="application-closed-notice">
+                                <div class="application-closed-notice-content">
+                                    <span class="application-closed-notice-icon"></span>
+                                    <span class="application-closed-notice-text"></span>
+                                </div>
+                            </div>
+                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        </div>
                     </div>
                 </div>
 
@@ -1218,13 +1398,23 @@
                 <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/innovative_pm.png" alt="Innovative Precision Medicine">
                     <div class="certificate-content">
-                        <h3 class="certificate-title">Graduate Certificate in Innovative Precision Medicine</h3>
-                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                        <ul class="module-list">
-                            <li>Causal Inference in Precision Medicine</li>
-                            <li>Technological Innovation in Precision Medicine</li>
-                        </ul>
-                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        <div class="certificate-main-content">
+                            <h3 class="certificate-title">Graduate Certificate in Innovative Precision Medicine</h3>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <ul class="module-list">
+                                <li>Causal Inference in Precision Medicine</li>
+                                <li>Technological Innovation in Precision Medicine</li>
+                            </ul>
+                        </div>
+                        <div class="certificate-actions">
+                            <div class="application-closed-notice">
+                                <div class="application-closed-notice-content">
+                                    <span class="application-closed-notice-icon"></span>
+                                    <span class="application-closed-notice-text"></span>
+                                </div>
+                            </div>
+                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        </div>
                     </div>
                 </div>
 
@@ -1232,13 +1422,23 @@
                 <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/precision_biomarkers_identification.png" alt="Precision Biomarkers">
                     <div class="certificate-content">
-                        <h3 class="certificate-title">Graduate Certificate in Precision Biomarker Identification and Diagnosis/Prognosis</h3>
-                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                        <ul class="module-list">
-                            <li>Precision Biomarkers</li>
-                            <li>Precision Diagnostics</li>
-                        </ul>
-                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        <div class="certificate-main-content">
+                            <h3 class="certificate-title">Graduate Certificate in Precision Biomarker Identification and Diagnosis/Prognosis</h3>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <ul class="module-list">
+                                <li>Precision Biomarkers</li>
+                                <li>Precision Diagnostics</li>
+                            </ul>
+                        </div>
+                        <div class="certificate-actions">
+                            <div class="application-closed-notice">
+                                <div class="application-closed-notice-content">
+                                    <span class="application-closed-notice-icon"></span>
+                                    <span class="application-closed-notice-text"></span>
+                                </div>
+                            </div>
+                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        </div>
                     </div>
                 </div>
 
@@ -1246,13 +1446,23 @@
                 <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/drug_discovery.png" alt="Drug Discovery">
                     <div class="certificate-content">
-                        <h3 class="certificate-title">Graduate Certificate in Drug Discovery, Pharmacogenomics and Therapeutics</h3>
-                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                        <ul class="module-list">
-                            <li>Precision Drug Discovery and Development</li>
-                            <li>Precision Therapeutics</li>
-                        </ul>
-                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        <div class="certificate-main-content">
+                            <h3 class="certificate-title">Graduate Certificate in Drug Discovery, Pharmacogenomics and Therapeutics</h3>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <ul class="module-list">
+                                <li>Precision Drug Discovery and Development</li>
+                                <li>Precision Therapeutics</li>
+                            </ul>
+                        </div>
+                        <div class="certificate-actions">
+                            <div class="application-closed-notice">
+                                <div class="application-closed-notice-content">
+                                    <span class="application-closed-notice-icon"></span>
+                                    <span class="application-closed-notice-text"></span>
+                                </div>
+                            </div>
+                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        </div>
                     </div>
                 </div>
 
@@ -1260,14 +1470,24 @@
                 <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/clinical_pm.png" alt="Clinical Precision Medicine">
                     <div class="certificate-content">
-                        <h3 class="certificate-title">Graduate Certificate in Clinical Precision Medicine</h3>
-                        <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                        <ul class="module-list">
-                            <li>Clinical Perspective in Precision Medicine</li>
-                            <li>Precision Oncology</li>
-                            <li>Precision Health and Medicine for Cardiometabolic Diseases</li>
-                        </ul>
-                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        <div class="certificate-main-content">
+                            <h3 class="certificate-title">Graduate Certificate in Clinical Precision Medicine</h3>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <ul class="module-list">
+                                <li>Clinical Perspective in Precision Medicine</li>
+                                <li>Precision Oncology</li>
+                                <li>Precision Health and Medicine for Cardiometabolic Diseases</li>
+                            </ul>
+                        </div>
+                        <div class="certificate-actions">
+                            <div class="application-closed-notice">
+                                <div class="application-closed-notice-content">
+                                    <span class="application-closed-notice-icon"></span>
+                                    <span class="application-closed-notice-text"></span>
+                                </div>
+                            </div>
+                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1322,22 +1542,18 @@
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="menu-icon"></div>
         </button>
         <div class="action-items">
-            <a href="#" class="action-button">
+            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>
@@ -1456,6 +1672,57 @@
                 }
             });
         });
+        
+        // ============================================
+        // APPLICATION PERIOD CHECKING
+        // ============================================
+        function checkApplicationPeriod() {
+            const isOpen = APPLICATION_CONFIG.isApplicationOpen();
+            
+            // Update all certificate cards
+            const certificateCards = document.querySelectorAll('.certificate-card');
+            certificateCards.forEach(card => {
+                if (!isOpen) {
+                    card.classList.add('application-closed');
+                } else {
+                    card.classList.remove('application-closed');
+                }
+            });
+            
+            // Update all closed notice messages
+            const noticeTexts = document.querySelectorAll('.application-closed-notice-text');
+            noticeTexts.forEach(text => {
+                text.textContent = APPLICATION_CONFIG.closedMessage;
+            });
+            
+            // Apply Now buttons are now hidden/shown via CSS when application-closed class is added
+            
+            // Also disable/enable the main Apply Now button in sidebar
+            const mainApplyButton = document.querySelector('.apply-button');
+            if (mainApplyButton) {
+                if (!isOpen) {
+                    mainApplyButton.disabled = true;
+                    mainApplyButton.style.background = '#cccccc';
+                    mainApplyButton.style.cursor = 'not-allowed';
+                    mainApplyButton.style.opacity = '0.6';
+                } else {
+                    mainApplyButton.disabled = false;
+                    mainApplyButton.style.background = '';
+                    mainApplyButton.style.cursor = 'pointer';
+                    mainApplyButton.style.opacity = '1';
+                }
+            }
+        }
+        
+        // Check application period on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkApplicationPeriod();
+        });
+        
+        // Also check immediately in case DOM is already loaded
+        if (document.readyState === 'interactive' || document.readyState === 'complete') {
+            checkApplicationPeriod();
+        }
     </script>
 </body>
 </html>

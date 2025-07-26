@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!-- 
+    CHANGE LOG - Last Updated: July 26, 2025 - 3:30 PM
+    ============================================
+    
+    Recent Changes:
+    - Linked Photos subsection to https://xchee-01.github.io/website/photo.html
+    - Added Vision and mission as first subsection under About us, linking to https://xchee-01.github.io/website/vision_mission.html
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -308,6 +316,7 @@
             cursor: pointer;
             text-decoration: none;
             display: block;
+            position: relative;
         }
         
         .course-card:hover {
@@ -316,14 +325,41 @@
             border-color: #FF6B35;
         }
         
+        .course-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+        
         .course-image {
             width: 100%;
-            height: 220px;
+            height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
         
         .course-card:hover .course-image {
+            transform: scale(1.05);
+        }
+        
+        .course-code {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 61, 124, 0.9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .course-card:hover .course-code {
+            background: rgba(255, 107, 53, 0.9);
             transform: scale(1.05);
         }
         
@@ -620,45 +656,42 @@
         }
         
         .menu-icon {
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             position: relative;
             transition: all 0.3s ease;
         }
         
-        .menu-icon span {
+        .menu-icon::before,
+        .menu-icon::after {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 3px;
             background: white;
-            border-radius: 3px;
-            left: 0;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .menu-icon span:nth-child(1) {
-            top: 0;
-        }
-        
-        .menu-icon span:nth-child(2) {
+        .menu-icon::before {
+            width: 100%;
+            height: 3px;
             top: 50%;
+            left: 0;
             transform: translateY(-50%);
         }
         
-        .menu-icon span:nth-child(3) {
-            bottom: 0;
+        .menu-icon::after {
+            width: 3px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
+        .action-menu-trigger.active .menu-icon::before {
+            transform: translateY(-50%) rotate(45deg);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .action-menu-trigger.active .menu-icon span:nth-child(3) {
-            transform: rotate(-45deg) translate(10px, -10px);
+        .action-menu-trigger.active .menu-icon::after {
+            transform: translateX(-50%) rotate(45deg);
         }
         
         .action-items {
@@ -1047,7 +1080,7 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://xavierchee.github.io/website/">
+            <a href="https://medicine.nus.edu.sg/bch/">
                 <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
@@ -1099,13 +1132,14 @@
                     <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="#student-stories">Student stories</a>
-                        <a href="#photos">Photos</a>
+                        <a href="https://xchee-01.github.io/website/photo.html">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#about">About us</a>
                     <div class="dropdown-menu">
+                        <a href="https://xchee-01.github.io/website/vision_mission.html">Vision and mission</a>
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
                         <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
                     </div>
@@ -1143,12 +1177,15 @@
             <!-- Core Courses Grid -->
             <div class="courses-grid scroll-fade">
                 <!-- Human Genomics -->
-                <a href="#" class="course-card">
-                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/human_genomics.jpg" 
-                         alt="Human Genomics" 
-                         class="course-image">
+                <a href="https://medicine.nus.edu.sg/bch/phm5001/" class="course-card" target="_blank">
+                    <div class="course-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/core_courses/human_genomics.jpg" 
+                             alt="Human Genomics in Precision Medicine" 
+                             class="course-image">
+                        <span class="course-code">PHM5001</span>
+                    </div>
                     <div class="course-content">
-                        <h3 class="course-title">Human Genomics</h3>
+                        <h3 class="course-title">Human Genomics in Precision Medicine</h3>
                         <p class="course-description">
                             Explore the fundamental principles of human genomics and their applications in personalized medicine and disease understanding.
                         </p>
@@ -1156,12 +1193,15 @@
                 </a>
                 
                 <!-- Proteomics and Metabolomics -->
-                <a href="#" class="course-card">
-                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/proteomics_and_metabolomics.png" 
-                         alt="Proteomics and Metabolomics" 
-                         class="course-image">
+                <a href="https://medicine.nus.edu.sg/bch/phm5002/" class="course-card" target="_blank">
+                    <div class="course-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/core_courses/proteomics_and_metabolomics.png" 
+                             alt="Proteomics and Metabolomics in Precision Health and Medicine" 
+                             class="course-image">
+                        <span class="course-code">PHM5002</span>
+                    </div>
                     <div class="course-content">
-                        <h3 class="course-title">Proteomics & Metabolomics</h3>
+                        <h3 class="course-title">Proteomics and Metabolomics in Precision Health and Medicine</h3>
                         <p class="course-description">
                             Understand protein and metabolite analysis techniques for comprehensive molecular profiling in precision health.
                         </p>
@@ -1169,53 +1209,65 @@
                 </a>
                 
                 <!-- Applied Statistics -->
-                <a href="#" class="course-card">
-                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/applied_statistics.jpg" 
-                         alt="Applied Statistics" 
-                         class="course-image">
+                <a href="https://medicine.nus.edu.sg/bch/phm5003/" class="course-card" target="_blank">
+                    <div class="course-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/core_courses/applied_statistics.jpg" 
+                             alt="Applied Statistics for Precision Medicine" 
+                             class="course-image">
+                        <span class="course-code">PHM5003</span>
+                    </div>
                     <div class="course-content">
-                        <h3 class="course-title">Applied Statistics</h3>
+                        <h3 class="course-title">Applied Statistics for Precision Medicine</h3>
                         <p class="course-description">
                             Master statistical methods and data analysis techniques essential for biomedical research and clinical applications.
                         </p>
                     </div>
                 </a>
                 
-                <!-- AI and Machine Learning -->
-                <a href="#" class="course-card">
-                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/ai_and_ml.jpg" 
-                         alt="AI and Machine Learning" 
-                         class="course-image">
-                    <div class="course-content">
-                        <h3 class="course-title">AI & Machine Learning</h3>
-                        <p class="course-description">
-                            Apply artificial intelligence and machine learning algorithms to healthcare data for predictive modeling and insights.
-                        </p>
-                    </div>
-                </a>
-                
                 <!-- High Performance Computing -->
-                <a href="#" class="course-card">
-                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/hpc.jpg" 
-                         alt="High Performance Computing" 
-                         class="course-image">
+                <a href="https://medicine.nus.edu.sg/bch/phm5004/" class="course-card" target="_blank">
+                    <div class="course-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/core_courses/hpc.jpg" 
+                             alt="High Performance Computing for Precision Medicine" 
+                             class="course-image">
+                        <span class="course-code">PHM5004</span>
+                    </div>
                     <div class="course-content">
-                        <h3 class="course-title">High Performance Computing</h3>
+                        <h3 class="course-title">High Performance Computing for Precision Medicine</h3>
                         <p class="course-description">
                             Leverage computational infrastructure and parallel processing for large-scale biomedical data analysis.
                         </p>
                     </div>
                 </a>
                 
-                <!-- Ethics and Regulation -->
-                <a href="#" class="course-card">
-                    <img src="https://xavierchee.github.io/website/website_assets/core_courses/ethic_reulgation.jpg" 
-                         alt="Ethics and Regulation" 
-                         class="course-image">
+                <!-- AI and Machine Learning -->
+                <a href="https://medicine.nus.edu.sg/bch/phm5005/" class="course-card" target="_blank">
+                    <div class="course-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/core_courses/ai_and_ml.jpg" 
+                             alt="AI and Machine Learning for Precision Medicine" 
+                             class="course-image">
+                        <span class="course-code">PHM5005</span>
+                    </div>
                     <div class="course-content">
-                        <h3 class="course-title">Ethics & Regulation</h3>
+                        <h3 class="course-title">AI and Machine Learning for Precision Medicine</h3>
                         <p class="course-description">
-                            Navigate ethical considerations and regulatory frameworks in precision medicine and healthcare innovation.
+                            Apply artificial intelligence and machine learning algorithms to healthcare data for predictive modeling and insights.
+                        </p>
+                    </div>
+                </a>
+                
+                <!-- Ethics and Regulation -->
+                <a href="https://medicine.nus.edu.sg/bch/phm5006/" class="course-card" target="_blank">
+                    <div class="course-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/core_courses/ethic_reulgation.jpg" 
+                             alt="Ethics, Regulation and Managerial Economics in Precision Medicine" 
+                             class="course-image">
+                        <span class="course-code">PHM5006</span>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Ethics, Regulation and Managerial Economics in Precision Medicine</h3>
+                        <p class="course-description">
+                            Navigate ethical considerations, regulatory frameworks, and economic aspects in precision medicine and healthcare innovation.
                         </p>
                     </div>
                 </a>
@@ -1256,14 +1308,10 @@
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="menu-icon"></div>
         </button>
         <div class="action-items">
-            <a href="https://xavierchee.github.io/website/application.html" class="action-button">
+            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
@@ -1271,7 +1319,7 @@
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="mailto:mscphm@nus.edu.sg?subject=Join%20Mailing%20List" class="action-button">
+            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>

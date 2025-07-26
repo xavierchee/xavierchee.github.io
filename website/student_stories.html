@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 27, 2025 - 09:36 PM
+    CHANGE LOG - Last Updated: February 2, 2025 - 7:45 PM
     ============================================
     
-    Recent Changes:
-    - Updated Photos link to point to https://xavierchee.github.io/website/photo.html
-    - Added Vision and mission as first subsection under About us, linking to https://xavierchee.github.io/website/vision_mission.html
+    Navigation Updates:
+    - Updated Photos link in navigation to point to https://xavierchee.github.io/website/photo.html
+    - Added Vision and mission as first item under About us dropdown, linking to https://xavierchee.github.io/website/vision_mission.html
 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Student Stories - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -294,13 +294,97 @@
             color: #5a6c7d;
             font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-weight: 400;
         }
         
-        /* Admission Requirements Styles */
-        .requirement-section {
-            margin-bottom: 40px;
+        /* Stories Grid */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 50px;
+        }
+        
+        .story-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.08);
+            border: 2px solid rgba(0, 61, 124, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            position: relative;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 61, 124, 0.15);
+            border-color: #FF6B35;
+        }
+        
+        .story-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+        
+        .story-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .story-card:hover .story-image {
+            transform: scale(1.05);
+        }
+        
+        .story-date {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(255, 107, 53, 0.9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .story-card:hover .story-date {
+            background: rgba(220, 38, 38, 0.9);
+            transform: scale(1.05);
+        }
+        
+        .story-content {
+            padding: 20px;
+        }
+        
+        .story-title {
+            color: #003D7C;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            flex: 0 0 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-section {
             background: white;
             padding: 30px;
             border-radius: 12px;
@@ -310,164 +394,164 @@
             overflow: hidden;
         }
         
-        .requirement-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #FF6B35, #FF8554);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .requirement-section:hover::before {
-            transform: translateX(0);
-        }
-        
-        /* Special highlighted section for Applicant Background and Preparation */
-        .requirement-section.highlighted {
-            border: 2px solid #dc2626;
-            background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
-            box-shadow: 0 0 30px rgba(220, 38, 38, 0.2),
-                        0 5px 15px rgba(220, 38, 38, 0.1),
-                        inset 0 0 20px rgba(220, 38, 38, 0.03);
-            animation: pulseGlow 3s ease-in-out infinite;
-            position: relative;
-        }
-        
-        @keyframes pulseGlow {
-            0%, 100% {
-                box-shadow: 0 0 30px rgba(220, 38, 38, 0.2),
-                           0 5px 15px rgba(220, 38, 38, 0.1),
-                           inset 0 0 20px rgba(220, 38, 38, 0.03);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(220, 38, 38, 0.3),
-                           0 8px 20px rgba(220, 38, 38, 0.15),
-                           inset 0 0 25px rgba(220, 38, 38, 0.05);
-            }
-        }
-        
-        .requirement-section.highlighted::before {
-            background: linear-gradient(90deg, #dc2626, #ef4444);
-            transform: translateX(0);
-            height: 5px;
-            animation: shimmerBar 3s linear infinite;
-        }
-        
-        @keyframes shimmerBar {
-            0% {
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0.7;
-            }
-        }
-        
-        .requirement-section.highlighted::after {
-            content: '⚠️ Important';
-            position: absolute;
-            top: -3px;
-            right: 30px;
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.3);
-        }
-        
-        .requirement-section.highlighted .requirement-title {
-            color: #dc2626;
-        }
-        
-        .requirement-title {
-            color: #003D7C;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: -0.3px;
-        }
-        
-        .requirement-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .requirement-list li {
-            padding: 12px 0;
-            color: #5a6c7d;
-            font-size: 15px;
-            position: relative;
-            padding-left: 25px;
-            line-height: 1.6;
-        }
-        
-        .requirement-list li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: #FF6B35;
-            font-weight: 700;
-            font-size: 20px;
-            line-height: 1;
-        }
-        
-        .requirement-note {
-            background: rgba(255, 107, 53, 0.05);
-            border-left: 3px solid #FF6B35;
-            padding: 12px 20px;
-            margin: 15px 0;
-            font-size: 14px;
-            color: #5a6c7d;
-            font-style: italic;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .highlight-box {
-            background: rgba(0, 61, 124, 0.03);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            font-size: 15px;
-            color: #2c3e50;
-            line-height: 1.8;
-        }
-        
-        /* Study Pathways Section */
-        .study-pathways {
-            margin-top: 60px;
-        }
-        
-        .pathways-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        .pathway-card {
-            background: white;
+        .intake-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            padding: 30px;
             border-radius: 12px;
-            padding: 0;
             box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 2px solid rgba(0, 61, 124, 0.1);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 61, 124, 0.1);
             position: relative;
             overflow: hidden;
         }
         
-        .pathway-card-content {
-            padding: 0 30px 30px 30px;
+        .events-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intake-container::before, .events-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-30px, -30px) scale(1.1);
+            }
+        }
+        
+        .info-section h3 {
+            color: #003D7C;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            position: relative;
+        }
+        
+        .date-info {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .date-info:hover {
+            transform: translateX(5px);
+        }
+        
+        .date-info:last-of-type {
+            border-bottom: none;
+        }
+        
+        .date-info .date {
+            color: #FF6B35;
+            font-weight: 700;
+            font-size: 12px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .date-info .description {
+            color: #5a6c7d;
+            line-height: 1.6;
+            font-size: 15px;
+            font-weight: 400;
+        }
+        
+        .apply-button {
+            background: linear-gradient(135deg, #003D7C, #0052A3);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 35px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+        
+        .apply-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .apply-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 61, 124, 0.4);
+        }
+        
+        .apply-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        
+        .events-section h3 {
+            color: #003D7C;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        
+        .event-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .event-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .event-date {
+            color: #FF6B35;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        
+        .event-item div:last-child {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 400;
         }
         
         /* Action Buttons - Fixed Floating Menu */
@@ -567,42 +651,45 @@
         }
         
         .menu-icon {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             position: relative;
             transition: all 0.3s ease;
         }
         
-        .menu-icon::before,
-        .menu-icon::after {
-            content: '';
+        .menu-icon span {
             position: absolute;
+            width: 100%;
+            height: 3px;
             background: white;
+            border-radius: 3px;
+            left: 0;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .menu-icon::before {
-            width: 100%;
-            height: 3px;
+        .menu-icon span:nth-child(1) {
+            top: 0;
+        }
+        
+        .menu-icon span:nth-child(2) {
             top: 50%;
-            left: 0;
             transform: translateY(-50%);
         }
         
-        .menu-icon::after {
-            width: 3px;
-            height: 100%;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+        .menu-icon span:nth-child(3) {
+            bottom: 0;
         }
         
-        .action-menu-trigger.active .menu-icon::before {
-            transform: translateY(-50%) rotate(45deg);
+        .action-menu-trigger.active .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
         }
         
-        .action-menu-trigger.active .menu-icon::after {
-            transform: translateX(-50%) rotate(45deg);
+        .action-menu-trigger.active .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
         }
         
         .action-items {
@@ -775,273 +862,13 @@
             }
         }
         
-        .pathway-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #FF6B35, #FF8554);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .pathway-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.15);
-            border-color: #FF6B35;
-        }
-        
-        .pathway-card:hover::before {
-            transform: translateX(0);
-        }
-        
-        .pathway-title {
-            color: #003D7C;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            margin-top: 20px;
-            letter-spacing: -0.3px;
-        }
-        
-        .pathway-detail {
-            margin-bottom: 12px;
-            font-size: 15px;
-            color: #5a6c7d;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .pathway-detail strong {
-            color: #003D7C;
-            font-weight: 600;
-            min-width: 140px;
-        }
-        
-        .pathway-modules {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(0, 61, 124, 0.08);
-        }
-        
-        .pathway-modules-title {
-            color: #FF6B35;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .pathway-modules ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .pathway-modules li {
-            padding: 6px 0;
-            color: #5a6c7d;
-            font-size: 14px;
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .pathway-modules li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #FF6B35;
-            font-weight: 700;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            flex: 0 0 35%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .info-section {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intake-container {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .events-container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .intake-container::before, .events-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(-30px, -30px) scale(1.1);
-            }
-        }
-        
-        .info-section h3 {
-            color: #003D7C;
-            margin-bottom: 30px;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            position: relative;
-        }
-        
-        .date-info {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-        
-        .date-info:hover {
-            transform: translateX(5px);
-        }
-        
-        .date-info:last-of-type {
-            border-bottom: none;
-        }
-        
-        .date-info .date {
-            color: #FF6B35;
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .date-info .description {
-            color: #5a6c7d;
-            line-height: 1.6;
-            font-size: 15px;
-            font-weight: 400;
-        }
-        
-        .apply-button {
-            background: linear-gradient(135deg, #003D7C, #0052A3);
-            color: white;
-            padding: 18px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 35px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.3);
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
-        }
-        
-        .apply-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .apply-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 61, 124, 0.4);
-        }
-        
-        .apply-button:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-        
-        .events-section h3 {
-            color: #003D7C;
-            margin-bottom: 30px;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-        
-        .event-item {
-            margin-bottom: 25px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .event-item:hover {
-            transform: translateX(5px);
-        }
-        
-        .event-item:last-child {
-            border-bottom: none;
-        }
-        
-        .event-date {
-            color: #FF6B35;
-            font-weight: 700;
-            margin-bottom: 10px;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-        }
-        
-        .event-item div:last-child {
-            color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.6;
-            font-weight: 400;
-        }
-        
         /* Footer */
         .footer {
             background: linear-gradient(135deg, #003D7C, #001f3f);
             color: white;
             text-align: center;
             padding: 30px 20px;
-            margin-top: 60px;
+            margin-top: 100px;
             font-size: 14px;
             font-weight: 300;
             letter-spacing: 0.5px;
@@ -1057,6 +884,22 @@
         .scroll-fade.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        /* Mobile hamburger menu button */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #003D7C;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
         }
         
         /* Responsive Design */
@@ -1078,8 +921,9 @@
                 padding: 0 40px;
             }
             
-            .pathways-grid {
-                grid-template-columns: 1fr;
+            .stories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
             
             .nav-links a {
@@ -1094,26 +938,11 @@
             }
         }
         
-        /* Mobile hamburger menu button */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #003D7C;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1001;
-        }
-        
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
                 padding: 0 20px;
+                margin: 30px auto;
             }
             
             .content-section {
@@ -1126,8 +955,9 @@
                 margin: 0 auto;
             }
             
-            .pathways-grid {
+            .stories-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             
             .section-header {
@@ -1242,11 +1072,6 @@
             .top-banner-content {
                 justify-content: center;
             }
-            
-            .main-content {
-                padding: 0 20px;
-                margin: 30px auto;
-            }
         }
     </style>
 </head>
@@ -1254,8 +1079,8 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://medicine.nus.edu.sg/bch/">
-                <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
+            <a href="https://xchee-01.github.io/website/">
+                <img src="https://xchee-01.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
     </div>
@@ -1267,21 +1092,21 @@
                 <span id="menu-icon">☰</span>
             </button>
             <ul class="nav-links">
-                <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
+                <li><a href="#home">Home</a></li>
                 
                 <li class="has-dropdown">
                     <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
-                        <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
+                        <a href="#programme-pathways">Programme pathways</a>
+                        <a href="#graduate-certificate">Graduate certificate</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
-                        <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
+                        <a href="#core-courses">Core courses</a>
+                        <a href="#elective-courses">Elective courses</a>
                         <a href="#others">Others</a>
                     </div>
                 </li>
@@ -1289,16 +1114,16 @@
                 <li class="has-dropdown">
                     <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
+                        <a href="#capstone-pathways">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
-                        <a href="https://xavierchee.github.io/website/application.html">Application</a>
-                        <a href="https://xavierchee.github.io/website/tuition_fee.html">Tuition fees</a>
+                        <a href="#eligibility">Eligibility</a>
+                        <a href="#application">Application</a>
+                        <a href="#tuition-fees">Tuition fees</a>
                     </div>
                 </li>
                 
@@ -1314,8 +1139,8 @@
                     <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/vision_mission.html">Vision and mission</a>
-                        <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
-                        <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
+                        <a href="#what-is-precision-medicine">What is precision medicine?</a>
+                        <a href="#meet-our-team">Meet our team</a>
                     </div>
                 </li>
             </ul>
@@ -1330,94 +1155,132 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Admission Requirements Banner Image -->
+    <!-- Student Stories Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/eligibility/eligibility_banner.png" 
-             alt="Course Pathway Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/student_stories/banner_student_stories.png" 
+             alt="Student Stories Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Admission Requirements</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Student Stories</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Admission Requirements</h1>
+            <h1 class="section-header scroll-fade">Student's Stories</h1>
             <p class="section-text scroll-fade">
-                Admissions to the NUS MSc in Precision Health and Medicine programme is competitive and selective.
+                Meet the remarkable students transforming healthcare through our programme. Their stories showcase real breakthroughs, everyday challenges, and life-changing moments that have shaped their paths in precision medicine.
             </p>
             <p class="section-text scroll-fade">
-                While meeting the minimum requirements outlined below establishes eligibility, final admission decisions reflect the programme's commitment to assembling a diverse cohort of exceptional candidates.
+                These aren't just success stories—they're honest glimpses into the exciting journey you could join. Get inspired by those who walked this path before you and see what's possible when passion meets opportunity.
             </p>
             
-            <!-- Academic Requirements Section -->
-            <div class="requirement-section scroll-fade">
-                <h2 class="requirement-title">Academic</h2>
-                <p style="color: #5a6c7d; margin-bottom: 20px;">Successful applicants typically possess:</p>
-                <ul class="requirement-list">
-                    <li><strong>A Bachelor's degree in Medicine</strong> (M.B.B.S.)</li>
-                    <li><strong>Any STEMM discipline</strong> (Science, Technology, Engineering, Mathematics, Medicine) or related field.</li>
-                </ul>
-                <div class="requirement-note">
-                    <strong>Note 1:</strong> Honours degrees are preferred.
-                </div>
-                <div class="requirement-note">
-                    <strong>Note 2:</strong> Candidates with other qualifications will be evaluated on a case-by-case basis, subject to approval of the Programme Committee.
-                </div>
-            </div>
-            
-            <!-- Skills and Experience Section -->
-            <div class="requirement-section scroll-fade">
-                <h2 class="requirement-title">Skills and Experience</h2>
-                <div class="highlight-box">
-                    <strong>As MScPHM is an interdisciplinary Master's programme, the ideal candidate for our Master's programme would possess foundational knowledge in both quantitative sciences and biological/biomedical fields.</strong>
-                </div>
+            <!-- Student Stories Grid -->
+            <div class="stories-grid scroll-fade">
+                <!-- Story 1 - Zihao (June 2) -->
+                <a href="./student_stories/student_story_zihao.html" class="story-card">
+                    <div class="story-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_zihao.png" 
+                             alt="Finding My Path: From Pharmacy Lab to Pharmaceutical Investment" 
+                             class="story-image">
+                        <span class="story-date">2 June 2025</span>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">Finding My Path: From Pharmacy Lab to Pharmaceutical Investment</h3>
+                    </div>
+                </a>
                 
-                <h3 style="color: #003D7C; font-size: 18px; margin: 25px 0 15px 0; font-weight: 600;">For applicants with no quantitative or programming undergraduate backgrounds, aptitude in quantitative sciences can be demonstrated through:</h3>
-                <ul class="requirement-list">
-                    <li><strong>Completion of basic programming (R/Python) or statistics courses</strong></li>
-                    <li><strong>Participation/awards in quantitative competitions</strong> (e.g., Math Olympiad)</li>
-                    <li><strong>Relevant work experience in data science fields</strong> (advantageous)</li>
-                </ul>
+                <!-- Story 2 - Divya (June 2) -->
+                <a href="./student_stories/student_story_divya.html" class="story-card">
+                    <div class="story-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_divya.png" 
+                             alt="Bridging Clinical Practice and Precision Health: Dr. Divya's Journey" 
+                             class="story-image">
+                        <span class="story-date">2 June 2025</span>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">Bridging Clinical Practice and Precision Health: Dr. Divya's Journey</h3>
+                    </div>
+                </a>
                 
-                <h3 style="color: #003D7C; font-size: 18px; margin: 25px 0 15px 0; font-weight: 600;">For applicants with no biological/biomedical undergraduate backgrounds, aptitude in the field can be demonstrated through:</h3>
-                <ul class="requirement-list">
-                    <li><strong>Completion of basic biology courses</strong> (online courses are acceptable)</li>
-                    <li><strong>Participation/awards in bio-related competitions</strong></li>
-                    <li><strong>Relevant work experience or internships or research in biological/biomedical fields</strong> (advantageous)</li>
-                </ul>
-            </div>
-            
-            <!-- Applicant Background and Preparation Section - HIGHLIGHTED -->
-            <div class="requirement-section highlighted scroll-fade">
-                <h2 class="requirement-title">Applicant Background and Preparation</h2>
-                <p style="color: #5a6c7d; margin-bottom: 20px;">
-                    A majority of the successful applicants typically come from <strong>EITHER</strong> biological/biomedical backgrounds <strong>OR</strong> programming/computational fields. Prior to joining the Master's programme, we would recommend students to prepare themselves by:
-                </p>
-                <ul class="requirement-list">
-                    <li>Studying relevant <strong>reference books</strong> in programming or bio-related subjects (depending on your background)</li>
-                    <li>Participating in available <strong>online courses</strong> through platforms (e.g. YouTube or Coursera)</li>
-                    <li>Enrolling in <strong>preparatory/bridging courses</strong> specifically organized by the MScPHM programme.</li>
-                </ul>
-            </div>
-            
-            <!-- English Language Section -->
-            <div class="requirement-section scroll-fade">
-                <h2 class="requirement-title">English Language</h2>
-                <p style="color: #5a6c7d; margin-bottom: 20px;">
-                    For applicants whose native language or medium of university instruction is not English, proof of English proficiency is required through either:
-                </p>
-                <ul class="requirement-list">
-                    <li><strong>TOEFL:</strong> Minimum score of 85 (Internet-based) or</li>
-                    <li><strong>IELTS:</strong> Minimum Academic score of 6.0</li>
-                </ul>
-                <div class="requirement-note">
-                    <strong>Note 4:</strong> Test scores must be valid (taken within the last two years) at time of application.
-                </div>
-                <div class="requirement-note">
-                    <strong>Note 5:</strong> Additional test scores (e.g. GRE) may be submitted to strengthen your application but are not required.
-                </div>
+                <!-- Story 3 - Knowledge to Action (June 2) -->
+                <a href="https://www.npm.sg/knowledge-to-action-enhancing-patient-care-through-precision-health/" class="story-card" target="_blank">
+                    <div class="story-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_knowledge_to_action.png" 
+                             alt="Knowledge to Action: Enhancing Patient Care through Precision Medicine" 
+                             class="story-image">
+                        <span class="story-date">2 June 2025</span>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">Knowledge to Action: Enhancing Patient Care through Precision Medicine</h3>
+                    </div>
+                </a>
+                
+                <!-- Story 4 - Bruce (May 23) -->
+                <a href="./student_stories/student_story_bruce.html" class="story-card">
+                    <div class="story-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_bruce.jpg" 
+                             alt="From Athlete to PhD: Powered by Precision Health" 
+                             class="story-image">
+                        <span class="story-date">23 May 2025</span>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">From Athlete to PhD: Powered by Precision Health</h3>
+                    </div>
+                </a>
+                
+                <!-- Story 5 - Binwen (March 11) -->
+                <a href="./student_stories/student_story_binwen.html" class="story-card">
+                    <div class="story-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_binwen.png" 
+                             alt="Beyond Borders: A Surgeon's Journey in Precision Medicine" 
+                             class="story-image">
+                        <span class="story-date">11 March 2025</span>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">Beyond Borders: A Surgeon's Journey in Precision Medicine</h3>
+                    </div>
+                </a>
+                
+                <!-- Story 6 - Jeremie (March 11) -->
+                <a href="./student_stories/student_story_jeremie.html" class="story-card">
+                    <div class="story-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_jeremie.png" 
+                             alt="From Classroom to Cutting-edge Innovation" 
+                             class="story-image">
+                        <span class="story-date">11 March 2025</span>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">From Classroom to Cutting-edge Innovation</h3>
+                    </div>
+                </a>
+                
+                <!-- Story 7 - Back to School (Feb 20) -->
+                <a href="https://www.npm.sg/nus-mscphm-curiousity-in-precision-health-into-impact/" class="story-card" target="_blank">
+                    <div class="story-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_back_to_school.png" 
+                             alt="Back to School Story" 
+                             class="story-image">
+                        <span class="story-date">20 Feb 2025</span>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">Back to School: Turning Curiosity in Precision Medicine into Impact</h3>
+                    </div>
+                </a>
+                
+                <!-- Story 8 - Junhua (Feb 20) -->
+                <a href="./student_stories/student_story_junhua.html" class="story-card">
+                    <div class="story-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_junhua.jpg" 
+                             alt="From Cardiologist to a Thought Leader" 
+                             class="story-image">
+                        <span class="story-date">20 Feb 2025</span>
+                    </div>
+                    <div class="story-content">
+                        <h3 class="story-title">From Cardiologist to a Thought Leader</h3>
+                    </div>
+                </a>
             </div>
         </div>
         
@@ -1455,18 +1318,22 @@
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon"></div>
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </button>
         <div class="action-items">
-            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>
