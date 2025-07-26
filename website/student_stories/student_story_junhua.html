@@ -9,7 +9,7 @@ Changes made on 2025-01-26 23:50:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Stories - Hu Binwen - Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Student Stories - Dr. Jun Hua Chong - Master's Programme - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -342,6 +342,17 @@ Changes made on 2025-01-26 23:50:
             margin: 30px 0;
         }
         
+        /* Image with text wrap */
+        .story-image-left {
+            float: left;
+            width: 300px;
+            height: auto;
+            margin-right: 30px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.1);
+        }
+        
         .student-info-box {
             background: white;
             padding: 30px;
@@ -369,6 +380,80 @@ Changes made on 2025-01-26 23:50:
         .student-info-box strong {
             color: #003D7C;
             font-weight: 600;
+        }
+        
+        /* Publication button */
+        .publication-button {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #FF6B35, #FF8554);
+            color: white;
+            padding: 16px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 40px 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.25);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+        }
+        
+        .publication-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .publication-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.35);
+            background: linear-gradient(135deg, #FF5722, #FF6B35);
+        }
+        
+        .publication-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .publication-button-icon {
+            margin-left: 8px;
+            font-size: 18px;
+        }
+        
+        /* Bullet points list */
+        .story-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .story-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+            color: #5a6c7d;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+        
+        .story-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #FF6B35;
+            font-weight: 700;
+            font-size: 20px;
         }
         
         /* Action Buttons - Fixed Floating Menu */
@@ -1059,6 +1144,14 @@ Changes made on 2025-01-26 23:50:
             .action-button:nth-child(3):hover {
                 --y: -60px;
             }
+            
+            /* Image responsiveness */
+            .story-image-left {
+                float: none;
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
@@ -1151,95 +1244,99 @@ Changes made on 2025-01-26 23:50:
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Beyond Borders: A Surgeon's Journey in Precision Health and Cultural Discovery</h1>
-            <p class="story-date">11 March 2025</p>
+            <h1 class="section-header scroll-fade">From Bedside to Bench: A Cardiologist's Journey into Precision Genomics</h1>
+            <p class="story-date">26 January 2025</p>
             
-            <p class="story-paragraph scroll-fade">
-                In the heart of Singapore's dynamic academic landscape, Hu Binwen, a young surgeon from China, is redefining what it means to be a global scholar. As a student in the Master of Science in Precision Health and Medicine (MScPHM) programme at the National University of Singapore (NUS), she has seamlessly woven scientific inquiry with cultural exploration, embodying the programme's commitment to academic excellence and global engagement.
-            </p>
+            <div class="scroll-fade">
+                <img src="https://xavierchee.github.io/website/website_assets/student_stories/junhua/junhua_1.jpg" 
+                     alt="Dr. Jun Hua Chong" 
+                     class="story-image-left">
+                
+                <p class="story-paragraph">
+                    In the rapidly evolving landscape of modern medicine, the intersection of cardiology and oncology represents one of healthcare's most significant challenges. Cardiovascular disease is now the leading cause of mortality among cancer survivors worldwide, claiming over 370,000 lives annually. For Dr. Jun Hua Chong, an established cardiologist consultant with years of clinical practice and expertise, this statistic wasn't just a number — it was a call to action that prompted her to expand her knowledge beyond traditional clinical boundaries.
+                </p>
+                
+                <div class="story-quote">
+                    "As a clinician in ethnically-diverse Singapore, I was keen to understand the varied genomic underpinnings of disease across the various ethnicities and cultures, and to equip myself with an understanding of precision medicine concepts that would translate into personalised health insights for my patients."
+                </div>
+                
+                <p class="story-paragraph">
+                    This motivation led Dr. Chong to enroll in PHM5001 — Human Genomics in Precision Medicine, a core module in the Master of Science in Precision Health and Medicine programme at NUS.
+                </p>
+            </div>
             
-            <h2 class="story-subtitle scroll-fade">Roots of Curiosity</h2>
+            <h2 class="story-subtitle scroll-fade">From Classroom to Publication</h2>
             <p class="story-paragraph scroll-fade">
-                Long before setting foot in Singapore, Binwen's intellectual world stretched far beyond geographical boundaries. Her childhood in China was enriched by literature, philosophy, and the arts—from Dante's <em>Divine Comedy</em> to the vibrant storytelling of <em>Alice's Adventures in Wonderland</em>. Her bookshelf became a gateway to different civilizations, where Greek mythology intertwined with Tang poetry, and Russian ballet coexisted with traditional Chinese dance.
+                What began as coursework transformed into something far more significant. Dr. Chong, along with collaborators including Prof. Lee herself, authored a review article titled "Revolutionising Cardio-Oncology Care with Precision Genomics," recently published in the International Journal of Molecular Sciences.
             </p>
             
             <div class="story-quote scroll-fade">
-                "Culture is not just a symbol of national identity. It is a shared intellectual and artistic treasure of humanity."
+                "Through my interactions and learnings from faculty and fellow students, I gained a greater appreciation of how precision genomics can be incorporated into established clinical entities, which led to the publication of these insights in the review article. The course provided practical understanding of genomic methods and their clinical application to disease. This is particularly useful to clinicians in an era of disease genotyping for bespoke medical therapies that maximise benefit and minimise side-effects."
             </div>
             
+            <h2 class="story-subtitle scroll-fade">Bridging Clinical Specialties Through Genomics</h2>
             <p class="story-paragraph scroll-fade">
-                This early appreciation for cultural diversity laid the foundation for her approach to both scientific discovery and cross-cultural collaboration.
-            </p>
-            
-            <img src="https://xavierchee.github.io/website/website_assets/student_stories/binwen/binwen_1.png" 
-                 alt="Hu Binwen" 
-                 class="story-image scroll-fade">
-            
-            <h2 class="story-subtitle scroll-fade">Bridging Science and Culture Exchange</h2>
-            <p class="story-paragraph scroll-fade">
-                Drawn by a passion for precision medicine and the promise of groundbreaking -omics technologies, Binwen chose the MScPHM programme at NUS. Yet, what captivated her most was not just its rigorous academic training but also the multicultural environment that defines the NUS experience.
+                The paper elegantly bridges two complex specialties—cardiology and oncology—through the lens of precision genomics. It explores how genetic testing and advanced genomic approaches can help clinicians better assess risk, diagnose conditions, and deliver personalized therapeutics.
             </p>
             
             <p class="story-paragraph scroll-fade">
-                Singapore's role as a global hub, combined with NUS's diverse student body, offered the perfect setting for Binwen to push her boundaries—both intellectually and socially. "At first, cultural differences felt unfamiliar and challenging," she admits. "But through continuous practice, active learning, and an open mindset, I gradually turned them into opportunities for growth."
-            </p>
-            
-            <p class="story-paragraph scroll-fade">
-                Her journey in cultural exchange soon evolved into leadership. When the MScPHM cohort organized an end-of-year dinner, Binwen took center stage—not as a researcher, but as a cultural ambassador. She led an Indian classical dance performance, working alongside three Indian classmates to honor a tradition outside her own. More than just a performance, the experience was an exercise in understanding—where each movement carried meaning, each rhythm told a story, and each gesture was a bridge to a new world.
-            </p>
-            
-            <img src="https://xavierchee.github.io/website/website_assets/student_stories/binwen/binwen_2.jpg" 
-                 alt="Binwen performing Indian classical dance" 
-                 class="story-image scroll-fade">
-            
-            <h2 class="story-subtitle scroll-fade">Enrichment through the Capstone Experience</h2>
-            <p class="story-paragraph scroll-fade">
-                At the core of Binwen's academic journey is her one-year capstone project at the Singapore Lipidomics Incubator (SLING)—a defining component of the MScPHM programme that transforms classroom learning into real-world impact.
-            </p>
-            
-            <p class="story-paragraph scroll-fade">
-                Her research contributes to the development of new precision medicine applications, using advanced mass spectrometry techniques to analyze lipid biomarkers. By refining diagnostic workflows, Binwen's work aims to detect metabolic disorders before clinical symptoms arise, paving the way for earlier, more personalized healthcare interventions.
-            </p>
-            
-            <h2 class="story-subtitle scroll-fade">A Life in Motion</h2>
-            <p class="story-paragraph scroll-fade">
-                Beyond her research, Binwen thrives in movement—whether kayaking with the NUS Kayaking Club, refining the disciplined gestures of classical dance with the NUS Classical Indian Dance Club, or channeling focused intensity at the NUS Boxing Club. These pursuits, though seemingly different, are bound by a common thread: precision, discipline, and an unwavering commitment to mastery.
-            </p>
-            
-            <p class="story-paragraph scroll-fade">
-                "Engaging with classmates and professors from diverse backgrounds has deepened my appreciation for different cultural perspectives," she says. "The friendships I have formed through these experiences are among the most invaluable parts of my academic journey."
-            </p>
-            
-            <h2 class="story-subtitle scroll-fade">Building Bridges for the Future</h2>
-            <p class="story-paragraph scroll-fade">
-                Binwen's story is not just about academic excellence or cultural adaptability—it is about the power of integration. Where science meets art. Where Chinese traditions meet Indian expressions. Where rigorous research meets creative exploration.
-            </p>
-            
-            <p class="story-paragraph scroll-fade">
-                Her advice to future MScPHM students?
+                Through detailed analysis of three key use cases—Cancer Therapy-Related Cardiac Dysfunction (CTRCD), Clonal Haematopoiesis of Indeterminate Potential (CHIP), and Polygenic Risk Scoring—the publication provides a roadmap for clinicians looking to incorporate precision medicine into cardio-oncology practice.
             </p>
             
             <div class="story-quote scroll-fade">
-                "Be open to new experiences. Cultivate an open mindset. Engage in two-way cultural exchange."
+                "The review summarized the latest developments of precision genomics in the subspecialty of cardio-oncology and proposed future directions which hold great potential for the use of precision genomic methods in clinical practice to optimize cardiac and cancer outcomes."
             </div>
             
             <p class="story-paragraph scroll-fade">
-                In a world where global challenges demand multidisciplinary, cross-cultural solutions, the MScPHM programme at NUS equips students with both the scientific expertise and the cultural intelligence to lead the future of precision medicine. Binwen's journey is a testament to what the programme stands for: not just training exceptional scientists, but nurturing boundary-crossers, innovators, and bridge-builders who will transform healthcare worldwide.
+                "What's remarkable about this work," adds program director Prof. Lee, "is how Dr. Chong translated complex genomic concepts into actionable clinical insights. This exemplifies exactly what our program aims to achieve—equipping healthcare professionals with the knowledge to bridge the gap between cutting-edge science and patient care."
+            </p>
+            
+            <h2 class="story-subtitle scroll-fade">From Course Content to Clinical Impact</h2>
+            <p class="story-paragraph scroll-fade">
+                The paper highlights several breakthrough approaches that have immediate clinical applications:
+            </p>
+            
+            <ul class="story-list scroll-fade">
+                <li>Identification of genetic variants (like rs1786814 in CELF4 and rs2229774 in RARG) that increase risk of anthracycline-induced cardiotoxicity, allowing for personalized risk stratification before cancer treatment</li>
+                <li>Recognition of Clonal hematopoiesis of indeterminate potential (CHIP) as an independent risk factor for cardiovascular disease, offering new opportunities for targeted interventions</li>
+                <li>Implementation of polygenic risk scoring to identify high-risk cancer survivors who might benefit from more aggressive preventive strategies</li>
+                <li>Utilization of long non-coding RNAs and microRNAs as potential biomarkers for cancer drug-induced cardiotoxicity</li>
+                <li>Application of human-induced pluripotent stem cells (hiPSCs) for modeling individual patients' risk profiles</li>
+            </ul>
+            
+            <h2 class="story-subtitle scroll-fade">A New Generation of Precision Medicine Leaders</h2>
+            <p class="story-paragraph scroll-fade">
+                The publication represents more than academic achievement—it signals a shift in how clinicians can approach complex medical challenges. By incorporating precision genomics into established clinical entities, Dr. Chong's work demonstrates how the future of medicine will increasingly rely on individualized approaches.
+            </p>
+            
+            <div class="story-quote scroll-fade">
+                "Under Prof Caroline Lee's leadership, she and the teaching team enabled students from varied professional backgrounds—lab-based, computer science, pharmaceutical, medical and healthcare—to learn together in cross-industry exchange. The in-person seminars allow for lively debate and exchange, which ultimately reinforces learning. I particularly enjoyed the group assignment where I was grouped with students from diverse professional and cultural backgrounds. Their enthusiasm for Precision Medicine is truly inspiring."
+            </div>
+            
+            <p class="story-paragraph scroll-fade">
+                Dr. Chong offers advice for clinicians considering similar educational paths: "I would recommend incoming students to make the most of the group project opportunities to network and learn from each other. Prof Caroline and faculty are always very supportive of any questions we may have as a group, and they constantly pique our interest in our presentation topics."
             </p>
             
             <p class="story-paragraph scroll-fade">
-                The future belongs to those who dare to cross borders—and more importantly, to those who build them.
+                As medicine continues to evolve toward more precise, personalized approaches, programmes like the Master's in Precision Health and Medicine are positioning themselves as essential training grounds for the healthcare leaders of tomorrow—clinicians who can translate complex genomic insights into better care for our most vulnerable patients.
             </p>
+            
+            <!-- Publication Button -->
+            <div style="text-align: center; margin: 40px 0;" class="scroll-fade">
+                <a href="https://doi.org/10.3390/ijms26052052" target="_blank" class="publication-button">
+                    Read Dr. Chong's Publication
+                    <span class="publication-button-icon">→</span>
+                </a>
+            </div>
             
             <!-- Student Info Box -->
             <div class="student-info-box scroll-fade">
                 <h3>About the student</h3>
-                <p><strong>Student:</strong> Dr Hu Binwen</p>
-                <p><strong>Programme:</strong> 2024 MScPHM with Capstone</p>
-                <p><strong>Capstone project:</strong></p>
-                <p><strong>Department:</strong> Department of Biochemistry, NUS Medicine</p>
-                <p><strong>Title:</strong> Helping establish an ISO accredited workflow in a university setting for precision medicine applications</p>
-                <p><strong>Mentor:</strong> Assistant Professor Federico Tesio Torta</p>
+                <p><strong>Student:</strong> Dr Jun Hua Chong</p>
+                <p><strong>Programme:</strong> 2023 MScPHM</p>
+                <p><strong>Professional background:</strong> Cardiologist Consultant</p>
+                <p><strong>Publication:</strong> "Revolutionising Cardio-Oncology Care with Precision Genomics" - International Journal of Molecular Sciences</p>
+                <p><strong>Course instructor:</strong> Professor Caroline Lee</p>
             </div>
         </div>
         
