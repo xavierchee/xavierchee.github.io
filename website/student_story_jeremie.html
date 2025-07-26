@@ -1,17 +1,15 @@
-<!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: July 26, 2025 - 3:30 PM
-    ============================================
-    
-    Recent Changes:
-    - Linked Photos subsection to https://xavierchee.github.io/website/photo.html
-    - Added Vision and mission as first subsection under About us, linking to https://xavierchee.github.io/website/vision_mission.html
+Changes made on 2025-01-26 23:50:
+- Updated banner image to use student_stories banner
+- Removed application banner for 2026
 -->
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Process - Master's Programme - Precision Health & Medicine - NUS</title>
+    <title>Student Stories - Jeremie Darmawan - Master's Programme - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -294,80 +292,83 @@
             color: #5a6c7d;
             font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
             font-weight: 400;
         }
         
-        /* First content after section headers */
-        .section-first-content {
-            margin-top: 20px;
+        /* Story specific styles */
+        .story-date {
+            color: #FF6B35;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
         }
         
-        .application-list {
-            margin-bottom: 30px;
+        .story-subtitle {
+            color: #003D7C;
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
         }
         
-        .application-list li {
+        .story-paragraph {
             color: #5a6c7d;
             font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 15px;
-            margin-left: 25px;
+            margin-bottom: 25px;
+            font-weight: 400;
         }
         
-        .application-list li strong {
-            color: #003D7C;
-            font-weight: 600;
-        }
-        
-        .application-link {
-            color: #FF6B35;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-        
-        .application-link:hover {
-            border-bottom-color: #FF6B35;
-        }
-        
-        .fee-notice {
+        .story-quote {
             font-style: italic;
-            color: #5a6c7d;
-            font-size: 16px;
-            margin-top: 20px;
+            color: #003D7C;
+            font-size: 18px;
+            line-height: 1.8;
+            margin: 30px 0;
+            padding: 20px 30px;
+            background: rgba(0, 61, 124, 0.03);
+            border-left: 4px solid #FF6B35;
+            border-radius: 4px;
         }
         
-        /* Process Image */
-        .process-image-wrapper {
-            margin: 50px 0;
-            position: relative;
-        }
-        
-        .process-image {
+        .story-image {
             width: 100%;
             height: auto;
-            display: block;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.1);
+            margin: 30px 0;
         }
         
-        /* Year overlays for the process timeline */
-        .year-overlay {
-            position: absolute;
+        .student-info-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            margin-top: 40px;
+        }
+        
+        .student-info-box h3 {
+            color: #003D7C;
+            font-size: 20px;
             font-weight: 700;
-            font-size: 14px;
-            color: #FF6B35;
-            z-index: 10;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
         }
         
-        .year-2025 {
-            bottom: 65px;
-            left: 27.5%;
+        .student-info-box p {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 8px;
         }
         
-        .year-2026 {
-            bottom: 65px;
-            right: 26%;
+        .student-info-box strong {
+            color: #003D7C;
+            font-weight: 600;
         }
         
         /* Action Buttons - Fixed Floating Menu */
@@ -467,42 +468,45 @@
         }
         
         .menu-icon {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             position: relative;
             transition: all 0.3s ease;
         }
         
-        .menu-icon::before,
-        .menu-icon::after {
-            content: '';
+        .menu-icon span {
             position: absolute;
+            width: 100%;
+            height: 3px;
             background: white;
+            border-radius: 3px;
+            left: 0;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .menu-icon::before {
-            width: 100%;
-            height: 3px;
+        .menu-icon span:nth-child(1) {
+            top: 0;
+        }
+        
+        .menu-icon span:nth-child(2) {
             top: 50%;
-            left: 0;
             transform: translateY(-50%);
         }
         
-        .menu-icon::after {
-            width: 3px;
-            height: 100%;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+        .menu-icon span:nth-child(3) {
+            bottom: 0;
         }
         
-        .action-menu-trigger.active .menu-icon::before {
-            transform: translateY(-50%) rotate(45deg);
+        .action-menu-trigger.active .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
         }
         
-        .action-menu-trigger.active .menu-icon::after {
-            transform: translateX(-50%) rotate(45deg);
+        .action-menu-trigger.active .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .action-menu-trigger.active .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(10px, -10px);
         }
         
         .action-items {
@@ -520,7 +524,7 @@
             border-radius: 50px;
             display: flex;
             align-items: center;
-            padding: 10px 18px 10px 10px;
+            padding: 12px 25px 12px 12px;
             text-decoration: none;
             color: #003D7C;
             box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
@@ -531,11 +535,11 @@
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             pointer-events: none;
             overflow: hidden;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 500;
-            width: 300px;
-            gap: 8px;
-            line-height: 1.2;
+            width: 380px;
+            gap: 12px;
+            line-height: 1.3;
         }
         
         .action-button::before {
@@ -563,23 +567,23 @@
         }
         
         .action-items.active .action-button:nth-child(1) {
-            transform: translateY(-170px) scale(1) translateX(0);
+            transform: translateY(-210px) scale(1) translateX(0);
             transition-delay: 0.15s;
         }
         
         .action-items.active .action-button:nth-child(2) {
-            transform: translateY(-110px) scale(1) translateX(0);
+            transform: translateY(-140px) scale(1) translateX(0);
             transition-delay: 0.3s;
         }
         
         .action-items.active .action-button:nth-child(3) {
-            transform: translateY(-55px) scale(1) translateX(0);
+            transform: translateY(-70px) scale(1) translateX(0);
             transition-delay: 0.45s;
         }
         
         .action-button-icon {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             background: #dc2626;
             border-radius: 50%;
             display: flex;
@@ -593,7 +597,7 @@
         .action-button-icon::after {
             content: '→';
             color: white;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 700;
             line-height: 1;
         }
@@ -613,15 +617,15 @@
         }
         
         .action-button:nth-child(1):hover {
-            --y: -170px;
+            --y: -210px;
         }
         
         .action-button:nth-child(2):hover {
-            --y: -110px;
+            --y: -140px;
         }
         
         .action-button:nth-child(3):hover {
-            --y: -55px;
+            --y: -70px;
         }
         
         .action-button-text {
@@ -821,245 +825,6 @@
             letter-spacing: 0.5px;
         }
         
-        /* Document sections */
-        .document-section {
-            margin-top: 30px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.08);
-            border: 1px solid rgba(0, 61, 124, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .document-section:first-of-type {
-            margin-top: 0;
-        }
-        
-        .document-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #FF6B35, #FF8554);
-        }
-        
-        /* Dropdown Header */
-        .dropdown-header {
-            background: white;
-            padding: 30px 40px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            border-radius: 16px 16px 0 0;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .dropdown-header:hover {
-            background: rgba(0, 61, 124, 0.02);
-        }
-        
-        .dropdown-header h2 {
-            color: #003D7C;
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -0.3px;
-            flex: 1;
-        }
-        
-        .dropdown-arrow {
-            color: #FF6B35;
-            font-size: 24px;
-            font-weight: 700;
-            transition: transform 0.3s ease;
-            margin-left: 20px;
-        }
-        
-        .dropdown-header.active .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-        
-        /* Dropdown Content */
-        .dropdown-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            background: white;
-            border-radius: 0 0 16px 16px;
-            transform-origin: top;
-        }
-        
-        .dropdown-content.active {
-            max-height: 3000px;
-            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .dropdown-content-inner {
-            padding: 0 40px 40px 40px;
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
-        }
-        
-        .dropdown-content:not(.active) .dropdown-content-inner {
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        
-        .document-section h3 {
-            color: #003D7C;
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            margin-top: 35px;
-            letter-spacing: -0.2px;
-        }
-        
-        .document-section h3:first-of-type {
-            margin-top: 0;
-        }
-        
-        .document-intro {
-            color: #5a6c7d;
-            font-size: 16px;
-            line-height: 1.7;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255, 107, 53, 0.05);
-            border-left: 4px solid #FF6B35;
-            border-radius: 8px;
-        }
-        
-        .document-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .document-list > li {
-            margin-bottom: 20px;
-            padding: 20px;
-            background: rgba(0, 61, 124, 0.02);
-            border-radius: 10px;
-            border-left: 4px solid #003D7C;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .document-list > li:hover {
-            transform: translateX(5px);
-            background: rgba(0, 61, 124, 0.04);
-            box-shadow: 0 2px 15px rgba(0, 61, 124, 0.1);
-        }
-        
-        .document-list > li::before {
-            content: counter(doc-counter);
-            counter-increment: doc-counter;
-            position: absolute;
-            left: -15px;
-            top: 20px;
-            background: #003D7C;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-        }
-        
-        .compulsory-docs {
-            counter-reset: doc-counter;
-        }
-        
-        .optional-docs {
-            counter-reset: doc-counter;
-        }
-        
-        .document-list strong {
-            color: #003D7C;
-            font-weight: 600;
-        }
-        
-        .document-list ul {
-            margin-top: 12px;
-            margin-left: 20px;
-        }
-        
-        .document-list ul li {
-            color: #5a6c7d;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 15px;
-        }
-        
-        .document-list ul li::before {
-            content: '•';
-            color: #FF6B35;
-            font-weight: 700;
-            position: absolute;
-            left: 0;
-        }
-        
-        .document-warning {
-            margin: 30px 0;
-            padding: 25px;
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(239, 68, 68, 0.05) 100%);
-            border: 2px solid rgba(220, 38, 38, 0.2);
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .document-warning::before {
-            content: '⚠️';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 20px;
-        }
-        
-        .document-warning p {
-            color: #7c2d12;
-            font-size: 16px;
-            line-height: 1.7;
-            margin: 0;
-            padding-left: 45px;
-            font-weight: 500;
-        }
-        
-        .document-warning strong {
-            color: #991b1b;
-            font-weight: 700;
-        }
-        
-        .requirement-note {
-            background: rgba(255, 107, 53, 0.05);
-            border-left: 3px solid #FF6B35;
-            padding: 12px 20px;
-            margin: 15px 0;
-            font-size: 14px;
-            color: #5a6c7d;
-            font-style: italic;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .requirement-note strong {
-            color: #003D7C;
-            font-weight: 600;
-        }
-        
         /* Scroll animations */
         .scroll-fade {
             opacity: 0;
@@ -1072,7 +837,53 @@
             transform: translateY(0);
         }
         
-        /* Mobile adjustments */
+        /* Responsive Design */
+        @media (max-width: 1600px) {
+            .main-content {
+                padding: 0 60px;
+            }
+        }
+        
+        @media (max-width: 1400px) {
+            .main-content {
+                padding: 0 50px;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content {
+                gap: 30px;
+                padding: 0 40px;
+            }
+            
+            .nav-links a {
+                padding: 20px 10px;
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .main-content {
+                padding: 0 30px;
+            }
+        }
+        
+        /* Mobile hamburger menu button */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #003D7C;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+        
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
@@ -1097,69 +908,7 @@
                 font-size: 15px;
             }
             
-            .year-overlay {
-                font-size: 12px;
-            }
-            
-            .action-button {
-                width: 85vw;
-                max-width: 280px;
-                padding: 8px 15px 8px 8px;
-                font-size: 12px;
-                gap: 8px;
-            }
-            
-            .action-button-icon {
-                width: 30px;
-                height: 30px;
-            }
-            
-            .action-button-icon::after {
-                font-size: 14px;
-            }
-            
-            .action-items.active .action-button:nth-child(1) {
-                transform: translateY(-150px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(2) {
-                transform: translateY(-95px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(3) {
-                transform: translateY(-45px) scale(1) translateX(0);
-            }
-            
-            .action-button:nth-child(1):hover {
-                --y: -150px;
-            }
-            
-            .action-button:nth-child(2):hover {
-                --y: -95px;
-            }
-            
-            .action-button:nth-child(3):hover {
-                --y: -45px;
-            }
-        }
-        
-        /* Mobile hamburger menu button */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #003D7C;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1001;
-        }
-        
-        @media (max-width: 768px) {
+            /* Mobile navigation */
             .mobile-menu-toggle {
                 display: block;
             }
@@ -1268,6 +1017,48 @@
                 padding: 0 20px;
                 margin: 30px auto;
             }
+            
+            /* Mobile adjustments for action buttons */
+            .action-button {
+                width: 85vw;
+                max-width: 350px;
+                padding: 10px 20px 10px 10px;
+                font-size: 14px;
+                gap: 10px;
+            }
+            
+            .action-button-icon {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .action-button-icon::after {
+                font-size: 18px;
+            }
+            
+            .action-items.active .action-button:nth-child(1) {
+                transform: translateY(-190px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(2) {
+                transform: translateY(-125px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(3) {
+                transform: translateY(-60px) scale(1) translateX(0);
+            }
+            
+            .action-button:nth-child(1):hover {
+                --y: -190px;
+            }
+            
+            .action-button:nth-child(2):hover {
+                --y: -125px;
+            }
+            
+            .action-button:nth-child(3):hover {
+                --y: -60px;
+            }
         }
     </style>
 </head>
@@ -1275,8 +1066,8 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://medicine.nus.edu.sg/bch/">
-                <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
+            <a href="https://xchee-01.github.io/website/">
+                <img src="https://xchee-01.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
     </div>
@@ -1288,21 +1079,21 @@
                 <span id="menu-icon">☰</span>
             </button>
             <ul class="nav-links">
-                <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
+                <li><a href="#home">Home</a></li>
                 
                 <li class="has-dropdown">
                     <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
-                        <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
+                        <a href="#programme-pathways">Programme pathways</a>
+                        <a href="#graduate-certificate">Graduate certificate</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
-                        <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
+                        <a href="#core-courses">Core courses</a>
+                        <a href="#elective-courses">Elective courses</a>
                         <a href="#others">Others</a>
                     </div>
                 </li>
@@ -1310,16 +1101,16 @@
                 <li class="has-dropdown">
                     <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
+                        <a href="#capstone-pathways">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
-                        <a href="https://xavierchee.github.io/website/application.html">Application</a>
-                        <a href="https://xavierchee.github.io/website/tuition_fee.html">Tuition fees</a>
+                        <a href="#eligibility">Eligibility</a>
+                        <a href="#application">Application</a>
+                        <a href="#tuition-fees">Tuition fees</a>
                     </div>
                 </li>
                 
@@ -1327,16 +1118,15 @@
                     <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="#student-stories">Student stories</a>
-                        <a href="https://xavierchee.github.io/website/photo.html">Photos</a>
+                        <a href="#photos">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#about">About us</a>
                     <div class="dropdown-menu">
-                        <a href="https://xavierchee.github.io/website/vision_mission.html">Vision and mission</a>
-                        <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
-                        <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
+                        <a href="#what-is-precision-medicine">What is precision medicine?</a>
+                        <a href="#meet-our-team">Meet our team</a>
                     </div>
                 </li>
             </ul>
@@ -1346,176 +1136,93 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
     
-    <!-- Application Banner -->
-    <div class="application-banner">
-        Our Masters programme application for 2026 is open now!
-    </div>
+
     
-    <!-- Application Banner Image -->
+    <!-- Student Stories Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/application/application_banner.png" 
-             alt="Application Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/student_stories/banner_student_stories.png" 
+             alt="Student Stories Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Application Process</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Student Stories</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <!-- Application Process Section -->
-            <div class="document-section scroll-fade">
-                <div class="dropdown-header" onclick="toggleDropdown(this)">
-                    <h2>Application Process</h2>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-                <div class="dropdown-content">
-                    <div class="dropdown-content-inner">
-                        <p class="section-text section-first-content">
-                            The application period for August 2025 intake is now open, and closes on:
-                        </p>
-                        
-                        <ul class="application-list">
-                            <li><strong>31 May 2026</strong> for international applicants</li>
-                            <li><strong>30 June 2026</strong> for local applicants.</li>
-                        </ul>
-                        
-                        <p class="section-text">
-                            Please visit the <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="application-link">Graduate Admission System</a> to apply online.
-                        </p>
-                        
-                        <p class="section-text">
-                            You can refer to the <a href="https://nusgs.nus.edu.sg/wp-content/uploads/2024/04/GDA3-Applicant-User-Guide.pdf" target="_blank" class="application-link">Applicant Guide</a> to the Graduate Admission System.
-                        </p>
-                        
-                        <p class="fee-notice">
-                            A non-refundable, non-transferable application fee of S$50.47 applies.
-                        </p>
-                        
-                        <!-- Process Timeline Image -->
-                        <div class="process-image-wrapper">
-                            <img src="https://xavierchee.github.io/website/website_assets/application/application_process.png" 
-                                 alt="Application Process Timeline" 
-                                 class="process-image">
-                            <div class="year-overlay year-2025">2025</div>
-                            <div class="year-overlay year-2026">2026</div>
-                        </div>
-                    </div>
-                </div>
+            <h1 class="section-header scroll-fade">From Classroom to Cutting-Edge Innovation: Jeremie Darmawan's Precision Medicine Journey</h1>
+            <p class="story-date">11 March 2025</p>
+            
+            <p class="story-paragraph scroll-fade">
+                When Jeremie Theddy Darmawan first joined the MSc in Precision Health and Medicine (MScPHM) program, he had one goal in mind—to bridge the gap between bioinformatics and real-world healthcare applications. Jeremie is a MScPHM Scholar from Indonesia International Institute for Life-Sciences (i3L) with a specialisation in Bioinformatics and a strong foundation in computational biology. i3L, both an institute of higher learning and research institute, strives to accelerate Indonesia's competitiveness in the global landscape. Hence, Jeremie recognizes that in order to make a real impact in precision medicine, he needed hands-on experience in both academia and industry.
+            </p>
+            
+            <img src="https://xavierchee.github.io/website/website_assets/student_stories/jeremie/jeremie_1.jpg" 
+                 alt="Jeremie Darmawan" 
+                 class="story-image scroll-fade">
+            
+            <h2 class="story-subtitle scroll-fade">Making an Impact at MSD</h2>
+            <p class="story-paragraph scroll-fade">
+                The Ear OCT Imaging Biomarker Project is an innovative initiative aimed at developing non-invasive imaging biomarkers for studying ear infections using optical coherence tomography (OCT). This project has the potential to enhance early diagnosis and treatment, ultimately improving patient care.
+            </p>
+            
+            <p class="story-paragraph scroll-fade">
+                At MSD, Jeremie quickly became an integral part of the research team, demonstrating exceptional technical expertise and problem-solving skills. He optimize the segmentation workflow, transitioned critical components from Matlab to Python, and played a pivotal role in AI-driven measurements of tympanic membrane thickness in 3D—a significant advancement in the project's image analytical pipeline.
+            </p>
+            
+            <p class="story-paragraph scroll-fade">
+                His supervisor, Dr. Luo Weiwei, Principal Scientist, Biomarkers C Data Analytics, reached out to highlight his contributions to the MScPHM Directors to highlight his exceptional contributions. "Jeremie's ability to integrate into a fast-paced research environment and enhance our workflow so quickly has been outstanding," Dr. Luo shared. "His structured approach to quality control, algorithm development, and AI-driven analysis has been invaluable. His work is already being recognized by key colleagues in Singapore and the US."
+            </p>
+            
+            <p class="story-paragraph scroll-fade">
+                For Jeremie, this capstone project has been both challenging and transformative.
+            </p>
+            
+            <h2 class="story-subtitle scroll-fade">Bridging Academia and Industry in Precision Medicine</h2>
+            
+            <p class="story-paragraph scroll-fade">
+                Reflecting on his experience at MSD, Jeremie shared:
+            </p>
+            
+            <div class="story-quote scroll-fade">
+                "A key takeaway has been the importance of aligning innovation with the pragmatic needs of real-world implementation. Working in a fast-paced corporate environment has helped me develop adaptability and a result-driven mindset, while reinforcing the critical role of AI/ML and biology in driving impactful healthcare solutions. The MScPHM program has given me the tools to not only understand precision medicine but actively contribute to its evolution."
             </div>
             
-            <!-- Application Documents Section -->
-            <div class="document-section scroll-fade">
-                <div class="dropdown-header" onclick="toggleDropdown(this)">
-                    <h2>Application Documents</h2>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-                <div class="dropdown-content">
-                    <div class="dropdown-content-inner">
-                        <div class="document-intro section-first-content">
-                            <strong>Instructions for Uploading Application Documents</strong><br>
-                            Documents in languages other than English must include certified English translations. Incomplete or inaccurate applications will not be processed.<br><br>
-                            Please upload all supporting documents to the Graduate Admission System under "Document Upload" in PDF format only.<br><br>
-                            You may be contacted via email if additional documentation is required for your application.
-                        </div>
-                        
-                        <div class="document-warning">
-                            <p>Applicants must ensure all application information and supporting documents are <strong>truthful and accurate</strong>. NUS reserves the right to verify any information provided. <strong>False or misleading information in applications</strong> (including test scores, resumes, certificates, transcripts, etc.) <strong>will result in rejection, revocation of admission, and/or dismissal from the University</strong>.</p>
-                        </div>
-                        
-                        <h3>Compulsory Documents</h3>
-                        <ol class="document-list compulsory-docs">
-                            <li>
-                                Your <strong>resume/CV</strong> detailing educational background, internships, work experience, achievements, etc.
-                            </li>
-                            <li>
-                                Your <strong>identification documents</strong>:
-                                <ul>
-                                    <li>Singapore Citizens and Permanent Residents: NRIC (front and back)</li>
-                                    <li>International applicants: Passport (identification page) and Employment Pass (if applicable)</li>
-                                </ul>
-                            </li>
-                            <li>
-                                Certified copies of <strong>transcripts/mark sheets</strong> and <strong>degree certificate</strong>
-                            </li>
-                            <li>
-                                Your <strong>TOEFL/IELTS scores</strong> (Required if English is not your native language or medium of university instruction)
-                            </li>
-                            <li>
-                                A <strong>Statement of Purpose</strong> explaining your reasons for applying to this programme
-                            </li>
-                        </ol>
-                        
-                        <h3>Optional Documents</h3>
-                        <ol class="document-list optional-docs">
-                            <li>
-                                <strong>Test scores (e.g., GRE)</strong>
-                            </li>
-                            <li>
-                                <strong>Participation and awards in quantitative competitions (e.g., Math Olympiad)</strong>
-                            </li>
-                            <li>
-                                <strong>Certificate of completion in basic programming (e.g., R or Python) and/or basic statistics course</strong> (reputable online courses acceptable)
-                            </li>
-                            <li>
-                                <strong>Reference letters</strong>
-                            </li>
-                        </ol>
-                        
-                        <div class="requirement-note">
-                            <strong>Note 6:</strong> Financial assistance requires reference letters to be submitted directly by professional referees through the Graduate Admission System. Designate at least one referee who will receive automated email instructions for submission. Recommended referees include university faculty members or direct work supervisors. Reference letters from family members, friends, or relatives will not be accepted.
-                        </div>
-                        
-                        <div class="requirement-note">
-                            <strong>Note 7:</strong> Students will only be considered for financial assistance after acceptance of their offer.
-                        </div>
-                    </div>
-                </div>
+            <p class="story-paragraph scroll-fade">
+                He also emphasized how the MScPHM program has helped him navigate the intersection of academic discovery and industry application:
+            </p>
+            
+            <div class="story-quote scroll-fade">
+                "The MScPHM program has been an enriching experience that combines rigorous academic training with hands-on industry exposure. My capstone at MSD has provided a platform to bridge theoretical knowledge with practical applications in a real-world setting. The experience has reinforced the complementary strengths of academic and industry research—pushing the boundaries of innovation while keeping grounded on translatable discoveries into tangible outcomes that can directly benefit patients. Through this project, I've gained a deeper appreciation for how cutting-edge AI/ML techniques can be integrated into the drug development process to enhance precision medicine."
             </div>
             
-            <!-- Application Outcome Section -->
-            <div class="document-section scroll-fade">
-                <div class="dropdown-header" onclick="toggleDropdown(this)">
-                    <h2>Application Outcome</h2>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-                <div class="dropdown-content">
-                    <div class="dropdown-content-inner">
-                        <p class="section-text section-first-content">
-                            Applications are processed on a rolling basis, with outcomes released in batches. Candidates may receive offers after the application closing date, and the selection process does not strictly adhere to the order of submission or interview dates.
-                        </p>
-                    </div>
-                </div>
+            <h2 class="story-subtitle scroll-fade">A Future of Endless Possibilities</h2>
+            <p class="story-paragraph scroll-fade">
+                Although this is just the beginning of his capstone project, Jeremie has already demonstrated exceptional promise. Given his technical expertise, adaptability, and drive, he is expected to make further contributions by the end of his capstone and go on to secure a successful career in precision medicine.
+            </p>
+            
+            <p class="story-paragraph scroll-fade">
+                As one of the inaugural MScPHM students, Jeremie's success showcases the program's ability to equip students with the skills and experiences needed to thrive in precision medicine.
+            </p>
+            
+            <p class="story-paragraph scroll-fade">
+                <strong>His advice for future students?</strong>
+            </p>
+            
+            <div class="story-quote scroll-fade">
+                "Embrace both academic and industry perspectives. The ability to navigate between the two is crucial for making meaningful contributions in precision medicine. Stay curious, be adaptable, and seek out hands-on experiences—every challenge is an opportunity to grow. The MScPHM program provides an incredible platform to learn, innovate, and contribute—so make the most of it!"
             </div>
             
-            <!-- Acceptance Section -->
-            <div class="document-section scroll-fade">
-                <div class="dropdown-header" onclick="toggleDropdown(this)">
-                    <h2>Acceptance</h2>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-                <div class="dropdown-content">
-                    <div class="dropdown-content-inner">
-                        <h3 class="section-first-content">Before accepting:</h3>
-                        <ul class="application-list">
-                            <li><strong>Self-supporting students</strong> must upload financial documents (bank statement or recent pay slip)</li>
-                            <li><strong>Sponsored students</strong> must upload a confirmation letter from their sponsor with proof of financial status</li>
-                            <li><strong>Financial proof</strong> must certify ability to cover tuition, student fees, and living expenses of S$18,000 per year for the entire MSc programme</li>
-                            <li><strong>Failure to provide proper documentation</strong> will delay processing or disqualify your application</li>
-                        </ul>
-                        
-                        <h3>When accepting:</h3>
-                        <ul class="application-list">
-                            <li>Pay the <strong>non-refundable, non-transferable acceptance fee of SGD 5,450.00</strong> (including 9% GST) through the Graduate admission system</li>
-                            <li>This fee will be <strong>credited toward tuition fees</strong></li>
-                        </ul>
-                        
-                        <div class="requirement-note">
-                            <strong>Note 8:</strong> Scholarship or tuition fee waiver decisions are made separately from admissions offers and may be communicated later.
-                        </div>
-                    </div>
-                </div>
+            <!-- Student Info Box -->
+            <div class="student-info-box scroll-fade">
+                <h3>About the student</h3>
+                <p><strong>Student:</strong> Mr Jeremie Theddy Darmawan</p>
+                <p><strong>Programme:</strong> 2024 MScPHM with Capstone</p>
+                <p><strong>Capstone project:</strong></p>
+                <p><strong>Company:</strong> MSD Singapore</p>
+                <p><strong>Title:</strong> Imaging Biomarker Discovery using AI/ML techniques: Medical image analysis and data mining</p>
+                <p><strong>Mentor:</strong> Dr Luo Wei Wei</p>
             </div>
         </div>
         
@@ -1553,18 +1260,22 @@
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon"></div>
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </button>
         <div class="action-items">
-            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
+            <a href="#" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>
@@ -1669,43 +1380,6 @@
         document.querySelectorAll('.scroll-fade').forEach(el => {
             observer.observe(el);
         });
-        
-        // Dropdown toggle functionality
-        function toggleDropdown(headerElement) {
-            const content = headerElement.nextElementSibling;
-            const arrow = headerElement.querySelector('.dropdown-arrow');
-            const contentInner = content.querySelector('.dropdown-content-inner');
-            
-            // Toggle active class
-            headerElement.classList.toggle('active');
-            
-            if (!content.classList.contains('active')) {
-                // Opening dropdown
-                content.classList.add('active');
-                // Force reflow
-                content.offsetHeight;
-                // Set max-height to actual content height for smooth animation
-                content.style.maxHeight = contentInner.scrollHeight + 80 + "px";
-            } else {
-                // Closing dropdown
-                content.style.maxHeight = "0px";
-                // Remove active class after animation
-                setTimeout(() => {
-                    content.classList.remove('active');
-                }, 600);
-            }
-        }
-        
-        // Initialize - show first dropdown by default
-        // COMMENTED OUT: Now all dropdowns start closed until user clicks
-        /*
-        document.addEventListener('DOMContentLoaded', function() {
-            const firstDropdown = document.querySelector('.dropdown-header');
-            if (firstDropdown) {
-                toggleDropdown(firstDropdown);
-            }
-        });
-        */
         
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
