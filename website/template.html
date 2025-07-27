@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 27, 2025 - 09:30 PM
+    CHANGE LOG - Last Updated: January 28, 2025 - 04:15 UTC+8
     ============================================
     
     Recent Changes:
-    - Updated Photos link to point to https://xavierchee.github.io/website/photo.html
-    - Added Vision and mission as first subsection under About us, linking to https://xavierchee.github.io/website/vision_mission.html
+    - Changed floating menu button icon from hamburger style to plus sign using ::before and ::after pseudo-elements
+    - Updated active state transform to rotate(135deg) scale(0.9) to match template_backup_v15.html
+    - Removed span elements from menu-icon div for cleaner markup
 -->
 <html lang="en">
 <head>
@@ -362,7 +363,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             animation: glow-pulse 2s ease-in-out infinite, float-button 3s ease-in-out infinite;
             overflow: hidden;
         }
@@ -1109,7 +1110,7 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://medicine.nus.edu.sg/bch/">
+            <a href="https://xavierchee.github.io/website/homepage.html">
                 <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
@@ -1160,7 +1161,7 @@
                 <li class="has-dropdown">
                     <a href="#">Student stories and photos</a>
                     <div class="dropdown-menu">
-                        <a href="#student-stories">Student stories</a>
+                        <a href="https://xavierchee.github.io/website/student_stories.html">Student stories</a>
                         <a href="https://xavierchee.github.io/website/photo.html">Photos</a>
                     </div>
                 </li>
@@ -1342,7 +1343,7 @@
             <div class="menu-icon"></div>
         </button>
         <div class="action-items">
-            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
+            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
@@ -1350,7 +1351,7 @@
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
+            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>

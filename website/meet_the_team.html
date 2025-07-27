@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 27, 2025 - 09:34 PM
-    ============================================
-    
-    Recent Changes:
-    - Updated Photos link to point to https://xavierchee.github.io/website/photo.html
-    - Added Vision and mission as first subsection under About us, linking to https://xavierchee.github.io/website/vision_mission.html
+CHANGE LOG - Last Updated: January 28, 2025 - 04:15 UTC+8
+============================================
+
+Recent Changes:
+- Updated floating menu button animation to match template.html
+- Changed transition timing from 0.5s to 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+- Ensured active state transform is rotate(135deg) scale(0.9)
+    - Confirmed menu icon uses ::before and ::after pseudo-elements for plus sign
 -->
 <html lang="en">
 <head>
@@ -523,7 +525,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             animation: glow-pulse 2s ease-in-out infinite, float-button 3s ease-in-out infinite;
             overflow: hidden;
         }
@@ -1222,7 +1224,7 @@
                 <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Programme structure</a>
+                    <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
                         <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
@@ -1230,7 +1232,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Courses</a>
+                    <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
@@ -1239,14 +1241,14 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Capstone projects</a>
+                    <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Admissions</a>
+                    <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
                         <a href="https://xavierchee.github.io/website/application.html">Application</a>
@@ -1255,15 +1257,15 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Student stories and photos</a>
+                    <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
-                        <a href="#student-stories">Student stories</a>
+                        <a href="https://xavierchee.github.io/website/student_stories.html">Student stories</a>
                         <a href="https://xavierchee.github.io/website/photo.html">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">About us</a>
+                    <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/vision_mission.html">Vision and mission</a>
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
