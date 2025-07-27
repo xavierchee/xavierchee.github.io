@@ -1,7 +1,11 @@
 <!-- 
-Changes made on 2025-01-26 23:50:
-- Updated banner image to use student_stories banner
-- Removed application banner for 2026
+    CHANGE LOG - Last Updated: January 28, 2025 - 04:25 UTC+8
+    ============================================
+    
+    Recent Changes:
+    - Updated floating menu button icon to use ::before and ::after pseudo-elements matching template.html
+    - Changed active state transform to rotate(135deg) scale(0.9)
+    - Updated menu icon styles and animations
 -->
 
 <!DOCTYPE html>
@@ -408,7 +412,7 @@ Changes made on 2025-01-26 23:50:
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             animation: glow-pulse 2s ease-in-out infinite, float-button 3s ease-in-out infinite;
             overflow: hidden;
         }
@@ -468,45 +472,42 @@ Changes made on 2025-01-26 23:50:
         }
         
         .menu-icon {
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             position: relative;
             transition: all 0.3s ease;
         }
         
-        .menu-icon span {
+        .menu-icon::before,
+        .menu-icon::after {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 3px;
             background: white;
-            border-radius: 3px;
-            left: 0;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        .menu-icon span:nth-child(1) {
-            top: 0;
-        }
-        
-        .menu-icon span:nth-child(2) {
+        .menu-icon::before {
+            width: 100%;
+            height: 3px;
             top: 50%;
+            left: 0;
             transform: translateY(-50%);
         }
         
-        .menu-icon span:nth-child(3) {
-            bottom: 0;
+        .menu-icon::after {
+            width: 3px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
+        .action-menu-trigger.active .menu-icon::before {
+            transform: translateY(-50%) rotate(45deg);
         }
         
-        .action-menu-trigger.active .menu-icon span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .action-menu-trigger.active .menu-icon span:nth-child(3) {
-            transform: rotate(-45deg) translate(10px, -10px);
+        .action-menu-trigger.active .menu-icon::after {
+            transform: translateX(-50%) rotate(45deg);
         }
         
         .action-items {
@@ -1079,21 +1080,21 @@ Changes made on 2025-01-26 23:50:
                 <span id="menu-icon">☰</span>
             </button>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
+                <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
                     <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
-                        <a href="#programme-pathways">Programme pathways</a>
-                        <a href="#graduate-certificate">Graduate certificate</a>
+                        <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
+                        <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
-                        <a href="#core-courses">Core courses</a>
-                        <a href="#elective-courses">Elective courses</a>
+                        <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
+                        <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
                         <a href="#others">Others</a>
                     </div>
                 </li>
@@ -1101,32 +1102,33 @@ Changes made on 2025-01-26 23:50:
                 <li class="has-dropdown">
                     <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
-                        <a href="#capstone-pathways">Capstone pathways</a>
+                        <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
-                        <a href="#eligibility">Eligibility</a>
-                        <a href="#application">Application</a>
-                        <a href="#tuition-fees">Tuition fees</a>
+                        <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
+                        <a href="https://xavierchee.github.io/website/application.html">Application</a>
+                        <a href="https://xavierchee.github.io/website/tuition_fee.html">Tuition fees</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#stories">Student stories and photos</a>
                     <div class="dropdown-menu">
-                        <a href="#student-stories">Student stories</a>
-                        <a href="#photos">Photos</a>
+                        <a href="https://xavierchee.github.io/website/student_stories.html">Student stories</a>
+                        <a href="https://xavierchee.github.io/website/photo.html">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
                     <a href="#about">About us</a>
                     <div class="dropdown-menu">
-                        <a href="#what-is-precision-medicine">What is precision medicine?</a>
-                        <a href="#meet-our-team">Meet our team</a>
+                        <a href="https://xavierchee.github.io/website/vision_mission.html">Vision and mission</a>
+                        <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
+                        <a href="https://xavierchee.github.io/website/meet_the_team.html">Meet our team</a>
                     </div>
                 </li>
             </ul>
@@ -1167,7 +1169,7 @@ Changes made on 2025-01-26 23:50:
                 "The MScPHM programme gave me the foundation and technical skillset I needed to turn a passion into purpose. It transformed how I think—from broad group trends to individualized solutions rooted in data and biology."
             </div>
             
-            <img src="https://xavierchee.github.io/website/website_assets/student_stories/bruce_1.jpg" 
+            <img src="https://xavierchee.github.io/website/website_assets/student_stories/bruce/bruce_1.jpg" 
                  alt="Bruce Song Mingyang" 
                  class="story-image scroll-fade">
             
@@ -1197,7 +1199,7 @@ Changes made on 2025-01-26 23:50:
                 "For the first time, I could combine physiological data, training loads, and subjective perceptions into a model that offered real-time, personalized insights. That kind of innovation is what sports science needs."
             </div>
             
-            <img src="https://xavierchee.github.io/website/website_assets/student_stories/bruce_2.jpg" 
+            <img src="https://xavierchee.github.io/website/website_assets/student_stories/bruce/bruce_2.jpg" 
                  alt="Bruce working on research" 
                  class="story-image scroll-fade">
             
@@ -1219,7 +1221,7 @@ Changes made on 2025-01-26 23:50:
                 As Bruce prepares for his PhD journey, he carries forward the lessons learned at NUS: that precision medicine is not just about technology—it's about reimagining how we approach human health, one individual at a time.
             </p>
             
-            <img src="https://xavierchee.github.io/website/website_assets/student_stories/bruce_3.jpg" 
+            <img src="https://xavierchee.github.io/website/website_assets/student_stories/bruce/bruce_3.jpg" 
                  alt="Bruce at NUS campus" 
                  class="story-image scroll-fade">
             
@@ -1265,22 +1267,18 @@ Changes made on 2025-01-26 23:50:
     <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
-            <div class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="menu-icon"></div>
         </button>
         <div class="action-items">
-            <a href="#" class="action-button">
+            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="mailto:mscphm@nus.edu.sg" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="#" class="action-button">
+            <a href="https://gradapp.nus.edu.sg/portal/app_manage" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>
