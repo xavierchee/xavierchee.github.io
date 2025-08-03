@@ -2012,29 +2012,24 @@
         
         /* Responsive features */
         @media (max-width: 768px) {
+            /* Keep horizontal tab layout on mobile */
             .tab-toggle {
-                flex-direction: column;
+                /* Remove flex-direction: column; to keep horizontal */
                 padding: 0.3rem;
+                /* Add horizontal scroll if needed on very small screens */
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
             
             .tab-button {
-                width: 100%;
-                text-align: center;
+                /* Adjust padding for mobile but keep side-by-side */
+                padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem);
+                font-size: clamp(0.8rem, 2vw, 0.9rem);
+                white-space: nowrap;
             }
             
-            .tab-indicator {
-                width: calc(100% - 0.6rem) !important;
-                transform: translateX(0) !important;
-                top: auto;
-                bottom: 0.3rem;
-                left: 0.3rem;
-                height: calc(50% - 0.3rem);
-            }
-            
-            .tab-button.active:first-child ~ #tabIndicator {
-                top: 0.3rem;
-                bottom: auto;
-            }
+            /* Keep the horizontal sliding indicator behavior */
+            /* Remove all the vertical indicator styles */
             
             .features-grid {
                 grid-template-columns: 1fr;
@@ -2046,8 +2041,7 @@
                 font-size: 0.6rem;
                 padding: 0.4rem 0.8rem;
             }
-        }
-        
+        }        
         /* =========================================== */
         /* LIFE IN OUR PROGRAMME SECTION               */
         /* =========================================== */
@@ -3792,45 +3786,29 @@
         
         // Initialize tab indicator position
         function updateTabIndicator(activeButton) {
-            if (window.innerWidth <= 768) {
-                // Mobile: vertical tabs
-                const buttons = Array.from(activeButton.parentElement.querySelectorAll('.tab-button'));
-                const activeIndex = buttons.indexOf(activeButton);
-                const indicatorHeight = activeButton.offsetHeight;
-                
-                tabIndicator.style.height = indicatorHeight + 'px';
-                tabIndicator.style.width = 'calc(100% - 0.6rem)';
-                
-                if (activeIndex === 0) {
-                    tabIndicator.style.transform = 'translateY(0)';
-                } else {
-                    tabIndicator.style.transform = `translateY(${activeButton.offsetTop - activeButton.parentElement.offsetTop}px)`;
-                }
+            // Always use horizontal tab logic, regardless of screen size
+            const buttonRect = activeButton.getBoundingClientRect();
+            const toggleRect = activeButton.parentElement.getBoundingClientRect();
+            const buttons = Array.from(activeButton.parentElement.querySelectorAll('.tab-button'));
+            const activeIndex = buttons.indexOf(activeButton);
+
+            if (activeIndex === 0) {
+                // First button - align to left padding
+                tabIndicator.style.width = `${buttonRect.width}px`;
+                tabIndicator.style.transform = `translateX(0)`;
             } else {
-                // Desktop: horizontal tabs
-                const buttonRect = activeButton.getBoundingClientRect();
-                const toggleRect = activeButton.parentElement.getBoundingClientRect();
-                const buttons = Array.from(activeButton.parentElement.querySelectorAll('.tab-button'));
-                const activeIndex = buttons.indexOf(activeButton);
-        
-                if (activeIndex === 0) {
-                    // First button - align to left padding
-                    tabIndicator.style.width = `${buttonRect.width}px`;
-                    tabIndicator.style.transform = `translateX(0)`;
-                } else {
-                    // Second button - calculate to maintain right padding
-                    const togglePadding = 8; // 0.5rem
-                    const availableWidth = toggleRect.width - (togglePadding * 2);
-                    const firstButtonWidth = buttons[0].getBoundingClientRect().width;
-            
-                    // Position at the start of the second button
-                    const leftPosition = buttonRect.left - toggleRect.left - togglePadding;
-                    // Width should fit within the remaining space
-                    const indicatorWidth = availableWidth - leftPosition;
-            
-                    tabIndicator.style.width = `${indicatorWidth}px`;
-                    tabIndicator.style.transform = `translateX(${leftPosition}px)`;
-                }
+                // Second button - calculate to maintain right padding
+                const togglePadding = 8; // 0.5rem
+                const availableWidth = toggleRect.width - (togglePadding * 2);
+                const firstButtonWidth = buttons[0].getBoundingClientRect().width;
+
+                // Position at the start of the second button
+                const leftPosition = buttonRect.left - toggleRect.left - togglePadding;
+                // Width should fit within the remaining space
+                const indicatorWidth = availableWidth - leftPosition;
+
+                tabIndicator.style.width = `${indicatorWidth}px`;
+                tabIndicator.style.transform = `translateX(${leftPosition}px)`;
             }
         }
         
