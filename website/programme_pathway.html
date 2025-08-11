@@ -1,0 +1,950 @@
+<!-- 
+Last Updated: 2025-08-11 22:30:00
+Changes: Added fade-in animations for timeline nodes and connectors
+- Added CSS animations for timeline line, node connectors, node points, and milestone cards
+- Implemented staggered fade-in effects when switching between program timelines
+- Updated JavaScript to trigger animations with appropriate delays for smooth visual experience
+- Timeline elements now fade in sequentially: line → connectors → points → cards
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NUS MSc Precision Health & Medicine - Program Timeline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* ===== NUS BRAND COLORS ===== */
+            --nus-blue: #003D7C;
+            --nus-blue-dark: #002952;
+            --nus-blue-light: #004990;
+            --nus-orange: #EF7C00;
+            --nus-orange-light: #FF9E2C;
+            --nus-orange-dark: #D66E00;
+            --nus-gray-dark: #4A4A4A;
+            --nus-gray: #6C757D;
+            --nus-gray-light: #9B9B9B;
+            --nus-gray-lighter: #E5E5E5;
+            --nus-gray-lightest: #F8F9FA;
+            --text-primary: #2C3E50;
+            --text-secondary: #6C757D;
+            --text-light: #9B9B9B;
+            --bg-white: #FFFFFF;
+            --bg-light: #F8F9FA;
+            --bg-lighter: #FAFBFC;
+            --border-light: #E5E5E5;
+            --border-lighter: #F0F0F0;
+            --shadow-sm: 0 2px 4px rgba(0, 61, 124, 0.08);
+            --shadow-md: 0 4px 8px rgba(0, 61, 124, 0.12);
+            --shadow-lg: 0 8px 16px rgba(0, 61, 124, 0.15);
+            --shadow-xl: 0 12px 24px rgba(0, 61, 124, 0.18);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* ===== EASILY TUNABLE SPACING VARIABLES ===== */
+            
+            /* Main Container Spacing */
+            --container-padding: 2rem;
+            --container-max-width: 1400px;
+            
+            /* Program Selector to Timeline Distance */
+            --selector-to-timeline-gap: -1rem;
+            --description-container-margin-top: 2rem;
+            --description-container-min-height: 90px;
+            
+            /* Timeline Wrapper Spacing */
+            --timeline-wrapper-margin: 1rem 0 4rem 0;
+            --timeline-wrapper-padding: 1rem 0;
+            --timeline-container-min-width: 1200px;
+            --timeline-container-padding: 0 2rem;
+            
+            /* Timeline Track Positioning */
+            --timeline-track-padding: 3rem 0 2rem 0;
+            --timeline-line-top-offset: 75px;
+            --timeline-line-side-margin: 50px;
+            --timeline-line-thickness: 3px;
+            
+            /* Year Markers Positioning */
+            --year-markers-top-offset: -30px;
+            --year-markers-side-margin: 50px;
+            --year-label-font-size: 1.875rem;
+            --year-subtitle-font-size: 0.875rem;
+            --year-label-bottom-margin: 0.25rem;
+            
+            /* Timeline Nodes Spacing */
+            --timeline-nodes-margin-top: 120px;
+            --timeline-nodes-side-padding: 50px;
+            --timeline-node-width: calc(25% - 1rem);
+            --timeline-node-margin: 0 0.5rem;
+            
+            /* Node Connectors */
+            --node-connector-top-offset: -80px;
+            --node-connector-width: 2px;
+            --node-connector-height: 60px;
+            
+            /* Node Points */
+            --node-point-top-offset: -99px;
+            --node-point-size: 18px;
+            --node-point-border-width: 3px;
+            --node-point-hover-size: 22px;
+            --node-point-hover-shadow-size: 6px;
+            
+            /* Milestone Cards - Reduced sizes for compactness */
+            --milestone-card-margin-top: -10px;
+            --milestone-card-padding: 1.25rem;
+            --milestone-card-min-height: 230px;
+            --milestone-card-combined-padding: 1.25rem 1.5rem;
+            --milestone-card-hover-lift: -4px;
+            
+            /* Card Content Spacing - Tightened for compactness */
+            --milestone-header-margin-bottom: 0.75rem;
+            --milestone-title-font-size: 1.125rem;
+            --milestone-title-margin-bottom: 0.25rem;
+            --milestone-subtitle-font-size: 0.8125rem;
+            --milestone-summary-font-size: 0.875rem;
+            --milestone-summary-margin-bottom: 1rem;
+            --milestone-summary-min-height: 2.8rem;
+            
+            /* Tags Spacing */
+            --milestone-tags-gap: 0.375rem;
+            --milestone-tag-padding: 0.3125rem 0.75rem;
+            --milestone-tag-font-size: 0.6875rem;
+            
+            /* Year Divider */
+            --year-divider-top-offset: 0px;
+            --year-divider-width: 3px;
+            
+            /* Program Tabs */
+            --program-tabs-padding: 4px;
+            --program-tabs-gap: 2px;
+            --program-tab-padding: 14px 32px;
+            --program-tab-font-size: 0.9375rem;
+            --program-tab-font-size: 0.9375rem;
+            --program-tab-min-width: 150px;
+        }
+
+        /* ===== BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, var(--bg-lighter) 0%, var(--bg-white) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--container-padding);
+        }
+
+        /* ===== PROGRAM SELECTOR SECTION ===== */
+        .program-selector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: var(--selector-to-timeline-gap);
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .program-tabs {
+            display: inline-flex;
+            background: var(--bg-white);
+            border-radius: 40px;
+            padding: var(--program-tabs-padding);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            gap: var(--program-tabs-gap);
+        }
+
+        .program-tab {
+            padding: var(--program-tab-padding);
+            border-radius: 36px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            font-family: inherit;
+            font-size: var(--program-tab-font-size);
+            color: var(--text-secondary);
+            min-width: var(--program-tab-min-width);
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .program-tab.active {
+            color: var(--bg-white);
+            background: var(--nus-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        .program-tab:hover:not(.active) {
+            color: var(--nus-blue);
+            background: var(--nus-gray-lightest);
+        }
+
+        /* ===== PROGRAM DESCRIPTION SECTION ===== */
+        .program-description-container {
+            position: relative;
+            margin-top: var(--description-container-margin-top);
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+            min-height: var(--description-container-min-height);
+            z-index: 10;
+        }
+
+        .program-description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-out;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        .program-description.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .program-description p {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 400;
+            white-space: normal;
+            word-wrap: break-word;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .program-description .best-for {
+            color: var(--nus-orange);
+            font-weight: 600;
+            margin-top: 0.75rem;
+            font-size: 0.9375rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== TIMELINE VISIBILITY CONTROL ===== */
+        .program-timeline {
+            display: none;
+        }
+
+        .program-timeline.active {
+            display: block;
+        }
+
+        /* ===== TIMELINE ANIMATION STYLES ===== */
+        .timeline-line {
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .timeline-line.animate-in {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        .node-connector {
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: top center;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .node-connector.animate-in {
+            opacity: 1;
+            transform: scaleY(1);
+        }
+
+        .node-point {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .node-point.animate-in {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .milestone-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .milestone-card.animate-in {
+            opacity: 1;
+            transform: translateY(var(--milestone-card-margin-top));
+        }
+
+        .milestone-card.combined.animate-in {
+            transform: translateY(var(--milestone-card-margin-top));
+        }
+
+        .milestone-card.full-width.animate-in {
+            transform: translateY(0);
+        }
+
+        /* ===== TIMELINE WRAPPER AND CONTAINER ===== */
+        .timeline-wrapper {
+            position: relative;
+            margin: var(--timeline-wrapper-margin);
+            padding: var(--timeline-wrapper-padding);
+            overflow-x: auto;
+            clear: both;
+            z-index: 1;
+        }
+
+        .timeline-container {
+            position: relative;
+            min-width: var(--timeline-container-min-width);
+            padding: var(--timeline-container-padding);
+        }
+
+        /* ===== MAIN TIMELINE STRUCTURE ===== */
+        .timeline-track {
+            position: relative;
+            padding: var(--timeline-track-padding);
+        }
+
+        /* Horizontal Timeline Line */
+        .timeline-line {
+            position: absolute;
+            top: var(--timeline-line-top-offset);
+            left: var(--timeline-line-side-margin);
+            right: var(--timeline-line-side-margin);
+            height: var(--timeline-line-thickness);
+            background: linear-gradient(90deg, 
+                var(--nus-blue) 0%, 
+                var(--nus-blue-light) 40%, 
+                var(--nus-orange) 70%, 
+                var(--nus-orange-light) 100%);
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        /* ===== YEAR MARKERS ===== */
+        .year-markers {
+            position: absolute;
+            top: var(--year-markers-top-offset);
+            left: var(--year-markers-side-margin);
+            right: var(--year-markers-side-margin);
+            z-index: 2;
+            height: 60px;
+        }
+
+        .year-marker {
+            position: absolute;
+            text-align: center;
+            transform: translateX(-50%);
+        }
+
+        .year-marker:first-child {
+            left: 25%;
+        }
+
+        .year-marker:last-child {
+            left: 75%;
+        }
+
+        /* For single year marker (MScPHM 1-year), center it at 25% */
+        .year-marker:only-child {
+            left: 25%;
+        }
+
+        .year-label {
+            font-size: var(--year-label-font-size);
+            font-weight: 900;
+            color: var(--nus-blue);
+            margin-bottom: var(--year-label-bottom-margin);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .year-subtitle {
+            font-size: var(--year-subtitle-font-size);
+            color: var(--nus-orange);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== TIMELINE NODES CONTAINER ===== */
+        .timeline-nodes {
+            position: relative;
+            display: flex;
+            padding: 0 var(--timeline-nodes-side-padding);
+            margin-top: var(--timeline-nodes-margin-top);
+        }
+
+        /* ===== TIMELINE NODE (MILESTONE) ===== */
+        .timeline-node {
+            position: relative;
+            width: var(--timeline-node-width);
+            margin: var(--timeline-node-margin);
+        }
+
+        /* Hidden nodes for consistent positioning */
+        .timeline-node.hidden {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Combined nodes that share a card */
+        .timeline-node.combined {
+            width: var(--timeline-node-width);
+            margin: var(--timeline-node-margin);
+        }
+
+        /* Single node that spans the full width for stackable pathway */
+        .timeline-node.full-width {
+            width: 100%;
+            margin: 0;
+            position: relative;
+        }
+
+        /* ===== NODE CONNECTORS AND POINTS ===== */
+        .node-connector {
+            position: absolute;
+            top: var(--node-connector-top-offset);
+            left: 50%;
+            width: var(--node-connector-width);
+            height: var(--node-connector-height);
+            background: var(--border-light);
+            z-index: 0;
+        }
+
+        .node-point {
+            position: absolute;
+            top: var(--node-point-top-offset);
+            left: 50%;
+            width: var(--node-point-size);
+            height: var(--node-point-size);
+            background: var(--bg-white);
+            border: var(--node-point-border-width) solid var(--nus-blue);
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        .timeline-node:hover .node-point.animate-in {
+            width: var(--node-point-hover-size);
+            height: var(--node-point-hover-size);
+            border-color: var(--nus-orange);
+            background: var(--nus-orange);
+            box-shadow: 0 0 0 var(--node-point-hover-shadow-size) rgba(239, 124, 0, 0.15);
+            transition: var(--transition);
+        }
+
+        /* ===== MILESTONE CARDS ===== */
+        .milestone-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            padding: var(--milestone-card-padding);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            position: relative;
+            margin-top: var(--milestone-card-margin-top);
+            min-height: var(--milestone-card-min-height);
+            height: var(--milestone-card-min-height);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Combined milestone card that spans two nodes */
+        .milestone-card.combined {
+            position: absolute;
+            left: 0;
+            right: -100%;
+            margin-right: -1rem;
+            width: calc(200% + 1rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: var(--milestone-card-combined-padding);
+            min-height: var(--milestone-card-min-height);
+            height: var(--milestone-card-min-height);
+        }
+
+        /* Full width milestone card for stackable pathway */
+        .milestone-card.full-width {
+            width: calc(100% + 100px);
+            margin-left: 170px;
+            margin-right: -50px;
+            text-align: center;
+            height: auto;
+            min-height: 120px;
+            position: relative;
+        }
+
+        .milestone-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--nus-blue), var(--nus-orange));
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .milestone-card.animate-in:hover {
+            transform: translateY(calc(var(--milestone-card-margin-top) + var(--milestone-card-hover-lift)));
+            box-shadow: var(--shadow-xl);
+            border-color: var(--nus-blue);
+            transition: var(--transition);
+        }
+
+        .milestone-card.combined.animate-in:hover {
+            transform: translateY(calc(var(--milestone-card-margin-top) + var(--milestone-card-hover-lift)));
+        }
+
+        .milestone-card.full-width.animate-in:hover {
+            transform: translateY(var(--milestone-card-hover-lift));
+        }
+
+        .milestone-card:hover::before {
+            opacity: 1;
+        }
+
+        /* ===== MILESTONE CARD CONTENT ===== */
+        .milestone-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .milestone-header {
+            text-align: center;
+            margin-bottom: var(--milestone-header-margin-bottom);
+        }
+
+        .milestone-title {
+            font-size: var(--milestone-title-font-size);
+            font-weight: 700;
+            color: var(--nus-blue);
+            margin-bottom: var(--milestone-title-margin-bottom);
+            letter-spacing: -0.25px;
+        }
+
+        .milestone-subtitle {
+            font-size: var(--milestone-subtitle-font-size);
+            color: var(--nus-orange);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .milestone-summary {
+            color: var(--text-secondary);
+            font-size: var(--milestone-summary-font-size);
+            line-height: 1.5;
+            text-align: center;
+            flex-grow: 1;
+            margin-bottom: var(--milestone-summary-margin-bottom);
+            min-height: var(--milestone-summary-min-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== MILESTONE TAGS ===== */
+        .milestone-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--milestone-tags-gap);
+            justify-content: center;
+            margin-top: auto;
+        }
+
+        .milestone-tag {
+            background: var(--nus-blue);
+            color: var(--bg-white);
+            padding: var(--milestone-tag-padding);
+            border-radius: 20px;
+            font-size: var(--milestone-tag-font-size);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .milestone-tag.core {
+            background: var(--nus-orange);
+        }
+
+        .milestone-tag.elective {
+            background: var(--nus-gray);
+        }
+
+        .milestone-tag.research {
+            background: var(--nus-blue-light);
+        }
+
+        /* ===== YEAR DIVIDER ===== */
+        .year-divider {
+            position: absolute;
+            top: var(--year-divider-top-offset);
+            bottom: 410px;
+            width: var(--year-divider-width);
+            background: var(--border-light);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        .timeline-wrapper::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .timeline-wrapper::-webkit-scrollbar-track {
+            background: var(--bg-lighter);
+            border-radius: 5px;
+        }
+
+        .timeline-wrapper::-webkit-scrollbar-thumb {
+            background: var(--nus-blue);
+            border-radius: 5px;
+        }
+
+        .timeline-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--nus-blue-dark);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            :root {
+                --program-tab-font-size: 0.875rem;
+                --program-tab-padding: 12px 24px;
+                --program-tab-min-width: 120px;
+                --container-padding: 1rem;
+                --timeline-container-padding: 0 1rem;
+                --milestone-card-min-height: 180px;
+                --milestone-card-padding: 1rem;
+            }
+            
+            .milestone-card,
+            .milestone-card.combined {
+                height: var(--milestone-card-min-height);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="program-selector">
+            <div class="program-tabs">
+                <button class="program-tab active" data-program="1-year">MScPHM</button>
+                <button class="program-tab" data-program="2-year">MScPHM with capstone</button>
+                <button class="program-tab" data-program="flexible">Stackable pathway</button>
+            </div>
+            
+            <div class="program-description-container">
+                <div class="program-description active" id="description-1-year">
+                    <p>A one-year programme (two-years if taken part-time) for preparing <span style="color: var(--nus-orange); font-weight: 600;">medical doctors</span>, <span style="color: var(--nus-orange); font-weight: 600;">healthcare professionals</span>, <span style="color: var(--nus-orange); font-weight: 600;">communicators</span>, <span style="color: var(--nus-orange); font-weight: 600;">educators</span> and <span style="color: var(--nus-orange); font-weight: 600;">policy makers</span> seeking expertise in precision health and medicine.</p>
+                </div>
+                
+                <div class="program-description" id="description-2-year">
+                    <p>A 2-year programme offering advanced training in precision health and medicine with a hands-on capstone project. Designed for those <span style="color: var(--nus-orange); font-weight: 600;">pursuing research and expertise</span> in the field.</p>
+                </div>
+                
+                <div class="program-description" id="description-flexible">
+                    <p>Flexible pathway with stackable modules suitable for working professionals seeking flexibility.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-wrapper">
+            
+            <div class="program-timeline active" id="timeline-1-year">
+                <div class="timeline-container">
+                    <div class="timeline-track">
+                        <div class="timeline-line"></div>
+                        <div class="year-markers">
+                            <div class="year-marker">
+                                <div class="year-label">Year 1</div>
+                                <div class="year-subtitle">Foundation & Core Competencies</div>
+                            </div>
+                        </div>
+                        <div class="timeline-nodes">
+                            <div class="timeline-node">
+                                <div class="node-connector"></div>
+                                <div class="node-point"></div>
+                                <div class="milestone-card">
+                                    <div class="milestone-content">
+                                        <div class="milestone-header">
+                                            <div class="milestone-title">Semester 1</div>
+                                            <div class="milestone-subtitle">Foundation</div>
+                                        </div>
+                                        <div class="milestone-summary">Essential foundation modules for precision medicine</div>
+                                    </div>
+                                    <div class="milestone-tags">
+                                        <span class="milestone-tag core">5 Core Modules</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-node">
+                                <div class="node-connector"></div>
+                                <div class="node-point"></div>
+                                <div class="milestone-card">
+                                    <div class="milestone-content">
+                                        <div class="milestone-header">
+                                            <div class="milestone-title">Semester 2</div>
+                                            <div class="milestone-subtitle">Specialization</div>
+                                        </div>
+                                        <div class="milestone-summary">Advanced core concepts and methodologies</div>
+                                    </div>
+                                    <div class="milestone-tags">
+                                        <span class="milestone-tag core">1 Core Modules</span>
+                                        <span class="milestone-tag elective">4 Elective Modules</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-node hidden"></div>
+                            <div class="timeline-node hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="program-timeline" id="timeline-2-year">
+                <div class="timeline-container">
+                    <div class="timeline-track">
+                        <div class="timeline-line"></div>
+                        <div class="year-markers">
+                            <div class="year-marker">
+                                <div class="year-label">Year 1</div>
+                                <div class="year-subtitle">Foundation & Core Competencies</div>
+                            </div>
+                            <div class="year-marker">
+                                <div class="year-label">Year 2</div>
+                                <div class="year-subtitle">Real-life Application</div>
+                            </div>
+                        </div>
+                        <div class="year-divider" style="left: 50%"></div>
+                        <div class="timeline-nodes">
+                            <div class="timeline-node">
+                                <div class="node-connector"></div>
+                                <div class="node-point"></div>
+                                <div class="milestone-card">
+                                    <div class="milestone-content">
+                                        <div class="milestone-header">
+                                            <div class="milestone-title">Semester 1</div>
+                                            <div class="milestone-subtitle">Foundation</div>
+                                        </div>
+                                        <div class="milestone-summary">Essential foundation modules for precision medicine</div>
+                                    </div>
+                                    <div class="milestone-tags">
+                                        <span class="milestone-tag core">5 Core Modules</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-node">
+                                <div class="node-connector"></div>
+                                <div class="node-point"></div>
+                                <div class="milestone-card">
+                                    <div class="milestone-content">
+                                        <div class="milestone-header">
+                                            <div class="milestone-title">Semester 2</div>
+                                            <div class="milestone-subtitle">Specialization</div>
+                                        </div>
+                                        <div class="milestone-summary">Advanced core concepts and methodologies</div>
+                                    </div>
+                                    <div class="milestone-tags">
+                                        <span class="milestone-tag core">1 Core Modules</span>
+                                        <span class="milestone-tag elective">2 Elective Modules</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-node combined">
+                                <div class="node-connector"></div>
+                                <div class="node-point"></div>
+                                <div class="milestone-card combined">
+                                    <div class="milestone-content">
+                                        <div class="milestone-header">
+                                            <div class="milestone-title">Semester 3 and 4</div>
+                                            <div class="milestone-subtitle">Capstone Research</div>
+                                        </div>
+                                        <div class="milestone-summary">Hands-on resesarch experience with academic and industry partners</div>
+                                    </div>
+                                    <div class="milestone-tags">
+                                        <span class="milestone-tag research">Academic or Industry Capstone Project</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-node combined">
+                                <div class="node-connector"></div>
+                                <div class="node-point"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="program-timeline" id="timeline-flexible">
+                <div class="timeline-container">
+                    <div class="timeline-track">
+                        <div class="timeline-line"></div>
+                        <div class="year-markers">
+                            <div class="year-marker">
+                                <div class="year-label">Year 1</div>
+                                <div class="year-subtitle">Start Journey</div>
+                            </div>
+                            <div class="year-marker">
+                                <div class="year-label">Year 5</div>
+                                <div class="year-subtitle">Complete MSc</div>
+                            </div>
+                        </div>
+                        <div class="timeline-nodes">
+                            <div class="timeline-node full-width">
+                                <div class="milestone-card full-width">
+                                    <div class="milestone-content">
+                                        <div class="milestone-header">
+                                            <div class="milestone-title">Complete modular Executive or Graduate at your own pace and stack them toward your MSc within 5 years</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-node hidden"></div>
+                            <div class="timeline-node hidden"></div>
+                            <div class="timeline-node hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Function to animate timeline elements with staggered delays
+        function animateTimelineElements(timeline) {
+            // Reset all animation classes first
+            const timelineLine = timeline.querySelector('.timeline-line');
+            const connectors = timeline.querySelectorAll('.node-connector');
+            const points = timeline.querySelectorAll('.node-point');
+            const cards = timeline.querySelectorAll('.milestone-card');
+            
+            // Remove all animation classes
+            timelineLine?.classList.remove('animate-in');
+            connectors.forEach(connector => connector.classList.remove('animate-in'));
+            points.forEach(point => point.classList.remove('animate-in'));
+            cards.forEach(card => card.classList.remove('animate-in'));
+            
+            // Animate timeline line first
+            setTimeout(() => {
+                timelineLine?.classList.add('animate-in');
+            }, 100);
+            
+            // Animate connectors with staggered delay
+            connectors.forEach((connector, index) => {
+                setTimeout(() => {
+                    connector.classList.add('animate-in');
+                }, 400 + (index * 100));
+            });
+            
+            // Animate points with staggered delay
+            points.forEach((point, index) => {
+                setTimeout(() => {
+                    point.classList.add('animate-in');
+                }, 700 + (index * 100));
+            });
+            
+            // Animate cards with staggered delay
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, 1000 + (index * 150));
+            });
+        }
+
+        // Function to switch between program timelines and descriptions
+        function switchProgram(programKey) {
+            // Hide all program timelines
+            document.querySelectorAll('.program-timeline').forEach(timeline => {
+                timeline.classList.remove('active');
+            });
+            
+            // Hide all program descriptions
+            document.querySelectorAll('.program-description').forEach(description => {
+                description.classList.remove('active');
+            });
+            
+            // Show the selected program timeline
+            const selectedTimeline = document.getElementById(`timeline-${programKey}`);
+            if (selectedTimeline) {
+                selectedTimeline.classList.add('active');
+                // Animate the timeline elements
+                animateTimelineElements(selectedTimeline);
+            }
+            
+            // Show the selected program description
+            const selectedDescription = document.getElementById(`description-${programKey}`);
+            if (selectedDescription) {
+                selectedDescription.classList.add('active');
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Program tab switching
+            document.querySelectorAll('.program-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Only update if not already active
+                    if (!tab.classList.contains('active')) {
+                        // Update tab active state
+                        document.querySelectorAll('.program-tab').forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        // Switch to the selected program
+                        const program = tab.dataset.program;
+                        switchProgram(program);
+                    }
+                });
+            });
+            
+            // Animate the initial timeline (1-year program)
+            const initialTimeline = document.getElementById('timeline-1-year');
+            if (initialTimeline) {
+                animateTimelineElements(initialTimeline);
+            }
+        });
+    </script>
+</body>
+</html>
