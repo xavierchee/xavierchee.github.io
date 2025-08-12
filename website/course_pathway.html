@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 14, 2025 - 3:45 PM
+    CHANGE LOG - Last Updated: August 12, 2025 - 8:15 AM
     ============================================
     
     Recent Changes:
-    - Updated all navigation links to use full URLs starting with https://xavierchee.github.io/website/
-    - Updated floating menu buttons with correct links:
-      * Application/admissions: https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS
-      * Contact us: mailto:mscphm@nus.edu.sg  
-      * Mailing list: https://gradapp.nus.edu.sg/portal/app_manage
-    
-    Previous Changes:
-    - Linked Photos subsection to https://xavierchee.github.io/website/photo.html
-    - Added Vision and mission as first subsection under About us, linking to https://xavierchee.github.io/website/vision_mission.html
+    - Replaced hexagon icons with bullet points
+    - Colored key terms (feature titles) in orange (#FF6B35)
+    - Simplified feature grid layout
+    - Fixed a layout issue where the new timeline component was shifting the sidebar. 
+    - Added `min-width: 0` to the `.content-section` class to correctly contain the wide timeline within the flexbox layout.
+    - Replaced the static study pathway cards with the interactive timeline from course_pathway_new.html.
+    - Added CSS and JavaScript required for the new timeline functionality and animations.
+    - Ensured sidebar padding for intake/application and events containers remains identical to the original design.
+    - Merged styles and scripts to create a single, functional HTML file.
 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master's Programme - Precision Health & Medicine - NUS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -286,6 +287,7 @@
         
         .content-section {
             flex: 1;
+            min-width: 0; /* Prevents wide flex children from breaking the layout */
         }
         
         .section-header {
@@ -305,24 +307,20 @@
             font-weight: 400;
         }
         
-        /* Programme Features Section */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 50px 40px;
+        /* Programme Features Section - Updated to bullet list */
+        .features-list {
             margin: 60px 0;
-            justify-items: center;
+            list-style: none;
+            padding: 0;
         }
         
         .feature-item {
-            text-align: center;
-            padding: 20px;
-            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            padding-left: 30px;
+            position: relative;
             opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 0.8s ease forwards;
-            max-width: 320px;
-            width: 100%;
+            transform: translateX(-20px);
+            animation: fadeInLeft 0.8s ease forwards;
         }
         
         /* Stagger animation for sequential appearance */
@@ -333,95 +331,39 @@
         .feature-item:nth-child(5) { animation-delay: 0.5s; }
         .feature-item:nth-child(6) { animation-delay: 0.6s; }
         
-        @keyframes fadeInUp {
+        @keyframes fadeInLeft {
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
         
-        .feature-item:hover {
-            transform: translateY(-10px) scale(1.02);
-        }
-        
-        .hexagon-icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 25px;
-            position: relative;
-            transition: all 0.3s ease;
-            overflow: hidden;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        }
-        
-        .hexagon-icon::before {
-            content: '';
+        /* Bullet point styling */
+        .feature-item::before {
+            content: '•';
             position: absolute;
-            top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 255, 255, 0.4) 45%, 
-                rgba(255, 255, 255, 0.6) 50%, 
-                rgba(255, 255, 255, 0.4) 55%, 
-                transparent 100%);
-            transform: translateX(-200%);
-            pointer-events: none;
-            animation: autoShimmer 3s ease-in-out infinite;
-        }
-        
-        @keyframes autoShimmer {
-            0%, 90% {
-                transform: translateX(-200%);
-            }
-            95% {
-                transform: translateX(200%);
-            }
-            100% {
-                transform: translateX(200%);
-            }
-        }
-        
-        .hexagon-icon:hover::before {
-            animation: metalShimmer 0.8s ease-in-out forwards;
-        }
-        
-        @keyframes metalShimmer {
-            0% {
-                transform: translateX(-200%);
-            }
-            100% {
-                transform: translateX(200%);
-            }
-        }
-        
-        .hexagon-icon:hover {
-            transform: scale(1.15) rotate(5deg);
-        }
-        
-        .hexagon-icon svg {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            z-index: 1;
+            top: 0;
+            color: #FF6B35;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.2;
         }
         
         .feature-title {
-            color: #003D7C;
+            color: #FF6B35;
             font-size: 20px;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             letter-spacing: -0.3px;
+            line-height: 1.3;
         }
         
         .feature-description {
             color: #5a6c7d;
             font-size: 15px;
             line-height: 1.6;
-            max-width: 100%;
-            margin: 0 auto;
+            margin: 0;
         }
         
         /* Study Pathways Section */
@@ -429,28 +371,475 @@
             margin-top: 60px;
         }
         
-        .pathways-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-top: 40px;
+        /* Timeline Styles Integration */
+        :root {
+            --nus-blue: #003D7C;
+            --nus-blue-dark: #002952;
+            --nus-blue-light: #004990;
+            --nus-orange: #FF6B35;
+            --nus-orange-light: #FF8554;
+            --nus-orange-dark: #D66E00;
         }
         
-        .pathway-card {
-            background: white;
-            border-radius: 12px;
-            padding: 0;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 2px solid rgba(0, 61, 124, 0.1);
-            transition: all 0.3s ease;
+        .program-selector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0 20px 0;
+            width: 100%;
             position: relative;
-            overflow: hidden;
+            z-index: 10;
+            max-width: 100%;
         }
         
-        .pathway-card-content {
-            padding: 0 30px 30px 30px;
+        .program-tabs {
+            display: inline-flex;
+            background: white;
+            border-radius: 40px;
+            padding: 4px;
+            box-shadow: 0 4px 8px rgba(0, 61, 124, 0.12);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            gap: 2px;
         }
         
+        .program-tab {
+            padding: 14px 32px;
+            border-radius: 36px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            background: none;
+            font-family: inherit;
+            font-size: 0.9375rem;
+            color: #6C757D;
+            min-width: 150px;
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+        }
+        
+        .program-tab.active {
+            color: white;
+            background: #003D7C;
+            box-shadow: 0 4px 8px rgba(0, 61, 124, 0.12);
+        }
+        
+        .program-tab:hover:not(.active) {
+            color: #003D7C;
+            background: #F8F9FA;
+        }
+        
+        .program-description-container {
+            position: relative;
+            margin-top: 2rem;
+            text-align: center;
+            width: 100%;
+            max-width: 100%;
+            min-height: 90px;
+            z-index: 10;
+            padding: 0 20px;
+        }
+        
+        .program-description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-out;
+            pointer-events: none;
+            text-align: center;
+        }
+        
+        .program-description.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .program-description p {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 400;
+            text-align: center;
+        }
+        
+        .program-timeline {
+            display: none;
+        }
+        
+        .program-timeline.active {
+            display: block;
+        }
+        
+        /* Timeline Animation Styles */
+        .timeline-line {
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .timeline-line.animate-in {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+        
+        .node-connector {
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: top center;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .node-connector.animate-in {
+            opacity: 1;
+            transform: scaleY(1);
+        }
+        
+        .node-point {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .node-point.animate-in {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        .milestone-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .milestone-card.animate-in {
+            opacity: 1;
+            transform: translateY(-10px);
+        }
+        
+        .timeline-wrapper {
+            position: relative;
+            margin: 1rem 0 2rem 0;
+            padding: 1rem 0;
+            overflow-x: auto;
+            clear: both;
+            z-index: 1;
+            max-width: 100%;
+        }
+        
+        .timeline-container {
+            position: relative;
+            min-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        .timeline-track {
+            position: relative;
+            padding: 3rem 0 2rem 0;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 75px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #003D7C 0%, #004990 40%, #FF6B35 70%, #FF8554 100%);
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .year-markers {
+            position: absolute;
+            top: -30px;
+            left: 50px;
+            right: 50px;
+            z-index: 2;
+            height: 60px;
+        }
+        
+        .year-marker {
+            position: absolute;
+            text-align: center;
+            transform: translateX(-50%);
+        }
+        
+        .year-marker:first-child {
+            left: 25%;
+        }
+        
+        .year-marker:last-child {
+            left: 75%;
+        }
+        
+        .year-marker:only-child {
+            left: 25%;
+        }
+        
+        .year-label {
+            font-size: 1.875rem;
+            font-weight: 900;
+            color: #003D7C;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .year-subtitle {
+            font-size: 0.875rem;
+            color: #FF6B35;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .timeline-nodes {
+            position: relative;
+            display: flex;
+            padding: 0 50px;
+            margin-top: 120px;
+        }
+        
+        .timeline-node {
+            position: relative;
+            width: calc(25% - 1rem);
+            margin: 0 0.5rem;
+        }
+        
+        .timeline-node.hidden {
+            visibility: hidden;
+            pointer-events: none;
+        }
+        
+        .timeline-node.combined {
+            width: calc(25% - 1rem);
+            margin: 0 0.5rem;
+        }
+        
+        .timeline-node.full-width {
+            width: 100%;
+            margin: 0;
+            position: relative;
+        }
+        
+        .node-connector {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            width: 2px;
+            height: 60px;
+            background: #E5E5E5;
+            z-index: 0;
+        }
+        
+        .node-point {
+            position: absolute;
+            top: -99px;
+            left: 50%;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 3px solid #003D7C;
+            border-radius: 50%;
+            z-index: 3;
+        }
+        
+        .timeline-node:hover .node-point.animate-in {
+            width: 22px;
+            height: 22px;
+            border-color: #FF6B35;
+            background: #FF6B35;
+            box-shadow: 0 0 0 6px rgba(255, 107, 53, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .milestone-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 8px rgba(0, 61, 124, 0.12);
+            border: 1px solid rgba(0, 61, 124, 0.1);
+            position: relative;
+            margin-top: -10px;
+            min-height: 230px;
+            height: 230px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .milestone-card.combined {
+            position: absolute;
+            left: 0;
+            right: -100%;
+            margin-right: -1rem;
+            width: calc(200% + 1rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            min-height: 230px;
+            height: 230px;
+        }
+        
+        .milestone-card.full-width {
+            width: calc(100% - 100px);
+            margin-left: 50px;
+            margin-right: 50px;
+            text-align: center;
+            height: auto;
+            min-height: 120px;
+            position: relative;
+        }
+        
+        .milestone-card.full-width.animate-in {
+            transform: translateY(0);
+        }
+        
+        .milestone-card.combined.animate-in {
+            transform: translateY(-10px);
+        }
+        
+        .milestone-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #003D7C, #FF6B35);
+            border-radius: 8px 8px 0 0;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .milestone-card.animate-in:hover {
+            transform: translateY(-14px);
+            box-shadow: 0 12px 24px rgba(0, 61, 124, 0.18);
+            border-color: #003D7C;
+        }
+        
+        .milestone-card.combined.animate-in:hover {
+            transform: translateY(-14px);
+        }
+        
+        .milestone-card.full-width.animate-in:hover {
+            transform: translateY(-4px);
+        }
+        
+        .milestone-card:hover::before {
+            opacity: 1;
+        }
+        
+        .milestone-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        .milestone-header {
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .milestone-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #003D7C;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.25px;
+        }
+        
+        .milestone-subtitle {
+            font-size: 0.8125rem;
+            color: #FF6B35;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .milestone-summary {
+            color: #6C757D;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            text-align: center;
+            flex-grow: 1;
+            margin-bottom: 1rem;
+            min-height: 2.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .milestone-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+            justify-content: center;
+            margin-top: auto;
+        }
+        
+        .milestone-tag {
+            background: #003D7C;
+            color: white;
+            padding: 0.3125rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .milestone-tag.core {
+            background: #FF6B35;
+        }
+        
+        .milestone-tag.elective {
+            background: #6C757D;
+        }
+        
+        .milestone-tag.research {
+            background: #004990;
+        }
+        
+        .year-divider {
+            position: absolute;
+            top: 0;
+            bottom: 410px;
+            width: 3px;
+            background: #E5E5E5;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        
+        .timeline-wrapper::-webkit-scrollbar {
+            height: 10px;
+        }
+        
+        .timeline-wrapper::-webkit-scrollbar-track {
+            background: #FAFBFC;
+            border-radius: 5px;
+        }
+        
+        .timeline-wrapper::-webkit-scrollbar-thumb {
+            background: #003D7C;
+            border-radius: 5px;
+        }
+        
+        .timeline-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #002952;
+        }
+
         /* Action Buttons - Fixed Floating Menu */
         .action-buttons {
             position: fixed;
@@ -756,88 +1145,6 @@
             }
         }
         
-        .pathway-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #FF6B35, #FF8554);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .pathway-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.15);
-            border-color: #FF6B35;
-        }
-        
-        .pathway-card:hover::before {
-            transform: translateX(0);
-        }
-        
-        .pathway-title {
-            color: #003D7C;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            margin-top: 20px;
-            letter-spacing: -0.3px;
-        }
-        
-        .pathway-detail {
-            margin-bottom: 12px;
-            font-size: 15px;
-            color: #5a6c7d;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .pathway-detail strong {
-            color: #003D7C;
-            font-weight: 600;
-            min-width: 140px;
-        }
-        
-        .pathway-modules {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(0, 61, 124, 0.08);
-        }
-        
-        .pathway-modules-title {
-            color: #FF6B35;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .pathway-modules ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .pathway-modules li {
-            padding: 6px 0;
-            color: #5a6c7d;
-            font-size: 14px;
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .pathway-modules li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #FF6B35;
-            font-weight: 700;
-        }
-        
         /* Sidebar */
         .sidebar {
             flex: 0 0 35%;
@@ -1059,19 +1366,20 @@
                 padding: 0 40px;
             }
             
-            .pathways-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .nav-links a {
                 padding: 20px 10px;
                 font-size: 12px;
             }
             
-            /* Adjust features grid for tablets */
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 40px 30px;
+            /* Adjust timeline for smaller screens */
+            .timeline-container {
+                min-width: 600px;
+            }
+            
+            .milestone-card.full-width {
+                width: 90%;
+                margin-left: 5%;
+                margin-right: 5%;
             }
         }
         
@@ -1113,10 +1421,6 @@
                 margin: 0 auto;
             }
             
-            .pathways-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .section-header {
                 font-size: 28px;
             }
@@ -1125,16 +1429,31 @@
                 font-size: 15px;
             }
             
-            /* Adjust features grid for mobile */
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
+            /* Timeline adjustments for mobile */
+            .program-tab {
+                font-size: 0.875rem;
+                padding: 12px 24px;
+                min-width: 120px;
             }
             
-            .feature-item {
-                max-width: 400px;
+            .timeline-container {
+                padding: 0 1rem;
+                min-width: 100%;
             }
             
+            .milestone-card,
+            .milestone-card.combined {
+                height: 180px;
+                min-height: 180px;
+                padding: 1rem;
+            }
+            
+            .milestone-card.full-width {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
             /* Mobile navigation */
             .mobile-menu-toggle {
                 display: block;
@@ -1345,263 +1664,219 @@
                 Master the future of healthcare through Asia's pioneering precision medicine programme—where genomics meets AI, and research transforms patient care.
             </p>
             
-            <!-- Programme Features Grid -->
-            <div class="features-grid scroll-fade">
-                <div class="feature-item">
-                    <div class="hexagon-icon">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
-                            <!-- Branching paths -->
-                            <g transform="translate(50, 50)">
-                                <path d="M0,15 L0,0" stroke="white" stroke-width="3" fill="none"/>
-                                <path d="M0,0 L-15,-15" stroke="white" stroke-width="3" fill="none"/>
-                                <path d="M0,0 L15,-15" stroke="white" stroke-width="3" fill="none"/>
-                                <path d="M0,0 L0,-20" stroke="white" stroke-width="3" fill="none"/>
-                                <circle cx="0" cy="15" r="4" fill="white"/>
-                                <circle cx="0" cy="0" r="4" fill="white"/>
-                                <circle cx="-15" cy="-15" r="4" fill="white"/>
-                                <circle cx="15" cy="-15" r="4" fill="white"/>
-                                <circle cx="0" cy="-20" r="4" fill="white"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Flexible Learning Pathways</h3>
-                    <p class="feature-description">Designed for diverse student backgrounds—whether you're a fresh graduate, working professional, or career changer</p>
-                </div>
-                
-                <div class="feature-item">
-                    <div class="hexagon-icon">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
-                            <!-- Book merged with gear -->
-                            <g transform="translate(50, 50)">
-                                <!-- Book -->
-                                <rect x="-20" y="-15" width="15" height="25" fill="white" rx="2"/>
-                                <rect x="-18" y="-12" width="11" height="2" fill="#003D7C"/>
-                                <rect x="-18" y="-8" width="11" height="1" fill="#003D7C"/>
-                                <rect x="-18" y="-5" width="11" height="1" fill="#003D7C"/>
-                                <!-- Gear -->
-                                <circle cx="10" cy="0" r="10" fill="none" stroke="white" stroke-width="2"/>
-                                <circle cx="10" cy="0" r="4" fill="white"/>
-                                <rect x="8" y="-12" width="4" height="5" fill="white"/>
-                                <rect x="8" y="7" width="4" height="5" fill="white"/>
-                                <rect x="-2" y="-2" width="5" height="4" fill="white"/>
-                                <rect x="17" y="-2" width="5" height="4" fill="white"/>
-                            </g>
-                        </svg>
-                    </div>
+            <!-- Programme Features List with Bullet Points -->
+            <ul class="features-list scroll-fade">
+                <li class="feature-item">
                     <h3 class="feature-title">Hybrid Programme Model</h3>
                     <p class="feature-description">Neither purely coursework nor research—a unique blend combining rigorous academics with practical application</p>
-                </div>
+                </li>			
+			
+                <li class="feature-item">
+                    <h3 class="feature-title">Multi-discplinary Curriculum</h3>
+                    <p class="feature-description">Multidisciplinary curriculum spanning biomedicine, data science and AI to shape precision health leaders.</p>
+                </li>
                 
-                <div class="feature-item">
-                    <div class="hexagon-icon">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
-                            <!-- Gear icon -->
-                            <g transform="translate(50, 50)">
-                                <!-- Main gear circle -->
-                                <circle cx="0" cy="0" r="18" fill="none" stroke="white" stroke-width="3"/>
-                                <!-- Center circle -->
-                                <circle cx="0" cy="0" r="7" fill="white"/>
-                                <!-- Gear teeth -->
-                                <rect x="-4" y="-24" width="8" height="10" fill="white"/>
-                                <rect x="-4" y="14" width="8" height="10" fill="white"/>
-                                <rect x="-24" y="-4" width="10" height="8" fill="white"/>
-                                <rect x="14" y="-4" width="10" height="8" fill="white"/>
-                                <!-- Diagonal teeth -->
-                                <g transform="rotate(45)">
-                                    <rect x="-3" y="-22" width="6" height="8" fill="white"/>
-                                    <rect x="-3" y="14" width="6" height="8" fill="white"/>
-                                    <rect x="-22" y="-3" width="8" height="6" fill="white"/>
-                                    <rect x="14" y="-3" width="8" height="6" fill="white"/>
-                                </g>
-                            </g>
-                        </svg>
-                    </div>
+                <li class="feature-item">
+                    <h3 class="feature-title">Academic Excellence</h3>
+                    <p class="feature-description">Learn from distinguished faculty from NUS Medicine, alongside leaders from Singapore's premier research centres, industries and hospitals</p>
+                </li>
+				
+				<li class="feature-item">
                     <h3 class="feature-title">Real-World Problem Solving</h3>
                     <p class="feature-description">Tackle actual healthcare challenges through Capstone projects in academic research or industry internships</p>
-                </div>
-                
-                <div class="feature-item">
-                    <div class="hexagon-icon">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
-                            <!-- Stethoscope forming infinity symbol -->
-                            <g transform="translate(50, 50)">
-                                <!-- Infinity symbol made with stethoscope -->
-                                <path d="M-15,0 C-15,-8 -8,-8 0,-8 C8,-8 15,-8 15,0 C15,8 8,8 0,8 C-8,8 -15,8 -15,0 Z" fill="none" stroke="white" stroke-width="3"/>
-                                <!-- Stethoscope earpieces -->
-                                <circle cx="-15" cy="-12" r="3" fill="white"/>
-                                <circle cx="15" cy="-12" r="3" fill="white"/>
-                                <!-- Connecting lines -->
-                                <path d="M-15,-12 L-15,-8" stroke="white" stroke-width="2"/>
-                                <path d="M15,-12 L15,-8" stroke="white" stroke-width="2"/>
-                                <!-- Chest piece -->
-                                <circle cx="0" cy="12" r="5" fill="white"/>
-                                <path d="M0,8 L0,12" stroke="white" stroke-width="2"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Transformative Healthcare Education</h3>
-                    <p class="feature-description">Develop core and advanced skills in key Precision Medicine disciplines to reshape patient care</p>
-                </div>
-                
-                <div class="feature-item">
-                    <div class="hexagon-icon">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
-                            <!-- Hospital with network connections -->
-                            <g transform="translate(50, 50)">
-                                <!-- Hospital building -->
-                                <rect x="-15" y="-10" width="30" height="25" fill="white"/>
-                                <!-- Hospital cross -->
-                                <rect x="-3" y="-5" width="6" height="15" fill="#003D7C"/>
-                                <rect x="-8" y="0" width="16" height="5" fill="#003D7C"/>
-                                <!-- Network nodes -->
-                                <circle cx="-25" cy="-10" r="3" fill="white"/>
-                                <circle cx="25" cy="-10" r="3" fill="white"/>
-                                <circle cx="-25" cy="10" r="3" fill="white"/>
-                                <circle cx="25" cy="10" r="3" fill="white"/>
-                                <!-- Network connections -->
-                                <line x1="-15" y1="-5" x2="-22" y2="-10" stroke="white" stroke-width="1.5"/>
-                                <line x1="15" y1="-5" x2="22" y2="-10" stroke="white" stroke-width="1.5"/>
-                                <line x1="-15" y1="10" x2="-22" y2="10" stroke="white" stroke-width="1.5"/>
-                                <line x1="15" y1="10" x2="22" y2="10" stroke="white" stroke-width="1.5"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Clinical Practice Integration</h3>
-                    <p class="feature-description">Learn directly from healthcare professionals on how Precision Medicine is applied clinically</p>
-                </div>
-                
-                <div class="feature-item">
-                    <div class="hexagon-icon">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" fill="#003D7C" stroke="none"/>
-                            <!-- Building skyline -->
-                            <g transform="translate(50, 50)">
-                                <!-- Building 1 -->
-                                <rect x="-25" y="-5" width="12" height="20" fill="white"/>
-                                <rect x="-23" y="-3" width="3" height="3" fill="#003D7C"/>
-                                <rect x="-18" y="-3" width="3" height="3" fill="#003D7C"/>
-                                <rect x="-23" y="2" width="3" height="3" fill="#003D7C"/>
-                                <rect x="-18" y="2" width="3" height="3" fill="#003D7C"/>
-                                <!-- Building 2 (tallest) -->
-                                <rect x="-6" y="-15" width="12" height="30" fill="white"/>
-                                <rect x="-4" y="-13" width="3" height="3" fill="#003D7C"/>
-                                <rect x="1" y="-13" width="3" height="3" fill="#003D7C"/>
-                                <rect x="-4" y="-8" width="3" height="3" fill="#003D7C"/>
-                                <rect x="1" y="-8" width="3" height="3" fill="#003D7C"/>
-                                <!-- Building 3 -->
-                                <rect x="13" y="-10" width="12" height="25" fill="white"/>
-                                <rect x="15" y="-8" width="3" height="3" fill="#003D7C"/>
-                                <rect x="20" y="-8" width="3" height="3" fill="#003D7C"/>
-                                <rect x="15" y="-3" width="3" height="3" fill="#003D7C"/>
-                                <rect x="20" y="-3" width="3" height="3" fill="#003D7C"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Industry Excellence</h3>
-                    <p class="feature-description">Learn from distinguished faculty from NUS Medicine, alongside leaders from Singapore's premier research centres, industries and hospitals</p>
-                </div>
-            </div>
+                </li>
+            </ul>
+           
             
-            <!-- Asia First Image -->
-            <div style="margin: 40px 0;">
-                <img src="https://xavierchee.github.io/website/website_assets/course_pathway/asia_first.png" 
-                     alt="Asia's First Multi-disciplinary Graduate Programme" 
-                     style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 61, 124, 0.1);">
-            </div>
-            
-            <!-- Study Pathways Section -->
+            <!-- Study Pathways Section with Interactive Timeline -->
             <div class="study-pathways scroll-fade">
                 <h2 class="section-header">Education That Fits Your Life: Flexible Study Pathways</h2>
                 <p class="section-text">
-                    Our programme recognizes that students come with diverse backgrounds, career goals, and life commitments. Choose from four customizable study routes:
+                    Our programme recognizes that students come with diverse backgrounds, career goals, and life commitments. Choose from our customizable study routes:
                 </p>
                 
-                <div class="pathways-grid">
-                    <div class="pathway-card">
-                        <img src="https://xavierchee.github.io/website/website_assets/course_pathway/mscphm_1_year.png" 
-                             alt="1 Year Programme" 
-                             style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px 10px 0 0;">
-                        <div class="pathway-card-content">
-                            <h3 class="pathway-title">M.Sc. in Precision Health and Medicine</h3>
-                            <div class="pathway-detail">
-                                <strong>Duration:</strong>
-                                <span>1 Year</span>
-                            </div>
-                            <div class="pathway-modules">
-                                <div class="pathway-modules-title">Modules to complete:</div>
-                                <ul>
-                                    <li>6 Core modules</li>
-                                    <li>4 Elective modules</li>
-                                </ul>
-                            </div>
-                        </div>
+                <!-- Interactive Timeline Section -->
+                <div class="program-selector">
+                    <div class="program-tabs">
+                        <button class="program-tab active" data-program="1-year">MScPHM</button>
+                        <button class="program-tab" data-program="2-year">MScPHM with capstone</button>
+                        <button class="program-tab" data-program="flexible">Stackable pathway</button>
                     </div>
                     
-                    <div class="pathway-card">
-                        <img src="https://xavierchee.github.io/website/website_assets/course_pathway/mscphm_2_years.png" 
-                             alt="2 Years Programme with Capstone" 
-                             style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px 10px 0 0;">
-                        <div class="pathway-card-content">
-                            <h3 class="pathway-title">M.Sc. in Precision Health and Medicine with Capstone</h3>
-                            <div class="pathway-detail">
-                                <strong>Duration:</strong>
-                                <span>2 Years</span>
-                            </div>
-                            <div class="pathway-modules">
-                                <div class="pathway-modules-title">Modules to complete:</div>
-                                <ul>
-                                    <li>6 Core modules</li>
-                                    <li>2 Elective modules</li>
-                                    <li>1 Capstone project</li>
-                                </ul>
-                            </div>
+                    <div class="program-description-container">
+                        <div class="program-description active" id="description-1-year">
+                            <p>A one-year programme (two-years if taken part-time) for preparing <span style="color: #FF6B35; font-weight: 600;">medical doctors</span>, <span style="color: #FF6B35; font-weight: 600;">healthcare professionals</span>, <span style="color: #FF6B35; font-weight: 600;">communicators</span>, <span style="color: #FF6B35; font-weight: 600;">educators</span> and <span style="color: #FF6B35; font-weight: 600;">policy makers</span> seeking expertise in precision health and medicine.</p>
+                        </div>
+                        
+                        <div class="program-description" id="description-2-year">
+                            <p>A 2-year programme offering advanced training in precision health and medicine with a hands-on capstone project. Designed for those <span style="color: #FF6B35; font-weight: 600;">pursuing research and expertise</span> in the field.</p>
+                        </div>
+                        
+                        <div class="program-description" id="description-flexible">
+                            <p>Flexible pathway with stackable modules suitable for working professionals seeking flexibility.</p>
                         </div>
                     </div>
+                </div>
+
+                <div class="timeline-wrapper">
                     
-                    <div class="pathway-card">
-                        <img src="https://xavierchee.github.io/website/website_assets/course_pathway/mscphm_part_time.png" 
-                             alt="Part-time Programme" 
-                             style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px 10px 0 0;">
-                        <div class="pathway-card-content">
-                            <h3 class="pathway-title">M.Sc. in Precision Health and Medicine (part-time)</h3>
-                            <div class="pathway-detail">
-                                <strong>Duration:</strong>
-                                <span>Up to 2 years</span>
-                            </div>
-                            <div class="pathway-modules">
-                                <div class="pathway-modules-title">Modules to complete:</div>
-                                <ul>
-                                    <li>6 Core modules</li>
-                                    <li>4 Elective modules</li>
-                                </ul>
+                    <div class="program-timeline active" id="timeline-1-year">
+                        <div class="timeline-container">
+                            <div class="timeline-track">
+                                <div class="timeline-line"></div>
+                                <div class="year-markers">
+                                    <div class="year-marker">
+                                        <div class="year-label">Year 1</div>
+                                        <div class="year-subtitle">Foundation & Core Competencies</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-nodes">
+                                    <div class="timeline-node">
+                                        <div class="node-connector"></div>
+                                        <div class="node-point"></div>
+                                        <div class="milestone-card">
+                                            <div class="milestone-content">
+                                                <div class="milestone-header">
+                                                    <div class="milestone-title">Semester 1</div>
+                                                    <div class="milestone-subtitle">Foundation</div>
+                                                </div>
+                                                <div class="milestone-summary">Essential foundation modules for precision medicine</div>
+                                            </div>
+                                            <div class="milestone-tags">
+                                                <span class="milestone-tag core">5 Core Modules</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-node">
+                                        <div class="node-connector"></div>
+                                        <div class="node-point"></div>
+                                        <div class="milestone-card">
+                                            <div class="milestone-content">
+                                                <div class="milestone-header">
+                                                    <div class="milestone-title">Semester 2</div>
+                                                    <div class="milestone-subtitle">Specialization</div>
+                                                </div>
+                                                <div class="milestone-summary">Advanced core concepts and methodologies</div>
+                                            </div>
+                                            <div class="milestone-tags">
+                                                <span class="milestone-tag core">1 Core Modules</span>
+                                                <span class="milestone-tag elective">4 Elective Modules</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-node hidden"></div>
+                                    <div class="timeline-node hidden"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="pathway-card">
-                        <img src="https://xavierchee.github.io/website/website_assets/course_pathway/mscphm_stackable.png" 
-                             alt="Stackable Programme" 
-                             style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px 10px 0 0;">
-                        <div class="pathway-card-content">
-                            <h3 class="pathway-title">M.Sc. in Precision Health and Medicine (stackable)</h3>
-                            <div class="pathway-detail">
-                                <strong>Duration:</strong>
-                                <span>Within 5 years</span>
-                            </div>
-                            <div class="pathway-modules">
-                                <div class="pathway-modules-title">Modules to complete:</div>
-                                <ul>
-                                    <li>6 Core modules</li>
-                                    <li>4 Elective modules</li>
-                                </ul>
+
+                    <div class="program-timeline" id="timeline-2-year">
+                        <div class="timeline-container">
+                            <div class="timeline-track">
+                                <div class="timeline-line"></div>
+                                <div class="year-markers">
+                                    <div class="year-marker">
+                                        <div class="year-label">Year 1</div>
+                                        <div class="year-subtitle">Foundation & Core Competencies</div>
+                                    </div>
+                                    <div class="year-marker">
+                                        <div class="year-label">Year 2</div>
+                                        <div class="year-subtitle">Real-life Application</div>
+                                    </div>
+                                </div>
+                                <div class="year-divider" style="left: 50%"></div>
+                                <div class="timeline-nodes">
+                                    <div class="timeline-node">
+                                        <div class="node-connector"></div>
+                                        <div class="node-point"></div>
+                                        <div class="milestone-card">
+                                            <div class="milestone-content">
+                                                <div class="milestone-header">
+                                                    <div class="milestone-title">Semester 1</div>
+                                                    <div class="milestone-subtitle">Foundation</div>
+                                                </div>
+                                                <div class="milestone-summary">Essential foundation modules for precision medicine</div>
+                                            </div>
+                                            <div class="milestone-tags">
+                                                <span class="milestone-tag core">5 Core Modules</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-node">
+                                        <div class="node-connector"></div>
+                                        <div class="node-point"></div>
+                                        <div class="milestone-card">
+                                            <div class="milestone-content">
+                                                <div class="milestone-header">
+                                                    <div class="milestone-title">Semester 2</div>
+                                                    <div class="milestone-subtitle">Specialization</div>
+                                                </div>
+                                                <div class="milestone-summary">Advanced core concepts and methodologies</div>
+                                            </div>
+                                            <div class="milestone-tags">
+                                                <span class="milestone-tag core">1 Core Modules</span>
+                                                <span class="milestone-tag elective">2 Elective Modules</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-node combined">
+                                        <div class="node-connector"></div>
+                                        <div class="node-point"></div>
+                                        <div class="milestone-card combined">
+                                            <div class="milestone-content">
+                                                <div class="milestone-header">
+                                                    <div class="milestone-title">Semester 3 and 4</div>
+                                                    <div class="milestone-subtitle">Capstone Research</div>
+                                                </div>
+                                                <div class="milestone-summary">Hands-on research experience with academic and industry partners</div>
+                                            </div>
+                                            <div class="milestone-tags">
+                                                <span class="milestone-tag research">Academic or Industry Capstone Project</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-node combined">
+                                        <div class="node-connector"></div>
+                                        <div class="node-point"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="program-timeline" id="timeline-flexible">
+                        <div class="timeline-container">
+                            <div class="timeline-track">
+                                <div class="timeline-line"></div>
+                                <div class="year-markers">
+                                    <div class="year-marker">
+                                        <div class="year-label">Year 1</div>
+                                        <div class="year-subtitle">Start Journey</div>
+                                    </div>
+                                    <div class="year-marker">
+                                        <div class="year-label">Year 5</div>
+                                        <div class="year-subtitle">Complete MSc</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-nodes">
+                                    <div class="timeline-node full-width">
+                                        <div class="milestone-card full-width">
+                                            <div class="milestone-content">
+                                                <div class="milestone-header">
+                                                    <div class="milestone-title">Complete modular Executive or Graduate certificates at your own pace and stack them toward your MSc within 5 years</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-node hidden"></div>
+                                    <div class="timeline-node hidden"></div>
+                                    <div class="timeline-node hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -1769,6 +2044,99 @@
                     });
                 }
             });
+        });
+
+        // Timeline animation functions
+        function animateTimelineElements(timeline) {
+            // Reset all animation classes first
+            const timelineLine = timeline.querySelector('.timeline-line');
+            const connectors = timeline.querySelectorAll('.node-connector');
+            const points = timeline.querySelectorAll('.node-point');
+            const cards = timeline.querySelectorAll('.milestone-card');
+            
+            // Remove all animation classes
+            timelineLine?.classList.remove('animate-in');
+            connectors.forEach(connector => connector.classList.remove('animate-in'));
+            points.forEach(point => point.classList.remove('animate-in'));
+            cards.forEach(card => card.classList.remove('animate-in'));
+            
+            // Animate timeline line first
+            setTimeout(() => {
+                timelineLine?.classList.add('animate-in');
+            }, 100);
+            
+            // Animate connectors with staggered delay
+            connectors.forEach((connector, index) => {
+                setTimeout(() => {
+                    connector.classList.add('animate-in');
+                }, 400 + (index * 100));
+            });
+            
+            // Animate points with staggered delay
+            points.forEach((point, index) => {
+                setTimeout(() => {
+                    point.classList.add('animate-in');
+                }, 700 + (index * 100));
+            });
+            
+            // Animate cards with staggered delay
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, 1000 + (index * 150));
+            });
+        }
+
+        // Function to switch between program timelines and descriptions
+        function switchProgram(programKey) {
+            // Hide all program timelines
+            document.querySelectorAll('.program-timeline').forEach(timeline => {
+                timeline.classList.remove('active');
+            });
+            
+            // Hide all program descriptions
+            document.querySelectorAll('.program-description').forEach(description => {
+                description.classList.remove('active');
+            });
+            
+            // Show the selected program timeline
+            const selectedTimeline = document.getElementById(`timeline-${programKey}`);
+            if (selectedTimeline) {
+                selectedTimeline.classList.add('active');
+                // Animate the timeline elements
+                animateTimelineElements(selectedTimeline);
+            }
+            
+            // Show the selected program description
+            const selectedDescription = document.getElementById(`description-${programKey}`);
+            if (selectedDescription) {
+                selectedDescription.classList.add('active');
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Program tab switching
+            document.querySelectorAll('.program-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Only update if not already active
+                    if (!tab.classList.contains('active')) {
+                        // Update tab active state
+                        document.querySelectorAll('.program-tab').forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        // Switch to the selected program
+                        const program = tab.dataset.program;
+                        switchProgram(program);
+                    }
+                });
+            });
+            
+            // Animate the initial timeline (1-year program)
+            const initialTimeline = document.getElementById('timeline-1-year');
+            if (initialTimeline) {
+                animateTimelineElements(initialTimeline);
+            }
         });
     </script>
 </body>
