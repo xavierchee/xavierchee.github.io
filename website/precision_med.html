@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 28, 2025 - 17:45 UTC+8
+    CHANGE LOG - Last Updated: August 12, 2025 - 18:30 UTC+8
     ============================================
     
     Recent Changes:
-    - Replaced main content with new "Precision Medicine: The Future of Healthcare is Personal" content
-    - Converted bullet points into interactive flip cards
-    - Added CSS styles for flip card functionality
-    - Maintained existing page structure and design consistency
+    - Replaced flip cards with click-to-reveal cards
+    - Added background images from GitHub repository for each card
+    - Applied white overlay filter for better text readability
+    - Changed card text color to NUS blue (#003D7C)
+    - Implemented modern click interaction with smooth transitions
+    - Removed pulse animation for cleaner appearance
 -->
 <html lang="en">
 <head>
@@ -337,85 +339,197 @@
             font-weight: 700;
         }
         
-        /* Flip Card Styles */
-        .flip-cards-container {
+        /* Click-to-Reveal Card Styles */
+        .reveal-cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin: 40px 0;
         }
         
-        .flip-card {
-            background-color: transparent;
+        .reveal-card {
+            position: relative;
             width: 100%;
-            height: 200px;
-            perspective: 1000px;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.15);
+            border: 1px solid rgba(0, 61, 124, 0.1);
         }
         
-        .flip-card-inner {
+        .reveal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 35px rgba(0, 61, 124, 0.25);
+        }
+        
+        .reveal-card.active {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(0, 61, 124, 0.3);
+        }
+        
+        .card-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 0.6s ease;
+        }
+        
+        .reveal-card.active .card-background {
+            transform: scale(1.1);
+        }
+        
+        /* White overlay for better text readability */
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.92) 0%, 
+                rgba(255, 255, 255, 0.85) 50%,
+                rgba(255, 255, 255, 0.92) 100%);
+            transition: background 0.4s ease;
+        }
+        
+        .reveal-card.active .card-overlay {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(255, 255, 255, 0.9) 50%,
+                rgba(255, 255, 255, 0.95) 100%);
+        }
+        
+        .card-content {
             position: relative;
             width: 100%;
             height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        
-        .flip-card:hover .flip-card-inner,
-        .flip-card.flipped .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-        
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.1);
+            padding: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            text-align: center;
+            z-index: 2;
         }
         
-        .flip-card-front {
-            background: linear-gradient(135deg, #003D7C, #0052A3);
-            color: white;
-        }
-        
-        .flip-card-back {
-            background: white;
-            border: 2px solid #003D7C;
-            color: #2c3e50;
-            transform: rotateY(180deg);
-        }
-        
-        .flip-card-title {
-            font-size: 18px;
+        .card-title {
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 10px;
+            color: #003D7C;
+            margin-bottom: 12px;
             line-height: 1.3;
+            transition: all 0.4s ease;
+            letter-spacing: -0.3px;
         }
         
-        .flip-card-subtitle {
+        .card-subtitle {
             font-size: 14px;
-            font-weight: 400;
-            opacity: 0.9;
+            font-weight: 500;
+            color: #003D7C;
+            opacity: 0.7;
+            margin-bottom: 15px;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .flip-card-content {
+        .card-subtitle::after {
+            content: '→';
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .reveal-card:hover .card-subtitle::after {
+            transform: translateX(5px);
+        }
+        
+        .card-description {
             font-size: 15px;
             line-height: 1.6;
-            color: #5a6c7d;
+            color: #003D7C;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 0;
+            overflow: hidden;
+            font-weight: 500;
+        }
+        
+        .reveal-card.active .card-description {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 150px;
+            margin-top: 15px;
+        }
+        
+        .reveal-card.active .card-title {
+            transform: translateY(-10px);
+            font-size: 18px;
+        }
+        
+        .reveal-card.active .card-subtitle {
+            opacity: 0;
+            transform: translateY(-20px);
+            position: absolute;
+        }
+        
+        /* Individual card backgrounds */
+        .card-ngs {
+            background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/next_gene_sequencing.png');
+        }
+        
+        .card-ai {
+            background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/artificial_intelligence.png');
+        }
+        
+        .card-biomarker {
+            background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/biomarker_discovery.png');
+        }
+        
+        .card-multiomics {
+            background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/multiomics_integration.png');
+        }
+        
+        .card-efficacy {
+            background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/enhanced_treatment_efficacy.png');
+        }
+        
+        .card-sideeffects {
+            background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/minimized_side_effects.png');
+        }
+        
+        .card-timetreat {
+            background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/accelerated_time_to_treatment.png');
+        }
+        
+        .card-prevention {
+            background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/proactive_prevention.png');
         }
         
         @media (max-width: 768px) {
-            .flip-cards-container {
+            .reveal-cards-container {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .reveal-card {
+                height: 200px;
+            }
+            
+            .card-title {
+                font-size: 18px;
+            }
+            
+            .card-description {
+                font-size: 14px;
             }
         }
         
@@ -1242,126 +1356,110 @@
                 </p>
             </div>
             
-            <!-- Core Technologies Section with Flip Cards -->
+            <!-- Core Technologies Section with Click-to-Reveal Cards -->
             <div class="content-subsection scroll-fade">
                 <h2 class="subsection-header">Core Technologies that Drive Precision Medicine</h2>
                 
-                <div class="flip-cards-container">
-                    <div class="flip-card" onclick="toggleFlip(this)">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="flip-card-title">Next-Generation Sequencing</div>
-                                <div class="flip-card-subtitle">Click to learn more</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="flip-card-content">
-                                    Rapidly decoding genetic variations that influence disease risk and treatment response
-                                </div>
+                <div class="reveal-cards-container">
+                    <div class="reveal-card" onclick="toggleReveal(this)">
+                        <div class="card-background card-ngs"></div>
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="card-title">Next-Generation Sequencing</div>
+                            <div class="card-subtitle">Click to discover</div>
+                            <div class="card-description">
+                                Rapidly decoding genetic variations that influence disease risk and treatment response
                             </div>
                         </div>
                     </div>
                     
-                    <div class="flip-card" onclick="toggleFlip(this)">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="flip-card-title">Artificial Intelligence</div>
-                                <div class="flip-card-subtitle">Click to learn more</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="flip-card-content">
-                                    Analyzing vast multidimensional datasets to identify patterns invisible to the human eye
-                                </div>
+                    <div class="reveal-card" onclick="toggleReveal(this)">
+                        <div class="card-background card-ai"></div>
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="card-title">Artificial Intelligence</div>
+                            <div class="card-subtitle">Click to discover</div>
+                            <div class="card-description">
+                                Analyzing vast multidimensional datasets to identify patterns invisible to the human eye
                             </div>
                         </div>
                     </div>
                     
-                    <div class="flip-card" onclick="toggleFlip(this)">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="flip-card-title">Biomarker Discovery</div>
-                                <div class="flip-card-subtitle">Click to learn more</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="flip-card-content">
-                                    Pinpointing molecular signatures that predict optimal therapeutic pathways
-                                </div>
+                    <div class="reveal-card" onclick="toggleReveal(this)">
+                        <div class="card-background card-biomarker"></div>
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="card-title">Biomarker Discovery</div>
+                            <div class="card-subtitle">Click to discover</div>
+                            <div class="card-description">
+                                Pinpointing molecular signatures that predict optimal therapeutic pathways
                             </div>
                         </div>
                     </div>
                     
-                    <div class="flip-card" onclick="toggleFlip(this)">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="flip-card-title">Multi-Omics Integration</div>
-                                <div class="flip-card-subtitle">Click to learn more</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="flip-card-content">
-                                    Synthesizing genomics, proteomics, and metabolomics for comprehensive biological insights
-                                </div>
+                    <div class="reveal-card" onclick="toggleReveal(this)">
+                        <div class="card-background card-multiomics"></div>
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="card-title">Multi-Omics Integration</div>
+                            <div class="card-subtitle">Click to discover</div>
+                            <div class="card-description">
+                                Synthesizing genomics, proteomics, and metabolomics for comprehensive biological insights
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- The Promise Section with Flip Cards -->
+            <!-- The Promise Section with Click-to-Reveal Cards -->
             <div class="content-subsection scroll-fade">
                 <h2 class="subsection-header">The Promise: Better Outcomes, Fewer Risks</h2>
                 
-                <div class="flip-cards-container">
-                    <div class="flip-card" onclick="toggleFlip(this)">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="flip-card-title">Enhanced Treatment Efficacy</div>
-                                <div class="flip-card-subtitle">Click to learn more</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="flip-card-content">
-                                    Treatments matched to your biological profile work more effectively, eliminating trial-and-error approaches
-                                </div>
+                <div class="reveal-cards-container">
+                    <div class="reveal-card" onclick="toggleReveal(this)">
+                        <div class="card-background card-efficacy"></div>
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="card-title">Enhanced Treatment Efficacy</div>
+                            <div class="card-subtitle">Click to discover</div>
+                            <div class="card-description">
+                                Treatments matched to your biological profile work more effectively, eliminating trial-and-error approaches
                             </div>
                         </div>
                     </div>
                     
-                    <div class="flip-card" onclick="toggleFlip(this)">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="flip-card-title">Minimized Side Effects</div>
-                                <div class="flip-card-subtitle">Click to learn more</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="flip-card-content">
-                                    Genetic insights prevent unnecessary side effects by avoiding incompatible medications
-                                </div>
+                    <div class="reveal-card" onclick="toggleReveal(this)">
+                        <div class="card-background card-sideeffects"></div>
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="card-title">Minimized Side Effects</div>
+                            <div class="card-subtitle">Click to discover</div>
+                            <div class="card-description">
+                                Genetic insights prevent unnecessary side effects by avoiding incompatible medications
                             </div>
                         </div>
                     </div>
                     
-                    <div class="flip-card" onclick="toggleFlip(this)">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="flip-card-title">Accelerated Time to Treatment</div>
-                                <div class="flip-card-subtitle">Click to learn more</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="flip-card-content">
-                                    Molecular diagnostics identify the right therapy immediately
-                                </div>
+                    <div class="reveal-card" onclick="toggleReveal(this)">
+                        <div class="card-background card-timetreat"></div>
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="card-title">Accelerated Time to Treatment</div>
+                            <div class="card-subtitle">Click to discover</div>
+                            <div class="card-description">
+                                Molecular diagnostics identify the right therapy immediately
                             </div>
                         </div>
                     </div>
                     
-                    <div class="flip-card" onclick="toggleFlip(this)">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <div class="flip-card-title">Proactive Prevention</div>
-                                <div class="flip-card-subtitle">Click to learn more</div>
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="flip-card-content">
-                                    Risk assessment enables intervention before disease develops
-                                </div>
+                    <div class="reveal-card" onclick="toggleReveal(this)">
+                        <div class="card-background card-prevention"></div>
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="card-title">Proactive Prevention</div>
+                            <div class="card-subtitle">Click to discover</div>
+                            <div class="card-description">
+                                Risk assessment enables intervention before disease develops
                             </div>
                         </div>
                     </div>
@@ -1548,10 +1646,36 @@
             });
         });
         
-        // Flip card toggle function
-        function toggleFlip(card) {
-            card.classList.toggle('flipped');
+        // Click-to-reveal card toggle function
+        function toggleReveal(card) {
+            // Close other active cards in the same container
+            const container = card.parentElement;
+            const otherCards = container.querySelectorAll('.reveal-card.active');
+            otherCards.forEach(otherCard => {
+                if (otherCard !== card) {
+                    otherCard.classList.remove('active');
+                }
+            });
+            
+            // Toggle current card
+            card.classList.toggle('active');
         }
+        
+        // Close cards when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.reveal-card')) {
+                document.querySelectorAll('.reveal-card.active').forEach(card => {
+                    card.classList.remove('active');
+                });
+            }
+        });
+        
+        // Prevent card from closing when clicking inside it
+        document.querySelectorAll('.reveal-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
     </script>
 </body>
 </html>
