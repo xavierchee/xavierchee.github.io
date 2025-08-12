@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: August 12, 2025 - 8:15 AM
+    CHANGE LOG - Last Updated: December 18, 2024 - 11:54 AM
     ============================================
     
     Recent Changes:
-    - Replaced hexagon icons with bullet points
-    - Colored key terms (feature titles) in orange (#FF6B35)
-    - Simplified feature grid layout
-    - Fixed a layout issue where the new timeline component was shifting the sidebar. 
-    - Added `min-width: 0` to the `.content-section` class to correctly contain the wide timeline within the flexbox layout.
-    - Replaced the static study pathway cards with the interactive timeline from course_pathway_new.html.
-    - Added CSS and JavaScript required for the new timeline functionality and animations.
-    - Ensured sidebar padding for intake/application and events containers remains identical to the original design.
-    - Merged styles and scripts to create a single, functional HTML file.
+    - Removed both horizontal and vertical scrollbars from timeline section by setting overflow-x and overflow-y to 'hidden'
+    - Added more top padding (2rem) to timeline-wrapper to ensure year labels have enough space and aren't cut off
 -->
 <html lang="en">
 <head>
@@ -528,8 +521,9 @@
         .timeline-wrapper {
             position: relative;
             margin: 1rem 0 2rem 0;
-            padding: 1rem 0;
-            overflow-x: auto;
+            padding: 2rem 0 1rem 0;
+            overflow-x: hidden;
+            overflow-y: hidden;
             clear: both;
             z-index: 1;
             max-width: 100%;
@@ -691,8 +685,8 @@
         }
         
         .milestone-card.full-width {
-            width: calc(100% - 100px);
-            margin-left: 50px;
+            width: calc(100% + 100px);
+            margin-left: 90px;
             margin-right: 50px;
             text-align: center;
             height: auto;
@@ -1598,7 +1592,7 @@
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
-                        <a href="#others">Others</a>
+                        
                     </div>
                 </li>
                 

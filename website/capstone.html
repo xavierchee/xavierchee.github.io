@@ -1,26 +1,17 @@
-<!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 14, 2025 - 3:45 PM
-    ============================================
-    
-    Recent Changes:
-    - Updated all navigation links to use full URLs starting with https://xavierchee.github.io/website/
-    - Updated floating menu buttons with correct links:
-      * Application/admissions: https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS
-      * Contact us: mailto:mscphm@nus.edu.sg  
-      * Mailing list: https://gradapp.nus.edu.sg/portal/app_manage
-    
-    Previous Changes:
-    - Linked Photos subsection to https://xavierchee.github.io/website/photo.html
-    - Added Vision and mission as first subsection under About us, linking to https://xavierchee.github.io/website/vision_mission.html
+Last Updated: January 15, 2025 12:18 PM
+Changes: Changed pathway card top gradient line to solid NUS orange
+- Replaced orange-to-blue gradient with solid NUS orange (#FF6B35) for cleaner appearance
 -->
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capstone Project - Precision Health & Medicine - NUS</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700&display=swap');
         
         * {
             margin: 0;
@@ -303,37 +294,6 @@
             line-height: 1.8;
             margin-bottom: 50px;
             font-weight: 400;
-        }
-        
-        /* Capstone Types Section */
-        .capstone-types {
-            margin-top: 60px;
-        }
-        
-        .capstone-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-top: 40px;
-            align-items: stretch;
-        }
-        
-        .capstone-card {
-            background: white;
-            border-radius: 12px;
-            padding: 0;
-            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
-            border: 2px solid rgba(0, 61, 124, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 400px;
-        }
-        
-        .capstone-card-content {
-            padding: 25px 30px 30px 30px;
         }
         
         /* Action Buttons - Fixed Floating Menu */
@@ -641,101 +601,6 @@
             }
         }
         
-        .capstone-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #FF6B35, #FF8554);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1;
-        }
-        
-        .capstone-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 61, 124, 0.15);
-            border-color: #FF6B35;
-        }
-        
-        .capstone-card:hover::before {
-            transform: translateX(0);
-        }
-        
-        .capstone-title {
-            color: #003D7C;
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            margin-top: 0;
-            letter-spacing: -0.3px;
-        }
-        
-        /* Capstone card image styling */
-        .capstone-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
-            display: block;
-        }
-        
-        .capstone-description {
-            color: #5a6c7d;
-            font-size: 16px;
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        /* Placeholder Image Styles */
-        .placeholder-image {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 40px 0;
-            border: 2px dashed rgba(0, 61, 124, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .placeholder-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: placeholder-shine 2s infinite;
-        }
-        
-        @keyframes placeholder-shine {
-            0% {
-                left: -100%;
-            }
-            100% {
-                left: 100%;
-            }
-        }
-        
-        .placeholder-text {
-            color: #94a3b8;
-            font-size: 18px;
-            font-weight: 500;
-            z-index: 1;
-        }
-        
-        /* Locations Section */
-        .locations-section {
-            margin-top: 60px;
-        }
-        
         /* Sidebar */
         .sidebar {
             flex: 0 0 35%;
@@ -957,10 +822,6 @@
                 padding: 0 40px;
             }
             
-            .capstone-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .nav-links a {
                 padding: 20px 10px;
                 font-size: 12px;
@@ -1003,14 +864,6 @@
                 flex: 0 0 100%;
                 max-width: 500px;
                 margin: 0 auto;
-            }
-            
-            .capstone-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .capstone-card img {
-                height: 200px;
             }
             
             .section-header {
@@ -1131,10 +984,605 @@
                 margin: 30px auto;
             }
         }
+
+        /* --- START: Integrated Capstone Pathway Carousel Styles --- */
+        .capstone-pathway-container {
+            --path-primary: #003D7C;
+            --path-secondary: #FF6B35;
+            --path-accent: #0052A3;
+            --path-light-blue: #E8F2F7;
+            --path-dark: #2c3e50;
+            --path-gray: #5a6c7d;
+            --path-light-gray: #f8fafc;
+            --path-border: rgba(0, 61, 124, 0.1);
+            
+            /* Consistent shadow hierarchy with improved depth */
+            --shadow-sm: 0 2px 8px rgba(0, 61, 124, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 61, 124, 0.1);
+            --shadow-lg: 0 8px 32px rgba(0, 61, 124, 0.15);
+            --shadow-xl: 0 12px 48px rgba(0, 61, 124, 0.2);
+            --shadow-glow: 0 20px 60px rgba(0, 61, 124, 0.2);
+            --shadow-neumorphic: 20px 20px 60px rgba(0, 61, 124, 0.1), -20px -20px 60px rgba(255, 255, 255, 0.9);
+            
+            /* Consistent animation easing */
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            padding: 0;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+            background: transparent;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            overflow: visible;
+        }
+
+        .pathway-header {
+            text-align: center;
+            padding: 0 20px 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pathway-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--path-secondary) 0%, var(--path-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .pathway-header p {
+            color: var(--path-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        /* Carousel Container */
+        .pathway-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 60px;
+            height: 550px;
+            perspective: 1200px;
+        }
+        
+        .pathway-slider-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .pathway-slide {
+            position: absolute;
+            width: 100%;
+            max-width: 600px;
+            height: 100%;
+            opacity: 0;
+            transform: translateX(100%) scale(0.8);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        
+        .pathway-slide.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: all;
+            z-index: 10;
+        }
+        
+        .pathway-slide.prev {
+            transform: translateX(-100%) scale(0.8);
+            opacity: 0;
+        }
+        
+        .pathway-slide.next {
+            transform: translateX(100%) scale(0.8);
+            opacity: 0;
+        }
+
+        .pathway-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 10px 40px rgba(0, 61, 124, 0.15),
+                0 2px 10px rgba(0, 61, 124, 0.05),
+                0 0 80px rgba(0, 61, 124, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -1px 0 rgba(0, 61, 124, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.4s var(--ease-smooth);
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .pathway-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #FF6B35;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s var(--ease-smooth);
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
+        }
+        
+        .pathway-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.6s var(--ease-smooth);
+            pointer-events: none;
+        }
+        
+        .pathway-slide.active .pathway-card::before {
+            transform: scaleX(1);
+        }
+        
+        .pathway-card:hover {
+            box-shadow: 
+                0 20px 60px rgba(0, 61, 124, 0.2),
+                0 4px 20px rgba(0, 61, 124, 0.1),
+                0 0 100px rgba(0, 61, 124, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 1),
+                inset 0 -1px 0 rgba(0, 61, 124, 0.1);
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(250, 252, 254, 1));
+        }
+        
+        .pathway-card:hover::after {
+            opacity: 1;
+        }
+
+        .pathway-card-header {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .pathway-card-title {
+            font-family: 'Inter', sans-serif;
+            color: var(--path-primary);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .pathway-card-description {
+            color: var(--path-gray);
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .pathway-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .pathway-choice-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+            border: 2px solid rgba(0, 61, 124, 0.1);
+            border-radius: 50px;
+            padding: 20px 30px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            transition-delay: 0ms; /* Default no delay */
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 2px 8px rgba(0, 61, 124, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+        
+
+        
+        .pathway-choice-btn::after {
+            content: '→';
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%) translateX(0);
+            color: var(--path-secondary);
+            font-size: 20px;
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.3s var(--ease-smooth);
+        }
+
+        .pathway-choice-btn:hover {
+            transition-delay: 50ms; /* Small delay before hover starts */
+            background: linear-gradient(135deg, #003D7C, #0052A3);
+            border-color: var(--path-primary);
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 30px rgba(0, 61, 124, 0.15),
+                0 4px 15px rgba(0, 61, 124, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .pathway-choice-btn:hover .pathway-choice-title,
+        .pathway-choice-btn:hover .pathway-choice-subtitle {
+            color: white;
+        }
+        
+        .pathway-choice-btn:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) translateX(5px);
+            color: white;
+        }
+        
+
+
+        .pathway-choice-title {
+            color: var(--path-dark);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            transition: color 0.3s var(--ease-smooth);
+        }
+
+        .pathway-choice-subtitle {
+            color: var(--path-gray);
+            font-size: 15px;
+            opacity: 0.9;
+            font-weight: 400;
+            transition: color 0.3s var(--ease-smooth);
+        }
+        
+        .pathway-info-box {
+            background: linear-gradient(135deg, rgba(232, 242, 247, 0.5) 0%, rgba(0, 88, 141, 0.05) 100%);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--path-primary);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 25px 0;
+            box-shadow: 
+                0 4px 12px rgba(0, 61, 124, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pathway-info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .pathway-info-box.orange {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border-left-color: var(--path-secondary);
+        }
+        
+        .pathway-info-box h4 {
+            color: var(--path-primary);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 0.2px;
+        }
+        
+        .pathway-info-box.orange h4 {
+            color: var(--path-secondary);
+        }
+        
+        .pathway-info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pathway-info-box li {
+            color: var(--path-dark);
+            font-size: 15px;
+            line-height: 1.8;
+            padding-left: 20px;
+            position: relative;
+            font-weight: 400;
+        }
+        
+        .pathway-info-box li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--path-primary);
+        }
+        
+        .pathway-info-box.orange li::before {
+            color: var(--path-secondary);
+        }
+
+        .pathway-result-card {
+            background: linear-gradient(135deg, var(--path-primary) 0%, var(--path-accent) 100%);
+            color: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 20px 60px rgba(0, 61, 124, 0.2),
+                0 10px 30px rgba(0, 61, 124, 0.15),
+                0 0 80px rgba(0, 61, 124, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pathway-result-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shimmerResult 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmerResult {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+        
+        .pathway-result-card.industry {
+            background: linear-gradient(135deg, var(--path-secondary) 0%, #FF9040 100%);
+        }
+        
+        .pathway-result-card h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .pathway-result-card p {
+            font-size: 17px;
+            line-height: 1.8;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+        }
+        
+        .pathway-result-outcomes {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .pathway-result-outcomes strong {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+        
+        .pathway-result-outcomes ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .pathway-result-outcomes li {
+            font-size: 15px;
+            line-height: 1.8;
+            font-weight: 400;
+            padding: 4px 0;
+        }
+        
+        .pathway-result-outcomes li::before {
+            content: '✓';
+            margin-right: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 700;
+        }
+
+        
+        /* Navigation arrows for carousel */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+            backdrop-filter: blur(10px) saturate(180%);
+            border: 2px solid rgba(0, 61, 124, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            z-index: 15;
+            box-shadow: 
+                0 4px 15px rgba(0, 61, 124, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .carousel-nav.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .carousel-nav:hover {
+            background: linear-gradient(135deg, #003D7C, #0052A3);
+            border-color: var(--path-primary);
+            box-shadow: 
+                0 8px 25px rgba(0, 61, 124, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-nav:hover::after {
+            border-color: white;
+        }
+        
+        .carousel-nav.prev {
+            left: 10px;
+        }
+        
+        .carousel-nav.next {
+            right: 10px;
+        }
+        
+        .carousel-nav::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid var(--path-primary);
+            border-right: 2px solid var(--path-primary);
+            transition: border-color 0.3s var(--ease-smooth);
+        }
+        
+        .carousel-nav.prev::after {
+            transform: rotate(-135deg);
+            margin-left: 3px;
+        }
+        
+        .carousel-nav.next::after {
+            transform: rotate(45deg);
+            margin-right: 3px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%) scale(0.9);
+                filter: blur(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100%) scale(0.9);
+                filter: blur(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+                filter: blur(2px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .slide-in-right {
+            animation: slideInFromRight 0.6s var(--ease-smooth) forwards;
+        }
+        
+        .slide-in-left {
+            animation: slideInFromLeft 0.6s var(--ease-smooth) forwards;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s var(--ease-smooth) forwards;
+        }
+        
+        /* Mobile responsiveness for carousel */
+        @media (max-width: 768px) {
+            .pathway-carousel {
+                padding: 0 20px;
+                height: 550px;
+            }
+            
+            .pathway-slide {
+                max-width: 100%;
+            }
+            
+            .pathway-card {
+                padding: 30px 25px;
+            }
+            
+            .pathway-card-title {
+                font-size: 1.3rem;
+            }
+            
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .carousel-nav.prev {
+                left: 5px;
+            }
+            
+            .carousel-nav.next {
+                right: 5px;
+            }
+        }
+        /* --- END: Integrated Capstone Pathway Carousel Styles --- */
+
     </style>
 </head>
 <body>
-    <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
             <a href="https://medicine.nus.edu.sg/bch/">
@@ -1143,7 +1591,6 @@
         </div>
     </div>
     
-    <!-- Navigation Bar -->
     <nav class="nav-bar">
         <div class="nav-bar-content">
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -1165,7 +1612,7 @@
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
-                        <a href="#others">Others</a>
+                        
                     </div>
                 </li>
                 
@@ -1205,15 +1652,12 @@
         </div>
     </nav>
     
-    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
     
-    <!-- Application Banner -->
     <div class="application-banner">
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Capstone Project Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
         <img src="https://xavierchee.github.io/website/website_assets/capstone/capstone_banner.png" 
              alt="Capstone Project Banner" 
@@ -1223,7 +1667,6 @@
         </div>
     </div>
     
-    <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
             <h1 class="section-header scroll-fade">Capstone Project: From Concept to Impact</h1>
@@ -1234,45 +1677,56 @@
                 Our capstone projects serve as valuable professional development experiences, enabling students to enhance their CVs, explore diverse career pathways across industries, academic institutions, and organizations, and potentially connect with future employers.
             </p>
             
-            <!-- Capstone Types Section -->
-            <div class="capstone-types scroll-fade">
-                <div class="capstone-grid">
-                    <div class="capstone-card">
-                        <img src="https://xavierchee.github.io/website/website_assets/capstone/industry_capstone.png" 
-                             alt="Industry Capstone Projects">
-                        <div class="capstone-card-content">
-                            <h3 class="capstone-title">Industry Capstone Projects</h3>
-                            <p class="capstone-description">
-                                Work directly with industry partners under professional supervision to gain industrial experience.
-                            </p>
-                        </div>
-                    </div>
+            <h2 class="section-header scroll-fade" style="margin-top: 60px; margin-bottom: 40px;">Choosing Your Capstone Pathway</h2>
+            
+            <div class="capstone-pathway-container scroll-fade">
+                <div class="pathway-carousel">
+                    <div class="carousel-nav prev" id="prevBtn" onclick="pathwayCarousel.prev()"></div>
+                    <div class="carousel-nav next" id="nextBtn" onclick="pathwayCarousel.next()"></div>
                     
-                    <div class="capstone-card">
-                        <img src="https://xavierchee.github.io/website/website_assets/capstone/academic_capstone.png" 
-                             alt="Academic Capstone Projects">
-                        <div class="capstone-card-content">
-                            <h3 class="capstone-title">Academic Capstone Projects</h3>
-                            <p class="capstone-description">
-                                Work under leading researchers at university laboratories, medical centers, or research institutes.
-                            </p>
+                    <div class="pathway-slider-track">
+                        <!-- Slide 1: Choose Path -->
+                        <div class="pathway-slide active" id="slide1">
+                            <div class="pathway-card">
+                                <div class="pathway-card-header">
+                                    <h3 class="pathway-card-title">What Type of Capstone Path?</h3>
+                                </div>
+                                <p class="pathway-card-description">
+                                    Which type of capstone experience aligns with your career goals?
+                                </p>
+                                <div class="pathway-choices">
+                                    <button class="pathway-choice-btn" onclick="pathwayCarousel.choosePath('industry')">
+                                        <div class="pathway-choice-title">Industry Capstone</div>
+                                        <div class="pathway-choice-subtitle">Work with companies & industry partners</div>
+                                    </button>
+                                    <button class="pathway-choice-btn" onclick="pathwayCarousel.choosePath('academic')">
+                                        <div class="pathway-choice-title">Academic Capstone</div>
+                                        <div class="pathway-choice-subtitle">Research with academic institutions</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 2: Path Details -->
+                        <div class="pathway-slide" id="slide2">
+                            <div class="pathway-card" id="pathDetailsCard">
+                                <!-- Content will be dynamically populated -->
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 3: Outcomes -->
+                        <div class="pathway-slide" id="slide3">
+                            <div id="outcomeCard">
+                                <!-- Content will be dynamically populated -->
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Locations Section -->
-            <div class="locations-section scroll-fade">
-                <h2 class="section-header">Locations of academic and industry capstone placements</h2>
                 
-                <!-- Location Map Image -->
-                <img src="https://xavierchee.github.io/website/website_assets/capstone/location_of_capstone.png" 
-                     alt="Locations of academic and industry capstone placements" 
-                     style="width: 100%; height: auto; display: block; margin: 0; padding: 0; border: none; box-shadow: none; background: transparent;">
+
             </div>
-        </div>
+            </div>
         
-        <!-- Sidebar -->
         <div class="sidebar">
             <div class="intake-container scroll-fade">
                 <h3>INTAKE AND APPLICATION</h3>
@@ -1303,7 +1757,6 @@
         </div>
     </div>
     
-    <!-- Floating Action Menu -->
     <div class="action-buttons">
         <button class="action-menu-trigger" onclick="toggleActionMenu()">
             <div class="menu-icon"></div>
@@ -1324,7 +1777,6 @@
         </div>
     </div>
     
-    <!-- Footer -->
     <footer class="footer">
         © National University of Singapore. All Rights Reserved.
     </footer>
@@ -1436,6 +1888,190 @@
                 }
             });
         });
+
+        /* --- START: Integrated Capstone Pathway Carousel Script --- */
+        class CapstonePathwayCarousel {
+            constructor() {
+                this.currentSlide = 1;
+                this.selectedPath = null;
+                this.slides = {
+                    1: document.getElementById('slide1'),
+                    2: document.getElementById('slide2'),
+                    3: document.getElementById('slide3')
+                };
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+
+                this.pathDetailsCard = document.getElementById('pathDetailsCard');
+                this.outcomeCard = document.getElementById('outcomeCard');
+                this.init();
+            }
+
+            init() {
+                this.updateNavButtons();
+            }
+            
+            updateNavButtons() {
+                // Show/hide navigation based on current slide
+                if (this.currentSlide === 1) {
+                    this.prevBtn.classList.remove('show');
+                } else {
+                    this.prevBtn.classList.add('show');
+                }
+                
+                // Next button is controlled by content
+                this.nextBtn.classList.remove('show');
+            }
+
+            slideTo(slideNumber, direction = 'forward') {
+                if (slideNumber < 1 || slideNumber > 3) return;
+                
+                const currentSlideEl = this.slides[this.currentSlide];
+                const nextSlideEl = this.slides[slideNumber];
+                
+                if (!currentSlideEl || !nextSlideEl) return;
+                
+                // Remove all classes first
+                Object.values(this.slides).forEach(slide => {
+                    slide.classList.remove('active', 'prev', 'next');
+                });
+                
+                // Set up the animation
+                if (direction === 'forward') {
+                    currentSlideEl.classList.add('prev');
+                    nextSlideEl.classList.add('active');
+                } else {
+                    currentSlideEl.classList.add('next');
+                    nextSlideEl.classList.add('active');
+                }
+                
+                this.currentSlide = slideNumber;
+                this.updateNavButtons();
+
+            }
+
+            choosePath(path) {
+                this.selectedPath = path;
+                
+                // Populate slide 2 content with enhanced styling
+                if (path === 'industry') {
+                    this.pathDetailsCard.innerHTML = `
+                        <div class="pathway-card-header">
+                            <h3 class="pathway-card-title">Industry Partnerships</h3>
+                        </div>
+                        <p class="pathway-card-description">
+                            You'll be working with reputable industry partners along side an academic as a co-thesis advisor, gaining real-world experience in cutting-edge precision medicine applications.
+                        </p>
+                        <div class="pathway-choices">
+                            <button class="pathway-choice-btn" onclick="pathwayCarousel.showOutcome()">
+                                <div class="pathway-choice-title">Continue to Outcomes</div>
+                                <div class="pathway-choice-subtitle">See your potential outcomes</div>
+                            </button>
+                        </div>
+                        <div class="pathway-info-box">
+                            <h4>Partner Companies Include</h4>
+                            <ul>
+                                <li>Leading biotech firms</li>
+                                <li>Pharmaceutical companies</li>
+                                <li>Medical device manufacturers</li>
+                                <li>Healthcare technology startups</li>
+                            </ul>
+                        </div>
+                    `;
+                } else { // academic
+                    this.pathDetailsCard.innerHTML = `
+                        <div class="pathway-card-header">
+                            <h3 class="pathway-card-title">Academic Research</h3>
+                        </div>
+                        <p class="pathway-card-description">
+                            Immerse yourself in cutting-edge research within world-class medical and research institutions, working alongside leading faculty and researchers in the field.
+                        </p>
+                        <div class="pathway-choices">
+                            <button class="pathway-choice-btn" onclick="pathwayCarousel.showOutcome()">
+                                <div class="pathway-choice-title">Continue to Outcomes</div>
+                                <div class="pathway-choice-subtitle">See your potential outcomes</div>
+                            </button>
+                        </div>
+                        <div class="pathway-info-box orange">
+                            <h4>Research Placements</h4>
+                            <ul>
+                                <li>Medical centers</li>
+                                <li>Research institutions</li>
+                                <li>University laboratories</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                // Slide to next with smooth transition
+                setTimeout(() => {
+                    this.slideTo(2, 'forward');
+                }, 100);
+            }
+            
+            showOutcome() {
+                // Populate slide 3 content with enhanced result cards
+                if (this.selectedPath === 'industry') {
+                    this.outcomeCard.innerHTML = `
+                        <div class="pathway-result-card industry">
+                            <h3>Potential to be Hired</h3>
+                            <p>
+                                Your industry capstone experience positions you perfectly for networking 
+                                opportunities with partner companies or other industry in the precision medicine and related fields.
+                            </p>
+                            <div class="pathway-result-outcomes">
+                                <strong>Potential Career Outcomes:</strong>
+                                <ul>
+                                    <li>Direct hire by company</li>
+                                    <li>Hire for positions in other industries</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                } else { // academic
+                    this.outcomeCard.innerHTML = `
+                        <div class="pathway-result-card">
+                            <h3>Employment or Further Studies</h3>
+                            <p>
+                                Your academic capstone experience provides an exceptional foundation for direct hire by your
+                                institution or for pursuing further studies in precision medicine and related fields.
+                            </p>
+                            <div class="pathway-result-outcomes">
+                                <strong>Potential Academic Outcomes:</strong>
+                                <ul>
+								    <li>Direct hire by institutions</li>
+                                    <li>Hire for positions in other industries</li>
+                                    <li>PhD programme admission</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Slide to outcome
+                setTimeout(() => {
+                    this.slideTo(3, 'forward');
+                }, 100);
+            }
+            
+            prev() {
+                if (this.currentSlide > 1) {
+                    this.slideTo(this.currentSlide - 1, 'backward');
+                }
+            }
+            
+            next() {
+                if (this.currentSlide < 3) {
+                    this.slideTo(this.currentSlide + 1, 'forward');
+                }
+            }
+
+
+        }
+
+        const pathwayCarousel = new CapstonePathwayCarousel();
+        /* --- END: Integrated Capstone Pathway Carousel Script --- */
+
     </script>
 </body>
 </html>
