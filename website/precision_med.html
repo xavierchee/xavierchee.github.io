@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: August 12, 2025 - 18:30 UTC+8
+    CHANGE LOG - Last Updated: December 27, 2024 - 14:47 UTC+8
     ============================================
     
     Recent Changes:
-    - Replaced flip cards with click-to-reveal cards
-    - Added background images from GitHub repository for each card
-    - Applied white overlay filter for better text readability
-    - Changed card text color to NUS blue (#003D7C)
-    - Implemented modern click interaction with smooth transitions
-    - Removed pulse animation for cleaner appearance
+    - Replaced glassmorphism blur with semi-transparent white overlay
+    - Added 3D perspective transforms and magnetic hover effects
+    - Changed ripple effect to neutral gray for colorless aesthetic
+    - Enhanced micro-interactions with spring animations
+    - Improved visual hierarchy with refined typography and color palette
+    - Added staggered reveal animations
+    - Implemented smooth morphing transitions between card states
+    - Enhanced mobile responsiveness with touch-optimized interactions
+    - Removed parallax effect for better performance and stability
 -->
 <html lang="en">
 <head>
@@ -339,146 +342,327 @@
             font-weight: 700;
         }
         
-        /* Click-to-Reveal Card Styles */
+        /* Click-to-Reveal Card Styles with Modern Enhancements */
         .reveal-cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
+            gap: 35px;
+            margin: 50px 0;
+            perspective: 1500px;
+            transform-style: preserve-3d;
         }
         
         .reveal-card {
             position: relative;
             width: 100%;
-            height: 220px;
-            border-radius: 16px;
+            height: 240px;
+            border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.15);
-            border: 1px solid rgba(0, 61, 124, 0.1);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 10px 40px -10px rgba(0, 61, 124, 0.3),
+                0 2px 10px -2px rgba(0, 61, 124, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+            will-change: transform;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
+        }
+        
+        /* Staggered animation for cards */
+        .reveal-card:nth-child(1) { animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both; }
+        .reveal-card:nth-child(2) { animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both; }
+        .reveal-card:nth-child(3) { animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both; }
+        .reveal-card:nth-child(4) { animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both; }
+        
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px) rotateX(-10deg) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0) scale(1);
+            }
+        }
+        
+        .reveal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                105deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.4) 45%,
+                rgba(255, 255, 255, 0) 50%,
+                transparent 55%
+            );
+            transform: translateX(-100%);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .reveal-card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        /* Ripple effect */
+        .reveal-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease-out, height 0.6s ease-out, opacity 0.6s ease-out;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .reveal-card.ripple::after {
+            width: 300%;
+            height: 300%;
+            opacity: 1;
+        }
+        
+        .reveal-card:not(.ripple)::after {
+            transition: width 0.6s ease-out, height 0.6s ease-out, opacity 0.4s ease-out 0.2s;
+            opacity: 0;
         }
         
         .reveal-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 35px rgba(0, 61, 124, 0.25);
+            transform: translateY(-8px) rotateX(5deg) scale(1.02);
+            box-shadow: 
+                0 20px 60px -15px rgba(0, 61, 124, 0.4),
+                0 10px 40px -10px rgba(255, 107, 53, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
         
         .reveal-card.active {
-            transform: scale(1.02);
-            box-shadow: 0 10px 40px rgba(0, 61, 124, 0.3);
+            transform: scale(1.05) rotateX(0deg) translateZ(20px);
+            box-shadow: 
+                0 30px 80px -20px rgba(0, 61, 124, 0.5),
+                0 15px 50px -15px rgba(255, 107, 53, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            z-index: 100;
         }
         
         .card-background {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 110%;
+            height: 110%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            transition: transform 0.6s ease;
+            transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: brightness(0.9) contrast(1.1);
+            transform: scale(1) translateZ(0);
+            will-change: transform;
+        }
+        
+        .reveal-card:hover .card-background {
+            transform: scale(1.1) translateY(-5px);
+            filter: brightness(1) contrast(1.15);
         }
         
         .reveal-card.active .card-background {
-            transform: scale(1.1);
+            transform: scale(1.15) translateY(-10px);
+            filter: brightness(1.05) contrast(1.2) saturate(1.1);
         }
         
-        /* White overlay for better text readability */
+        /* Semi-transparent white overlay */
         .card-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.92) 0%, 
-                rgba(255, 255, 255, 0.85) 50%,
-                rgba(255, 255, 255, 0.92) 100%);
-            transition: background 0.4s ease;
+            background: rgba(255, 255, 255, 0.85);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4);
+        }
+        
+        .reveal-card:hover .card-overlay {
+            background: rgba(255, 255, 255, 0.82);
         }
         
         .reveal-card.active .card-overlay {
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.95) 0%, 
-                rgba(255, 255, 255, 0.9) 50%,
-                rgba(255, 255, 255, 0.95) 100%);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                inset 0 2px 4px rgba(255, 255, 255, 0.6),
+                inset 0 -1px 2px rgba(0, 61, 124, 0.05);
         }
         
         .card-content {
             position: relative;
             width: 100%;
             height: 100%;
-            padding: 25px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            z-index: 2;
+            z-index: 20;
+            transform: translateZ(10px);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .reveal-card:hover .card-content {
+            transform: translateZ(20px);
+        }
+        
+        .reveal-card.active .card-content {
+            transform: translateZ(30px);
         }
         
         .card-title {
-            font-size: 20px;
+            font-size: 21px;
             font-weight: 700;
             color: #003D7C;
             margin-bottom: 12px;
             line-height: 1.3;
-            transition: all 0.4s ease;
-            letter-spacing: -0.3px;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 61, 124, 0.1);
+            position: relative;
+            background: linear-gradient(135deg, #003D7C 0%, #0052A3 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .reveal-card:hover .card-title {
+            transform: translateY(-2px);
+            text-shadow: 0 4px 8px rgba(0, 61, 124, 0.15);
         }
         
         .card-subtitle {
             font-size: 14px;
-            font-weight: 500;
-            color: #003D7C;
-            opacity: 0.7;
+            font-weight: 600;
+            color: #FF6B35;
+            opacity: 0.85;
             margin-bottom: 15px;
-            transition: all 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
             align-items: center;
             gap: 8px;
+            position: relative;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .card-subtitle::before {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FF6B35, #FF8554);
+            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .reveal-card:hover .card-subtitle::before {
+            width: 100%;
+            left: 0;
         }
         
         .card-subtitle::after {
-            content: '→';
+            content: '⟶';
             display: inline-block;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 18px;
         }
         
         .reveal-card:hover .card-subtitle::after {
-            transform: translateX(5px);
+            transform: translateX(8px) scale(1.2);
         }
         
         .card-description {
             font-size: 15px;
-            line-height: 1.6;
-            color: #003D7C;
+            line-height: 1.7;
+            color: #2c3e50;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
             max-height: 0;
             overflow: hidden;
             font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .card-description::before {
+            content: '"';
+            position: absolute;
+            top: -5px;
+            left: -15px;
+            font-size: 40px;
+            color: rgba(255, 107, 53, 0.2);
+            font-family: Georgia, serif;
         }
         
         .reveal-card.active .card-description {
             opacity: 1;
-            transform: translateY(0);
-            max-height: 150px;
-            margin-top: 15px;
+            transform: translateY(0) scale(1);
+            max-height: 200px;
+            margin-top: 20px;
+            animation: descriptionPulse 0.6s ease-out;
+        }
+        
+        @keyframes descriptionPulse {
+            0% {
+                transform: translateY(30px) scale(0.9);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(-5px) scale(1.02);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
         }
         
         .reveal-card.active .card-title {
-            transform: translateY(-10px);
-            font-size: 18px;
+            transform: translateY(-12px) scale(0.95);
+            font-size: 19px;
+            animation: titleMorph 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes titleMorph {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-15px) scale(0.92);
+            }
+            100% {
+                transform: translateY(-12px) scale(0.95);
+            }
         }
         
         .reveal-card.active .card-subtitle {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(-30px) scale(0.8);
             position: absolute;
+            pointer-events: none;
         }
         
         /* Individual card backgrounds */
@@ -514,22 +698,52 @@
             background-image: url('https://xavierchee.github.io/website/website_assets/precision_med/proactive_prevention.png');
         }
         
+        /* Magnetic hover effect styles */
+        .reveal-card.magnetic {
+            transition: transform 0.2s ease-out;
+        }
+        
+        /* Mobile optimizations */
         @media (max-width: 768px) {
             .reveal-cards-container {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 25px;
+                perspective: 1000px;
             }
             
             .reveal-card {
-                height: 200px;
+                height: 220px;
             }
             
             .card-title {
-                font-size: 18px;
+                font-size: 19px;
             }
             
             .card-description {
                 font-size: 14px;
+            }
+            
+            .reveal-card:hover {
+                transform: translateY(-5px) scale(1.01);
+            }
+            
+            .reveal-card.active {
+                transform: scale(1.02) translateZ(10px);
+            }
+        }
+        
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .reveal-card::before {
+                display: none;
+            }
+            
+            .reveal-card {
+                transition: all 0.3s ease;
+            }
+            
+            .reveal-card:active {
+                transform: scale(0.98);
             }
         }
         
@@ -1646,20 +1860,84 @@
             });
         });
         
-        // Click-to-reveal card toggle function
+        // Enhanced click-to-reveal with ripple effect
         function toggleReveal(card) {
-            // Close other active cards in the same container
+            // Add ripple effect
+            card.classList.add('ripple');
+            setTimeout(() => {
+                card.classList.remove('ripple');
+            }, 600);
+            
+            // Close other active cards with staggered animation
             const container = card.parentElement;
             const otherCards = container.querySelectorAll('.reveal-card.active');
-            otherCards.forEach(otherCard => {
+            otherCards.forEach((otherCard, index) => {
                 if (otherCard !== card) {
-                    otherCard.classList.remove('active');
+                    setTimeout(() => {
+                        otherCard.classList.remove('active');
+                    }, index * 50);
                 }
             });
             
-            // Toggle current card
-            card.classList.toggle('active');
+            // Toggle current card with slight delay for better UX
+            setTimeout(() => {
+                card.classList.toggle('active');
+            }, 100);
         }
+        
+        // Magnetic hover effect
+        document.querySelectorAll('.reveal-card').forEach(card => {
+            let bounds;
+            
+            card.addEventListener('mouseenter', (e) => {
+                bounds = card.getBoundingClientRect();
+                card.classList.add('magnetic');
+            });
+            
+            card.addEventListener('mousemove', (e) => {
+                if (!card.classList.contains('magnetic')) return;
+                
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                const leftX = mouseX - bounds.x;
+                const topY = mouseY - bounds.y;
+                const center = {
+                    x: leftX - bounds.width / 2,
+                    y: topY - bounds.height / 2
+                };
+                
+                const distance = Math.sqrt(center.x**2 + center.y**2);
+                
+                if (distance < bounds.width / 2) {
+                    const translateX = center.x * 0.15;
+                    const translateY = center.y * 0.15;
+                    const rotateX = -center.y * 0.05;
+                    const rotateY = center.x * 0.05;
+                    
+                    card.style.transform = `
+                        translate3d(${translateX}px, ${translateY}px, 20px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.02)
+                    `;
+                }
+            });
+            
+            card.addEventListener('mouseleave', (e) => {
+                card.classList.remove('magnetic');
+                card.style.transform = '';
+            });
+        });
+        
+        // Parallax effect removed for better stability
+        
+        // Initialize entrance animations on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.reveal-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
         
         // Close cards when clicking outside
         document.addEventListener('click', function(e) {
