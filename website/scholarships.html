@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <!-- 
-CHANGE LOG - Last Updated: January 28, 2025 - 04:15 UTC+8
-============================================
-
-Recent Changes:
-- Updated floating menu button animation to match template.html
-- Changed transition timing from 0.5s to 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    - Ensured active state transform is rotate(135deg) scale(0.9)
-    - Changed menu icon from span elements to ::before and ::after pseudo-elements for plus sign
+    CHANGE LOG - Last Updated: January 28, 2025 - 18:45 UTC+8
+    ============================================
+    
+    Recent Changes:
+    - Added NUS blue (#003D7C) highlighting for "Exceptional academic achievement", "Recognition of excellence", and "Academic distinction"
+    - Added NUS orange (#FF6B35) highlighting for "We encourage all qualified candidates to apply, as we are committed to"
 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Stories - Precision Health & Medicine - NUS</title>
+    <title>Financial Aids and Scholarships - Master's Programme - Precision Health & Medicine - NUS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -296,86 +294,89 @@ Recent Changes:
             color: #5a6c7d;
             font-size: 17px;
             line-height: 1.8;
-            margin-bottom: 25px;
+            margin-bottom: 50px;
             font-weight: 400;
         }
         
-        /* Stories Grid */
-        .stories-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            margin-top: 50px;
+        /* Scholarship Details Section */
+        .scholarship-details {
+            margin-top: 60px;
         }
         
-        .story-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 61, 124, 0.08);
-            border: 2px solid rgba(0, 61, 124, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            display: block;
-            position: relative;
+        .scholarship-subsection {
+            margin-bottom: 50px;
         }
         
-        .story-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0, 61, 124, 0.15);
-            border-color: #FF6B35;
-        }
-        
-        .story-image-container {
-            position: relative;
-            overflow: hidden;
-            height: 200px;
-        }
-        
-        .story-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .story-card:hover .story-image {
-            transform: scale(1.05);
-        }
-        
-        .story-date {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            background: rgba(255, 107, 53, 0.9);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .story-card:hover .story-date {
-            background: rgba(220, 38, 38, 0.9);
-            transform: scale(1.05);
-        }
-        
-        .story-content {
-            padding: 20px;
-        }
-        
-        .story-title {
+        .scholarship-subsection h3 {
             color: #003D7C;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+        
+        .scholarship-list {
+            margin: 20px 0;
+            padding-left: 0;
+        }
+        
+        .scholarship-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .scholarship-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            color: #5a6c7d;
+            font-size: 16px;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .scholarship-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #FF6B35;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .scholarship-types {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 2px solid rgba(0, 61, 124, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+        }
+        
+        .scholarship-types h4 {
+            color: #FF6B35;
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 10px;
-            letter-spacing: -0.3px;
-            line-height: 1.3;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .scholarship-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.08);
+        }
+        
+        .scholarship-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .scholarship-item strong {
+            color: #003D7C;
+            font-size: 17px;
+            display: block;
+            margin-bottom: 5px;
         }
         
         /* Sidebar */
@@ -464,7 +465,7 @@ Recent Changes:
         .date-info .date {
             color: #FF6B35;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 18px;
             margin-bottom: 10px;
             letter-spacing: 0.5px;
         }
@@ -545,7 +546,7 @@ Recent Changes:
             color: #FF6B35;
             font-weight: 700;
             margin-bottom: 10px;
-            font-size: 11px;
+            font-size: 16px;
             letter-spacing: 0.5px;
         }
         
@@ -554,6 +555,30 @@ Recent Changes:
             font-size: 15px;
             line-height: 1.6;
             font-weight: 400;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #003D7C, #001f3f);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Scroll animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         /* Action Buttons - Fixed Floating Menu */
@@ -817,90 +842,6 @@ Recent Changes:
             white-space: normal;
         }
         
-        /* Mobile adjustments for action buttons */
-        @media (max-width: 768px) {
-            .action-button {
-                width: 85vw;
-                max-width: 350px;
-                padding: 10px 20px 10px 10px;
-                font-size: 14px;
-                gap: 10px;
-            }
-            
-            .action-button-icon {
-                width: 36px;
-                height: 36px;
-            }
-            
-            .action-button-icon::after {
-                font-size: 18px;
-            }
-            
-            .action-items.active .action-button:nth-child(1) {
-                transform: translateY(-190px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(2) {
-                transform: translateY(-125px) scale(1) translateX(0);
-            }
-            
-            .action-items.active .action-button:nth-child(3) {
-                transform: translateY(-60px) scale(1) translateX(0);
-            }
-            
-            .action-button:nth-child(1):hover {
-                --y: -190px;
-            }
-            
-            .action-button:nth-child(2):hover {
-                --y: -125px;
-            }
-            
-            .action-button:nth-child(3):hover {
-                --y: -60px;
-            }
-        }
-        
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, #003D7C, #001f3f);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 100px;
-            font-size: 14px;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-        
-        /* Scroll animations */
-        .scroll-fade {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .scroll-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Mobile hamburger menu button */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #003D7C;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1001;
-        }
-        
         /* Responsive Design */
         @media (max-width: 1600px) {
             .main-content {
@@ -920,11 +861,6 @@ Recent Changes:
                 padding: 0 40px;
             }
             
-            .stories-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-            
             .nav-links a {
                 padding: 20px 10px;
                 font-size: 12px;
@@ -937,11 +873,26 @@ Recent Changes:
             }
         }
         
+        /* Mobile hamburger menu button */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #003D7C;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+        
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
                 padding: 0 20px;
-                margin: 30px auto;
             }
             
             .content-section {
@@ -952,11 +903,6 @@ Recent Changes:
                 flex: 0 0 100%;
                 max-width: 500px;
                 margin: 0 auto;
-            }
-            
-            .stories-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
             }
             
             .section-header {
@@ -1071,6 +1017,53 @@ Recent Changes:
             .top-banner-content {
                 justify-content: center;
             }
+            
+            .main-content {
+                padding: 0 20px;
+                margin: 30px auto;
+            }
+            
+            /* Mobile adjustments for action buttons */
+            .action-button {
+                width: 85vw;
+                max-width: 350px;
+                padding: 10px 20px 10px 10px;
+                font-size: 14px;
+                gap: 10px;
+            }
+            
+            .action-button-icon {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .action-button-icon::after {
+                font-size: 18px;
+            }
+            
+            .action-items.active .action-button:nth-child(1) {
+                transform: translateY(-190px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(2) {
+                transform: translateY(-125px) scale(1) translateX(0);
+            }
+            
+            .action-items.active .action-button:nth-child(3) {
+                transform: translateY(-60px) scale(1) translateX(0);
+            }
+            
+            .action-button:nth-child(1):hover {
+                --y: -190px;
+            }
+            
+            .action-button:nth-child(2):hover {
+                --y: -125px;
+            }
+            
+            .action-button:nth-child(3):hover {
+                --y: -60px;
+            }
         }
     </style>
 </head>
@@ -1078,7 +1071,7 @@ Recent Changes:
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://xavierchee.github.io/website/">
+            <a href="https://xavierchee.github.io/website/homepage.html">
                 <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
@@ -1094,7 +1087,7 @@ Recent Changes:
                 <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
-                    <a href="#programme">Programme structure</a>
+                    <a href="#">Programme structure</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
                         <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
@@ -1102,7 +1095,7 @@ Recent Changes:
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#courses">Courses</a>
+                    <a href="#">Courses</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
@@ -1111,14 +1104,14 @@ Recent Changes:
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#capstone">Capstone projects</a>
+                    <a href="#">Capstone projects</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#admissions">Admissions</a>
+                    <a href="#">Admissions</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
                         <a href="https://xavierchee.github.io/website/application.html">Application</a>
@@ -1128,7 +1121,7 @@ Recent Changes:
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#stories">Student stories and photos</a>
+                    <a href="#">Student stories and photos</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/student_stories.html">Student stories</a>
                         <a href="https://xavierchee.github.io/website/photo.html">Photos</a>
@@ -1136,7 +1129,7 @@ Recent Changes:
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#about">About us</a>
+                    <a href="#">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/vision_mission.html">Vision and mission</a>
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
@@ -1155,132 +1148,73 @@ Recent Changes:
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Student Stories Banner Image -->
+    <!-- Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
-        <img src="https://xavierchee.github.io/website/website_assets/student_stories/banner_student_stories.png" 
-             alt="Student Stories Banner" 
+        <img src="https://xavierchee.github.io/website/website_assets/scholarships/banner_scholarships.png" 
+             alt="Scholarships Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Student Stories</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Financial aids and scholarships</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Student's Stories</h1>
+            <h1 class="section-header scroll-fade">Supporting Excellence Through Financial Aids</h1>
             <p class="section-text scroll-fade">
-                Meet the remarkable students transforming healthcare through our programme. Their stories showcase real breakthroughs, everyday challenges, and life-changing moments that have shaped their paths in precision medicine.
-            </p>
-            <p class="section-text scroll-fade">
-                These aren't just success stories—they're honest glimpses into the exciting journey you could join. Get inspired by those who walked this path before you and see what's possible when passion meets opportunity.
+                We are committed to supporting exceptional candidates through our scholarship and financial aids programme. Each year, we offer a limited number of ultra-competitive scholarships and financial aids to help talented students pursue their studies regardless of financial circumstances.
             </p>
             
-            <!-- Student Stories Grid -->
-            <div class="stories-grid scroll-fade">
-                <!-- Story 1 - Zihao (June 2) -->
-                <a href="./student_stories/student_story_zihao.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_zihao.png" 
-                             alt="Finding My Path: From Pharmacy Lab to Pharmaceutical Investment" 
-                             class="story-image">
-                        <span class="story-date">2 June 2025</span>
+            <!-- Scholarship Details Section -->
+            <div class="scholarship-details scroll-fade">
+                <div class="scholarship-subsection">
+                    <h3>Available Funding</h3>
+                    <p class="section-text">We offer two scholarship categories:</p>
+                    
+                    <div class="scholarship-types">
+                        <h4>Our Scholarship Programmes</h4>
+                        <div class="scholarship-item">
+                            <strong>PHM Director's Scholarship</strong>
+                        </div>
+                        <div class="scholarship-item">
+                            <strong>PHM Director's Tuition Fee Awards</strong>
+                        </div>
                     </div>
-                    <div class="story-content">
-                        <h3 class="story-title">Finding My Path: From Pharmacy Lab to Pharmaceutical Investment</h3>
-                    </div>
-                </a>
+                </div>
                 
-                <!-- Story 2 - Divya (June 2) -->
-                <a href="./student_stories/student_story_divya.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_divya.png" 
-                             alt="Bridging Clinical Practice and Precision Health: Dr. Divya's Journey" 
-                             class="story-image">
-                        <span class="story-date">2 June 2025</span>
+                <div class="scholarship-subsection">
+                    <h3>Scholarship and Financial Aids Eligibility</h3>
+                    <p class="section-text">
+                        Our scholarships and financial aids are ultra-competitive and awarded based on academic excellence and demonstrated potential. Successful candidates typically demonstrate:
+                    </p>
+                    <div class="scholarship-list">
+                        <ul>
+                            <li><span style="color: #003D7C; font-weight: 600;">Exceptional academic achievement</span> in their undergraduate studies (typically top of their cohort with CGPA > 3.6 on a 4.0 scale, or equivalent performance on other grading systems)</li>
+                            <li><span style="color: #003D7C; font-weight: 600;">Recognition of excellence</span> through awards, honours, or peer-reviewed publications</li>
+                            <li><span style="color: #003D7C; font-weight: 600;">Academic distinction</span> such as graduating at or near the top of their undergraduate cohort</li>
+                        </ul>
                     </div>
-                    <div class="story-content">
-                        <h3 class="story-title">Bridging Clinical Practice and Precision Health: Dr. Divya's Journey</h3>
-                    </div>
-                </a>
+                </div>
                 
-                <!-- Story 3 - Knowledge to Action (June 2) -->
-                <a href="https://www.npm.sg/knowledge-to-action-enhancing-patient-care-through-precision-health/" class="story-card" target="_blank">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_knowledge_to_action.png" 
-                             alt="Knowledge to Action: Enhancing Patient Care through Precision Medicine" 
-                             class="story-image">
-                        <span class="story-date">2 June 2025</span>
+                <div class="scholarship-subsection">
+                    <h3>How to Apply</h3>
+                    <p class="section-text">
+                        Eligible applicants are considered for available scholarships when they submit their programme application by the deadline. No separate scholarship application is required.
+                    </p>
+                    <p class="section-text">
+                        Candidates seeking financial aids must submit reference letters directly through the Graduate Admission System. Requirements include:
+                    </p>
+                    <div class="scholarship-list">
+                        <ul>
+                            <li>Designate at least one referee who will receive automated email instructions for submission</li>
+                            <li>Recommended referees include university faculty members or direct work supervisors</li>
+                        </ul>
                     </div>
-                    <div class="story-content">
-                        <h3 class="story-title">Knowledge to Action: Enhancing Patient Care through Precision Medicine</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 4 - Bruce (May 23) -->
-                <a href="./student_stories/student_story_bruce.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_bruce.jpg" 
-                             alt="From Athlete to PhD: Powered by Precision Health" 
-                             class="story-image">
-                        <span class="story-date">23 May 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">From Athlete to PhD: Powered by Precision Health</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 5 - Binwen (March 11) -->
-                <a href="./student_stories/student_story_binwen.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_binwen.png" 
-                             alt="Beyond Borders: A Surgeon's Journey in Precision Medicine" 
-                             class="story-image">
-                        <span class="story-date">11 March 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">Beyond Borders: A Surgeon's Journey in Precision Medicine</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 6 - Jeremie (March 11) -->
-                <a href="./student_stories/student_story_jeremie.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_jeremie.png" 
-                             alt="From Classroom to Cutting-edge Innovation" 
-                             class="story-image">
-                        <span class="story-date">11 March 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">From Classroom to Cutting-edge Innovation</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 7 - Back to School (Feb 20) -->
-                <a href="https://www.npm.sg/nus-mscphm-curiousity-in-precision-health-into-impact/" class="story-card" target="_blank">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_back_to_school.png" 
-                             alt="Back to School Story" 
-                             class="story-image">
-                        <span class="story-date">20 Feb 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">Back to School: Turning Curiosity in Precision Medicine into Impact</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 8 - Junhua (Feb 20) -->
-                <a href="./student_stories/student_story_junhua.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_junhua.jpg" 
-                             alt="From Cardiologist to a Thought Leader" 
-                             class="story-image">
-                        <span class="story-date">20 Feb 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">From Cardiologist to a Thought Leader</h3>
-                    </div>
-                </a>
+                    <p class="section-text">
+                        <span style="color: #FF6B35; font-weight: 600;">We encourage all qualified candidates to apply, as we are committed to identifying and supporting the most promising students in the field.</span>
+                    </p>
+                </div>
             </div>
         </div>
         
@@ -1321,7 +1255,7 @@ Recent Changes:
             <div class="menu-icon"></div>
         </button>
         <div class="action-items">
-            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" class="action-button">
+            <a href="https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Click here for application and admissions</span>
             </a>
@@ -1329,7 +1263,7 @@ Recent Changes:
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Contact us to find out more</span>
             </a>
-            <a href="https://gradapp.nus.edu.sg/portal/app_manage" class="action-button">
+            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="action-button">
                 <span class="action-button-icon"></span>
                 <span class="action-button-text">Join our mailing list for our programme updates</span>
             </a>
