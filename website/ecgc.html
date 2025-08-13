@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 14, 2025 - 3:45 PM
+    CHANGE LOG - Last Updated: August 13, 2025 - 10:31 UTC+8
     ============================================
     
     Recent Changes:
-    - Updated all navigation links to use full URLs starting with https://xavierchee.github.io/website/
-    - Updated floating menu buttons with correct links:
-      * Application/admissions: https://nus.syd1.qualtrics.com/jfe/form/SV_1FB2CORnEgWVtuS
-      * Contact us: mailto:mscphm@nus.edu.sg  
-      * Mailing list: https://gradapp.nus.edu.sg/portal/app_manage
-    
-    Previous Changes:
-    - Linked Photos subsection to https://xavierchee.github.io/website/photo.html
-    - Added Vision and mission as first subsection under About us, linking to https://xavierchee.github.io/website/vision_mission.html
+    - Converted Note section to modern bullet point format with NUS styling
+    - Added orange accent indicators for module list
+    - Implemented hover effects and professional card-based design
 -->
 <html lang="en">
 <script>
@@ -1012,6 +1006,101 @@
             white-space: normal;
         }
         
+        /* Note Container Styles */
+        .note-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
+            border-left: 4px solid #FF6B35;
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .note-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .note-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #FF6B35, #FF8554);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .note-title {
+            color: #003D7C;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+        
+        .note-content {
+            color: #5a6c7d;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .note-module-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .note-module-item {
+            padding: 12px 0;
+            color: #5a6c7d;
+            font-size: 15px;
+            position: relative;
+            padding-left: 32px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 61, 124, 0.05);
+        }
+        
+        .note-module-item:last-child {
+            border-bottom: none;
+        }
+        
+        .note-module-item:hover {
+            transform: translateX(5px);
+            color: #003D7C;
+        }
+        
+        .note-module-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #FF6B35;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .note-module-item:hover::before {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #FF6B35, #FF8554);
+        }
+        
+        .module-code {
+            font-weight: 600;
+            color: #003D7C;
+        }
+        
         /* Footer */
         .footer {
             background: linear-gradient(135deg, #003D7C, #001f3f);
@@ -1328,7 +1417,7 @@
              alt="Executive and Graduate Certificates Banner" 
              style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Executive & Graduate Certificates</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Executive & graduate certificates</h1>
         </div>
     </div>
     
@@ -1511,9 +1600,27 @@
             <p class="section-text scroll-fade">
                 Please note that ECs and GCs are valid for credit conversion for up to 5 years from completion date, ensuring your knowledge remains current in this rapidly evolving field.
             </p>
-            <p class="section-text scroll-fade" style="margin-top: 20px;">
-                <strong style="color: #003D7C;">Note:</strong> Some core modules in the Master's programme are exclusively available to enrolled Master's students, including PHM5004 – High Performance Computing for Precision Medicine, PHM5005 – AI and Machine Learning for Precision Medicine and PHM5007 – Seminars in Precision Medicine.
-            </p>
+            <!-- Note Section -->
+            <div class="note-container scroll-fade">
+                <div class="note-header">
+                    <div class="note-icon">!</div>
+                    <div class="note-title">Note</div>
+                </div>
+                <div class="note-content">
+                    Some core modules in the Master's programme are exclusively available to enrolled Master's students, including:
+                </div>
+                <ul class="note-module-list">
+                    <li class="note-module-item">
+                        <span class="module-code">PHM5004</span> – High Performance Computing for Precision Medicine
+                    </li>
+                    <li class="note-module-item">
+                        <span class="module-code">PHM5005</span> – AI and Machine Learning for Precision Medicine
+                    </li>
+                    <li class="note-module-item">
+                        <span class="module-code">PHM5007</span> – Seminars in Precision Medicine
+                    </li>
+                </ul>
+            </div>
         </div>
         
         <!-- Sidebar -->
