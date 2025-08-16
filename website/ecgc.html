@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: August 13, 2025 - 10:31 UTC+8
+    CHANGE LOG - Last Updated: January 28, 2025 - 04:40 UTC+8
     ============================================
     
     Recent Changes:
-    - Converted Note section to modern bullet point format with NUS styling
-    - Added orange accent indicators for module list
-    - Implemented hover effects and professional card-based design
+    - Added two-button layout to each EC module card: "Learn more" and application status button
+    - EC modules now display as cards instead of simple buttons
+    - Application status button shows dynamic message based on application period
+    - Learn more buttons open module pages in new tabs
+    - Fixed text wrapping for application status button to prevent text cutoff
 -->
 <html lang="en">
 <script>
@@ -417,6 +419,11 @@
             left: 0;
             color: #FF6B35;
             font-weight: 700;
+        }
+        
+        .module-list li a:hover {
+            color: #FF6B35 !important;
+            text-decoration: underline !important;
         }
         
         /* Apply Button */
@@ -1437,11 +1444,363 @@
                 Our Precision Medicine programme offers unparalleled flexibility through two learning paths:
             </p>
             <ul style="margin: 20px 0; padding-left: 30px;" class="scroll-fade">
-                <li style="margin-bottom: 10px; color: #5a6c7d; font-size: 17px;"><strong style="color: #003D7C;">Executive Certificates (EC):</strong> Take individual modules as standalone courses to build targeted expertise.</li>
+                <li style="margin-bottom: 10px; color: #5a6c7d; font-size: 17px;">
+                    <strong style="color: #003D7C;">Executive Certificates (EC):</strong> Take individual modules as standalone courses to build targeted expertise.
+                    
+                    <!-- EC Modules Expandable Section -->
+                    <div class="ec-modules-section" style="margin: 15px 0 0 0;">
+                        <p class="ec-expand-trigger" onclick="toggleECModules()" style="color: #FF6B35; font-size: 15px; cursor: pointer; font-weight: 500; transition: all 0.3s ease; display: inline-block; position: relative; padding-bottom: 2px; margin-left: 0;">
+                            Click here to view available EC modules
+                            <span class="ec-arrow" style="display: inline-block; margin-left: 8px; transition: transform 0.3s ease;">▼</span>
+                        </p>
+                        
+                        <div class="ec-modules-container" style="max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); margin-top: 15px; margin-left: -20px;">
+                            <div class="ec-modules-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; padding: 15px 0;">
+                                <!-- Applied Statistics for Precision Medicine -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Applied Statistics for Precision Medicine</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5003/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Causal Inference in Precision Medicine -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Causal Inference in Precision Medicine</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5014/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Clinical Perspective in Precision Medicine -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Clinical Perspective in Precision Medicine</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5008/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Human Genomics in Precision Medicine -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Human Genomics in Precision Medicine</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5001/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Precision Biomarkers -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Precision Biomarkers</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5010/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Precision Drug Discovery and Development -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Precision Drug Discovery and Development</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5013/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Precision Health and Medicine For Cardiometabolic Diseases -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Precision Health and Medicine For Cardiometabolic Diseases</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5018/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Precision Oncology -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Precision Oncology</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5009/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Precision Therapeutics -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Precision Therapeutics</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5012/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Proteomics and Metabolomics in Precision Health and Medicine -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Proteomics and Metabolomics in Precision Health and Medicine</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5002/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Technological Innovation in Precision Medicine -->
+                                <div class="ec-module-card">
+                                    <div class="ec-module-title">Technological Innovation in Precision Medicine</div>
+                                    <div class="ec-module-buttons">
+                                        <a href="https://medicine.nus.edu.sg/bch/phm5015/" target="_blank" class="ec-learn-more-btn">Learn more</a>
+                                        <div class="ec-application-status">
+                                            <span class="ec-status-text"></span>
+                                        </div>
+                                        <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="ec-apply-btn">Apply Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <li style="color: #5a6c7d; font-size: 17px;"><strong style="color: #003D7C;">Graduate Certificates (GC):</strong> Bundle two related modules into a comprehensive credential that provides deeper specialization.</li>
             </ul>
             
-            <!-- Certificates Grid -->
+            <style>
+                /* EC Modules Styles */
+                .ec-expand-trigger:hover {
+                    color: #003D7C !important;
+                    transform: translateX(5px);
+                }
+                
+                .ec-expand-trigger::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, #FF6B35, #FF8554);
+                    transition: width 0.3s ease;
+                }
+                
+                .ec-expand-trigger:hover::after {
+                    width: 100%;
+                }
+                
+                .ec-modules-container.expanded {
+                    max-height: 1600px !important;
+                }
+                
+                .ec-arrow.rotated {
+                    transform: rotate(180deg);
+                }
+                
+                /* EC Module Card Styles */
+                .ec-module-card {
+                    background: white;
+                    border: 2px solid rgba(0, 61, 124, 0.1);
+                    border-radius: 12px;
+                    padding: 20px;
+                    box-shadow: 0 2px 8px rgba(0, 61, 124, 0.05);
+                    position: relative;
+                    overflow: hidden;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                
+                .ec-module-card::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 3px;
+                    background: linear-gradient(90deg, #FF6B35, #FF8554);
+                    transform: translateX(-100%);
+                    transition: transform 0.3s ease;
+                }
+                
+                .ec-module-card:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 8px 20px rgba(0, 61, 124, 0.12);
+                    border-color: #FF6B35;
+                }
+                
+                .ec-module-card:hover::before {
+                    transform: translateX(0);
+                }
+                
+                .ec-module-title {
+                    color: #003D7C;
+                    font-size: 16px;
+                    font-weight: 600;
+                    margin-bottom: 15px;
+                    line-height: 1.4;
+                    min-height: 44px;
+                }
+                
+                .ec-module-buttons {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                }
+                
+                /* Learn More Button */
+                .ec-learn-more-btn {
+                    background: white;
+                    color: #003D7C;
+                    border: 2px solid #003D7C;
+                    padding: 10px 20px;
+                    border-radius: 25px;
+                    text-decoration: none;
+                    font-size: 14px;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    white-space: nowrap;
+                    display: inline-block;
+                    flex-shrink: 0;
+                }
+                
+                .ec-learn-more-btn:hover {
+                    background: #003D7C;
+                    color: white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 61, 124, 0.3);
+                }
+                
+                /* EC Apply Button */
+                .ec-apply-btn {
+                    background: linear-gradient(135deg, #003D7C, #0052A3);
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 25px;
+                    text-decoration: none;
+                    font-size: 14px;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 3px 10px rgba(0, 61, 124, 0.3);
+                    white-space: nowrap;
+                    display: none;
+                }
+                
+                .ec-apply-btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(0, 61, 124, 0.4);
+                }
+                
+                /* EC Application Status */
+                .ec-application-status {
+                    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+                    border: 2px solid #fca5a5;
+                    border-radius: 25px;
+                    padding: 10px 15px;
+                    display: none;
+                    text-align: center;
+                    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
+                    transition: all 0.3s ease;
+                    flex: 1;
+                    min-width: 140px;
+                    line-height: 1.3;
+                }
+                
+                .ec-application-status:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+                    border-color: #f87171;
+                    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+                }
+                
+                .ec-status-text {
+                    color: #991b1b;
+                    font-size: 13px;
+                    font-weight: 600;
+                    letter-spacing: 0.2px;
+                    display: inline-block;
+                    word-wrap: break-word;
+                }
+                
+                /* Show/hide based on application status */
+                .ec-module-card.application-open .ec-apply-btn {
+                    display: inline-block;
+                }
+                
+                .ec-module-card.application-open .ec-application-status {
+                    display: none;
+                }
+                
+                .ec-module-card.application-closed .ec-apply-btn {
+                    display: none;
+                }
+                
+                .ec-module-card.application-closed .ec-application-status {
+                    display: inline-block;
+                }
+                
+                /* Mobile responsiveness for EC modules */
+                @media (max-width: 768px) {
+                    .ec-modules-grid {
+                        grid-template-columns: 1fr !important;
+                    }
+                    
+                    .ec-module-card {
+                        padding: 15px;
+                    }
+                    
+                    .ec-module-title {
+                        font-size: 15px;
+                        min-height: auto;
+                    }
+                    
+                    .ec-module-buttons {
+                        flex-direction: column;
+                        gap: 8px;
+                    }
+                    
+                    .ec-learn-more-btn,
+                    .ec-apply-btn,
+                    .ec-application-status {
+                        width: 100%;
+                        text-align: center;
+                    }
+                    
+                    .ec-modules-container.expanded {
+                        max-height: 3000px !important;
+                    }
+                }
+            </style>
+            
+            <!-- Certificates Grid with 4 certificates (removed Big Data Analytics and Precision Biomarker Identification) -->
             <div class="certificates-grid">
                 <!-- Certificate 1 -->
                 <div class="certificate-card scroll-fade">
@@ -1451,8 +1810,9 @@
                             <h3 class="certificate-title">Graduate Certificate in Fundamentals of Precision Medicine</h3>
                             <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
                             <ul class="module-list">
-                                <li>Human Genomics in Precision Medicine</li>
-                                <li>Proteomics and Metabolomics in Precision Health and Medicine</li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5001/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Human Genomics in Precision Medicine</a></li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5002/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Proteomics and Metabolomics in Precision Health and Medicine</a></li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5019-precision-population-health/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Precision Population Health</a></li>
                             </ul>
                         </div>
                         <div class="certificate-actions">
@@ -1466,32 +1826,9 @@
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Certificate 2 -->
-                <div class="certificate-card scroll-fade">
-                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/big_data_analytics_in_pm.png" alt="Big Data Analytics">
-                    <div class="certificate-content">
-                        <div class="certificate-main-content">
-                            <h3 class="certificate-title">Graduate Certificate in Big Data Analytics in Precision Medicine</h3>
-                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                            <ul class="module-list">
-                                <li>Applied Statistics in Precision Medicine</li>
-                                <li>High Performance Computing for Precision Medicine</li>
-                            </ul>
-                        </div>
-                        <div class="certificate-actions">
-                            <div class="application-closed-notice">
-                                <div class="application-closed-notice-content">
-                                    <span class="application-closed-notice-icon"></span>
-                                    <span class="application-closed-notice-text"></span>
-                                </div>
-                            </div>
-                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Certificate 3 -->
                 <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/innovative_pm.png" alt="Innovative Precision Medicine">
                     <div class="certificate-content">
@@ -1499,8 +1836,33 @@
                             <h3 class="certificate-title">Graduate Certificate in Innovative Precision Medicine</h3>
                             <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
                             <ul class="module-list">
-                                <li>Causal Inference in Precision Medicine</li>
-                                <li>Technological Innovation in Precision Medicine</li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5014/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Causal Inference in Precision Medicine</a></li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5015/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Technological Innovation in Precision Medicine</a></li>
+                            </ul>
+                        </div>
+                        <div class="certificate-actions">
+                            <div class="application-closed-notice">
+                                <div class="application-closed-notice-content">
+                                    <span class="application-closed-notice-icon"></span>
+                                    <span class="application-closed-notice-text"></span>
+                                </div>
+                            </div>
+                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Certificate 3 -->
+                <div class="certificate-card scroll-fade">
+                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/drug_discovery.png" alt="Drug Discovery">
+                    <div class="certificate-content">
+                        <div class="certificate-main-content">
+                            <h3 class="certificate-title">Graduate Certificate in Drug Discovery, Pharmacogenomics and Therapeutics</h3>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <ul class="module-list">
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5013/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Precision Drug Discovery and Development</a></li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5012/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Precision Therapeutics</a></li>
                             </ul>
                         </div>
                         <div class="certificate-actions">
@@ -1517,63 +1879,15 @@
 
                 <!-- Certificate 4 -->
                 <div class="certificate-card scroll-fade">
-                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/precision_biomarkers_identification.png" alt="Precision Biomarkers">
-                    <div class="certificate-content">
-                        <div class="certificate-main-content">
-                            <h3 class="certificate-title">Graduate Certificate in Precision Biomarker Identification and Diagnosis/Prognosis</h3>
-                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                            <ul class="module-list">
-                                <li>Precision Biomarkers</li>
-                                <li>Precision Diagnostics</li>
-                            </ul>
-                        </div>
-                        <div class="certificate-actions">
-                            <div class="application-closed-notice">
-                                <div class="application-closed-notice-content">
-                                    <span class="application-closed-notice-icon"></span>
-                                    <span class="application-closed-notice-text"></span>
-                                </div>
-                            </div>
-                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Certificate 5 -->
-                <div class="certificate-card scroll-fade">
-                    <img src="https://xavierchee.github.io/website/website_assets/ecgc/drug_discovery.png" alt="Drug Discovery">
-                    <div class="certificate-content">
-                        <div class="certificate-main-content">
-                            <h3 class="certificate-title">Graduate Certificate in Drug Discovery, Pharmacogenomics and Therapeutics</h3>
-                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
-                            <ul class="module-list">
-                                <li>Precision Drug Discovery and Development</li>
-                                <li>Precision Therapeutics</li>
-                            </ul>
-                        </div>
-                        <div class="certificate-actions">
-                            <div class="application-closed-notice">
-                                <div class="application-closed-notice-content">
-                                    <span class="application-closed-notice-icon"></span>
-                                    <span class="application-closed-notice-text"></span>
-                                </div>
-                            </div>
-                            <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Certificate 6 -->
-                <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/clinical_pm.png" alt="Clinical Precision Medicine">
                     <div class="certificate-content">
                         <div class="certificate-main-content">
                             <h3 class="certificate-title">Graduate Certificate in Clinical Precision Medicine</h3>
                             <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
                             <ul class="module-list">
-                                <li>Clinical Perspective in Precision Medicine</li>
-                                <li>Precision Oncology</li>
-                                <li>Precision Health and Medicine for Cardiometabolic Diseases</li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5008/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Clinical Perspective in Precision Medicine</a></li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5009/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Precision Oncology</a></li>
+                                <li><a href="https://medicine.nus.edu.sg/bch/phm5018/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Precision Health and Medicine for Cardiometabolic Diseases</a></li>
                             </ul>
                         </div>
                         <div class="certificate-actions">
@@ -1829,14 +2143,77 @@
             }
         }
         
+        // Enhanced application period checking to include EC modules
+        function checkApplicationPeriodWithEC() {
+            const isOpen = APPLICATION_CONFIG.isApplicationOpen();
+            
+            // Update all certificate cards (GC cards)
+            const certificateCards = document.querySelectorAll('.certificate-card');
+            certificateCards.forEach(card => {
+                if (!isOpen) {
+                    card.classList.add('application-closed');
+                } else {
+                    card.classList.remove('application-closed');
+                }
+            });
+            
+            // Update all EC module cards
+            const ecModuleCards = document.querySelectorAll('.ec-module-card');
+            ecModuleCards.forEach(card => {
+                if (!isOpen) {
+                    card.classList.add('application-closed');
+                } else {
+                    card.classList.add('application-open');
+                    card.classList.remove('application-closed');
+                }
+            });
+            
+            // Update all closed notice messages (for GC cards)
+            const noticeTexts = document.querySelectorAll('.application-closed-notice-text');
+            noticeTexts.forEach(text => {
+                text.textContent = APPLICATION_CONFIG.closedMessage;
+            });
+            
+            // Update all EC status texts
+            const ecStatusTexts = document.querySelectorAll('.ec-status-text');
+            ecStatusTexts.forEach(text => {
+                text.textContent = APPLICATION_CONFIG.closedMessage;
+            });
+            
+            // Also disable/enable the main Apply Now button in sidebar
+            const mainApplyButton = document.querySelector('.apply-button');
+            if (mainApplyButton) {
+                if (!isOpen) {
+                    mainApplyButton.disabled = true;
+                    mainApplyButton.style.background = '#cccccc';
+                    mainApplyButton.style.cursor = 'not-allowed';
+                    mainApplyButton.style.opacity = '0.6';
+                } else {
+                    mainApplyButton.disabled = false;
+                    mainApplyButton.style.background = '';
+                    mainApplyButton.style.cursor = 'pointer';
+                    mainApplyButton.style.opacity = '1';
+                }
+            }
+        }
+        
         // Check application period on page load
         document.addEventListener('DOMContentLoaded', function() {
-            checkApplicationPeriod();
+            checkApplicationPeriodWithEC();
         });
         
         // Also check immediately in case DOM is already loaded
         if (document.readyState === 'interactive' || document.readyState === 'complete') {
-            checkApplicationPeriod();
+            checkApplicationPeriodWithEC();
+        }
+        
+        // Toggle EC Modules
+        function toggleECModules() {
+            const container = document.querySelector('.ec-modules-container');
+            const arrow = document.querySelector('.ec-arrow');
+            
+            container.classList.toggle('expanded');
+            arrow.classList.toggle('rotated');
         }
     </script>
 </body>

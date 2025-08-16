@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: December 18, 2024 - 11:54 AM
+    CHANGE LOG - Last Updated: January 28, 2025 - 16:45 UTC+8
     ============================================
     
     Recent Changes:
-    - Removed both horizontal and vertical scrollbars from timeline section by setting overflow-x and overflow-y to 'hidden'
-    - Added more top padding (2rem) to timeline-wrapper to ensure year labels have enough space and aren't cut off
+    - Updated year labels (Year 1-7+) in stackable pathway timeline to match MSc PHM font styling
+    - Changed font family to 'Inter' and color to #003D7C for consistency with other pathways
 -->
 <html lang="en">
 <head>
@@ -430,7 +430,7 @@
             text-align: center;
             width: 100%;
             max-width: 100%;
-            min-height: 90px;
+            min-height: 60px;
             z-index: 10;
             padding: 0 20px;
         }
@@ -1841,32 +1841,82 @@
                     </div>
 
                     <div class="program-timeline" id="timeline-flexible">
-                        <div class="timeline-container">
-                            <div class="timeline-track">
-                                <div class="timeline-line"></div>
-                                <div class="year-markers">
-                                    <div class="year-marker">
-                                        <div class="year-label">Year 1</div>
-                                        <div class="year-subtitle">Start Journey</div>
-                                    </div>
-                                    <div class="year-marker">
-                                        <div class="year-label">Year 5</div>
-                                        <div class="year-subtitle">Complete MSc</div>
-                                    </div>
-                                </div>
-                                <div class="timeline-nodes">
-                                    <div class="timeline-node full-width">
-                                        <div class="milestone-card full-width">
-                                            <div class="milestone-content">
-                                                <div class="milestone-header">
-                                                    <div class="milestone-title">Complete modular Executive or Graduate certificates at your own pace and stack them toward your MSc within 5 years</div>
-                                                </div>
+                        <div class="timeline-container" style="position: relative; padding: 50px 20px 80px 20px; min-width: 100%;">
+                            <div class="credit-timeline-wrapper" style="position: relative; padding: 80px 0 120px 0;">
+                                <div class="credit-timeline-container" style="position: relative; height: 3px; display: flex; align-items: center;">
+                                    <div class="credit-timeline" style="position: absolute; width: 100%; height: 3px; background: #e5e7eb; border-radius: 2px;"></div>
+                                    <div class="credit-timeline-segment-1" style="position: absolute; left: 0; top: 0; width: 66.67%; height: 100%; background: #e5e7eb; border-radius: 2px 0 0 2px; z-index: 1;"></div>
+                                    <div class="credit-timeline-segment-2" style="position: absolute; left: 66.67%; top: 0; width: 33.33%; height: 100%; background: #e5e7eb; border-radius: 0 2px 2px 0; z-index: 1;"></div>
+                                    <div class="credit-timeline-progress-1" id="creditTimelineProgress1" style="position: absolute; left: 0; top: 0; height: 100%; background: #10b981; border-radius: 2px 0 0 2px; width: 0; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2;"></div>
+                                    <div class="credit-timeline-progress-2" id="creditTimelineProgress2" style="position: absolute; left: 65.00%; top: 0; height: 100%; background: #ef4444; border-radius: 0 2px 2px 0; width: 0; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2;"></div>
+                                    
+                                    <div class="credit-year-markers" style="position: relative; width: 100%; display: flex; justify-content: space-between; z-index: 10; margin-top: 38px;">
+                                        <!-- Year 1 -->
+                                        <div class="credit-year-marker" id="creditYear1" style="position: relative; text-align: center; flex: 0 0 auto;">
+                                            <div class="credit-year-dot" style="width: 14px; height: 14px; background: white; border: 3px solid #d1d5db; border-radius: 50%; margin: 0 auto; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 2;"></div>
+                                            <div class="credit-year-label" style="margin-top: 15px; font-weight: 600; color: #003D7C; font-size: 0.875rem; white-space: nowrap; transition: all 0.5s ease; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">YEAR 1</div>
+                                            
+                                            <!-- Completion Box with Button -->
+                                            <div class="credit-timeline-element credit-completion-box show" id="creditCompletionBox" style="position: absolute; left: 350%; top: -160px; transform: translateX(-50%); background: white; padding: 16px 20px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; border-left: 4px solid #EF7C00; white-space: nowrap; display: flex; flex-direction: column; align-items: center; gap: 12px; opacity: 1; transition: all 0.3s ease;">
+                                                <h3 style="color: #003D7C; font-size: 0.95rem; font-weight: 600; margin: 0;">I completed my EC! What's next?</h3>
+                                                <button class="credit-start-button" id="creditStartButton" style="background: #EF7C00; color: white; border: none; padding: 10px 24px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; cursor: pointer; box-shadow: 0 4px 15px rgba(239, 124, 0, 0.3); white-space: nowrap; position: relative; overflow: hidden; transition: all 0.3s ease; animation: gentleGlow 2s ease-in-out infinite;">Click me to find out!</button>
                                             </div>
                                         </div>
+                                        
+                                        <!-- Year 2 -->
+                                        <div class="credit-year-marker" id="creditYear2" style="position: relative; text-align: center; flex: 0 0 auto;">
+                                            <div class="credit-year-dot" style="width: 14px; height: 14px; background: white; border: 3px solid #d1d5db; border-radius: 50%; margin: 0 auto; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 2;"></div>
+                                            <div class="credit-year-label" style="margin-top: 15px; font-weight: 600; color: #003D7C; font-size: 0.875rem; white-space: nowrap; transition: all 0.5s ease; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">YEAR 2</div>
+                                        </div>
+                                        
+                                        <!-- Year 3 -->
+                                        <div class="credit-year-marker" id="creditYear3" style="position: relative; text-align: center; flex: 0 0 auto;">
+                                            <div class="credit-year-dot" style="width: 14px; height: 14px; background: white; border: 3px solid #d1d5db; border-radius: 50%; margin: 0 auto; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 2;"></div>
+                                            <div class="credit-year-label" style="margin-top: 15px; font-weight: 600; color: #003D7C; font-size: 0.875rem; white-space: nowrap; transition: all 0.5s ease; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">YEAR 3</div>
+                                        </div>
+                                        
+                                        <!-- Year 4 -->
+                                        <div class="credit-year-marker" id="creditYear4" style="position: relative; text-align: center; flex: 0 0 auto;">
+                                            <div class="credit-year-dot" style="width: 14px; height: 14px; background: white; border: 3px solid #d1d5db; border-radius: 50%; margin: 0 auto; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 2;"></div>
+                                            <div class="credit-year-label" style="margin-top: 15px; font-weight: 600; color: #003D7C; font-size: 0.875rem; white-space: nowrap; transition: all 0.5s ease; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">YEAR 4</div>
+                                        </div>
+                                        
+                                        <!-- Year 5 -->
+                                        <div class="credit-year-marker" id="creditYear5" style="position: relative; text-align: center; flex: 0 0 auto;">
+                                            <div class="credit-year-dot" style="width: 14px; height: 14px; background: white; border: 3px solid #d1d5db; border-radius: 50%; margin: 0 auto; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 2;"></div>
+                                            <div class="credit-year-label" style="margin-top: 15px; font-weight: 600; color: #003D7C; font-size: 0.875rem; white-space: nowrap; transition: all 0.5s ease; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">YEAR 5</div>
+                                        </div>
+                                        
+                                        <!-- Year 6 -->
+                                        <div class="credit-year-marker" id="creditYear6" style="position: relative; text-align: center; flex: 0 0 auto;">
+                                            <div class="credit-year-dot" style="width: 14px; height: 14px; background: white; border: 3px solid #d1d5db; border-radius: 50%; margin: 0 auto; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 2;"></div>
+                                            <div class="credit-year-label" style="margin-top: 15px; font-weight: 600; color: #003D7C; font-size: 0.875rem; white-space: nowrap; transition: all 0.5s ease; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">YEAR 6</div>
+                                        </div>
+                                        
+                                        <!-- Year 7+ -->
+                                        <div class="credit-year-marker" id="creditYear7" style="position: relative; text-align: center; flex: 0 0 auto;">
+                                            <div class="credit-year-dot" style="width: 14px; height: 14px; background: white; border: 3px solid #d1d5db; border-radius: 50%; margin: 0 auto; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 2;"></div>
+                                            <div class="credit-year-label" style="margin-top: 15px; font-weight: 600; color: #003D7C; font-size: 0.875rem; white-space: nowrap; transition: all 0.5s ease; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">YEAR 7+</div>
+                                        </div>
                                     </div>
-                                    <div class="timeline-node hidden"></div>
-                                    <div class="timeline-node hidden"></div>
-                                    <div class="timeline-node hidden"></div>
+                                    
+                                    <!-- Info Box 1 - Credit Conversion Eligibility -->
+                                    <div class="credit-timeline-element credit-info-box credit-info-box-1" id="creditInfoBox1" style="position: absolute; width: 58.00%; left: 34.00%; top: -160px; transform: translateX(-50%); background: white; padding: 18px 22px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; border-left: 4px solid #10b981; opacity: 0; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
+                                        <h3 style="color: #003D7C; font-size: 0.95rem; font-weight: 600; margin-bottom: 8px;">Credit Conversion Opportunity</h3>
+                                        <p style="color: #6b7280; line-height: 1.5; font-size: 0.85rem; margin: 0;">If you enrol in the <strong style="color: #1f2937; font-weight: 600;">MScPHM</strong> programme, your EC credits can count toward your degree requirements <span style="color: #10b981; font-weight: 700;">(minimum CAP of 3.5 required)</span>.</p>
+                                    </div>
+                                    
+                                    <!-- Info Box 2 - Enrollment CTA -->
+                                    <div class="credit-timeline-element credit-info-box credit-info-box-2" id="creditInfoBox2" style="position: absolute; width: 280px; left: 66.67%; top: 60px; transform: translateX(-50%); background: white; padding: 18px 22px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; border-left: 4px solid #003D7C; opacity: 0; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
+                                        <h3 style="color: #003D7C; font-size: 0.95rem; font-weight: 600; margin-bottom: 8px;">Starting your MScPHM journey</h3>
+                                        <p style="color: #6b7280; line-height: 1.5; font-size: 0.85rem; margin: 0;">You must enrol in the MScPHM programme within the <strong style="color: #1f2937; font-weight: 600;">5-year validity period</strong> for your EC credits to be counted toward your degree.</p>
+                                    </div>
+                                    
+                                    <!-- Info Box 3 - Validity Warning -->
+                                    <div class="credit-timeline-element credit-info-box credit-info-box-3" id="creditInfoBox3" style="position: absolute; width: 260px; left: 82%; top: -160px; transform: translateX(-50%); background: white; padding: 18px 22px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); border: 1px solid #e5e7eb; border-left: 4px solid #ef4444; opacity: 0; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);">
+                                        <h3 style="color: #003D7C; font-size: 0.95rem; font-weight: 600; margin-bottom: 8px;">Credit Validity Period</h3>
+                                        <p style="color: #6b7280; line-height: 1.5; font-size: 0.85rem; margin: 0;">EC and GC credits are valid for credit conversion for <span style="color: #ef4444; font-weight: 700;">up to 5 years</span> from completion date.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2041,6 +2091,73 @@
             });
         });
 
+        // CSS styles for credit timeline animations
+        const creditTimelineStyles = `
+            <style>
+            .credit-year-marker.active-green .credit-year-dot {
+                border-color: #10b981;
+                background: #10b981;
+                box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.1);
+                animation: pulseGreen 2s infinite;
+            }
+            
+            .credit-year-marker.active-red .credit-year-dot {
+                border-color: #ef4444;
+                background: #ef4444;
+                box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.1);
+                animation: pulseRed 2s infinite;
+            }
+            
+            @keyframes pulseGreen {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+                50% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+            }
+            
+            @keyframes pulseRed {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+                50% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+            }
+            
+            .credit-year-marker.active-green .credit-year-label {
+                color: #10b981;
+                font-weight: 700;
+            }
+            
+            .credit-year-marker.active-red .credit-year-label {
+                color: #ef4444;
+                font-weight: 700;
+            }
+            
+            @keyframes gentleGlow {
+                0%, 100% {
+                    box-shadow: 0 4px 15px rgba(239, 124, 0, 0.3);
+                }
+                50% {
+                    box-shadow: 0 4px 25px rgba(239, 124, 0, 0.5), 0 0 30px rgba(239, 124, 0, 0.2);
+                }
+            }
+            
+            .credit-start-button:hover {
+                background: #d86f00 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 35px rgba(239, 124, 0, 0.7), 0 0 40px rgba(239, 124, 0, 0.3) !important;
+                animation: none !important;
+            }
+            
+            .credit-start-button:active {
+                transform: translateY(0);
+            }
+            
+            .credit-timeline-element.show {
+                opacity: 1 !important;
+                transform: translateX(-50%) translateY(0) !important;
+            }
+            </style>
+        `;
+        
+        // Inject credit timeline styles
+        document.head.insertAdjacentHTML('beforeend', creditTimelineStyles);
+        
         // Timeline animation functions
         function animateTimelineElements(timeline) {
             // Reset all animation classes first
@@ -2131,6 +2248,99 @@
             const initialTimeline = document.getElementById('timeline-1-year');
             if (initialTimeline) {
                 animateTimelineElements(initialTimeline);
+            }
+            
+            // Credit timeline animation functionality
+            const creditStartButton = document.getElementById('creditStartButton');
+            if (creditStartButton) {
+                let creditAnimationStarted = false;
+                
+                creditStartButton.addEventListener('click', () => {
+                    if (creditAnimationStarted) return;
+                    creditAnimationStarted = true;
+                    
+                    const completionBox = document.getElementById('creditCompletionBox');
+                    const timelineProgress1 = document.getElementById('creditTimelineProgress1');
+                    const timelineProgress2 = document.getElementById('creditTimelineProgress2');
+                    const infoBox1 = document.getElementById('creditInfoBox1');
+                    const infoBox2 = document.getElementById('creditInfoBox2');
+                    const infoBox3 = document.getElementById('creditInfoBox3');
+                    
+                    // Hide completion box with fade effect
+                    completionBox.style.opacity = '0';
+                    completionBox.style.transform = 'translateX(-50%) translateY(-10px)';
+                    setTimeout(() => {
+                        completionBox.style.display = 'none';
+                    }, 300);
+                    
+                    // Calculate timing for sequential animations
+                    const stage2Start = 500;
+                    const stage2Duration = 1050;
+                    const stage3Start = stage2Start + stage2Duration + 300;
+                    const stage4Start = stage3Start + 600 + 300;
+                    const stage4Duration = 600;
+                    const stage4InfoStart = stage4Start + stage4Duration + 300;
+                    
+                    // Stage 2: Light up years 1-5 in green and show first info box
+                    setTimeout(() => {
+                        // Animate year markers 1-5
+                        for (let i = 1; i <= 5; i++) {
+                            setTimeout(() => {
+                                document.getElementById(`creditYear${i}`).classList.add('active-green');
+                            }, (i - 1) * 150);
+                        }
+                        
+                        // Animate green progress bar
+                        setTimeout(() => {
+                            timelineProgress1.style.width = '65.00%';
+                        }, 300);
+                        
+                        // Show first info box after timeline animation completes
+                        setTimeout(() => {
+                            infoBox1.classList.add('show');
+                        }, stage2Duration);
+                    }, stage2Start);
+                    
+                    // Stage 3: Show second info box
+                    setTimeout(() => {
+                        infoBox2.classList.add('show');
+                    }, stage3Start);
+                    
+                    // Stage 4: Light up years 6-7 in red
+                    setTimeout(() => {
+                        // Animate year markers 6-7
+                        for (let i = 6; i <= 7; i++) {
+                            setTimeout(() => {
+                                document.getElementById(`creditYear${i}`).classList.add('active-red');
+                            }, (i - 6) * 150);
+                        }
+                        
+                        // Animate red progress bar
+                        setTimeout(() => {
+                            timelineProgress2.style.width = '35.00%';
+                        }, 300);
+                    }, stage4Start);
+                    
+                    // Show warning info box (part of Stage 4)
+                    setTimeout(() => {
+                        infoBox3.classList.add('show');
+                    }, stage4InfoStart);
+                });
+                
+                // Add hover effect to year markers
+                document.querySelectorAll('.credit-year-marker').forEach(marker => {
+                    marker.addEventListener('mouseenter', function() {
+                        const dot = this.querySelector('.credit-year-dot');
+                        if (this.classList.contains('active-green') || this.classList.contains('active-red')) {
+                            dot.style.transform = 'scale(1.2)';
+                        }
+                    });
+                    
+                    marker.addEventListener('mouseleave', function() {
+                        const dot = this.querySelector('.credit-year-dot');
+                        dot.style.transform = 'scale(1)';
+                    });
+                });
             }
         });
     </script>
