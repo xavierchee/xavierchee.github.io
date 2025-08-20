@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 28, 2025 - 16:45 UTC+8
+    CHANGE LOG - Last Updated: January 28, 2025 - 17:15 UTC+8
     ============================================
     
     Recent Changes:
-    - Updated year labels (Year 1-7+) in stackable pathway timeline to match MSc PHM font styling
-    - Changed font family to 'Inter' and color to #003D7C for consistency with other pathways
+    - Made milestone tags for core and elective courses clickable links to respective course pages
+    - Core course tags link to core_courses.html, elective tags link to elective_courses.html
+    - Added hover effects and cursor pointer to indicate clickable tags
 -->
 <html lang="en">
 <head>
@@ -791,6 +792,9 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.3px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
         }
         
         .milestone-tag.core {
@@ -803,6 +807,27 @@
         
         .milestone-tag.research {
             background: #004990;
+        }
+        
+        /* Hover effects for clickable tags */
+        a.milestone-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            color: white;
+            filter: brightness(1.1);
+        }
+        
+        a.milestone-tag.core:hover {
+            background: #FF7F4D;
+        }
+        
+        a.milestone-tag.elective:hover {
+            background: #7D8A96;
+        }
+        
+        a.milestone-tag.research:hover {
+            background: #0055A8;
         }
         
         .year-divider {
@@ -1321,12 +1346,98 @@
         .footer {
             background: linear-gradient(135deg, #003D7C, #001f3f);
             color: white;
-            text-align: center;
-            padding: 30px 20px;
+            padding: 35px 20px;
             margin-top: 60px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-copyright {
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: 0.3px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .footer-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 14px;
             font-weight: 300;
-            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.3s ease;
+        }
+        
+        .footer-info-item:hover {
+            color: white;
+        }
+        
+        .footer-info-item svg {
+            flex-shrink: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .footer-info-item a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-info-item a:hover {
+            color: #FF6B35;
+        }
+        
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+        
+        .footer-social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .footer-social-link:hover {
+            transform: translateY(-3px);
+            opacity: 0.8;
+        }
+        
+        .footer-social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        
+        @media (max-width: 768px) {
+            .footer {
+                padding: 30px 20px;
+            }
+            
+            .footer-social {
+                gap: 20px;
+            }
         }
         
         /* Scroll animations */
@@ -1654,31 +1765,32 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Our Unique Programme for Tomorrow's Healthcare Leaders</h1>
+            <h1 class="section-header scroll-fade">Uniqueness of Our Programme</h1>
             <p class="section-text scroll-fade">
-                Master the future of healthcare through Asia's pioneering precision medicine programme—where biomedical data meets AI, and research transforms patient care.
+                Why choose between coursework or research MSc when you can master both? Our MSc in Precision Medicine brings together world-class academics, clinicians, and industry pioneers to deliver a truly one-of-a-kind programme. 
+				With its multidisciplinary curriculum and distinctive capstone—offering pathways into research or industry—you’ll graduate ready to lead the future of healthcare.
             </p>
             
             <!-- Programme Features List with Bullet Points -->
             <ul class="features-list scroll-fade">
                 <li class="feature-item">
-                    <h3 class="feature-title">Hybrid Programme Model</h3>
-                    <p class="feature-description">Neither purely coursework nor research—a unique blend combining rigorous academics with practical application</p>
+                    <h3 class="feature-title">Hybrid by Design</h3>
+                    <p class="feature-description">Not just coursework. Not just research. A powerful blend of both.</p>
                 </li>			
 			
                 <li class="feature-item">
-                    <h3 class="feature-title">Multi-discplinary Curriculum</h3>
-                    <p class="feature-description">Multi-disciplinary curriculum spanning biomedicine, data science and AI to shape precision health leaders.</p>
+                    <h3 class="feature-title">Multi-discplinary at the Core</h3>
+                    <p class="feature-description">From biomedicine to genomics to data science to AI, ethics to regulation to sustainable business to clinical care, learn across disciplines.</p>
                 </li>
                 
                 <li class="feature-item">
-                    <h3 class="feature-title">Taught by renowned academics and industry leaders</h3>
-                    <p class="feature-description">Learn from distinguished faculty from NUS Medicine and other faculties, alongside leaders from Singapore's premier research centres, industries and hospitals</p>
+                    <h3 class="feature-title">Expert-led, Real-world Focused</h3>
+                    <p class="feature-description">Taught by distinguished experts at NUS Medicine and other NUS faculties, together with leaders from world-class research centres, hospitals, and precision medicine industries.</p>
                 </li>
 				
 				<li class="feature-item">
-                    <h3 class="feature-title">Real-World Problem Solving</h3>
-                    <p class="feature-description">Tackle actual healthcare challenges through Capstone projects in academic research or industry internships</p>
+                    <h3 class="feature-title">Capstone with Choice</h3>
+                    <p class="feature-description">Academic research or industry internship—the path that fits your ambition.</p>
                 </li>
             </ul>
            
@@ -1708,7 +1820,7 @@
                         </div>
                         
                         <div class="program-description" id="description-flexible">
-                            <p>Flexible pathway with stackable modules suitable for working professionals seeking flexibility.</p>
+                            <p>Flexible pathway with stackable courses suitable for working professionals seeking flexibility.</p>
                         </div>
                     </div>
                 </div>
@@ -1735,10 +1847,10 @@
                                                     <div class="milestone-title">Semester 1</div>
                                                     <div class="milestone-subtitle">Foundation</div>
                                                 </div>
-                                                <div class="milestone-summary">Essential foundation modules for precision medicine</div>
+                                                <div class="milestone-summary">Essential foundation courses for precision medicine</div>
                                             </div>
                                             <div class="milestone-tags">
-                                                <span class="milestone-tag core">5 Core Modules</span>
+                                                <a href="https://xavierchee.github.io/website/core_courses.html" class="milestone-tag core">5 Core Courses</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1754,8 +1866,8 @@
                                                 <div class="milestone-summary">Advanced core concepts and methodologies</div>
                                             </div>
                                             <div class="milestone-tags">
-                                                <span class="milestone-tag core">1 Core Modules</span>
-                                                <span class="milestone-tag elective">4 Elective Modules</span>
+                                                <a href="https://xavierchee.github.io/website/core_courses.html" class="milestone-tag core">1 Core Course</a>
+                                                <a href="https://xavierchee.github.io/website/elective_courses.html" class="milestone-tag elective">4 Elective Courses</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1791,10 +1903,10 @@
                                                     <div class="milestone-title">Semester 1</div>
                                                     <div class="milestone-subtitle">Foundation</div>
                                                 </div>
-                                                <div class="milestone-summary">Essential foundation modules for precision medicine</div>
+                                                <div class="milestone-summary">Essential foundation courses for precision medicine</div>
                                             </div>
                                             <div class="milestone-tags">
-                                                <span class="milestone-tag core">5 Core Modules</span>
+                                                <a href="https://xavierchee.github.io/website/core_courses.html" class="milestone-tag core">5 Core Courses</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1810,8 +1922,8 @@
                                                 <div class="milestone-summary">Advanced core concepts and methodologies</div>
                                             </div>
                                             <div class="milestone-tags">
-                                                <span class="milestone-tag core">1 Core Modules</span>
-                                                <span class="milestone-tag elective">2 Elective Modules</span>
+                                                <a href="https://xavierchee.github.io/website/core_courses.html" class="milestone-tag core">1 Core Course</a>
+                                                <a href="https://xavierchee.github.io/website/elective_courses.html" class="milestone-tag elective">2 Elective Courses</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1827,7 +1939,7 @@
                                                 <div class="milestone-summary">Hands-on research experience with academic and industry partners</div>
                                             </div>
                                             <div class="milestone-tags">
-                                                <span class="milestone-tag research">Academic or Industry Capstone Project</span>
+                                                <a href="https://xavierchee.github.io/website/capstone.html" class="milestone-tag research">Academic or Industry Capstone Project</a>
                                             </div>
                                         </div>
                                     </div>
@@ -1980,7 +2092,42 @@
     
     <!-- Footer -->
     <footer class="footer">
-        © National University of Singapore. All Rights Reserved.
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © Department of Biochemistry, NUS Medicine. All Rights Reserved.
+            </div>
+            
+            <div class="footer-info">
+                <div class="footer-info-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C7.802 0 4 3.403 4 7.602C4 11.8 7.469 16.812 12 24C16.531 16.812 20 11.8 20 7.602C20 3.403 16.199 0 12 0zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                    <span>MD 7, 8 Medical Drive Singapore 117596</span>
+                </div>
+                
+                <div class="footer-info-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <a href="mailto:mscphm@nus.edu.sg">mscphm@nus.edu.sg</a>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://www.facebook.com/nusprecisionmedicine" target="_blank" class="footer-social-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                
+                <a href="https://www.instagram.com/nusprecisionmedicine/" target="_blank" class="footer-social-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
     </footer>
     
     <script>

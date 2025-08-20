@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 28, 2025 - 04:40 UTC+8
+    CHANGE LOG - Last Updated: January 28, 2025 - 16:50 UTC+8
     ============================================
     
     Recent Changes:
-    - Added two-button layout to each EC module card: "Learn more" and application status button
-    - EC modules now display as cards instead of simple buttons
-    - Application status button shows dynamic message based on application period
-    - Learn more buttons open module pages in new tabs
-    - Fixed text wrapping for application status button to prevent text cutoff
+    - Redesigned footer with structured layout including location, email, and social media links
+    - Added SVG icons for location (filled pin) and email (outline envelope)
+    - Implemented modern professional footer design with NUS styling
 -->
 <html lang="en">
 <script>
@@ -332,7 +330,7 @@
         .certificate-card {
             background: white;
             border-radius: 12px;
-            border: 2px solid rgba(0, 61, 124, 0.1);
+            border: 2px solid #003D7C;
             box-shadow: 0 2px 10px rgba(0, 61, 124, 0.08);
             overflow: hidden;
             transition: all 0.3s ease;
@@ -1112,12 +1110,98 @@
         .footer {
             background: linear-gradient(135deg, #003D7C, #001f3f);
             color: white;
-            text-align: center;
-            padding: 30px 20px;
+            padding: 35px 20px;
             margin-top: 60px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-copyright {
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: 0.3px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        .footer-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 14px;
             font-weight: 300;
-            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.3s ease;
+        }
+        
+        .footer-info-item:hover {
+            color: white;
+        }
+        
+        .footer-info-item svg {
+            flex-shrink: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .footer-info-item a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-info-item a:hover {
+            color: #FF6B35;
+        }
+        
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+        
+        .footer-social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .footer-social-link:hover {
+            transform: translateY(-3px);
+            opacity: 0.8;
+        }
+        
+        .footer-social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        
+        @media (max-width: 768px) {
+            .footer {
+                padding: 30px 20px;
+            }
+            
+            .footer-social {
+                gap: 20px;
+            }
         }
         
         /* Scroll animations */
@@ -1432,32 +1516,28 @@
         <div class="content-section">
             <h1 class="section-header scroll-fade">Flexible Learning</h1>
             <p class="section-text scroll-fade">
-                The future of medicine is personalized care. Healthcare leaders must master genomics, advanced diagnostics, and data analytics to tailor treatments to individual patients. These professionals must also protect genetic privacy, ensure fair access to treatments, and build financially sustainable models for precision medicine. They need to understand how patients from different backgrounds view genetic information and testing.
-            </p>
-			<p> </p>
-			<p class="section-text scroll-fade">
-				By combining scientific expertise with ethics, business skills, and cultural awareness, professionals can lead healthcare's transformation—making personalized medicine both innovative and accessible to all.
+                Healthcare professionals and leaders must continuously update their knowledge in important fields such as genomics, advanced diagnostics, and data analytics to drive the future of medicine.
             </p>
             
-            <h2 class="section-header scroll-fade">Executive and Graduate Certificates (ECGC)</h2>
+            <h2 class="section-header scroll-fade">Executive and Graduate Certificates (EC/GC)</h2>
             <p class="section-text scroll-fade">
-                Our Precision Medicine programme offers unparalleled flexibility through two learning paths:
+                Our Precision Medicine programme offers unparalleled flexibility for lifelong learning through two learning paths:
             </p>
             <ul style="margin: 20px 0; padding-left: 30px;" class="scroll-fade">
                 <li style="margin-bottom: 10px; color: #5a6c7d; font-size: 17px;">
-                    <strong style="color: #003D7C;">Executive Certificates (EC):</strong> Take individual modules as standalone courses to build targeted expertise.
+                    <strong style="color: #003D7C;">Executive Certificates (EC):</strong> Take individual courses as standalone courses to build targeted expertise.
                     
                     <!-- EC Modules Expandable Section -->
                     <div class="ec-modules-section" style="margin: 15px 0 0 0;">
                         <p class="ec-expand-trigger" onclick="toggleECModules()" style="color: #FF6B35; font-size: 15px; cursor: pointer; font-weight: 500; transition: all 0.3s ease; display: inline-block; position: relative; padding-bottom: 2px; margin-left: 0;">
-                            Click here to view available EC modules
+                            Click here to view available EC courses
                             <span class="ec-arrow" style="display: inline-block; margin-left: 8px; transition: transform 0.3s ease;">▼</span>
                         </p>
                         
                         <div class="ec-modules-container" style="max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); margin-top: 15px; margin-left: -20px;">
                             <div class="ec-modules-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; padding: 15px 0;">
                                 <!-- Applied Statistics for Precision Medicine -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/applied_statistics.png');">
                                     <div class="ec-module-title">Applied Statistics for Precision Medicine</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5003/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1469,7 +1549,7 @@
                                 </div>
                                 
                                 <!-- Causal Inference in Precision Medicine -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/causal_inference.png');">
                                     <div class="ec-module-title">Causal Inference in Precision Medicine</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5014/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1481,7 +1561,7 @@
                                 </div>
                                 
                                 <!-- Clinical Perspective in Precision Medicine -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/clinical_perspective.png');">
                                     <div class="ec-module-title">Clinical Perspective in Precision Medicine</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5008/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1493,7 +1573,7 @@
                                 </div>
                                 
                                 <!-- Human Genomics in Precision Medicine -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/human_genomics.png');">
                                     <div class="ec-module-title">Human Genomics in Precision Medicine</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5001/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1505,7 +1585,7 @@
                                 </div>
                                 
                                 <!-- Precision Biomarkers -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/precision_biomarkers.png');">
                                     <div class="ec-module-title">Precision Biomarkers</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5010/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1517,7 +1597,7 @@
                                 </div>
                                 
                                 <!-- Precision Drug Discovery and Development -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/precision_drug_disc_dev.png');">
                                     <div class="ec-module-title">Precision Drug Discovery and Development</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5013/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1529,7 +1609,7 @@
                                 </div>
                                 
                                 <!-- Precision Health and Medicine For Cardiometabolic Diseases -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/precision_health_and_medicine_cardiometabolic.png');">
                                     <div class="ec-module-title">Precision Health and Medicine For Cardiometabolic Diseases</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5018/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1541,7 +1621,7 @@
                                 </div>
                                 
                                 <!-- Precision Oncology -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/precision_oncology.png');">
                                     <div class="ec-module-title">Precision Oncology</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5009/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1553,7 +1633,7 @@
                                 </div>
                                 
                                 <!-- Precision Therapeutics -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/precision_therapeutics.png');">
                                     <div class="ec-module-title">Precision Therapeutics</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5012/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1565,7 +1645,7 @@
                                 </div>
                                 
                                 <!-- Proteomics and Metabolomics in Precision Health and Medicine -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/proteomics_and_metabolomics.png');">
                                     <div class="ec-module-title">Proteomics and Metabolomics in Precision Health and Medicine</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5002/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1577,7 +1657,7 @@
                                 </div>
                                 
                                 <!-- Technological Innovation in Precision Medicine -->
-                                <div class="ec-module-card">
+                                <div class="ec-module-card" style="background-image: url('https://xavierchee.github.io/website/website_assets/ecgc/technological_innovation.png');">
                                     <div class="ec-module-title">Technological Innovation in Precision Medicine</div>
                                     <div class="ec-module-buttons">
                                         <a href="https://medicine.nus.edu.sg/bch/phm5015/" target="_blank" class="ec-learn-more-btn">Learn more</a>
@@ -1591,8 +1671,18 @@
                         </div>
                     </div>
                 </li>
-                <li style="color: #5a6c7d; font-size: 17px;"><strong style="color: #003D7C;">Graduate Certificates (GC):</strong> Bundle two related modules into a comprehensive credential that provides deeper specialization.</li>
-            </ul>
+                <li style="color: #5a6c7d; font-size: 17px;">
+                    <strong style="color: #003D7C;">Graduate Certificates (GC):</strong> Bundle two related courses into a comprehensive credential that provides deeper specialization.
+                    
+                    <!-- GC Certificates Expandable Section -->
+                    <div class="gc-certificates-section" style="margin: 15px 0 0 0;">
+                        <p class="gc-expand-trigger" onclick="toggleGCCertificates()" style="color: #FF6B35; font-size: 15px; cursor: pointer; font-weight: 500; transition: all 0.3s ease; display: inline-block; position: relative; padding-bottom: 2px; margin-left: 0;">
+                            Click here to view available GC courses
+                            <span class="gc-arrow" style="display: inline-block; margin-left: 8px; transition: transform 0.3s ease;">▼</span>
+                        </p>
+                        
+                        <div class="gc-certificates-container" style="max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); margin-top: 15px; margin-left: -20px;">
+                            <div class="gc-certificates-wrapper" style="padding: 15px 0;">
             
             <style>
                 /* EC Modules Styles */
@@ -1627,13 +1717,40 @@
                 /* EC Module Card Styles */
                 .ec-module-card {
                     background: white;
-                    border: 2px solid rgba(0, 61, 124, 0.1);
+                    border: 2px solid #003D7C;
                     border-radius: 12px;
                     padding: 20px;
                     box-shadow: 0 2px 8px rgba(0, 61, 124, 0.05);
                     position: relative;
                     overflow: hidden;
                     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                }
+                
+                /* White overlay for EC module cards */
+                .ec-module-card::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(255, 255, 255, 0.90);
+                    z-index: 1;
+                    transition: background 0.3s ease;
+                }
+                
+                .ec-module-card:hover::after {
+                    background: rgba(255, 255, 255, 0.88);
+                }
+                
+                /* Ensure all content appears above the overlay */
+                .ec-module-card .ec-module-title,
+                .ec-module-card .ec-module-buttons {
+                    position: relative;
+                    z-index: 2;
                 }
                 
                 .ec-module-card::before {
@@ -1767,6 +1884,35 @@
                     display: inline-block;
                 }
                 
+                /* GC Certificates Styles (similar to EC) */
+                .gc-expand-trigger:hover {
+                    color: #003D7C !important;
+                    transform: translateX(5px);
+                }
+                
+                .gc-expand-trigger::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0;
+                    height: 2px;
+                    background: linear-gradient(90deg, #FF6B35, #FF8554);
+                    transition: width 0.3s ease;
+                }
+                
+                .gc-expand-trigger:hover::after {
+                    width: 100%;
+                }
+                
+                .gc-certificates-container.expanded {
+                    max-height: 2000px !important;
+                }
+                
+                .gc-arrow.rotated {
+                    transform: rotate(180deg);
+                }
+                
                 /* Mobile responsiveness for EC modules */
                 @media (max-width: 768px) {
                     .ec-modules-grid {
@@ -1800,15 +1946,15 @@
                 }
             </style>
             
-            <!-- Certificates Grid with 4 certificates (removed Big Data Analytics and Precision Biomarker Identification) -->
-            <div class="certificates-grid">
+                                <!-- Certificates Grid with 4 certificates (moved from outside) -->
+                                <div class="certificates-grid">
                 <!-- Certificate 1 -->
                 <div class="certificate-card scroll-fade">
                     <img src="https://xavierchee.github.io/website/website_assets/ecgc/fundamentals_of_pm.png" alt="Fundamentals of Precision Medicine">
                     <div class="certificate-content">
                         <div class="certificate-main-content">
                             <h3 class="certificate-title">Graduate Certificate in Fundamentals of Precision Medicine</h3>
-                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Courses/ECs required:</p>
                             <ul class="module-list">
                                 <li><a href="https://medicine.nus.edu.sg/bch/phm5001/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Human Genomics in Precision Medicine</a></li>
                                 <li><a href="https://medicine.nus.edu.sg/bch/phm5002/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Proteomics and Metabolomics in Precision Health and Medicine</a></li>
@@ -1834,7 +1980,7 @@
                     <div class="certificate-content">
                         <div class="certificate-main-content">
                             <h3 class="certificate-title">Graduate Certificate in Innovative Precision Medicine</h3>
-                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Courses/ECs required:</p>
                             <ul class="module-list">
                                 <li><a href="https://medicine.nus.edu.sg/bch/phm5014/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Causal Inference in Precision Medicine</a></li>
                                 <li><a href="https://medicine.nus.edu.sg/bch/phm5015/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Technological Innovation in Precision Medicine</a></li>
@@ -1859,7 +2005,7 @@
                     <div class="certificate-content">
                         <div class="certificate-main-content">
                             <h3 class="certificate-title">Graduate Certificate in Drug Discovery, Pharmacogenomics and Therapeutics</h3>
-                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Courses/ECs required:</p>
                             <ul class="module-list">
                                 <li><a href="https://medicine.nus.edu.sg/bch/phm5013/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Precision Drug Discovery and Development</a></li>
                                 <li><a href="https://medicine.nus.edu.sg/bch/phm5012/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Precision Therapeutics</a></li>
@@ -1883,7 +2029,7 @@
                     <div class="certificate-content">
                         <div class="certificate-main-content">
                             <h3 class="certificate-title">Graduate Certificate in Clinical Precision Medicine</h3>
-                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Modules/ECs required:</p>
+                            <p style="color: #003D7C; font-weight: 600; margin-bottom: 10px;">Courses/ECs required:</p>
                             <ul class="module-list">
                                 <li><a href="https://medicine.nus.edu.sg/bch/phm5008/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Clinical Perspective in Precision Medicine</a></li>
                                 <li><a href="https://medicine.nus.edu.sg/bch/phm5009/" target="_blank" style="color: inherit; text-decoration: none; transition: color 0.3s ease;">Precision Oncology</a></li>
@@ -1900,8 +2046,12 @@
                             <a href="https://gradapp.nus.edu.sg/portal/app_manage" target="_blank" class="certificate-apply-button">Apply Now</a>
                         </div>
                     </div>
-                </div>
-            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             
             <!-- Conversion Section -->
             <h2 class="section-header scroll-fade" style="margin-top: 60px;">Certificate to Master's Conversion: Building Your Precision Medicine Degree</h2>
@@ -1921,7 +2071,7 @@
                     <div class="note-title">Note</div>
                 </div>
                 <div class="note-content">
-                    Some core modules in the Master's programme are exclusively available to enrolled Master's students, including:
+                    Some core courses in the Master's programme are exclusively available to enrolled Master's students, including:
                 </div>
                 <ul class="note-module-list">
                     <li class="note-module-item">
@@ -1991,7 +2141,42 @@
     
     <!-- Footer -->
     <footer class="footer">
-        © National University of Singapore. All Rights Reserved.
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © Department of Biochemistry, NUS Medicine. All Rights Reserved.
+            </div>
+            
+            <div class="footer-info">
+                <div class="footer-info-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C7.802 0 4 3.403 4 7.602C4 11.8 7.469 16.812 12 24C16.531 16.812 20 11.8 20 7.602C20 3.403 16.199 0 12 0zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                    </svg>
+                    <span>MD 7, 8 Medical Drive Singapore 117596</span>
+                </div>
+                
+                <div class="footer-info-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <a href="mailto:mscphm@nus.edu.sg">mscphm@nus.edu.sg</a>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://www.facebook.com/nusprecisionmedicine" target="_blank" class="footer-social-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                
+                <a href="https://www.instagram.com/nusprecisionmedicine/" target="_blank" class="footer-social-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
     </footer>
     
     <script>
@@ -2211,6 +2396,15 @@
         function toggleECModules() {
             const container = document.querySelector('.ec-modules-container');
             const arrow = document.querySelector('.ec-arrow');
+            
+            container.classList.toggle('expanded');
+            arrow.classList.toggle('rotated');
+        }
+        
+        // Toggle GC Certificates
+        function toggleGCCertificates() {
+            const container = document.querySelector('.gc-certificates-container');
+            const arrow = document.querySelector('.gc-arrow');
             
             container.classList.toggle('expanded');
             arrow.classList.toggle('rotated');
