@@ -1,11 +1,10 @@
 <!-- 
-    CHANGE LOG - Last Updated: January 28, 2025 - 16:50 UTC+8
+    CHANGE LOG - Last Updated: August 24, 2025 - 15:05 UTC+8
     ============================================
     
     Recent Changes:
-    - Redesigned footer with structured layout including location, email, and social media links
-    - Added SVG icons for location (filled pin) and email (outline envelope)
-    - Implemented modern professional footer design with NUS styling matching template.html
+    - Modified photo grid to display exactly 2 cards side by side
+    - Ensured all photo cards have consistent sizing
 -->
 
 <!DOCTYPE html>
@@ -303,7 +302,7 @@
         /* Photo Grid */
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
             margin-top: 40px;
         }
@@ -317,8 +316,9 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
-            max-width: 450px;
-            justify-self: start;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         .photo-card::before {
@@ -362,6 +362,10 @@
         
         .photo-content {
             padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .photo-title {
@@ -1009,7 +1013,7 @@
             }
             
             .photo-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
                 gap: 25px;
             }
         }
@@ -1296,6 +1300,16 @@
             </div>
             
             <div class="photo-grid">
+                <div class="photo-card scroll-fade" onclick="window.open('https://medicine.nus.edu.sg/bch/2025-welcome-event/', '_blank')">
+                    <div class="photo-image-container">
+                        <img src="https://xavierchee.github.io/website/website_assets/photos/2025_welcome_event.JPEG" alt="2025 Welcome Event" class="photo-image">
+                    </div>
+                    <div class="photo-content">
+                        <h3 class="photo-title">2025 Welcome Event</h3>
+                        <p class="photo-date">7 August 2025</p>
+                    </div>
+                </div>
+                
                 <div class="photo-card scroll-fade" onclick="window.open('https://medicine.nus.edu.sg/bch/2025-commencement/', '_blank')">
                     <div class="photo-image-container">
                         <img src="https://xavierchee.github.io/website/website_assets/photos/2025_commencement.png" alt="2025 Commencement" class="photo-image">

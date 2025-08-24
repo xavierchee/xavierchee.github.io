@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: January 28, 2025 - 16:50 UTC+8
+    CHANGE LOG - Last Updated: January 28, 2025 - 20:21 UTC+8
     ============================================
     
     Recent Changes:
-    - Redesigned footer with structured layout including location, email, and social media links
-    - Added SVG icons for location (filled pin) and email (outline envelope)
-    - Implemented modern professional footer design with NUS styling
+    - Modified application period checking to keep sidebar Apply Now button always enabled
+    - Removed conditional disabling of main Apply Now button in checkApplicationPeriodWithEC function
 -->
 <html lang="en">
 <script>
@@ -2311,20 +2310,13 @@
             
             // Apply Now buttons are now hidden/shown via CSS when application-closed class is added
             
-            // Also disable/enable the main Apply Now button in sidebar
+            // Keep the main Apply Now button in sidebar always enabled
             const mainApplyButton = document.querySelector('.apply-button');
             if (mainApplyButton) {
-                if (!isOpen) {
-                    mainApplyButton.disabled = true;
-                    mainApplyButton.style.background = '#cccccc';
-                    mainApplyButton.style.cursor = 'not-allowed';
-                    mainApplyButton.style.opacity = '0.6';
-                } else {
-                    mainApplyButton.disabled = false;
-                    mainApplyButton.style.background = '';
-                    mainApplyButton.style.cursor = 'pointer';
-                    mainApplyButton.style.opacity = '1';
-                }
+                mainApplyButton.disabled = false;
+                mainApplyButton.style.background = '';
+                mainApplyButton.style.cursor = 'pointer';
+                mainApplyButton.style.opacity = '1';
             }
         }
         
@@ -2365,20 +2357,13 @@
                 text.textContent = APPLICATION_CONFIG.closedMessage;
             });
             
-            // Also disable/enable the main Apply Now button in sidebar
+            // Keep the main Apply Now button in sidebar always enabled
             const mainApplyButton = document.querySelector('.apply-button');
             if (mainApplyButton) {
-                if (!isOpen) {
-                    mainApplyButton.disabled = true;
-                    mainApplyButton.style.background = '#cccccc';
-                    mainApplyButton.style.cursor = 'not-allowed';
-                    mainApplyButton.style.opacity = '0.6';
-                } else {
-                    mainApplyButton.disabled = false;
-                    mainApplyButton.style.background = '';
-                    mainApplyButton.style.cursor = 'pointer';
-                    mainApplyButton.style.opacity = '1';
-                }
+                mainApplyButton.disabled = false;
+                mainApplyButton.style.background = '';
+                mainApplyButton.style.cursor = 'pointer';
+                mainApplyButton.style.opacity = '1';
             }
         }
         

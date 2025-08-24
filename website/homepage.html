@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: February 01, 2025 - 16:50 UTC+8
+    CHANGE LOG - Last Updated: February 01, 2025 - 18:30 UTC+8
     ============================================
     
     Recent Changes:
-    - Redesigned footer with structured layout including location, email, and social media links
-    - Added SVG icons for location (filled pin) and email (outline envelope)
-    - Implemented modern professional footer design with NUS styling
+    - Implemented carousel hero section with multiple slides support
+    - Added event photo slides with customizable content via JavaScript array
+    - Added dot navigation and arrow controls for carousel
+    - Implemented auto-play functionality with pause on hover
+    - Added swipe support for mobile devices
 -->
 <html lang="en">
 <head>
@@ -235,30 +237,230 @@
             transform: translateX(0);
         }
         
-        /* Hero Section */
-        /* CHANGES MADE - January 31, 2025:
-         * 1. HERO CONTENT REPOSITIONING:
-         *    - Changed .hero-content from relative to absolute positioning
-         *    - Added centering with top: 50%, left: 50%, transform: translate(-50%, -50%)
-         *    - Added width: 90% for responsive sizing
-         *    - This centers all text content within the video background
-         * 
-         * 2. ANIMATION UPDATES:
-         *    - Updated fadeInUp animation to work with centered positioning
-         *    - Created new fadeInElement animation for child elements
-         *    - Applied fadeInElement to h1, p, and CTA button
-         *    - Maintains smooth staggered entrance effects (0.2s, 0.4s, 0.8s)
-         */
+        /* Hero Section with Carousel */
         .hero-section {
             position: relative;
             overflow: hidden;
             color: white;
-            padding: 60px 20px;
             text-align: center;
-            min-height: calc(100vh - 170px); /* Subtract header and banner heights */
+            min-height: calc(100vh - 170px);
+        }
+        
+        /* Carousel Container */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 170px);
+            overflow: hidden;
+        }
+        
+        .hero-slides-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hero-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .hero-slide.prev {
+            z-index: 1;
+        }
+        
+        /* Event Slide Specific Styles */
+        .hero-slide.event-slide {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .hero-slide.event-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 61, 124, 0.8) 0%, rgba(0, 61, 124, 0.6) 50%, rgba(255, 107, 53, 0.3) 100%);
+            z-index: 1;
+        }
+        
+        .event-slide-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 0 20px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .event-slide-title {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .event-slide-description {
+            font-size: 22px;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 300;
+            line-height: 1.4;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .event-slide-button {
+            background: linear-gradient(135deg, #FF6B35, #FF8554);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .event-slide-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .event-slide-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+        
+        .event-slide-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Carousel Navigation */
+        .carousel-navigation {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            width: 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #FF6B35, #FF8554);
+            border-color: white;
+        }
+        
+        .carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.2);
+        }
+        
+        .carousel-dot.active:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Carousel Arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        .hero-carousel:hover .carousel-arrow {
+            opacity: 1;
+        }
+        
+        .carousel-arrow:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-arrow.prev {
+            left: 30px;
+        }
+        
+        .carousel-arrow.next {
+            right: 30px;
+        }
+        
+        .carousel-arrow::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-top: 3px solid white;
+            border-right: 3px solid white;
+        }
+        
+        .carousel-arrow.prev::after {
+            transform: rotate(-135deg);
+            margin-left: 4px;
+        }
+        
+        .carousel-arrow.next::after {
+            transform: rotate(45deg);
+            margin-right: 4px;
         }
         
         .hero-video-background {
@@ -1376,8 +1578,34 @@
                 grid-template-columns: 1fr;
             }
             
-            .hero-section {
-                min-height: calc(100vh - 120px); /* Adjust for mobile without nav */
+            .hero-carousel {
+                height: calc(100vh - 120px);
+            }
+            
+            .event-slide-title {
+                font-size: 36px;
+            }
+            
+            .event-slide-description {
+                font-size: 18px;
+            }
+            
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                opacity: 0.7;
+            }
+            
+            .carousel-arrow.prev {
+                left: 15px;
+            }
+            
+            .carousel-arrow.next {
+                right: 15px;
+            }
+            
+            .carousel-navigation {
+                bottom: 60px;
             }
             
             .hero-section h1 {
@@ -1580,33 +1808,48 @@
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Hero Section with Video Background -->
+    <!-- Hero Section with Carousel -->
     <section class="hero-section">
-        <!-- Try multiple video sources -->
-        <video class="hero-video-background" autoplay muted loop playsinline>
-            <!-- Local path option - update this to your actual video location -->
-            <source src="video_homepage.mp4" type="video/mp4">
-            <!-- GitHub hosted option -->
-            <source src="https://xavierchee.github.io/website/website_assets/homepage/video_homepage.mp4" type="video/mp4">
-            <!-- Fallback message -->
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Master of Science in<br>Precision Health & Medicine</h1>
-            <div class="hero-text-container">
-                <p class="hero-animated-text" style="font-weight: 700; font-size: 22px;">
-                    Asia's First Multi-disciplinary Graduate Programme in Precision Medicine
-                </p>
-                <p class="hero-animated-text">
-                    Transform healthcare through mastering AI-driven precision medicine.
-                </p>
-                <p class="hero-animated-text">
-                    Join the next generation of healthcare innovators.
-                </p>
+        <div class="hero-carousel">
+            <div class="hero-slides-container">
+                <!-- Slide 1: Original Video Hero -->
+                <div class="hero-slide video-slide active">
+                    <video class="hero-video-background" autoplay muted loop playsinline>
+                        <source src="video_homepage.mp4" type="video/mp4">
+                        <source src="https://xavierchee.github.io/website/website_assets/homepage/video_homepage.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <h1>Master of Science in<br>Precision Health & Medicine</h1>
+                        <div class="hero-text-container">
+                            <p class="hero-animated-text" style="font-weight: 700; font-size: 22px;">
+                                Asia's First Multi-disciplinary Graduate Programme in Precision Medicine
+                            </p>
+                            <p class="hero-animated-text">
+                                Transform healthcare through mastering AI-driven precision medicine.
+                            </p>
+                            <p class="hero-animated-text">
+                                Join the next generation of healthcare innovators.
+                            </p>
+                        </div>
+                        <button class="cta-button" onclick="window.location.href='https://xavierchee.github.io/website/course_pathway.html'">I am interested to find out more!</button>
+                    </div>
+                </div>
+                
+                <!-- Event slides will be dynamically added here by JavaScript -->
             </div>
-            <button class="cta-button" onclick="window.location.href='https://xavierchee.github.io/website/course_pathway.html'">I am interested to find out more!</button>
+            
+            <!-- Navigation Arrows -->
+            <div class="carousel-arrow prev" onclick="changeSlide(-1)"></div>
+            <div class="carousel-arrow next" onclick="changeSlide(1)"></div>
+            
+            <!-- Navigation Dots -->
+            <div class="carousel-navigation" id="carouselDots">
+                <!-- Dots will be dynamically added by JavaScript -->
+            </div>
         </div>
+        
         <div class="scroll-indicator">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <polyline class="chevron-down" points="4 7 12 15 20 7"></polyline>
@@ -1876,6 +2119,195 @@
         // Remove parallax effect to prevent white gaps
         // Parallax disabled to fix white mask issue
         
+        // Hero Carousel Configuration
+        const heroSlides = [
+            {
+                type: 'video',
+                // Video slide is already in HTML
+            },
+            {
+                type: 'event',
+                image: 'https://xavierchee.github.io/website/website_assets/photos/2025_welcome_event.JPEG',
+                title: 'MScPHM Welcome Event 2025',
+                description: 'Celebrating new beginnings with our incoming cohort',
+                buttonText: 'Click here to view photos',
+                buttonLink: 'https://medicine.nus.edu.sg/bch/2025-welcome-event/'
+            }
+            // Add more event slides here as needed
+        ];
+        
+        // Initialize carousel
+        let currentSlide = 0;
+        let autoPlayInterval;
+        let isAutoPlayPaused = false;
+        
+        // Create event slides dynamically
+        function initializeCarousel() {
+            const slidesContainer = document.querySelector('.hero-slides-container');
+            const dotsContainer = document.getElementById('carouselDots');
+            
+            // Create event slides
+            heroSlides.forEach((slide, index) => {
+                if (slide.type === 'event') {
+                    const slideDiv = document.createElement('div');
+                    slideDiv.className = 'hero-slide event-slide';
+                    slideDiv.style.backgroundImage = `url('${slide.image}')`;
+                    
+                    slideDiv.innerHTML = `
+                        <div class="event-slide-content">
+                            <h2 class="event-slide-title">${slide.title}</h2>
+                            ${slide.description ? `<p class="event-slide-description">${slide.description}</p>` : ''}
+                            <a href="${slide.buttonLink}" class="event-slide-button" target="_blank">${slide.buttonText}</a>
+                        </div>
+                    `;
+                    
+                    slidesContainer.appendChild(slideDiv);
+                }
+                
+                // Create navigation dots
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+                dot.onclick = () => goToSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+        }
+        
+        // Change slide function
+        function changeSlide(direction) {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            
+            // Remove active class from current slide
+            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add('prev');
+            dots[currentSlide].classList.remove('active');
+            
+            // Calculate new slide index
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            
+            // Add active class to new slide
+            setTimeout(() => {
+                document.querySelectorAll('.hero-slide').forEach(slide => {
+                    slide.classList.remove('prev');
+                });
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+            }, 50);
+            
+            // Reset autoplay timer
+            if (!isAutoPlayPaused) {
+                resetAutoPlay();
+            }
+            
+            // Handle video playback
+            handleVideoPlayback();
+        }
+        
+        // Go to specific slide
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            
+            if (index === currentSlide) return;
+            
+            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add('prev');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = index;
+            
+            setTimeout(() => {
+                document.querySelectorAll('.hero-slide').forEach(slide => {
+                    slide.classList.remove('prev');
+                });
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+            }, 50);
+            
+            if (!isAutoPlayPaused) {
+                resetAutoPlay();
+            }
+            
+            handleVideoPlayback();
+        }
+        
+        // Handle video playback based on active slide
+        function handleVideoPlayback() {
+            const video = document.querySelector('.hero-video-background');
+            if (video) {
+                if (currentSlide === 0) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            }
+        }
+        
+        // Auto-play functionality
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                if (!isAutoPlayPaused) {
+                    changeSlide(1);
+                }
+            }, 8000); // Change slide every 8 seconds
+        }
+        
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            startAutoPlay();
+        }
+        
+        // Pause autoplay on hover
+        const heroCarousel = document.querySelector('.hero-carousel');
+        if (heroCarousel) {
+            heroCarousel.addEventListener('mouseenter', () => {
+                isAutoPlayPaused = true;
+            });
+            
+            heroCarousel.addEventListener('mouseleave', () => {
+                isAutoPlayPaused = false;
+            });
+        }
+        
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                changeSlide(1); // Swipe left, go to next slide
+            }
+            if (touchEndX > touchStartX + 50) {
+                changeSlide(-1); // Swipe right, go to previous slide
+            }
+        }
+        
+        if (heroCarousel) {
+            heroCarousel.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            heroCarousel.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+        
+        // Initialize carousel on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCarousel();
+            startAutoPlay();
+        });
+        
         // Debug video loading
         const video = document.querySelector('.hero-video-background');
         if (video) {
@@ -1884,7 +2316,6 @@
             });
             video.addEventListener('error', (e) => {
                 console.error('Video loading error:', e);
-                // Only add background color if video fails to load
                 document.querySelector('.hero-section').style.backgroundColor = '#003D7C';
             });
         }
