@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: February 01, 2025 - 18:30 UTC+8
+    CHANGE LOG - Last Updated: February 01, 2025 - 18:45 UTC+8
     ============================================
     
     Recent Changes:
-    - Implemented carousel hero section with multiple slides support
-    - Added event photo slides with customizable content via JavaScript array
-    - Added dot navigation and arrow controls for carousel
-    - Implemented auto-play functionality with pause on hover
-    - Added swipe support for mobile devices
+    - Implemented carousel with variable slide durations
+    - Main video slide displays for 4 seconds
+    - Event slides display for 2 seconds each
+    - Auto-play continues with custom timing per slide
 -->
 <html lang="en">
 <head>
@@ -2123,17 +2122,19 @@
         const heroSlides = [
             {
                 type: 'video',
+                duration: 4000,  // 4 seconds for main video slide
                 // Video slide is already in HTML
             },
             {
                 type: 'event',
+                duration: 2000,  // 2 seconds for event slides
                 image: 'https://xavierchee.github.io/website/website_assets/photos/2025_welcome_event.JPEG',
                 title: 'MScPHM Welcome Event 2025',
                 description: 'Celebrating new beginnings with our incoming cohort',
                 buttonText: 'Click here to view photos',
                 buttonLink: 'https://medicine.nus.edu.sg/bch/2025-welcome-event/'
             }
-            // Add more event slides here as needed
+            // Add more event slides here as needed with duration: 2000
         ];
         
         // Initialize carousel
@@ -2194,10 +2195,12 @@
                 dots[currentSlide].classList.add('active');
             }, 50);
             
-            // Reset autoplay timer
-            if (!isAutoPlayPaused) {
-                resetAutoPlay();
-            }
+            // Reset autoplay timer after transition completes
+            setTimeout(() => {
+                if (!isAutoPlayPaused) {
+                    resetAutoPlay();
+                }
+            }, 100);
             
             // Handle video playback
             handleVideoPlayback();
@@ -2224,9 +2227,11 @@
                 dots[currentSlide].classList.add('active');
             }, 50);
             
-            if (!isAutoPlayPaused) {
-                resetAutoPlay();
-            }
+            setTimeout(() => {
+                if (!isAutoPlayPaused) {
+                    resetAutoPlay();
+                }
+            }, 100);
             
             handleVideoPlayback();
         }
@@ -2243,17 +2248,20 @@
             }
         }
         
-        // Auto-play functionality
+        // Auto-play functionality with custom durations
         function startAutoPlay() {
-            autoPlayInterval = setInterval(() => {
+            // Get the duration for the current slide
+            const duration = heroSlides[currentSlide].duration || 4000;
+            
+            autoPlayInterval = setTimeout(() => {
                 if (!isAutoPlayPaused) {
                     changeSlide(1);
                 }
-            }, 8000); // Change slide every 8 seconds
+            }, duration);
         }
         
         function resetAutoPlay() {
-            clearInterval(autoPlayInterval);
+            clearTimeout(autoPlayInterval);
             startAutoPlay();
         }
         
@@ -2262,10 +2270,12 @@
         if (heroCarousel) {
             heroCarousel.addEventListener('mouseenter', () => {
                 isAutoPlayPaused = true;
+                clearTimeout(autoPlayInterval);
             });
             
             heroCarousel.addEventListener('mouseleave', () => {
                 isAutoPlayPaused = false;
+                startAutoPlay();
             });
         }
         
