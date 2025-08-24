@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: February 01, 2025 - 18:45 UTC+8
+    CHANGE LOG - Last Updated: February 01, 2025 - 18:55 UTC+8
     ============================================
     
     Recent Changes:
-    - Implemented carousel with variable slide durations
-    - Main video slide displays for 4 seconds
-    - Event slides display for 2 seconds each
-    - Auto-play continues with custom timing per slide
+    - Adjusted event slide button size to better match main CTA button
+    - Reduced padding to 16px 40px and font-size to 16px for visual consistency
 -->
 <html lang="en">
 <head>
@@ -332,18 +330,19 @@
         .event-slide-button {
             background: linear-gradient(135deg, #FF6B35, #FF8554);
             color: white;
-            padding: 18px 50px;
+            padding: 16px 40px;  /* Reduced from 18px 50px */
             border: none;
             border-radius: 50px;
-            font-size: 17px;
+            font-size: 16px;  /* Reduced from 17px */
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
             position: relative;
             overflow: hidden;
+            animation: glow 2s ease-in-out infinite;
         }
         
         .event-slide-button::before {
@@ -2133,6 +2132,15 @@
                 description: 'Celebrating new beginnings with our incoming cohort',
                 buttonText: 'Click here to view photos',
                 buttonLink: 'https://medicine.nus.edu.sg/bch/2025-welcome-event/'
+            },
+			{
+                type: 'event',
+                duration: 2000,  // 2 seconds for event slides
+                image: 'https://xavierchee.github.io/website/website_assets/hero_section/business_insider_writeup.png',
+                title: 'In the Press: A Focused Approach to Medicine',
+                description: 'How Precision Medicine Transforming Healthcare',
+                buttonText: 'Read more here',
+                buttonLink: 'https://www.businessinsider.com/sc/national-university-of-singapore-launches-advanced-healthcare-masters-programs#:~:text=Focused%20approach%20to%20medicine'
             }
             // Add more event slides here as needed with duration: 2000
         ];
