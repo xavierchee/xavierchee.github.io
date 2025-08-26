@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<!-- 
+    DOCUMENTATION:
+    Date: 2025-08-26 20:42 SGT
+    Changes:
+    - Fixed registration error handling to properly detect duplicate email registrations
+    - Modified submitRegistration function to parse response body before checking status
+    - Added proper error message display for "already exists" email validation
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUS Capstone Projects Portal</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --nus-blue: #003D7C;
+            --nus-orange: #EF7C00;
+            --nus-light-blue: #0056b3;
+            --nus-light-gray: #f8f9fa;
+            --nus-dark-gray: #495057;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        /* Header Styling */
+        .header-section {
+            background: linear-gradient(135deg, var(--nus-blue) 0%, var(--nus-light-blue) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-section h1 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nus-logo {
+            max-height: 60px;
+            margin-right: 20px;
+        }
+        
+        /* Login Section */
+        .login-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin-top: -30px;
+            margin-bottom: 30px;
+        }
+        
+        .login-btn {
+            background-color: var(--nus-orange);
+            border: none;
+            color: white;
+            padding: 10px 30px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: #d86c00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(239, 124, 0, 0.3);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* Password toggle button */
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 38px;
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .password-toggle:hover {
+            color: var(--nus-blue);
+        }
+        
+        /* Main Content */
+        .main-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            margin-bottom: 2rem;
+        }
+        
+        .btn-add-project {
+            background-color: var(--nus-blue);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-add-project:hover {
+            background-color: var(--nus-light-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 61, 124, 0.3);
+        }
+        
+        .btn-refresh {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-refresh:hover {
+            background-color: #218838;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table.dataTable {
+            border-collapse: collapse !important;
+        }
+        
+        .table thead {
+            background-color: var(--nus-blue);
+            color: white;
+        }
+        
+        .table thead th {
+            border-color: var(--nus-blue);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(0, 61, 124, 0.05);
+        }
+        
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            margin: 2px;
+            font-size: 0.875rem;
+        }
+        
+        .btn-edit {
+            background-color: var(--nus-orange);
+            border: none;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background-color: #d86c00;
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background-color: #c82333;
+            color: white;
+        }
+        
+        /* Modal Styling */
+        .modal-header {
+            background-color: var(--nus-blue);
+            color: white;
+        }
+        
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--nus-dark-gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--nus-orange);
+            box-shadow: 0 0 0 0.2rem rgba(239, 124, 0, 0.25);
+        }
+        
+        .required {
+            color: #dc3545;
+        }
+        
+        /* Loading Spinner */
+        .spinner-container {
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3rem;
+            color: var(--nus-blue);
+        }
+        
+        /* User Info Display */
+        .user-info {
+            background-color: var(--nus-light-gray);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .user-email {
+            font-weight: 600;
+            color: var(--nus-blue);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            background-color: var(--nus-blue);
+            color: white;
+            text-align: center;
+        }
+        
+        /* Registration Modal Styles */
+        .registration-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .registration-steps li {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .registration-steps li:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background-color: #dee2e6;
+            z-index: -1;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #dee2e6;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        .step-number.active {
+            background-color: var(--nus-orange);
+        }
+        
+        .step-number.completed {
+            background-color: #28a745;
+        }
+        
+        .step-title {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        
+        .step-title.active {
+            color: var(--nus-blue);
+            font-weight: 500;
+        }
+        
+        .registration-section {
+            display: none;
+        }
+        
+        .registration-section.active {
+            display: block;
+        }
+        
+        .pi-field-readonly {
+            background-color: #e9ecef !important;
+            cursor: not-allowed;
+        }
+        
+        .profile-badge {
+            display: inline-block;
+            background-color: rgba(0, 61, 124, 0.1);
+            color: var(--nus-blue);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        
+        /* Security Badge */
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        
+        .security-badge i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-section h1 {
+                font-size: 1.5rem;
+            }
+            
+            .table {
+                font-size: 0.875rem;
+            }
+            
+            .btn-edit, .btn-delete {
+                padding: 3px 6px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-section">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <div>
+                    <h1>NUS Capstone Projects Management Portal</h1>
+                    <p class="mb-0">Academic Projects Repository - Secure Access</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Login Section -->
+    <div class="container">
+        <div class="login-section" id="loginSection">
+            <h3 class="mb-4">
+                <i class="fas fa-lock me-2"></i>Principal Investigator Login
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <form id="loginForm" onsubmit="event.preventDefault(); login();">
+                        <div class="mb-3">
+                            <label for="emailInput" class="form-label">Email Address <span class="required">*</span></label>
+                            <input type="email" class="form-control" id="emailInput" placeholder="Enter your NUS email address" required>
+                            <small class="text-muted">Use your registered NUS email address</small>
+                        </div>
+                        <div class="mb-3 position-relative">
+                            <label for="passwordInput" class="form-label">Password <span class="required">*</span></label>
+                            <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                            </button>
+                            <small class="text-muted">Your password is case-sensitive</small>
+                        </div>
+                        <button type="submit" class="btn login-btn" id="loginButton">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </button>
+                        <div class="mt-3">
+                            <p class="text-muted">New to the system? 
+                                <a href="#" onclick="showRegistrationModal()" class="text-decoration-none" style="color: var(--nus-orange); font-weight: 500;">
+                                    <i class="fas fa-user-plus me-1"></i>Register here
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle"></i> Security Notice</h5>
+                        <p class="mb-0">Contact MScPHM team if you forget your password</p>
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Important:</strong> Never share your login credentials with anyone.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span>Logged in as: </span>
+                        <span class="user-email" id="userEmail"></span>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-outline-danger" onclick="logout()">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-add-project" onclick="showAddProjectModal()">
+                    <i class="fas fa-plus-circle me-2"></i>Add New Project
+                </button>
+                <button class="btn btn-refresh ms-2" onclick="loadProjects()">
+                    <i class="fas fa-sync-alt me-2"></i>Refresh
+                </button>
+            </div>
+            
+            <!-- Projects Table -->
+            <div class="table-container">
+                <div id="loadingSpinner" class="spinner-container" style="display: none;">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3">Loading projects...</p>
+                </div>
+                <table id="projectsTable" class="table table-striped table-bordered" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Project ID</th>
+                            <th>Title</th>
+                            <th>Department</th>
+                            <th>Type</th>
+                            <th>Vacancy</th>
+                            <th>Location</th>
+                            <th>Stipend</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Registration Modal -->
+    <div class="modal fade" id="registrationModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-user-plus me-2"></i>New Principal Investigator Registration
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="resetRegistrationForm()"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Progress Steps -->
+                    <ul class="registration-steps">
+                        <li>
+                            <span class="step-number active" id="step1Circle">1</span>
+                            <span class="step-title active">Account Setup</span>
+                        </li>
+                        <li>
+                            <span class="step-number" id="step2Circle">2</span>
+                            <span class="step-title">PI Profile</span>
+                        </li>
+                        <li>
+                            <span class="step-number" id="step3Circle">3</span>
+                            <span class="step-title">Confirmation</span>
+                        </li>
+                    </ul>
+                    
+                    <form id="registrationForm">
+                        <!-- Step 1: Account Setup -->
+                        <div class="registration-section active" id="step1">
+                            <h6 class="mb-3"><i class="fas fa-envelope me-2"></i>Account Information</h6>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Your password will be automatically generated and sent to your email address.
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">NUS Email Address <span class="required">*</span></label>
+                                <input type="email" class="form-control" id="regEmail" placeholder="your.name@nus.edu.sg" required>
+                                <small class="text-muted">Please use your official NUS email address</small>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm Email Address <span class="required">*</span></label>
+                                <input type="email" class="form-control" id="regEmailConfirm" placeholder="Confirm your email" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: PI Profile -->
+                        <div class="registration-section" id="step2">
+                            <h6 class="mb-3"><i class="fas fa-user-tie me-2"></i>Principal Investigator Profile</h6>
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                This information will be auto-filled for all your future projects.
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Full Name <span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="regPiName" placeholder="Dr. John Doe" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Designation <span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="regDesignation" placeholder="e.g., Associate Professor" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Faculty/Institute <span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="regFaculty" placeholder="e.g., Faculty of Medicine" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Department/Research Field <span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="regDepartment" placeholder="e.g., Biomedical Engineering" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Academic Institute <span class="required">*</span></label>
+                                        <input type="text" class="form-control" id="regAcademicInstitute" placeholder="e.g., NUS Medicine" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">PI Website</label>
+                                        <input type="url" class="form-control" id="regPiWebsite" placeholder="https://www.example.com">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3: Confirmation -->
+                        <div class="registration-section" id="step3">
+                            <h6 class="mb-3"><i class="fas fa-check-circle me-2"></i>Review & Confirm</h6>
+                            <div class="alert alert-success">
+                                <i class="fas fa-check me-2"></i>
+                                Please review your information before submitting.
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-3 text-muted">Account Information</h6>
+                                    <p><strong>Email:</strong> <span id="confirmEmail"></span></p>
+                                    
+                                    <hr>
+                                    
+                                    <h6 class="card-subtitle mb-3 text-muted">PI Profile</h6>
+                                    <p><strong>Name:</strong> <span id="confirmPiName"></span></p>
+                                    <p><strong>Designation:</strong> <span id="confirmDesignation"></span></p>
+                                    <p><strong>Faculty/Institute:</strong> <span id="confirmFaculty"></span></p>
+                                    <p><strong>Department:</strong> <span id="confirmDepartment"></span></p>
+                                    <p><strong>Academic Institute:</strong> <span id="confirmAcademicInstitute"></span></p>
+                                    <p><strong>Website:</strong> <span id="confirmWebsite"></span></p>
+                                </div>
+                            </div>
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="checkbox" id="agreeTerms">
+                                <label class="form-check-label" for="agreeTerms">
+                                    I confirm that the information provided is accurate and I agree to the terms of use.
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">
+                        <i class="fas fa-arrow-left me-2"></i>Previous
+                    </button>
+                    <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+                        Next<i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                    <button type="button" class="btn btn-success" id="submitBtn" onclick="submitRegistration()" style="display: none;">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Registration
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Project Modal -->
+    <div class="modal fade" id="projectModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add New Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="projectForm">
+                        <input type="hidden" id="projectId">
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Project Title <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="projectTitle" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Project Type <span class="required">*</span></label>
+                                    <select class="form-control" id="projectType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Research">Research</option>
+                                        <option value="Development">Development</option>
+                                        <option value="Industry">Industry</option>
+                                        <option value="Community">Community</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">PI Name <span class="profile-badge"><i class="fas fa-user-check me-1"></i>Auto-filled</span></label>
+                                    <input type="text" class="form-control pi-field-readonly" id="piName" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Designation <span class="profile-badge"><i class="fas fa-user-check me-1"></i>Auto-filled</span></label>
+                                    <input type="text" class="form-control pi-field-readonly" id="designation" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Faculty/Institute <span class="profile-badge"><i class="fas fa-user-check me-1"></i>Auto-filled</span></label>
+                                    <input type="text" class="form-control pi-field-readonly" id="faculty" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Department/Research Field <span class="profile-badge"><i class="fas fa-user-check me-1"></i>Auto-filled</span></label>
+                                    <input type="text" class="form-control pi-field-readonly" id="department" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">PI Website <span class="profile-badge"><i class="fas fa-user-check me-1"></i>Auto-filled</span></label>
+                                    <input type="url" class="form-control pi-field-readonly" id="piWebsite" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Academic Institute <span class="profile-badge"><i class="fas fa-user-check me-1"></i>Auto-filled</span></label>
+                                    <input type="text" class="form-control pi-field-readonly" id="academicInstitute" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Internship Location</label>
+                                    <input type="text" class="form-control" id="internshipLocation">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Vacancy <span class="required">*</span></label>
+                                    <input type="number" class="form-control" id="vacancy" min="1" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Capstone Stipend (per month)</label>
+                                    <input type="text" class="form-control" id="stipend" placeholder="e.g., $500">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Project Description <span class="required">*</span></label>
+                            <textarea class="form-control" id="projectDescription" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Expected Deliverables <span class="required">*</span></label>
+                            <textarea class="form-control" id="expectedDeliverables" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Learning Outcomes</label>
+                            <textarea class="form-control" id="learningOutcome" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Pre-requisites</label>
+                                    <textarea class="form-control" id="prerequisites" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Recommended Courses</label>
+                                    <textarea class="form-control" id="recommendedCourses" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Part-time Research Attachment</label>
+                                    <select class="form-control" id="partTimeResearch">
+                                        <option value="">Select Option</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="Maybe">Maybe</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Remarks</label>
+                                    <textarea class="form-control" id="remarks" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProject()">Save Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p class="mb-0">© 2024 National University of Singapore. All rights reserved.</p>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        // Configuration - Replace these with your Power Automate URLs
+        const API_CONFIG = {
+            // IMPORTANT: Replace this with your authentication flow URL
+            AUTHENTICATE_USER: 'https://prod-70.southeastasia.logic.azure.com:443/workflows/74643a6f6ba14eb2b7ea91db3663cdbd/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=uFzyRblvK_5jrwlUT957OvOqXbegOBpoLV9c6HhMUdg',
+            
+            // Registration and PI Profile URLs - REPLACE WITH YOUR ACTUAL URLS
+            REGISTER_USER: 'https://prod-86.southeastasia.logic.azure.com:443/workflows/a387bc1b0ed6419a9e06c7f81a39cd9c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KkJxj7Mt_2GczSMc-H1lv1M3at0Rs_aWnhc2dbP3oco',
+            ADD_PI_PROFILE: 'https://prod-32.southeastasia.logic.azure.com:443/workflows/346cda6b2eda4ec99d66961cc03301c9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2EFdrJceht_8X91rE7ZBd006SbIshO4UJK8noecCwPI',
+            GET_PI_PROFILE: 'https://prod-83.southeastasia.logic.azure.com:443/workflows/bc2f2814ba454ddb8c5c97c25d23524a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B2t_i4aZ2m8uGfzTVQPmvKax-HgykgcRuenbNPARJUM',
+            
+            // Existing flow URLs
+            GET_PROJECTS: 'https://prod-47.southeastasia.logic.azure.com:443/workflows/af46dd43639a4134a35ed2a4f7e3e38a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=XDdXoVdUW-dyFUmujjbqV8O-tBrt8y6eTLHNQkejNCg',
+            ADD_PROJECT: 'https://prod-80.southeastasia.logic.azure.com:443/workflows/82a26bf2ec0b4c508540f9a1248903de/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=elnzYL7HQsFcbf9MUOR27fxGb2hz61rufr6J8FDk_jU',
+            UPDATE_PROJECT: 'https://prod-77.southeastasia.logic.azure.com:443/workflows/4c6119a4c6144e43815dbd14105be195/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iYdAL7_Z1LAxYDx_5PzFGN09mdYltnVPyGU3dfdhcyc',
+            DELETE_PROJECT: 'https://prod-81.southeastasia.logic.azure.com:443/workflows/b477a511dba244b1b31a3e677579f40d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xL78mRrfOk_E1bf9ALNx5LvEpPpee-jiQeYv7sLveks'
+        };
+        
+        let currentUserEmail = '';
+        let currentUserProfile = {}; // Store PI profile data
+        let projectsData = [];
+        let dataTable = null;
+        let loginAttempts = 0;
+        const MAX_LOGIN_ATTEMPTS = 3;
+        
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Login Function with Authentication
+        async function login() {
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const loginButton = document.getElementById('loginButton');
+            
+            // Validate inputs
+            if (!email || !password) {
+                Swal.fire('Error', 'Please enter both email and password', 'error');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                Swal.fire('Error', 'Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Check login attempts
+            if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Account Locked',
+                    text: 'Maximum login attempts exceeded. Please contact IT support.',
+                    footer: 'Support: it-support@nus.edu.sg'
+                });
+                return;
+            }
+            
+            // Disable login button and show loading
+            loginButton.disabled = true;
+            loginButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
+            
+            try {
+                // Authenticate user against Excel sheet
+                const response = await fetch(API_CONFIG.AUTHENTICATE_USER, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email.toLowerCase(),
+                        password: password
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Authentication service unavailable');
+                }
+                
+                const authResult = await response.json();
+                
+                if (authResult.authenticated) {
+                    // Successful login
+                    loginAttempts = 0;
+                    currentUserEmail = authResult.userEmail.toLowerCase();
+                    
+                    // Store session
+                    sessionStorage.setItem('userEmail', currentUserEmail);
+                    
+                    // Fetch PI Profile
+                    await fetchPIProfile();
+                    
+                    // Show main content
+                    document.getElementById('userEmail').textContent = currentUserEmail;
+                    document.getElementById('loginSection').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    
+                    // Load projects
+                    loadProjects();
+                    
+                    // Show success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        text: `Welcome back, ${currentUserEmail}`,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    
+                    // Clear password field
+                    document.getElementById('passwordInput').value = '';
+                    
+                } else {
+                    // Failed login
+                    loginAttempts++;
+                    const remainingAttempts = MAX_LOGIN_ATTEMPTS - loginAttempts;
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Authentication Failed',
+                        text: authResult.message || 'Invalid email or password',
+                        footer: remainingAttempts > 0 ? 
+                            `${remainingAttempts} attempt${remainingAttempts > 1 ? 's' : ''} remaining` : 
+                            'No attempts remaining'
+                    });
+                    
+                    // Clear password field
+                    document.getElementById('passwordInput').value = '';
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connection Error',
+                    text: 'Unable to connect to authentication service. Please try again later.',
+                    footer: 'If the problem persists, contact IT support'
+                });
+            } finally {
+                // Re-enable login button
+                loginButton.disabled = false;
+                loginButton.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Sign In';
+            }
+        }
+        
+        // Logout Function
+        function logout() {
+            // Clear session
+            currentUserEmail = '';
+            sessionStorage.clear();
+            
+            // Clear form
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('emailInput').value = '';
+            document.getElementById('passwordInput').value = '';
+            
+            // Destroy DataTable
+            if (dataTable) {
+                dataTable.destroy();
+                dataTable = null;
+            }
+            
+            // Reset login attempts
+            loginAttempts = 0;
+        }
+        
+        // Validate Email
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Load Projects
+        async function loadProjects() {
+            showLoading(true);
+            
+            try {
+                const response = await fetch(API_CONFIG.GET_PROJECTS, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: currentUserEmail
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch projects');
+                }
+                
+                const data = await response.json();
+                projectsData = data.projects || [];
+                
+                // Filter projects for current user
+                const userProjects = projectsData.filter(p => 
+                    p.Email_address && p.Email_address.toLowerCase() === currentUserEmail
+                );
+                
+                displayProjects(userProjects);
+                
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                Swal.fire('Error', 'Failed to load projects. Please try again.', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Display Projects in Table
+        function displayProjects(projects) {
+            // Destroy existing DataTable completely
+            if ($.fn.DataTable.isDataTable('#projectsTable')) {
+                $('#projectsTable').DataTable().clear().destroy();
+                dataTable = null;
+            }
+            
+            const tableBody = document.querySelector('#projectsTable tbody');
+            tableBody.innerHTML = ''; // Clear existing content
+            
+            projects.forEach(project => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${project.project_ID || ''}</td>
+                    <td>${project.Project_title || ''}</td>
+                    <td>${project['Department/research_field'] || ''}</td>
+                    <td>${project.Project_type || ''}</td>
+                    <td>${project.Vacancy || ''}</td>
+                    <td>${project.Internship_location || ''}</td>
+                    <td>${project['Capstone_stipend (per month)'] || ''}</td>
+                    <td>
+                        <button class="btn btn-sm btn-edit" onclick='editProject(${JSON.stringify(project).replace(/'/g, "&apos;")})'>
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-delete" onclick="deleteProject('${project.project_ID}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Show table
+            document.getElementById('projectsTable').style.display = 'table';
+            
+            // Initialize fresh DataTable
+            dataTable = $('#projectsTable').DataTable({
+                pageLength: 10,
+                responsive: true,
+                order: [[0, 'desc']],
+                destroy: true,
+                retrieve: false,
+                language: {
+                    search: "Search projects:",
+                    lengthMenu: "Show _MENU_ projects per page",
+                    info: "Showing _START_ to _END_ of _TOTAL_ projects",
+                    paginate: {
+                        first: "First",
+                        last: "Last",
+                        next: "Next",
+                        previous: "Previous"
+                    }
+                }
+            });
+        }
+        
+        // Fetch PI Profile from Sheet 2
+        async function fetchPIProfile() {
+            try {
+                const response = await fetch(API_CONFIG.GET_PI_PROFILE, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: currentUserEmail
+                    })
+                });
+                
+                if (response.ok) {
+                    const profileData = await response.json();
+                    if (profileData.found) {
+                        currentUserProfile = profileData.profile;
+                        sessionStorage.setItem('userProfile', JSON.stringify(currentUserProfile));
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching PI profile:', error);
+            }
+        }
+        
+        // Registration System Functions
+        let currentStep = 1;
+        
+        function showRegistrationModal() {
+            currentStep = 1;
+            resetRegistrationForm();
+            updateStepDisplay();
+            const modal = new bootstrap.Modal(document.getElementById('registrationModal'));
+            modal.show();
+        }
+        
+        function resetRegistrationForm() {
+            document.getElementById('registrationForm').reset();
+            currentStep = 1;
+            updateStepDisplay();
+        }
+        
+        function updateStepDisplay() {
+            // Hide all sections
+            document.querySelectorAll('.registration-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show current section
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Update step circles
+            for (let i = 1; i <= 3; i++) {
+                const circle = document.getElementById(`step${i}Circle`);
+                const title = circle.nextElementSibling;
+                
+                circle.classList.remove('active', 'completed');
+                title.classList.remove('active');
+                
+                if (i < currentStep) {
+                    circle.classList.add('completed');
+                } else if (i === currentStep) {
+                    circle.classList.add('active');
+                    title.classList.add('active');
+                }
+            }
+            
+            // Update buttons
+            document.getElementById('prevBtn').style.display = currentStep === 1 ? 'none' : 'inline-block';
+            document.getElementById('nextBtn').style.display = currentStep === 3 ? 'none' : 'inline-block';
+            document.getElementById('submitBtn').style.display = currentStep === 3 ? 'inline-block' : 'none';
+        }
+        
+        function validateStep(step) {
+            if (step === 1) {
+                const email = document.getElementById('regEmail').value.trim();
+                const emailConfirm = document.getElementById('regEmailConfirm').value.trim();
+                
+                if (!validateEmail(email)) {
+                    Swal.fire('Validation Error', 'Please enter a valid email address', 'error');
+                    return false;
+                }
+                
+                if (email !== emailConfirm) {
+                    Swal.fire('Validation Error', 'Email addresses do not match', 'error');
+                    return false;
+                }
+                
+                if (!email.endsWith('@nus.edu.sg') && !email.endsWith('.nus.edu.sg')) {
+                    Swal.fire('Validation Error', 'Please use your official NUS email address', 'error');
+                    return false;
+                }
+                
+                return true;
+            } else if (step === 2) {
+                const requiredFields = ['regPiName', 'regDesignation', 'regFaculty', 'regDepartment', 'regAcademicInstitute'];
+                for (const field of requiredFields) {
+                    if (!document.getElementById(field).value.trim()) {
+                        Swal.fire('Validation Error', 'Please fill in all required fields', 'error');
+                        return false;
+                    }
+                }
+                return true;
+            } else if (step === 3) {
+                if (!document.getElementById('agreeTerms').checked) {
+                    Swal.fire('Validation Error', 'Please agree to the terms of use', 'error');
+                    return false;
+                }
+                return true;
+            }
+            return true;
+        }
+        
+        function nextStep() {
+            if (validateStep(currentStep)) {
+                if (currentStep === 2) {
+                    // Populate confirmation page
+                    document.getElementById('confirmEmail').textContent = document.getElementById('regEmail').value;
+                    document.getElementById('confirmPiName').textContent = document.getElementById('regPiName').value;
+                    document.getElementById('confirmDesignation').textContent = document.getElementById('regDesignation').value;
+                    document.getElementById('confirmFaculty').textContent = document.getElementById('regFaculty').value;
+                    document.getElementById('confirmDepartment').textContent = document.getElementById('regDepartment').value;
+                    document.getElementById('confirmAcademicInstitute').textContent = document.getElementById('regAcademicInstitute').value;
+                    document.getElementById('confirmWebsite').textContent = document.getElementById('regPiWebsite').value || 'Not provided';
+                }
+                currentStep++;
+                updateStepDisplay();
+            }
+        }
+        
+        function previousStep() {
+            currentStep--;
+            updateStepDisplay();
+        }
+        
+        async function submitRegistration() {
+            if (!validateStep(3)) {
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            
+            const registrationData = {
+                email: document.getElementById('regEmail').value.toLowerCase(),
+                piName: document.getElementById('regPiName').value,
+                designation: document.getElementById('regDesignation').value,
+                faculty: document.getElementById('regFaculty').value,
+                department: document.getElementById('regDepartment').value,
+                academicInstitute: document.getElementById('regAcademicInstitute').value,
+                piWebsite: document.getElementById('regPiWebsite').value
+            };
+            
+            try {
+                // Debug: Log what we're sending
+                console.log('Sending registration request:', {
+                    email: registrationData.email
+                });
+                
+                // Step 1: Register user and generate password
+                const registerResponse = await fetch(API_CONFIG.REGISTER_USER, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: registrationData.email
+                    })
+                });
+                
+                // Debug: Log response status
+                console.log('Register response status:', registerResponse.status);
+                console.log('Register response ok:', registerResponse.ok);
+                
+                // Parse the response body regardless of status
+                const registerResult = await registerResponse.json();
+                console.log('Register result:', registerResult);
+                
+                // Check for errors in the response
+                if (!registerResponse.ok || registerResult.error) {
+                    // Check if it's an "already exists" error in registerResult.error
+                    if (registerResult.error && registerResult.error.toLowerCase().includes('already exists')) {
+                        Swal.fire('Email Already Registered', 'This email is already registered. Please use the login page to sign in.', 'warning');
+                        return;
+                    }
+                    
+                    // Check body.error for the same condition (handling nested structure)
+                    if (registerResult.body && registerResult.body.error && registerResult.body.error.toLowerCase().includes('already exists')) {
+                        Swal.fire('Email Already Registered', 'This email is already registered. Please use the login page to sign in.', 'warning');
+                        return;
+                    }
+                    
+                    // For any other error
+                    throw new Error(registerResult.error || registerResult.body?.error || registerResult.message || 'Registration failed');
+                }
+                
+                // Step 2: Add PI Profile to Sheet 2
+                const profileResponse = await fetch(API_CONFIG.ADD_PI_PROFILE, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        PI_name: registrationData.piName,
+                        Designation: registrationData.designation,
+                        'Faculty/Institute': registrationData.faculty,
+                        'Department/research_field': registrationData.department,
+                        Email_address: registrationData.email,
+                        PI_Website: registrationData.piWebsite,
+                        Academic_institute: registrationData.academicInstitute
+                    })
+                });
+                
+                if (!profileResponse.ok) {
+                    throw new Error('Failed to save PI profile');
+                }
+                
+                // Success - Close modal and show success message
+                bootstrap.Modal.getInstance(document.getElementById('registrationModal')).hide();
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful!',
+                    html: `
+                        <div class="text-start">
+                            <p>Your account has been created successfully!</p>
+                            <div class="alert alert-info mt-3">
+                                <strong>Important:</strong> Your login credentials have been sent to:<br>
+                                <span class="fw-bold">${registrationData.email}</span>
+                            </div>
+                            <p>Please check your email for your password and keep it secure.</p>
+                        </div>
+                    `,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#003D7C'
+                });
+                
+                // Clear the registration form
+                resetRegistrationForm();
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Registration Failed',
+                    text: 'Unable to complete registration. Please try again or contact support.',
+                    footer: 'Support: it-support@nus.edu.sg'
+                });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Submit Registration';
+            }
+        }
+        
+        // Show Add Project Modal
+        function showAddProjectModal() {
+            document.getElementById('modalTitle').textContent = 'Add New Project';
+            document.getElementById('projectForm').reset();
+            document.getElementById('projectId').value = '';
+            
+            // Auto-fill PI details from profile
+            if (currentUserProfile) {
+                document.getElementById('piName').value = currentUserProfile.PI_name || '';
+                document.getElementById('designation').value = currentUserProfile.Designation || '';
+                document.getElementById('faculty').value = currentUserProfile['Faculty/Institute'] || '';
+                document.getElementById('department').value = currentUserProfile['Department/research_field'] || '';
+                document.getElementById('piWebsite').value = currentUserProfile.PI_Website || '';
+                document.getElementById('academicInstitute').value = currentUserProfile.Academic_institute || '';
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+            modal.show();
+        }
+        
+        // Edit Project
+        function editProject(project) {
+            document.getElementById('modalTitle').textContent = 'Edit Project';
+            
+            // Fill form with project data
+            document.getElementById('projectId').value = project.project_ID || '';
+            document.getElementById('projectTitle').value = project.Project_title || '';
+            document.getElementById('projectType').value = project.Project_type || '';
+            
+            // Auto-fill PI details from profile if available, otherwise use project data
+            if (currentUserProfile) {
+                document.getElementById('piName').value = currentUserProfile.PI_name || project.PI_name || '';
+                document.getElementById('designation').value = currentUserProfile.Designation || project.Designation || '';
+                document.getElementById('faculty').value = currentUserProfile['Faculty/Institute'] || project['Faculty/ Institute'] || '';
+                document.getElementById('department').value = currentUserProfile['Department/research_field'] || project['Department/research_field'] || '';
+                document.getElementById('piWebsite').value = currentUserProfile.PI_Website || project.PI_Website || '';
+                document.getElementById('academicInstitute').value = currentUserProfile.Academic_institute || project.Academic_institute || '';
+            } else {
+                document.getElementById('piName').value = project.PI_name || '';
+                document.getElementById('designation').value = project.Designation || '';
+                document.getElementById('faculty').value = project['Faculty/ Institute'] || '';
+                document.getElementById('department').value = project['Department/research_field'] || '';
+                document.getElementById('piWebsite').value = project.PI_Website || '';
+                document.getElementById('academicInstitute').value = project.Academic_institute || '';
+            }
+            
+            document.getElementById('internshipLocation').value = project.Internship_location || '';
+            document.getElementById('vacancy').value = project.Vacancy || '';
+            document.getElementById('stipend').value = project['Capstone_stipend (per month)'] || '';
+            document.getElementById('projectDescription').value = project.Project_description || '';
+            document.getElementById('expectedDeliverables').value = project.Expected_deliverables || '';
+            document.getElementById('learningOutcome').value = project.Learning_outcome || '';
+            document.getElementById('prerequisites').value = project['Pre-requisites'] || '';
+            document.getElementById('recommendedCourses').value = project.Recommended_courses || '';
+            document.getElementById('partTimeResearch').value = project['Part-time *research*attachment'] || '';
+            document.getElementById('remarks').value = project.Remark || '';
+            
+            const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+            modal.show();
+        }
+        
+        // Save Project
+        async function saveProject() {
+            // Validate required fields (removed PI fields from validation as they're auto-filled)
+            const requiredFields = ['projectTitle', 'projectType', 'vacancy', 'projectDescription', 'expectedDeliverables'];
+            let isValid = true;
+            
+            for (const field of requiredFields) {
+                const element = document.getElementById(field);
+                if (!element.value.trim()) {
+                    element.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    element.classList.remove('is-invalid');
+                }
+            }
+            
+            if (!isValid) {
+                Swal.fire('Validation Error', 'Please fill in all required fields', 'error');
+                return;
+            }
+            
+            // Use PI details from profile or form (profile takes precedence)
+            const projectData = {
+                project_ID: document.getElementById('projectId').value || generateProjectId(),
+                Project_title: document.getElementById('projectTitle').value,
+                Project_type: document.getElementById('projectType').value,
+                PI_name: currentUserProfile.PI_name || document.getElementById('piName').value,
+                Designation: currentUserProfile.Designation || document.getElementById('designation').value,
+                'Faculty/ Institute': currentUserProfile['Faculty/Institute'] || document.getElementById('faculty').value,
+                'Department/research_field': currentUserProfile['Department/research_field'] || document.getElementById('department').value,
+                Email_address: currentUserEmail,
+                PI_Website: currentUserProfile.PI_Website || document.getElementById('piWebsite').value,
+                Academic_institute: currentUserProfile.Academic_institute || document.getElementById('academicInstitute').value,
+                Internship_location: document.getElementById('internshipLocation').value,
+                Vacancy: document.getElementById('vacancy').value,
+                'Capstone_stipend (per month)': document.getElementById('stipend').value,
+                Project_description: document.getElementById('projectDescription').value,
+                Expected_deliverables: document.getElementById('expectedDeliverables').value,
+                Learning_outcome: document.getElementById('learningOutcome').value,
+                'Pre-requisites': document.getElementById('prerequisites').value,
+                Recommended_courses: document.getElementById('recommendedCourses').value,
+                'Part-time *research*attachment': document.getElementById('partTimeResearch').value,
+                Remark: document.getElementById('remarks').value
+            };
+            
+            const isEdit = document.getElementById('projectId').value !== '';
+            const apiUrl = isEdit ? API_CONFIG.UPDATE_PROJECT : API_CONFIG.ADD_PROJECT;
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(projectData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to save project');
+                }
+                
+                Swal.fire('Success', `Project ${isEdit ? 'updated' : 'added'} successfully!`, 'success');
+                
+                // Close modal and reload projects
+                bootstrap.Modal.getInstance(document.getElementById('projectModal')).hide();
+                loadProjects();
+                
+            } catch (error) {
+                console.error('Error saving project:', error);
+                Swal.fire('Error', 'Failed to save project. Please try again.', 'error');
+            }
+        }
+        
+        // Delete Project
+        async function deleteProject(projectId) {
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "This action cannot be undone!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            });
+            
+            if (result.isConfirmed) {
+                try {
+                    const response = await fetch(API_CONFIG.DELETE_PROJECT, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            project_ID: projectId,
+                            email: currentUserEmail
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to delete project');
+                    }
+                    
+                    Swal.fire('Deleted!', 'Your project has been deleted.', 'success');
+                    loadProjects();
+                    
+                } catch (error) {
+                    console.error('Error deleting project:', error);
+                    Swal.fire('Error', 'Failed to delete project. Please try again.', 'error');
+                }
+            }
+        }
+        
+        // Generate Project ID
+        function generateProjectId() {
+            const timestamp = Date.now();
+            const random = Math.floor(Math.random() * 1000);
+            return `PROJ-${timestamp}-${random}`;
+        }
+        
+        // Show/Hide Loading
+        function showLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'block' : 'none';
+            if (show) {
+                document.getElementById('projectsTable').style.display = 'none';
+            }
+        }
+        
+        // Check for existing session on page load
+        async function checkExistingSession() {
+            const storedEmail = sessionStorage.getItem('userEmail');
+            const storedProfile = sessionStorage.getItem('userProfile');
+            
+            if (storedEmail) {
+                // Valid session exists
+                currentUserEmail = storedEmail;
+                
+                // Restore profile from session storage
+                if (storedProfile) {
+                    try {
+                        currentUserProfile = JSON.parse(storedProfile);
+                    } catch (e) {
+                        console.error('Error parsing stored profile:', e);
+                    }
+                }
+                
+                // If no profile in session, try to fetch it
+                if (!currentUserProfile || Object.keys(currentUserProfile).length === 0) {
+                    await fetchPIProfile();
+                }
+                
+                document.getElementById('userEmail').textContent = currentUserEmail;
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                
+                loadProjects();
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check existing session
+            checkExistingSession();
+            
+            // Add enter key support for password field
+            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    login();
+                }
+            });
+            
+            // Prevent form submission on enter in other fields
+            document.getElementById('projectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                return false;
+            });
+        });
+        
+        // Handle browser back button
+        window.addEventListener('popstate', function() {
+            if (currentUserEmail && document.getElementById('mainContent').style.display === 'block') {
+                history.pushState(null, null, location.href);
+            }
+        });
+    </script>
+</body>
+</html>
