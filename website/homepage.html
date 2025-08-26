@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: February 01, 2025 - 18:55 UTC+8
+    CHANGE LOG - Last Updated: January 28, 2025 - 10:50 UTC+8
     ============================================
     
     Recent Changes:
-    - Adjusted event slide button size to better match main CTA button
-    - Reduced padding to 16px 40px and font-size to 16px for visual consistency
+    - Reduced navigation spacing: gap from 35px to 20px, horizontal padding from 12px to 8px
+    - Split "Student stories and photos" navigation into two separate menu items:
+      * "Student stories" with dropdown linking to student_stories.html
+      * "Students' journey" with dropdown "Photos" linking to photo.html
+    - Added new navigation item "In the Press" with dropdown "Featured in" linking to in_the_press.html
 -->
 <html lang="en">
 <head>
@@ -107,7 +110,7 @@
             margin: 0;
             padding: 0;
             justify-content: flex-start;
-            gap: 35px;
+            gap: 20px;
         }
         
         .nav-links li {
@@ -120,7 +123,7 @@
             color: #003D7C;
             font-size: 13px;
             font-weight: 500;
-            padding: 22px 12px;
+            padding: 22px 8px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
             position: relative;
@@ -1529,7 +1532,7 @@
             }
             
             .nav-links a {
-                padding: 20px 10px;
+                padding: 20px 6px;
                 font-size: 12px;
             }
         }
@@ -1779,10 +1782,23 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#stories">Student stories and photos</a>
+                    <a href="#stories">Student stories</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/student_stories.html">Student stories</a>
+                    </div>
+                </li>
+                
+                <li class="has-dropdown">
+                    <a href="#journey">Students' journey</a>
+                    <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/photo.html">Photos</a>
+                    </div>
+                </li>
+                
+                <li class="has-dropdown">
+                    <a href="#press">In the Press</a>
+                    <div class="dropdown-menu">
+                        <a href="https://xavierchee.github.io/website/in_the_press.html">Featured in</a>
                     </div>
                 </li>
                 
@@ -2137,8 +2153,8 @@
                 type: 'event',
                 duration: 2000,  // 2 seconds for event slides
                 image: 'https://xavierchee.github.io/website/website_assets/hero_section/business_insider_writeup.png',
-                title: 'In the Press: A Focused Approach to Medicine',
-                description: 'How Precision Medicine is Transforming Healthcare',
+                title: 'Business Insider Featured: Why NUS MScPHM Is Unique',
+                description: 'Find out what makes Asia\'s pioneering MSc Precision Health and Medicine special',
                 buttonText: 'Read more here',
                 buttonLink: 'https://www.businessinsider.com/sc/national-university-of-singapore-launches-advanced-healthcare-masters-programs#:~:text=Focused%20approach%20to%20medicine'
             }
