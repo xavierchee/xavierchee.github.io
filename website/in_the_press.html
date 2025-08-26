@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <!-- 
-CHANGE LOG - Last Updated: August 26, 2025 - 16:25 UTC+8
+CHANGE LOG - Last Updated: January 28, 2025 - 10:15 UTC+8
 ============================================
 
 Recent Changes:
-- Removed "Knowledge to Action" story card (external npm.sg link)
-- Removed "Back to School" story card (external npm.sg link)
+- Fixed alignment of "Featured by" text across all cards by setting min-height on titles
+- Ensures consistent vertical positioning regardless of title length
 -->
 <html lang="en">
 <head>
@@ -365,15 +365,32 @@ Recent Changes:
         
         .story-content {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
         
         .story-title {
             color: #003D7C;
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             letter-spacing: -0.3px;
             line-height: 1.3;
+            min-height: 72px;
+            display: block;
+        }
+        
+        .story-featured {
+            color: #8895a7;
+            font-size: 12px;
+            font-weight: 400;
+            margin-top: 0;
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            height: 18px;
+            line-height: 18px;
         }
         
         /* Sidebar */
@@ -1239,106 +1256,70 @@ Recent Changes:
         Our Masters programme application for 2026 is open now!
     </div>
     
-    <!-- Student Stories Banner Image -->
+    <!-- Featured in the News and Publications Banner Image -->
     <div style="width: 100%; overflow: hidden; position: relative;">
         <img src="https://xavierchee.github.io/website/website_assets/student_stories/banner_student_stories.png" 
              alt="Student Stories Banner" 
              style="width: 100%; height: auto; display: block;">
         <div style="position: absolute; top: 50%; left: 80px; transform: translateY(-50%); color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Student Stories</h1>
+            <h1 style="font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -1px;">Features in News and Publications</h1>
         </div>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-section">
-            <h1 class="section-header scroll-fade">Student's Stories</h1>
-            <p class="section-text scroll-fade">
-                Meet the remarkable students transforming healthcare through our programme. Their stories showcase real breakthroughs, everyday challenges, and life-changing moments that have shaped their paths in precision medicine.
-            </p>
-            <p class="section-text scroll-fade">
-                These aren't just success stories—they're honest glimpses into the exciting journey you could join. Get inspired by those who walked this path before you and see what's possible when passion meets opportunity.
-            </p>
-            
-            <!-- Student Stories Grid -->
-            <div class="stories-grid scroll-fade">
-                <!-- Story 1 - Divya (June 2) -->
-                <a href="./student_stories/student_story_divya.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_divya.png" 
-                             alt="Bridging Clinical Practice and Precision Health: Dr. Divya's Journey" 
-                             class="story-image">
-                        <span class="story-date">2 June 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">Bridging Clinical Practice and Precision Health: Dr. Divya's Journey</h3>
-                    </div>
-                </a>
+            <!-- In the Press Section -->
+            <div class="press-section">
+                <h1 class="section-header scroll-fade">In the Press</h1>
+                <p class="section-text scroll-fade">
+                    Our programme and students have been featured in various publications, highlighting the impact of precision medicine and its education on healthcare transformation.
+                </p>
                 
-                <!-- Story 2 - Zihao (June 2) -->
-                <a href="./student_stories/student_story_zihao.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_zihao.png" 
-                             alt="Finding My Path: From Pharmacy Lab to Pharmaceutical Investment" 
-                             class="story-image">
-                        <span class="story-date">2 June 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">Finding My Path: From Pharmacy Lab to Pharmaceutical Investment</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 3 - Bruce (May 23) -->
-                <a href="./student_stories/student_story_bruce.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_bruce.jpg" 
-                             alt="From Athlete to PhD: Powered by Precision Health" 
-                             class="story-image">
-                        <span class="story-date">23 May 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">From Athlete to PhD: Powered by Precision Health</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 4 - Binwen (March 11) -->
-                <a href="./student_stories/student_story_binwen.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_binwen.png" 
-                             alt="Beyond Borders: A Surgeon's Journey in Precision Medicine" 
-                             class="story-image">
-                        <span class="story-date">11 March 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">Beyond Borders: A Surgeon's Journey in Precision Medicine</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 5 - Jeremie (March 11) -->
-                <a href="./student_stories/student_story_jeremie.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_jeremie.png" 
-                             alt="From Classroom to Cutting-edge Innovation" 
-                             class="story-image">
-                        <span class="story-date">11 March 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">From Classroom to Cutting-edge Innovation</h3>
-                    </div>
-                </a>
-                
-                <!-- Story 6 - Junhua (Feb 20) -->
-                <a href="./student_stories/student_story_junhua.html" class="story-card">
-                    <div class="story-image-container">
-                        <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_junhua.jpg" 
-                             alt="From Cardiologist to a Thought Leader" 
-                             class="story-image">
-                        <span class="story-date">20 Feb 2025</span>
-                    </div>
-                    <div class="story-content">
-                        <h3 class="story-title">From Cardiologist to a Thought Leader</h3>
-                    </div>
-                </a>
+                <!-- Press Stories Grid -->
+                <div class="stories-grid scroll-fade">
+                    <!-- Press Story 1 - Business Insider (August 13) -->
+                    <a href="https://www.businessinsider.com/sc/national-university-of-singapore-launches-advanced-healthcare-masters-programs#:~:text=Focused%20approach%20to%20medicine" class="story-card" target="_blank">
+                        <div class="story-image-container">
+                            <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_business_insider.png" 
+                                 alt="In the Press: Focused approach to medicine" 
+                                 class="story-image">
+                            <span class="story-date">13 August 2025</span>
+                        </div>
+                        <div class="story-content">
+                            <h3 class="story-title">Business Insider: Focused approach to medicine</h3>
+                            <p class="story-featured">Featured by Business Insider</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Press Story 2 - Knowledge to Action (June 2) -->
+                    <a href="https://www.npm.sg/knowledge-to-action-enhancing-patient-care-through-precision-health/" class="story-card" target="_blank">
+                        <div class="story-image-container">
+                            <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_knowledge_to_action.png" 
+                                 alt="Knowledge to Action: Enhancing Patient Care through Precision Medicine" 
+                                 class="story-image">
+                            <span class="story-date">2 June 2025</span>
+                        </div>
+                        <div class="story-content">
+                            <h3 class="story-title">Knowledge to Action: Enhancing Patient Care through Precision Medicine</h3>
+                            <p class="story-featured">Featured by PRECISE</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Press Story 3 - Back to School (Feb 20) -->
+                    <a href="https://www.npm.sg/nus-mscphm-curiousity-in-precision-health-into-impact/" class="story-card" target="_blank">
+                        <div class="story-image-container">
+                            <img src="https://xavierchee.github.io/website/website_assets/student_stories/main_back_to_school.png" 
+                                 alt="Back to School Story" 
+                                 class="story-image">
+                            <span class="story-date">20 Feb 2025</span>
+                        </div>
+                        <div class="story-content">
+                            <h3 class="story-title">Back to School: Turning Curiosity in Precision Medicine into Impact</h3>
+                            <p class="story-featured">Featured by PRECISE</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
         
