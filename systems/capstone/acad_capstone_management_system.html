@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <!-- 
     DOCUMENTATION:
-    Date: 2025-09-03 19:30 SGT
+    Date: 2025-09-04 20:15 SGT
     Changes:
-    - Implemented modern NUS-compliant design system
-    - Updated color palette to official NUS brand colors
-    - Applied modern typography with Inter font stack and modular scale
-    - Implemented 8px grid spacing system for consistency
-    - Redesigned all components (navigation, cards, buttons, tables) with modern styling
+    - Added spinner animation to Save Project button during save operation
+    - Button is disabled and shows "Saving..." text with spinner while processing
+    - Spinner design matches the login button spinner (white color on blue background)
+    - Button state is properly reset in all scenarios (success, error, validation failure)
 -->
 <html lang="en">
 <head>
@@ -90,6 +89,7 @@
             flex-direction: column;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
         
         /* Main wrapper for proper footer positioning */
@@ -97,6 +97,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
         
         /* Modular Scale Typography (1.25 ratio) */
@@ -231,6 +232,7 @@
         .main-content {
             margin: 0 auto;
             max-width: 100%;
+            overflow-x: hidden;
         }
         
         /* Button Styling */
@@ -257,8 +259,45 @@
         
         .btn-primary:hover, .login-btn:hover {
             background-color: var(--nus-dark-blue);
+            color: white !important;
             transform: translateY(-1px);
             box-shadow: var(--shadow-hover);
+        }
+        
+        /* Fixed width for login button to prevent resize */
+        .login-btn {
+            min-width: 220px;
+            width: 220px;
+            min-height: 60px;
+            height: 60px;
+        }
+        
+        /* Ensure login button text stays white in all states */
+        .login-btn:hover,
+        .login-btn:focus,
+        .login-btn:active,
+        .login-btn:focus-visible {
+            color: white !important;
+        }
+        
+        /* Ensure spinner in login button is white */
+        .login-btn .spinner-border {
+            border-color: rgba(255, 255, 255, 0.75);
+            border-right-color: transparent;
+        }
+        
+        /* Fix spinner to be perfectly circular */
+        .spinner-border-sm {
+            width: 1rem !important;
+            height: 1rem !important;
+            flex-shrink: 0;
+            flex-grow: 0;
+            vertical-align: middle;
+        }
+        
+        /* Ensure spinner animation is smooth */
+        @keyframes spinner-border {
+            to { transform: rotate(360deg); }
         }
         
         /* Secondary Button */
@@ -305,29 +344,53 @@
         
         /* Small Buttons */
         .btn-sm {
-            padding: calc(var(--space-1) / 2) var(--space-2);
-            font-size: 0.875rem;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            font-weight: 500;
         }
         
         /* Edit/Delete Buttons */
         .btn-edit {
             background-color: var(--nus-orange);
             color: white;
+            width: 70px;  /* Fixed width instead of 100% */
+            justify-content: center;
+            transition: all 0.2s ease;
         }
         
         .btn-edit:hover {
             background-color: #d86c00;
             color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(239, 124, 0, 0.3);
         }
         
         .btn-delete {
             background-color: var(--danger);
             color: white;
+            width: 70px;  /* Fixed width instead of 100% */
+            justify-content: center;
+            transition: all 0.2s ease;
         }
         
         .btn-delete:hover {
             background-color: #c82333;
             color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+        }
+        
+        /* Action Buttons Cell Styling */
+        .action-buttons-cell {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+            align-items: flex-start;  /* Changed from stretch to flex-start */
+            min-width: 90px;
+            max-width: 110px;
+            padding: calc(var(--space-1) / 2) 0;
+            padding-left: 10px;  /* Remove left padding */
         }
         
         /* Form Controls */
@@ -388,19 +451,30 @@
             font-weight: 600;
         }
         
-        /* Table Styling */
+        /* Table Container */
         .table-container {
             overflow-x: auto;
+            overflow-y: hidden;
             background: white;
             border-radius: 8px;
             border: 1px solid var(--nus-gray-200);
             box-shadow: var(--shadow-sm);
+            max-width: 100%;
+            margin: 0 auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Ensure table wrapper doesn't exceed container */
+        .dataTables_wrapper {
+            max-width: 100%;
+            overflow: hidden;
         }
         
         table.dataTable {
             border-collapse: separate !important;
             border-spacing: 0;
             width: 100% !important;
+            table-layout: fixed;
         }
         
         .table {
@@ -420,17 +494,27 @@
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.75rem;
-            letter-spacing: 0.05em;
-            padding: var(--space-2);
-            white-space: nowrap;
+            letter-spacing: 0.03em;
+            padding: var(--space-2) var(--space-2);
+            white-space: normal;
+            word-wrap: break-word;
+            vertical-align: middle;
+            line-height: 1.4;
+            text-align: center;
+        }
+        
+        /* Add spacing for sort icons */
+        .table thead th.sorting:after,
+        .table thead th.sorting_asc:after,
+        .table thead th.sorting_desc:after {
+            margin-left: var(--space-1);
         }
         
         .table tbody tr {
-            border-bottom: 1px solid var(--nus-gray-200);
             transition: all 0.2s ease;
         }
         
-        .table tbody tr:last-child {
+        .table tbody tr:last-child td {
             border-bottom: none;
         }
         
@@ -440,9 +524,25 @@
         }
         
         .table tbody td {
-            padding: var(--space-2);
+            padding: var(--space-2) var(--space-2);
             vertical-align: middle;
-            border: none;
+            border-bottom: 1px solid var(--nus-gray-200);
+            border-right: 1px solid var(--nus-gray-100);
+            font-size: 0.875rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.5;
+        }
+        
+        /* Remove border from last column */
+        .table tbody td:last-child {
+            border-right: none;
+        }
+        
+        /* Extra padding for first column (Project ID) */
+        .table tbody td:first-child,
+        .table thead th:first-child {
+            padding-left: var(--space-3);
         }
         
         /* Zebra Striping */
@@ -740,7 +840,111 @@
             display: none;
         }
         
+        /* Column width optimization */
+        #projectsTable th:nth-child(1), 
+        #projectsTable td:nth-child(1) { /* Project ID */
+            width: 18%;
+            max-width: 200px;
+            min-width: 160px;
+        }
+        
+        #projectsTable th:nth-child(2), 
+        #projectsTable td:nth-child(2) { /* Title */
+            width: 25%;
+            min-width: 180px;
+        }
+        
+        #projectsTable th:nth-child(3), 
+        #projectsTable td:nth-child(3) { /* Department */
+            width: 15%;
+            min-width: 120px;
+        }
+        
+        #projectsTable th:nth-child(4), 
+        #projectsTable td:nth-child(4) { /* Type */
+            width: 7%;
+            min-width: 60px;
+        }
+        
+        #projectsTable th:nth-child(5), 
+        #projectsTable td:nth-child(5) { /* Vacancy */
+            width: 11%;
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        #projectsTable th:nth-child(6), 
+        #projectsTable td:nth-child(6) { /* Location */
+            width: 12%;
+            min-width: 100px;
+        }
+        
+        #projectsTable th:nth-child(7), 
+        #projectsTable td:nth-child(7) { /* Stipend */
+            width: 12%;
+            min-width: 100px;
+        }
+        
+        #projectsTable th:nth-child(8), 
+        #projectsTable td:nth-child(8) { /* Actions */
+            width: 10%;
+            min-width: 100px;
+            max-width: 120px;
+            padding-left: var(--space-1);  /* Reduce left padding for Actions column */
+        }
+        
+        /* Hide horizontal scrollbar on container while allowing scroll */
+        .table-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
         /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            #projectsTable {
+                font-size: 0.813rem;
+            }
+            
+            .table thead th {
+                font-size: 0.7rem;
+                padding: var(--space-1) var(--space-1);
+            }
+            
+            .table tbody td {
+                padding: var(--space-1) var(--space-1);
+                font-size: 0.813rem;
+            }
+            
+            /* Maintain extra padding for first column even on smaller screens */
+            .table tbody td:first-child,
+            .table thead th:first-child {
+                padding-left: var(--space-2);
+            }
+            
+            .btn-sm {
+                padding: 3px 8px;
+                font-size: 0.7rem;
+            }
+            
+            .action-buttons-cell {
+                min-width: 80px;
+                gap: 6px;
+            }
+        }
+        
         @media (max-width: 768px) {
             :root {
                 font-size: 14px; /* Slightly smaller base font on mobile */
@@ -758,20 +962,44 @@
             .main-wrapper .container {
                 padding-top: var(--space-4);
                 padding-bottom: var(--space-4);
+                padding-left: var(--space-1);
+                padding-right: var(--space-1);
             }
             
             .login-section, .main-content {
                 padding: var(--space-3);
-                margin: 0 var(--space-1);
+                margin: 0;
             }
             
-            .table {
-                font-size: 0.875rem;
+            #projectsTable {
+                font-size: 0.75rem;
+            }
+            
+            .table thead th {
+                font-size: 0.65rem;
+                padding: 6px 8px;
+                letter-spacing: 0;
+            }
+            
+            .table tbody td {
+                padding: 6px 8px;
+                font-size: 0.75rem;
+            }
+            
+            /* Keep first column padding on mobile */
+            .table tbody td:first-child,
+            .table thead th:first-child {
+                padding-left: 12px;
             }
             
             .btn-sm {
-                padding: 4px 8px;
-                font-size: 0.75rem;
+                padding: 2px 4px;
+                font-size: 0.65rem;
+            }
+            
+            .action-buttons-cell {
+                gap: 2px;
+                min-width: 60px;
             }
             
             .action-buttons {
@@ -789,6 +1017,12 @@
             
             .registration-steps {
                 font-size: 0.75rem;
+            }
+            
+            /* Hide less important columns on mobile */
+            #projectsTable th:nth-child(7),
+            #projectsTable td:nth-child(7) {
+                display: none;
             }
         }
     </style>
@@ -1215,7 +1449,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="saveProject()">Save Project</button>
+                    <button type="button" class="btn btn-primary" id="saveProjectBtn" onclick="saveProject()">Save Project</button>
                 </div>
             </div>
         </div>
@@ -1224,7 +1458,7 @@
     <!-- Footer -->
     <div class="footer">
         <div class="container">
-            <p class="mb-0">© 2024 National University of Singapore. All rights reserved.</p>
+            <p class="mb-0">© 2025 National University of Singapore. All rights reserved.</p>
         </div>
     </div>
     
@@ -1250,15 +1484,16 @@
             GET_PROJECTS: 'https://prod-47.southeastasia.logic.azure.com:443/workflows/af46dd43639a4134a35ed2a4f7e3e38a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=XDdXoVdUW-dyFUmujjbqV8O-tBrt8y6eTLHNQkejNCg',
             ADD_PROJECT: 'https://prod-80.southeastasia.logic.azure.com:443/workflows/82a26bf2ec0b4c508540f9a1248903de/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=elnzYL7HQsFcbf9MUOR27fxGb2hz61rufr6J8FDk_jU',
             UPDATE_PROJECT: 'https://prod-77.southeastasia.logic.azure.com:443/workflows/4c6119a4c6144e43815dbd14105be195/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iYdAL7_Z1LAxYDx_5PzFGN09mdYltnVPyGU3dfdhcyc',
-            DELETE_PROJECT: 'https://prod-81.southeastasia.logic.azure.com:443/workflows/b477a511dba244b1b31a3e677579f40d/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xL78mRrfOk_E1bf9ALNx5LvEpPpee-jiQeYv7sLveks'
+            DELETE_PROJECT: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b477a511dba244b1b31a3e677579f40d/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=5kstYdbwSG5O2Fa0dVDZejRTEpr9mbJ4t9hgLqTwsIA'
         };
         
         let currentUserEmail = '';
         let currentUserProfile = {}; // Store PI profile data
         let projectsData = [];
         let dataTable = null;
-        let loginAttempts = 0;
-        const MAX_LOGIN_ATTEMPTS = 3;
+        // Login attempts removed - now allowing unlimited attempts
+        // let loginAttempts = 0;
+        // const MAX_LOGIN_ATTEMPTS = 3;
         let recentlyRegisteredProfile = null; // Store profile immediately after registration
         
         // Toggle password visibility
@@ -1294,20 +1529,11 @@
                 return;
             }
             
-            // Check login attempts
-            if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Account Locked',
-                    text: 'Maximum login attempts exceeded. Please contact IT support.',
-                    footer: 'Support: it-support@nus.edu.sg'
-                });
-                return;
-            }
+            // Login attempts check removed - unlimited attempts allowed
             
             // Disable login button and show loading
             loginButton.disabled = true;
-            loginButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
+            loginButton.innerHTML = '<span class="spinner-border spinner-border-sm text-white me-2"></span>Authenticating...';
             
             try {
                 // Authenticate user against Excel sheet
@@ -1330,7 +1556,7 @@
                 
                 if (authResult.authenticated) {
                     // Successful login
-                    loginAttempts = 0;
+                    // loginAttempts = 0; // Removed login attempts counter
                     currentUserEmail = authResult.userEmail.toLowerCase();
                     
                     // Store session
@@ -1361,16 +1587,13 @@
                     
                 } else {
                     // Failed login
-                    loginAttempts++;
-                    const remainingAttempts = MAX_LOGIN_ATTEMPTS - loginAttempts;
+                    // loginAttempts++; // Removed login attempts counter
                     
                     Swal.fire({
                         icon: 'error',
                         title: 'Authentication Failed',
                         text: authResult.message || 'Invalid email or password',
-                        footer: remainingAttempts > 0 ? 
-                            `${remainingAttempts} attempt${remainingAttempts > 1 ? 's' : ''} remaining` : 
-                            'No attempts remaining'
+                        footer: 'Please contact mscphm@nus.edu.sg if you forgot your password'
                     });
                     
                     // Clear password field
@@ -1410,8 +1633,8 @@
                 dataTable = null;
             }
             
-            // Reset login attempts
-            loginAttempts = 0;
+            // Login attempts reset removed - no longer tracking attempts
+            // loginAttempts = 0;
         }
         
         // Validate Email
@@ -1479,12 +1702,14 @@
                     <td>${project.Internship_location || ''}</td>
                     <td>${project['Capstone_stipend (per month)'] || ''}</td>
                     <td>
-                        <button class="btn btn-sm btn-edit" onclick='editProject(${JSON.stringify(project).replace(/'/g, "&apos;")})'>
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button class="btn btn-sm btn-delete" onclick="deleteProject('${project.project_ID}')">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
+                        <div class="action-buttons-cell">
+                            <button class="btn btn-sm btn-edit" onclick='editProject(${JSON.stringify(project).replace(/'/g, "&apos;")})'>
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-delete" onclick="deleteProject('${project.project_ID}')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
                     </td>
                 `;
                 tableBody.appendChild(row);
@@ -1698,7 +1923,7 @@
             
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm text-white me-2"></span>Processing...';
             
             const registrationData = {
                 email: document.getElementById('regEmail').value.toLowerCase(),
@@ -1901,6 +2126,11 @@
         
         // Save Project
         async function saveProject() {
+            // Get save button and show spinner
+            const saveBtn = document.getElementById('saveProjectBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm text-white me-2"></span>Saving...';
+            
             // Validate required fields (removed PI fields from validation as they're auto-filled)
             const requiredFields = ['projectTitle', 'projectType', 'vacancy', 'internshipLocation', 'projectDescription', 'expectedDeliverables', 'learningOutcome', 'partTimeResearch'];
             let isValid = true;
@@ -1917,6 +2147,9 @@
             
             if (!isValid) {
                 Swal.fire('Validation Error', 'Please fill in all required fields', 'error');
+                // Reset button state
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Save Project';
                 return;
             }
             
@@ -1950,6 +2183,9 @@
                 });
                 
                 if (!result.isConfirmed) {
+                    // Reset button state
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = 'Save Project';
                     return;
                 }
                 
@@ -1967,6 +2203,9 @@
                 document.getElementById('faculty').classList.add('border-warning');
                 document.getElementById('department').classList.add('border-warning');
                 
+                // Reset button state
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Save Project';
                 return; // Stop here and let user fill in the details
             }
             
@@ -2019,6 +2258,10 @@
             } catch (error) {
                 console.error('Error saving project:', error);
                 Swal.fire('Error', 'Failed to save project. Please try again.', 'error');
+            } finally {
+                // Always reset button state
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Save Project';
             }
         }
         
