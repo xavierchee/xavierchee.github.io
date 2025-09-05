@@ -1,0 +1,2326 @@
+<!DOCTYPE html>
+<!-- 
+    DOCUMENTATION:
+    Date: 2025-09-05 08:15:00 SGT
+    Industrial Capstone Management System - Two Column Layout
+    
+    Latest Update (2025-09-05 17:45:00 SGT):
+    - Enhanced saveProject() function with comprehensive error handling and debugging
+    - Added null checks and default values to prevent undefined data issues
+    - Fixed Vacancy field to parse as integer for Excel compatibility
+    - Added detailed console logging for Power Automate request/response debugging
+    - Improved error messages with detailed feedback for troubleshooting
+    - Added safeguards for currentUser.profile access to prevent null reference errors
+    
+    Previous Update (2025-09-05 16:30:00 SGT):
+    - Fixed updateUserRole() function to properly handle Power Automate response format
+    - Added comprehensive error handling and debugging logs
+    - Enhanced response parsing for different Power Automate output formats
+    - Improved success detection logic
+    - Added detailed error messages for troubleshooting
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUS Industrial Capstone Projects Portal</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- Select2 for Mentor Selection -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+    <style>
+        /* ============================================
+           1. COLOR PALETTE - Official NUS Brand Colors (Matching Academic System)
+           ============================================ */
+        :root {
+            /* Primary NUS Colors */
+            --nus-blue: #003D7C;        /* Official NUS Blue */
+            --nus-orange: #EF7C00;      /* Official NUS Orange */
+            
+            /* Extended Palette */
+            --nus-dark-blue: #002A5C;   /* Darker shade for depth */
+            --nus-light-blue: #E6F2FF;  /* Light blue for backgrounds */
+            --nus-gray-100: #F8F9FA;    /* Light gray */
+            --nus-gray-200: #E9ECEF;    /* Medium light gray */
+            --nus-gray-300: #DEE2E6;    /* Border gray */
+            --nus-gray-600: #6C757D;    /* Text gray */
+            --nus-gray-800: #343A40;    /* Dark text */
+            
+            /* Accent Colors */
+            --success: #28A745;
+            --warning: #FFC107;
+            --danger: #DC3545;
+            --info: #17A2B8;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.12);
+            --shadow-hover: 0 8px 24px rgba(0,61,124,0.15);
+            
+            /* Spacing (8px grid) */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-5: 40px;
+            --space-6: 48px;
+            --space-8: 64px;
+        }
+        
+        /* Global box-sizing */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        /* ============================================
+           2. TYPOGRAPHY - Modern Font Stack (Same as Academic)
+           ============================================ */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--nus-gray-800);
+            background-color: var(--nus-gray-100);
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* Main wrapper for proper footer positioning */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Modular Scale Typography (1.25 ratio) */
+        h1 { 
+            font-size: 2.441rem; /* 39.06px */
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        h2 { 
+            font-size: 1.953rem; /* 31.25px */
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.25;
+        }
+        h3 { 
+            font-size: 1.563rem; /* 25px */
+            font-weight: 600;
+            letter-spacing: -0.005em;
+            line-height: 1.3;
+        }
+        h4 { 
+            font-size: 1.25rem;  /* 20px */
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        h5 { 
+            font-size: 1rem;     /* 16px */
+            font-weight: 600;
+            line-height: 1.5;
+        }
+        h6 { 
+            font-size: 0.8rem;   /* 12.8px */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.5;
+        }
+        
+        .text-small { 
+            font-size: 0.875rem; /* 14px */
+        }
+        .text-xs { 
+            font-size: 0.75rem;  /* 12px */
+        }
+        
+        /* ============================================
+           3. LAYOUT & SPACING - 8px Grid System
+           ============================================ */
+        
+        /* Margin utilities based on 8px grid */
+        .mb-1 { margin-bottom: var(--space-1) !important; }
+        .mb-2 { margin-bottom: var(--space-2) !important; }
+        .mb-3 { margin-bottom: var(--space-3) !important; }
+        .mb-4 { margin-bottom: var(--space-4) !important; }
+        .mb-5 { margin-bottom: var(--space-5) !important; }
+        .mb-6 { margin-bottom: var(--space-6) !important; }
+        
+        .mt-1 { margin-top: var(--space-1) !important; }
+        .mt-2 { margin-top: var(--space-2) !important; }
+        .mt-3 { margin-top: var(--space-3) !important; }
+        .mt-4 { margin-top: var(--space-4) !important; }
+        .mt-5 { margin-top: var(--space-5) !important; }
+        .mt-6 { margin-top: var(--space-6) !important; }
+        
+        /* Padding utilities based on 8px grid */
+        .p-1 { padding: var(--space-1) !important; }
+        .p-2 { padding: var(--space-2) !important; }
+        .p-3 { padding: var(--space-3) !important; }
+        .p-4 { padding: var(--space-4) !important; }
+        .p-5 { padding: var(--space-5) !important; }
+        .p-6 { padding: var(--space-6) !important; }
+        
+        /* ============================================
+           4. COMPONENT STYLING (Matching Academic System)
+           ============================================ */
+        
+        /* Navigation/Header Styling */
+        .header-section {
+            background: var(--nus-blue);
+            color: white;
+            padding: var(--space-4) 0;
+            box-shadow: var(--shadow-md);
+            border-bottom: 3px solid var(--nus-orange); /* Orange accent line */
+        }
+        
+        .header-section h1 {
+            margin-bottom: var(--space-1);
+            font-size: 1.953rem; /* Smaller than default h1 for header */
+        }
+        
+        .header-section p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        
+        /* Container adjustments */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: var(--space-2);
+            padding-right: var(--space-2);
+        }
+        
+        .main-wrapper .container {
+            padding-top: var(--space-6);
+            padding-bottom: var(--space-6);
+        }
+        
+        /* Card Styling (Login & Main Content) */
+        .login-section, .main-content {
+            background: white;
+            padding: var(--space-4);
+            border-radius: 12px;
+            border: 1px solid var(--nus-gray-200);
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+        }
+        
+        .login-section {
+            margin: 0 auto;
+            max-width: 900px;
+        }
+        
+        .main-content {
+            margin: 0 auto;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            border-bottom: 2px solid var(--nus-gray-300);
+            margin-bottom: var(--space-4);
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--nus-gray-600);
+            border: none;
+            padding: var(--space-2) var(--space-3);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--nus-blue);
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--nus-blue);
+            background: none;
+            border: none;
+        }
+        
+        .nav-tabs .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--nus-orange);
+        }
+        
+        /* Button Styling (Same as Academic) */
+        .btn {
+            font-weight: 500;
+            border-radius: 6px;
+            padding: var(--space-1) var(--space-3);
+            transition: all 0.2s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .btn:focus {
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.25);
+        }
+        
+        /* Primary Button (NUS Blue) */
+        .btn-primary, .login-btn {
+            background-color: var(--nus-blue);
+            color: white;
+        }
+        
+        .btn-primary:hover, .login-btn:hover {
+            background-color: var(--nus-dark-blue);
+            color: white !important;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Fixed width for login button to prevent resize */
+        .login-btn {
+            min-width: 220px;
+            width: 220px;
+            min-height: 60px;
+            height: 60px;
+        }
+        
+        /* Secondary Button */
+        .btn-secondary {
+            background-color: white;
+            color: var(--nus-blue);
+            border: 1px solid var(--nus-blue);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--nus-light-blue);
+            border-color: var(--nus-dark-blue);
+        }
+        
+        /* Accent Button (NUS Orange) */
+        .btn-add-project, .btn-orange {
+            background-color: var(--nus-orange);
+            color: white;
+        }
+        
+        .btn-add-project:hover, .btn-orange:hover {
+            background-color: #d86c00;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(239, 124, 0, 0.3);
+        }
+        
+        /* Success Button */
+        .btn-success, .btn-refresh {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover, .btn-refresh:hover {
+            background-color: #218838;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Small Buttons */
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        /* Edit/Delete Buttons */
+        .btn-edit {
+            background-color: var(--nus-orange);
+            color: white;
+            width: 70px;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-edit:hover {
+            background-color: #d86c00;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(239, 124, 0, 0.3);
+        }
+        
+        .btn-delete {
+            background-color: var(--danger);
+            color: white;
+            width: 70px;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-delete:hover {
+            background-color: #c82333;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Form Controls */
+        .form-label {
+            font-weight: 500;
+            color: var(--nus-gray-800);
+            margin-bottom: var(--space-1);
+            font-size: 0.875rem;
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid var(--nus-gray-300);
+            border-radius: 6px;
+            padding: var(--space-1) var(--space-2);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--nus-orange);
+            box-shadow: 0 0 0 3px rgba(239, 124, 0, 0.15);
+            outline: none;
+        }
+        
+        .form-control::placeholder {
+            color: var(--nus-gray-600);
+            font-size: 0.875rem;
+        }
+        
+        /* Password toggle button */
+        .password-toggle {
+            position: absolute;
+            right: var(--space-2);
+            top: 38px;
+            background: none;
+            border: none;
+            color: var(--nus-gray-600);
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s ease;
+        }
+        
+        .password-toggle:hover {
+            color: var(--nus-blue);
+        }
+        
+        /* Action Buttons Container */
+        .action-buttons {
+            margin-bottom: var(--space-4);
+            display: flex;
+            gap: var(--space-2);
+            flex-wrap: wrap;
+        }
+        
+        /* Required Asterisk */
+        .required {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        /* User Info Display */
+        .user-info {
+            background: linear-gradient(135deg, var(--nus-gray-100) 0%, white 100%);
+            padding: var(--space-3);
+            border-radius: 8px;
+            margin-bottom: var(--space-4);
+            border: 1px solid var(--nus-gray-200);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .user-email {
+            font-weight: 600;
+            color: var(--nus-blue);
+            font-size: 1.1rem;
+        }
+        
+        /* Table Container */
+        .table-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--nus-gray-200);
+            box-shadow: var(--shadow-sm);
+            max-width: 100%;
+            margin: 0 auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* DataTable Wrapper */
+        .dataTables_wrapper {
+            max-width: 100%;
+            overflow: hidden;
+        }
+        
+        table.dataTable {
+            border-collapse: separate !important;
+            border-spacing: 0;
+            width: 100% !important;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead {
+            background-color: var(--nus-blue);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .table thead th {
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.03em;
+            padding: var(--space-2) var(--space-2);
+            white-space: normal;
+            word-wrap: break-word;
+            vertical-align: middle;
+            line-height: 1.4;
+            text-align: center;
+        }
+        
+        /* Add spacing for sort icons */
+        .table thead th.sorting:after,
+        .table thead th.sorting_asc:after,
+        .table thead th.sorting_desc:after {
+            margin-left: var(--space-1);
+        }
+        
+        .table tbody tr {
+            transition: all 0.2s ease;
+        }
+        
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .table tbody tr:hover {
+            background-color: var(--nus-light-blue);
+            box-shadow: inset 0 0 0 1px var(--nus-gray-200);
+        }
+        
+        .table tbody td {
+            padding: var(--space-2) var(--space-2);
+            vertical-align: middle;
+            border-bottom: 1px solid var(--nus-gray-200);
+            border-right: 1px solid var(--nus-gray-100);
+            font-size: 0.875rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.5;
+        }
+        
+        /* Remove border from last column */
+        .table tbody td:last-child {
+            border-right: none;
+        }
+        
+        /* Extra padding for first column */
+        .table tbody td:first-child,
+        .table thead th:first-child {
+            padding-left: var(--space-3);
+        }
+        
+        /* Zebra Striping */
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: var(--nus-gray-100);
+        }
+        
+        /* Action Buttons Cell Styling */
+        .action-buttons-cell {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+            align-items: flex-start;
+            min-width: 90px;
+            max-width: 110px;
+            padding: calc(var(--space-1) / 2) 0;
+            padding-left: 10px;
+        }
+        
+        /* DataTable Specific Styling */
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            padding: var(--space-2);
+        }
+        
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1px solid var(--nus-gray-300);
+            border-radius: 6px;
+            padding: var(--space-1) var(--space-2);
+            margin-left: var(--space-1);
+        }
+        
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+        
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: var(--nus-blue) !important;
+            color: white !important;
+            border: 1px solid var(--nus-blue) !important;
+        }
+        
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: var(--nus-light-blue) !important;
+            color: var(--nus-blue) !important;
+            border: 1px solid var(--nus-blue) !important;
+        }
+        
+        /* Modal Styling */
+        .modal-content {
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background-color: var(--nus-blue);
+            color: white;
+            border-bottom: none;
+            padding: var(--space-3) var(--space-4);
+        }
+        
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+        }
+        
+        .modal-header .btn-close:hover {
+            opacity: 1;
+        }
+        
+        .modal-body {
+            padding: var(--space-4);
+        }
+        
+        .modal-footer {
+            background-color: var(--nus-gray-100);
+            border-top: 1px solid var(--nus-gray-200);
+            padding: var(--space-3) var(--space-4);
+        }
+        
+        /* Alert Styling */
+        .alert {
+            border: none;
+            border-radius: 8px;
+            padding: var(--space-2) var(--space-3);
+            font-size: 0.875rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .alert-info {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-left: 4px solid var(--nus-orange);
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid var(--success);
+        }
+        
+        /* Loading Spinner */
+        .spinner-container {
+            text-align: center;
+            padding: var(--space-6);
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.25rem;
+            color: var(--nus-blue);
+        }
+        
+        /* For small spinners */
+        .spinner-border-sm {
+            width: 1rem !important;
+            height: 1rem !important;
+            flex-shrink: 0;
+            flex-grow: 0;
+            vertical-align: middle;
+        }
+        
+        /* Ensure spinner animation is smooth */
+        @keyframes spinner-border {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: var(--space-4) 0;
+            background-color: var(--nus-blue);
+            color: white;
+            text-align: center;
+            border-top: 3px solid var(--nus-orange);
+            width: 100%;
+        }
+        
+        .footer p {
+            margin-bottom: 0;
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        
+        /* Team Cards */
+        .team-card {
+            background: white;
+            border: 1px solid var(--nus-gray-200);
+            border-radius: 8px;
+            padding: var(--space-3);
+            margin-bottom: var(--space-3);
+            transition: all 0.2s ease;
+        }
+        
+        .team-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        .team-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--nus-light-blue);
+            color: var(--nus-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        
+        /* Role Badge Styling */
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            gap: 6px;
+        }
+        
+        .role-badge.company_contact {
+            background: var(--nus-light-blue);
+            color: var(--nus-blue);
+        }
+        
+        .role-badge.capstone_mentor {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        /* Removed supervisor and team_member styles - all non-company_contact badges use mentor style */
+        
+        /* Profile Card */
+        .profile-section {
+            background: linear-gradient(135deg, var(--nus-gray-100) 0%, white 100%);
+            border-radius: 8px;
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+            border: 1px solid var(--nus-gray-200);
+        }
+        
+        /* Role Selector */
+        .role-selector {
+            display: flex;
+            gap: var(--space-2);
+            flex-wrap: wrap;
+            margin-top: var(--space-3);
+        }
+        
+        .role-option {
+            position: relative;
+        }
+        
+        .role-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .role-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-2) var(--space-3);
+            border: 2px solid var(--nus-gray-300);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 140px;
+        }
+        
+        .role-option input[type="radio"]:checked + label {
+            border-color: var(--nus-orange);
+            background: var(--nus-light-blue);
+        }
+        
+        .role-option label:hover {
+            border-color: var(--nus-blue);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .role-icon {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-1);
+            color: var(--nus-blue);
+        }
+        
+        /* Select2 Customization */
+        .select2-container--default .select2-selection--multiple {
+            border: 1px solid var(--nus-gray-300);
+            border-radius: 6px;
+            min-height: 40px;
+        }
+        
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: var(--nus-orange);
+            box-shadow: 0 0 0 3px rgba(239, 124, 0, 0.15);
+        }
+        
+        /* Dashboard Stats Cards */
+        .stat-card {
+            background: white;
+            border: 1px solid var(--nus-gray-200);
+            border-radius: 8px;
+            padding: var(--space-3);
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--nus-blue);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            color: var(--nus-gray-600);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: var(--space-1);
+        }
+        
+        /* Card Component */
+        .card {
+            border: 1px solid var(--nus-gray-200);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .card-body {
+            padding: var(--space-3);
+        }
+        
+        .card-header {
+            background-color: var(--nus-gray-100);
+            border-bottom: 1px solid var(--nus-gray-200);
+            font-weight: 600;
+            padding: var(--space-2) var(--space-3);
+        }
+        
+        /* Main Content Display State */
+        .main-content {
+            display: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .table {
+                font-size: 0.813rem;
+            }
+            
+            .table thead th {
+                font-size: 0.7rem;
+                padding: var(--space-1) var(--space-1);
+            }
+            
+            .table tbody td {
+                padding: var(--space-1) var(--space-1);
+                font-size: 0.813rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                font-size: 14px; /* Slightly smaller base font on mobile */
+            }
+            
+            .header-section h1 {
+                font-size: 1.563rem;
+            }
+            
+            .header-section {
+                padding: var(--space-3) 0;
+                text-align: center;
+            }
+            
+            .main-wrapper .container {
+                padding-top: var(--space-4);
+                padding-bottom: var(--space-4);
+                padding-left: var(--space-1);
+                padding-right: var(--space-1);
+            }
+            
+            .login-section, .main-content {
+                padding: var(--space-3);
+                margin: 0;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: var(--space-1) var(--space-2);
+                font-size: 0.875rem;
+            }
+            
+            .role-option label {
+                min-width: 100px;
+                padding: var(--space-1) var(--space-2);
+            }
+            
+            .stat-card {
+                margin-bottom: var(--space-2);
+            }
+            
+            .team-card {
+                padding: var(--space-2);
+            }
+        }
+        
+        /* Additional Small Utilities */
+        small {
+            color: var(--nus-gray-600);
+            font-size: 0.875rem;
+        }
+        
+        .text-muted {
+            color: var(--nus-gray-600) !important;
+        }
+        
+        .border-warning {
+            border-color: var(--warning) !important;
+        }
+        
+        .is-invalid {
+            border-color: var(--danger) !important;
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--nus-blue);
+            border-color: var(--nus-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-section">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <div>
+                    <h1>NUS Industrial Capstone Projects Portal</h1>
+                    <p class="mb-0">Industry Partnership Management System</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Wrapper for content -->
+    <div class="main-wrapper">
+        <div class="container">
+            <!-- Login Section -->
+            <div class="login-section" id="loginSection">
+                <h3 class="mb-4">
+                    <i class="fas fa-lock me-2"></i>Industry Partner Login
+                </h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <form id="loginForm" onsubmit="event.preventDefault(); login();">
+                            <div class="mb-3">
+                                <label for="emailInput" class="form-label">Email Address <span class="required">*</span></label>
+                                <input type="email" class="form-control" id="emailInput" placeholder="Enter your company email address" required>
+                                <small class="text-muted">Use your registered company email address</small>
+                            </div>
+                            <div class="mb-3 position-relative">
+                                <label for="passwordInput" class="form-label">Password <span class="required">*</span></label>
+                                <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                                </button>
+                                <small class="text-muted">Your password is case-sensitive</small>
+                            </div>
+                            <button type="submit" class="btn login-btn" id="loginButton">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </button>
+                            <div class="mt-3">
+                                <p class="text-muted">New company to the system? 
+                                    <a href="#" onclick="showRegistrationModal()" class="text-decoration-none" style="color: var(--nus-orange); font-weight: 500;">
+                                        <i class="fas fa-user-plus me-1"></i>Register here
+                                    </a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            <h5><i class="fas fa-info-circle"></i> Welcome to Industrial Partnerships</h5>
+                            <p class="mb-0">Manage your capstone projects and team members through this portal</p>
+                        </div>
+                        <div class="alert alert-warning mt-3">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Important:</strong> Each company can have multiple users with different roles.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="main-content" id="mainContent">
+                <!-- User Info Bar -->
+                <div class="user-info">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span>Logged in as: </span>
+                            <span class="user-email" id="userEmail"></span>
+                            <span class="ms-3">Company: </span>
+                            <strong id="userCompany"></strong>
+                        </div>
+                        <div>
+                            <span class="role-badge" id="currentRoleBadge">
+                                <i class="fas fa-user"></i>
+                                <span id="roleText"></span>
+                            </span>
+                            <button class="btn btn-sm btn-outline-danger ms-2" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Two Column Layout -->
+                <div class="row mt-4">
+                    <!-- Left Column: Profile & Role Management -->
+                    <div class="col-md-4">
+                        <div class="profile-section">
+                            <h5 class="mb-3">Your Profile & Role Management</h5>
+                            <div class="mb-3">
+                                <p class="mb-1"><strong>Name:</strong> <span id="profileName"></span></p>
+                                <p class="mb-1"><strong>Email:</strong> <span id="profileEmail"></span></p>
+                                <p class="mb-1"><strong>Job Title:</strong> <span id="profileJobTitle"></span></p>
+                            </div>
+                            <div>
+                                <h6 class="mb-2">Change Your Role:</h6>
+                                <div class="role-selector">
+                                    <div class="role-option mb-2">
+                                        <input type="radio" name="roleChange" id="role_company_contact" value="company_contact">
+                                        <label for="role_company_contact">
+                                            <i class="fas fa-user-tie role-icon"></i>
+                                            <strong>Company Contact</strong>
+                                            <small class="text-muted">Main POC</small>
+                                        </label>
+                                    </div>
+                                    <div class="role-option">
+                                        <input type="radio" name="roleChange" id="role_capstone_mentor" value="capstone_mentor">
+                                        <label for="role_capstone_mentor">
+                                            <i class="fas fa-chalkboard-teacher role-icon"></i>
+                                            <strong>Mentor</strong>
+                                            <small class="text-muted">Guide students</small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-sm mt-3" onclick="updateUserRole()">
+                                    <i class="fas fa-save"></i> Update Role
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Projects Section -->
+                    <div class="col-md-8">
+                        <!-- Statistics Cards -->
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="totalProjects">0</div>
+                                    <div class="stat-label">Total Projects</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="totalMentors">0</div>
+                                    <div class="stat-label">Total Mentors</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Projects List -->
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Project List</h5>
+                                <div>
+                                    <button class="btn btn-add-project btn-sm" onclick="showAddProjectModal()">
+                                        <i class="fas fa-plus-circle me-2"></i>Add Project
+                                    </button>
+                                    <button class="btn btn-refresh btn-sm ms-2" onclick="loadCompanyProjects()">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-striped mb-0" id="projectsTableSimple">
+                                        <thead>
+                                            <tr>
+                                                <th>Project Title</th>
+                                                <th>Mentors Responsible</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="projectsListBody">
+                                            <!-- Projects will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- End of Two Column Layout -->
+            </div>
+            <!-- End Main Content -->
+        </div>
+        <!-- End Container -->
+    </div>
+    <!-- End Main Wrapper -->
+    
+    <!-- Registration Modal -->
+    <div class="modal fade" id="registrationModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-building me-2"></i>New Company Registration
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Your password will be automatically generated and sent to your email address.
+                    </div>
+                    
+                    <form id="registrationForm">
+                        <!-- Account Section -->
+                        <h6 class="mb-3"><i class="fas fa-user"></i> Account Information</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email Address <span class="required">*</span></label>
+                                    <input type="email" class="form-control" id="regEmail" placeholder="your.email@company.com" required>
+                                    <small class="text-muted">This will be your login email</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Your Name <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="regContactName" placeholder="John Smith" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Job Title <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="regContactTitle" 
+                                           placeholder="e.g., HR Manager, Technical Lead" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Initial Role <span class="required">*</span></label>
+                                    <select class="form-select" id="regRole" required>
+                                        <option value="">Select your role</option>
+                                        <option value="company_contact">Company Contact (Main POC)</option>
+                                        <option value="capstone_mentor">Mentor</option>
+                                    </select>
+                                    <small class="text-muted">You can change this later</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Company Section -->
+                        <h6 class="mb-3 mt-4"><i class="fas fa-building"></i> Company Details</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Company Name <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="regCompanyName" placeholder="ABC Corporation" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Company Website</label>
+                                    <input type="url" class="form-control" id="regCompanyWebsite" 
+                                           placeholder="https://www.company.com">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="registerBtn" onclick="submitRegistration()">
+                        <i class="fas fa-paper-plane me-2"></i>Complete Registration
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Project Modal -->
+    <div class="modal fade" id="projectModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="projectModalTitle">Add New Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="projectForm">
+                        <input type="hidden" id="projectId">
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label">Project Title <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="projectTitle" placeholder="Enter project title" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Project Type <span class="required">*</span></label>
+                                    <select class="form-control" id="projectType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Dry lab">Dry lab</option>
+                                        <option value="Wet lab">Wet lab</option>
+                                        <option value="Software">Software Development</option>
+                                        <option value="Hardware">Hardware Engineering</option>
+                                        <option value="Data Science">Data Science/AI</option>
+                                        <option value="Research">Research</option>
+                                        <option value="Business">Business Analysis</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info mb-3">
+                            <i class="fas fa-info-circle me-2"></i><strong>Note:</strong> Company information will be auto-filled from your profile.
+                        </div>
+                        
+                        <!-- Mentor Assignment -->
+                        <div class="mb-3">
+                            <label class="form-label">Assign Mentors</label>
+                            <select class="form-select" id="mentorSelect" multiple>
+                                <!-- Options will be populated dynamically from team members with mentor role -->
+                            </select>
+                            <small class="text-muted">Select one or more mentors from your team</small>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Internship Location <span class="required">*</span></label>
+                                    <select class="form-select" id="internshipLocation" required>
+                                        <option value="">Select Location</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Remote">Remote</option>
+                                        <option value="Hybrid">Hybrid</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Vacancy <span class="required">*</span></label>
+                                    <input type="number" class="form-control" id="vacancy" min="1" value="1" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Capstone Stipend (SGD/month)</label>
+                                    <input type="text" class="form-control" id="stipend" placeholder="e.g., 1000">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Part-time Internship <span class="required">*</span></label>
+                                    <select class="form-control" id="partTimeOption" required>
+                                        <option value="">Select Option</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="Negotiable">Negotiable</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Project Abstract <span class="required">*</span></label>
+                            <textarea class="form-control" id="projectAbstract" rows="4" placeholder="Describe the project overview" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Expected Deliverables <span class="required">*</span></label>
+                            <textarea class="form-control" id="expectedDeliverables" rows="3" placeholder="What should the student deliver?" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Learning Outcomes <span class="required">*</span></label>
+                            <textarea class="form-control" id="learningOutcomes" rows="3" placeholder="What will students learn from this project?" required></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Pre-requisites</label>
+                                    <textarea class="form-control" id="prerequisites" rows="2" placeholder="Required skills/knowledge"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Recommended Courses</label>
+                                    <textarea class="form-control" id="recommendedCourses" rows="2" placeholder="Relevant courses or certifications"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Remarks</label>
+                            <textarea class="form-control" id="remarks" rows="2" placeholder="Additional information about the project"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveProjectBtn" onclick="saveProject()">Save Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p class="mb-0">© 2025 National University of Singapore. All rights reserved.</p>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <script>
+        // Configuration - Replace these with your Power Automate URLs
+        const API_CONFIG = {
+            // Authentication & User Management
+            AUTHENTICATE_USER: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/63e4571832754796b9a0989587a7a4a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FQkAteaFmT14UDlekTif9yGsWYMwNMOYZcRBF9liR_E',
+            REGISTER_USER: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/835590d6bd0b41fb8af5d3bbbb666783/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wcwqnoz8t-75nV1gtVQWrGOmIycscOD-ptH9oCnx9dA',
+            GET_USER_PROFILE: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d97e55228f3f456b806e3c8a244241bc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8qmgEtrkm35ib16FMoexAkYEn4BWg3xrHStFFfnkyVg',
+            UPDATE_USER_ROLE: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/37ba814fea294ef1990c69774606e611/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9_Fm4WTgU-54XQ6Iutr2Q7Aq6j-olWOvL1UlutEqjc', // FIXED
+            GET_COMPANY_USERS: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b87bbf64e8df4f5684e993e1290ab38d/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2ztyGp1FC6iqBtEZ3qC5uululAUodwvHmCqRuGAr334',
+            
+            // Project Management
+            GET_ALL_PROJECTS: 'YOUR_GET_ALL_PROJECTS_FLOW_URL',
+            GET_COMPANY_PROJECTS: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/f5be9084253f4ca0a002d8d61e519fed/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v3IyBAqO4nx34dH0_ytpD7l8DbfsNSk2_JnrPb_CzV4',
+            ADD_PROJECT: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/95ad816ea7ad412dbacae99138dc29cc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PT6qQDBo6-INh3rfEycITgKM56HezcT-BhQwTYf2eOc',
+            UPDATE_PROJECT: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/683edac54c554756bd40be693b89a9ac/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Lg8clbMZSRNJiKVobP0nG1Yv0YFLTvnTcnXaj4QQkdA',
+            DELETE_PROJECT: 'YOUR_DELETE_PROJECT_FLOW_URL'
+        };
+        
+        // Helper function to check if URL is configured
+        function isUrlConfigured(url) {
+            return url && !url.includes('YOUR_') && url.startsWith('http');
+        }
+        
+        // Global Variables
+        let currentUser = {
+            email: '',
+            name: '',
+            role: '',
+            companyName: '',
+            jobTitle: '',
+            profile: {}
+        };
+        
+        let companyUsers = [];
+        let companyProjects = [];
+        let allProjectsList = [];
+        let projectsDataTable = null;
+        let allProjectsDataTable = null;
+        
+        // Toggle Password Visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Login Function
+        async function login() {
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const loginButton = document.getElementById('loginButton');
+            
+            if (!email || !password) {
+                Swal.fire('Error', 'Please enter both email and password', 'error');
+                return;
+            }
+            
+            // Disable button and show loading
+            loginButton.disabled = true;
+            loginButton.innerHTML = '<span class="spinner-border spinner-border-sm text-white me-2"></span>Authenticating...';
+            
+            try {
+                // Authenticate user
+                const authResponse = await fetch(API_CONFIG.AUTHENTICATE_USER, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email.toLowerCase(), password })
+                });
+                
+                if (!authResponse.ok) {
+                    throw new Error('Authentication service unavailable');
+                }
+                
+                const authResult = await authResponse.json();
+                
+                // Parse Power Automate response structure
+                const authData = authResult.body || authResult;
+                
+                if (authData.success) {
+                    // Check if profile URL is configured
+                    if (isUrlConfigured(API_CONFIG.GET_USER_PROFILE)) {
+                        // Get user profile
+                        const profileResponse = await fetch(API_CONFIG.GET_USER_PROFILE, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email })
+                        });
+                        
+                        const profileResult = await profileResponse.json();
+                        const profileData = profileResult.body || profileResult;
+                        
+                        if (profileData.success && profileData.profile) {
+                            // Set current user data
+                            currentUser = {
+                                email: email,
+                                name: profileData.profile.Company_contact_name || '',
+                                role: profileData.profile.System_role || 'team_member',
+                                companyName: profileData.profile.Company_name || '',
+                                jobTitle: profileData.profile.Company_contact_job_title || '',
+                                profile: profileData.profile
+                            };
+                        } else {
+                            throw new Error('User profile not found');
+                        }
+                    } else {
+                        // Use mock data when profile URL not configured
+                        console.warn('GET_USER_PROFILE URL not configured, using mock data');
+                        currentUser = {
+                            email: authData.email || email,
+                            name: 'Demo User',
+                            role: 'company_contact',
+                            companyName: 'Demo Company',
+                            jobTitle: 'Demo Job Title',
+                            profile: {
+                                Company_name: 'Demo Company',
+                                Company_contact_name: 'Demo User',
+                                Company_contact_job_title: 'Demo Job Title',
+                                Company_contact_email_address: authData.email || email,
+                                System_role: 'company_contact'
+                            }
+                        };
+                    }
+                    
+                    // Store in session
+                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Show main content
+                    showMainContent();
+                    
+                    // Success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        text: `Welcome back, ${currentUser.name}`,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    
+                    // Clear password
+                    document.getElementById('passwordInput').value = '';
+                } else {
+                    throw new Error(authData.message || 'Invalid email or password');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: error.message || 'Unable to authenticate. Please try again.',
+                    footer: 'If the problem persists, contact support'
+                });
+            } finally {
+                loginButton.disabled = false;
+                loginButton.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Sign In';
+            }
+        }
+        
+        // Logout Function
+        function logout() {
+            currentUser = {};
+            sessionStorage.clear();
+            
+            // Clear form
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('emailInput').value = '';
+            document.getElementById('passwordInput').value = '';
+            
+            // Destroy DataTables
+            if (projectsDataTable) {
+                projectsDataTable.destroy();
+                projectsDataTable = null;
+            }
+            if (allProjectsDataTable) {
+                allProjectsDataTable.destroy();
+                allProjectsDataTable = null;
+            }
+        }
+        
+        // Show Main Content
+        function showMainContent() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            
+            // Update user info
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userCompany').textContent = currentUser.companyName;
+            
+            // Update profile section
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+            document.getElementById('profileJobTitle').textContent = currentUser.jobTitle;
+            
+            // Update role badge
+            updateRoleBadge(currentUser.role);
+            
+            // Set current role in selector
+            document.querySelector(`input[name="roleChange"][value="${currentUser.role}"]`).checked = true;
+            
+            // Load initial data
+            loadCompanyProjects();
+            loadCompanyUsers();
+            
+            // Show warning about unconfigured URLs
+            setTimeout(showUrlWarning, 1000);
+        }
+        
+        // Update Role Badge - Fixed with null checks
+        function updateRoleBadge(role) {
+            const badge = document.getElementById('currentRoleBadge');
+            const roleText = document.getElementById('roleText');
+            
+            // Check if elements exist (main content might not be displayed yet)
+            if (!badge || !roleText) {
+                console.warn('Role badge elements not found, main content may not be displayed yet');
+                return;
+            }
+            
+            badge.className = `role-badge ${role}`;
+            
+            const roleMap = {
+                'company_contact': 'Company Contact',
+                'capstone_mentor': 'Mentor',
+                'supervisor': 'Mentor',  // Map old supervisor to Mentor
+                'team_member': 'Mentor'  // Map old team_member to Mentor
+            };
+            
+            const iconMap = {
+                'company_contact': 'fa-user-tie',
+                'capstone_mentor': 'fa-chalkboard-teacher',
+                'supervisor': 'fa-chalkboard-teacher',  // Use mentor icon
+                'team_member': 'fa-chalkboard-teacher'   // Use mentor icon
+            };
+            
+            const roleDisplayText = roleMap[role] || role;
+            roleText.textContent = roleDisplayText;
+            badge.innerHTML = `<i class="fas ${iconMap[role] || 'fa-user'}"></i> <span>${roleDisplayText}</span>`;
+        }
+        
+        // Update User Role - Fixed for Power Automate Response
+        async function updateUserRole() {
+            const selectedRole = document.querySelector('input[name="roleChange"]:checked')?.value;
+            
+            if (!selectedRole || selectedRole === currentUser.role) {
+                Swal.fire('Info', 'Please select a different role', 'info');
+                return;
+            }
+            
+            if (!isUrlConfigured(API_CONFIG.UPDATE_USER_ROLE)) {
+                // Mock update when URL not configured
+                currentUser.role = selectedRole;
+                currentUser.profile.System_role = selectedRole;
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                updateRoleBadge(selectedRole);
+                loadCompanyUsers();
+                updateMentorDropdown();
+                
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Demo Mode',
+                    text: 'Role updated locally (UPDATE_USER_ROLE URL not configured)',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                return;
+            }
+            
+            try {
+                console.log('Sending request to update role:', {
+                    email: currentUser.email,
+                    newRole: selectedRole
+                });
+                
+                const response = await fetch(API_CONFIG.UPDATE_USER_ROLE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: currentUser.email,
+                        newRole: selectedRole
+                    })
+                });
+                
+                console.log('Response status:', response.status, response.statusText);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                console.log('Full Power Automate response:', result);
+                
+                // Handle Power Automate response format properly
+                let resultData;
+                if (result.body && typeof result.body === 'object') {
+                    // Power Automate wrapped response
+                    resultData = result.body;
+                } else if (result.body && typeof result.body === 'string') {
+                    // Sometimes Power Automate returns stringified JSON in body
+                    try {
+                        resultData = JSON.parse(result.body);
+                    } catch (e) {
+                        resultData = result;
+                    }
+                } else {
+                    // Direct response
+                    resultData = result;
+                }
+                
+                console.log('Parsed result data:', resultData);
+                
+                // Check for success in various possible formats
+                const isSuccess = resultData.success === true || 
+                                resultData.success === 'true' || 
+                                (result.statusCode && result.statusCode === '200');
+                
+                if (!isSuccess) {
+                    const errorMessage = resultData.message || resultData.error || 'Unknown error occurred';
+                    throw new Error(errorMessage);
+                }
+                
+                // Update local data
+                currentUser.role = selectedRole;
+                currentUser.profile.System_role = selectedRole;
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update UI
+                updateRoleBadge(selectedRole);
+                
+                // Refresh data
+                loadCompanyUsers();
+                updateMentorDropdown();
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Role Updated!',
+                    text: resultData.message || 'Your role has been successfully changed',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                
+            } catch (error) {
+                console.error('Error updating role:', error);
+                console.error('Error details:', {
+                    message: error.message,
+                    stack: error.stack
+                });
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Update Role',
+                    text: error.message || 'An unexpected error occurred',
+                    footer: 'Check the browser console for more details'
+                });
+            }
+        }
+        
+        // Registration
+        function showRegistrationModal() {
+            document.getElementById('registrationForm').reset();
+            const modal = new bootstrap.Modal(document.getElementById('registrationModal'));
+            modal.show();
+        }
+        
+        async function submitRegistration() {
+            const registerBtn = document.getElementById('registerBtn');
+            
+            // Get form values
+            const formData = {
+                email: document.getElementById('regEmail').value.trim(),
+                contactName: document.getElementById('regContactName').value.trim(),
+                contactTitle: document.getElementById('regContactTitle').value.trim(),
+                role: document.getElementById('regRole').value,
+                companyName: document.getElementById('regCompanyName').value.trim(),
+                companyWebsite: document.getElementById('regCompanyWebsite').value.trim()
+            };
+            
+            // Validate
+            if (!formData.email || !formData.contactName || !formData.contactTitle || 
+                !formData.role || !formData.companyName) {
+                Swal.fire('Error', 'Please fill in all required fields', 'error');
+                return;
+            }
+            
+            if (!isUrlConfigured(API_CONFIG.REGISTER_USER)) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Registration Not Available',
+                    text: 'Registration URL not configured. Please contact administrator.',
+                    footer: 'REGISTER_USER Power Automate flow needs to be configured'
+                });
+                return;
+            }
+            
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            
+            try {
+                const response = await fetch(API_CONFIG.REGISTER_USER, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        Email: formData.email,
+                        Company_name: formData.companyName,
+                        Company_contact_name: formData.contactName,
+                        Company_contact_job_title: formData.contactTitle,
+                        Company_contact_email_address: formData.email,
+                        Company_website: formData.companyWebsite,
+                        System_role: formData.role,
+                        Added_by: 'self',
+                        Date_added: new Date().toISOString()
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Registration failed');
+                
+                const response_result = await response.json();
+                const result = response_result.body || response_result;
+                
+                if (!result.success) {
+                    if (result.message && result.message.includes('already exists')) {
+                        Swal.fire('Registration Error', 'This email is already registered. Please use the login page.', 'error');
+                        return;
+                    }
+                    throw new Error(result.message || 'Registration failed');
+                }
+                
+                // Success
+                bootstrap.Modal.getInstance(document.getElementById('registrationModal')).hide();
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registration Successful!',
+                    html: `
+                        <div class="text-start">
+                            <p>Your account has been created successfully!</p>
+                            <div class="alert alert-info mt-3">
+                                <strong>Important:</strong> Your password has been sent to:<br>
+                                <span class="fw-bold">${formData.email}</span>
+                            </div>
+                            <p>Please check your email and use the password to login.</p>
+                        </div>
+                    `,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#003D7C'
+                });
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                Swal.fire('Error', 'Registration failed. Please try again.', 'error');
+            } finally {
+                registerBtn.disabled = false;
+                registerBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Complete Registration';
+            }
+        }
+        
+        // Removed loadDashboard - now using updateStatistics directly
+        
+        // Projects Management
+        async function loadCompanyProjects() {
+            if (!isUrlConfigured(API_CONFIG.GET_COMPANY_PROJECTS)) {
+                // Use mock data when URL not configured
+                companyProjects = [
+                    {
+                        Project_ID: 'DEMO-001',
+                        Project_title: 'Demo Healthcare AI Project',
+                        Project_type: 'Software',
+                        Internship_location: 'Singapore',
+                        Vacancy: 2,
+                        Mentors_name: 'Demo Mentor',
+                        Capstone_stipend_per_month: '1000',
+                        Company_name: currentUser.companyName
+                    },
+                    {
+                        Project_ID: 'DEMO-002',
+                        Project_title: 'Demo Biomedical Research',
+                        Project_type: 'Wet lab',
+                        Internship_location: 'Hybrid',
+                        Vacancy: 1,
+                        Mentors_name: 'Demo Supervisor',
+                        Capstone_stipend_per_month: '1200',
+                        Company_name: currentUser.companyName
+                    }
+                ];
+                
+                displayCompanyProjects();
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_CONFIG.GET_COMPANY_PROJECTS, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ companyName: currentUser.companyName })
+                });
+                
+                if (!response.ok) throw new Error('Failed to load projects');
+                
+                const response_data = await response.json();
+                const data = response_data.body || response_data;
+                companyProjects = data.projects || [];
+                
+                displayCompanyProjects();
+                
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                Swal.fire('Error', 'Failed to load projects', 'error');
+            }
+        }
+        
+        function displayCompanyProjects() {
+            const tableBody = document.getElementById('projectsListBody');
+            tableBody.innerHTML = '';
+            
+            if (companyProjects.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">No projects yet. Click "Add Project" to create one.</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            companyProjects.forEach(project => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <strong>${project.Project_title || ''}</strong>
+                        <br>
+                        <small class="text-muted">${project.Project_type || ''} • ${project.Internship_location || ''}</small>
+                    </td>
+                    <td>${project.Mentors_name || '<em class="text-muted">Not assigned</em>'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-edit me-1" onclick='editProject(${JSON.stringify(project).replace(/'/g, "&apos;")})' title="View/Edit">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-delete" onclick="deleteProject('${project.Project_ID}')" title="Delete">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Update statistics
+            updateStatistics();
+        }
+        
+        function updateStatistics() {
+            document.getElementById('totalProjects').textContent = companyProjects.length;
+            document.getElementById('totalMentors').textContent = 
+                companyUsers.filter(u => u.System_role === 'capstone_mentor').length;
+        }
+        
+        function showAddProjectModal() {
+            document.getElementById('projectModalTitle').textContent = 'Add New Project';
+            document.getElementById('projectForm').reset();
+            document.getElementById('projectId').value = '';
+            
+            // Update mentor dropdown
+            updateMentorDropdown();
+            
+            const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+            modal.show();
+        }
+        
+        function editProject(project) {
+            document.getElementById('projectModalTitle').textContent = 'View/Edit Project';
+            
+            // Fill form
+            document.getElementById('projectId').value = project.Project_ID || '';
+            document.getElementById('projectTitle').value = project.Project_title || '';
+            document.getElementById('projectType').value = project.Project_type || '';
+            document.getElementById('internshipLocation').value = project.Internship_location || '';
+            document.getElementById('vacancy').value = project.Vacancy || '';
+            document.getElementById('stipend').value = project.Capstone_stipend_per_month || '';
+            document.getElementById('partTimeOption').value = project.Part_time_internship_option || '';
+            document.getElementById('projectAbstract').value = project.Project_abstract || '';
+            document.getElementById('expectedDeliverables').value = project.Expected_deliverables || '';
+            document.getElementById('learningOutcomes').value = project.Learning_outcome || '';
+            document.getElementById('prerequisites').value = project['Pre-requisites'] || '';
+            document.getElementById('recommendedCourses').value = project.Recommended_courses || '';
+            document.getElementById('remarks').value = project.Remark || '';
+            
+            // Update mentor dropdown and set selected values
+            updateMentorDropdown();
+            
+            // Set selected mentors
+            if (project.Mentors_name) {
+                const mentorNames = project.Mentors_name.split(',').map(m => m.trim());
+                $('#mentorSelect').val(mentorNames).trigger('change');
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+            modal.show();
+        }
+        
+        async function saveProject() {
+            const saveBtn = document.getElementById('saveProjectBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+            
+            try {
+                const selectedMentors = $('#mentorSelect').val() || [];
+                
+                const projectData = {
+                    Project_ID: document.getElementById('projectId').value || generateProjectId(),
+                    Project_title: document.getElementById('projectTitle').value,
+                    Project_type: document.getElementById('projectType').value,
+                    Mentors_name: selectedMentors.join(', '),
+                    Designation: currentUser.jobTitle || '',
+                    Email_address: currentUser.email || '',
+                    Company_name: currentUser.companyName || '',
+                    company_contact_name: currentUser.name || '',
+                    Company_contact_job_title: currentUser.jobTitle || '',
+                    Company_contact_email_address: currentUser.email || '',
+                    Company_website: (currentUser.profile && currentUser.profile.Company_website) || '',
+                    Internship_location: document.getElementById('internshipLocation').value,
+                    Vacancy: parseInt(document.getElementById('vacancy').value) || 1,
+                    Capstone_stipend_per_month: document.getElementById('stipend').value || '',
+                    Part_time_internship_option: document.getElementById('partTimeOption').value,
+                    Project_abstract: document.getElementById('projectAbstract').value,
+                    'Pre-requisites': document.getElementById('prerequisites').value || '',
+                    Recommended_courses: document.getElementById('recommendedCourses').value || '',
+                    Expected_deliverables: document.getElementById('expectedDeliverables').value,
+                    Learning_outcome: document.getElementById('learningOutcomes').value,
+                    Remark: document.getElementById('remarks').value || ''
+                };
+                
+                const isEdit = document.getElementById('projectId').value !== '';
+                const apiUrl = isEdit ? API_CONFIG.UPDATE_PROJECT : API_CONFIG.ADD_PROJECT;
+                
+                // Debug logging
+                console.log('Project Data being sent:', projectData);
+                console.log('API URL:', apiUrl);
+                console.log('Is Edit mode:', isEdit);
+                
+                if (!isUrlConfigured(apiUrl)) {
+                    // Mock save for demo
+                    if (isEdit) {
+                        const index = companyProjects.findIndex(p => p.Project_ID === projectData.Project_ID);
+                        if (index !== -1) companyProjects[index] = projectData;
+                    } else {
+                        companyProjects.push(projectData);
+                    }
+                    
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Demo Mode',
+                        text: `Project ${isEdit ? 'updated' : 'created'} locally (${isEdit ? 'UPDATE' : 'ADD'}_PROJECT URL not configured)`,
+                        timer: 2000
+                    });
+                    
+                    bootstrap.Modal.getInstance(document.getElementById('projectModal')).hide();
+                    displayCompanyProjects();
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = 'Save Project';
+                    return;
+                }
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(projectData)
+                });
+                
+                console.log('Response status:', response.status, response.statusText);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Response error text:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const response_result = await response.json();
+                console.log('Power Automate response:', response_result);
+                
+                const result = response_result.body || response_result;
+                
+                if (!result.success) {
+                    throw new Error(result.message || 'Failed to save project');
+                }
+                
+                Swal.fire('Success', `Project ${isEdit ? 'updated' : 'created'} successfully!`, 'success');
+                
+                bootstrap.Modal.getInstance(document.getElementById('projectModal')).hide();
+                loadCompanyProjects();
+                
+            } catch (error) {
+                console.error('Error saving project:', error);
+                console.error('Full error details:', {
+                    message: error.message,
+                    stack: error.stack
+                });
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Save Project',
+                    text: error.message || 'An unexpected error occurred',
+                    footer: 'Check the browser console for detailed error information'
+                });
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Save Project';
+            }
+        }
+        
+        async function deleteProject(projectId) {
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "This action cannot be undone!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            });
+            
+            if (result.isConfirmed) {
+                if (!isUrlConfigured(API_CONFIG.DELETE_PROJECT)) {
+                    // Mock delete for demo
+                    companyProjects = companyProjects.filter(p => p.Project_ID !== projectId);
+                    Swal.fire('Demo Mode', 'Project deleted locally (DELETE_PROJECT URL not configured)', 'info');
+                    displayCompanyProjects();
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(API_CONFIG.DELETE_PROJECT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ project_ID: projectId })
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to delete project');
+                    
+                    const response_result = await response.json();
+                    const result = response_result.body || response_result;
+                    
+                    if (!result.success) {
+                        throw new Error(result.message || 'Failed to delete project');
+                    }
+                    
+                    Swal.fire('Deleted!', 'Your project has been deleted.', 'success');
+                    loadCompanyProjects();
+                    
+                } catch (error) {
+                    console.error('Error deleting project:', error);
+                    Swal.fire('Error', 'Failed to delete project', 'error');
+                }
+            }
+        }
+        
+        // Team Management
+        async function loadCompanyUsers() {
+            if (!isUrlConfigured(API_CONFIG.GET_COMPANY_USERS)) {
+                // Use mock data when URL not configured
+                companyUsers = [
+                    {
+                        Company_contact_name: currentUser.name,
+                        Company_contact_email_address: currentUser.email,
+                        Company_contact_job_title: currentUser.jobTitle,
+                        System_role: currentUser.role,
+                        Company_name: currentUser.companyName
+                    },
+                    {
+                        Company_contact_name: 'Demo Mentor',
+                        Company_contact_email_address: 'mentor@demo.com',
+                        Company_contact_job_title: 'Senior Researcher',
+                        System_role: 'capstone_mentor',
+                        Company_name: currentUser.companyName
+                    },
+                    {
+                        Company_contact_name: 'Demo Team Member',
+                        Company_contact_email_address: 'team@demo.com',
+                        Company_contact_job_title: 'Research Assistant',
+                        System_role: 'team_member',
+                        Company_name: currentUser.companyName
+                    }
+                ];
+                
+                updateMentorDropdown();
+                updateStatistics();
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_CONFIG.GET_COMPANY_USERS, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ companyName: currentUser.companyName })
+                });
+                
+                if (!response.ok) throw new Error('Failed to load team members');
+                
+                const response_data = await response.json();
+                const data = response_data.body || response_data;
+                companyUsers = data.users || [];
+                
+                updateMentorDropdown();
+                updateStatistics();
+                
+            } catch (error) {
+                console.error('Error loading team:', error);
+            }
+        }
+        
+        function updateMentorDropdown() {
+            const mentors = companyUsers.filter(u => u.System_role === 'capstone_mentor');
+            const select = document.getElementById('mentorSelect');
+            
+            select.innerHTML = mentors.map(mentor => 
+                `<option value="${mentor.Company_contact_name}">${mentor.Company_contact_name} - ${mentor.Company_contact_job_title}</option>`
+            ).join('');
+            
+            // Initialize Select2
+            $('#mentorSelect').select2({
+                placeholder: 'Select mentors for this project',
+                allowClear: true,
+                dropdownParent: $('#projectModal')
+            });
+        }
+        
+        // Removed All Projects View functionality - not needed in two-column layout
+        
+        // Show URL Configuration Warning
+        function showUrlWarning() {
+            const unconfiguredUrls = [];
+            for (const [key, url] of Object.entries(API_CONFIG)) {
+                if (!isUrlConfigured(url) && key !== 'AUTHENTICATE_USER') {
+                    unconfiguredUrls.push(key);
+                }
+            }
+            
+            if (unconfiguredUrls.length > 0) {
+                console.warn('Unconfigured Power Automate URLs:', unconfiguredUrls);
+                
+                // Show warning banner once
+                if (!sessionStorage.getItem('urlWarningShown')) {
+                    sessionStorage.setItem('urlWarningShown', 'true');
+                    
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Demo Mode Active',
+                        html: `
+                            <div class="text-start">
+                                <p>The following features are using mock data because their Power Automate URLs are not configured:</p>
+                                <ul class="text-start">
+                                    ${unconfiguredUrls.map(url => `<li>${url.replace(/_/g, ' ')}</li>`).join('')}
+                                </ul>
+                                <p class="mt-3">Configure these URLs in the API_CONFIG to enable full functionality.</p>
+                            </div>
+                        `,
+                        confirmButtonText: 'OK, I understand',
+                        confirmButtonColor: '#003D7C'
+                    });
+                }
+            }
+        }
+        
+        // Utility Functions
+        function generateProjectId() {
+            const timestamp = Date.now();
+            const random = Math.floor(Math.random() * 1000);
+            return `IND-${timestamp}-${random}`;
+        }
+        
+        function formatRoleName(role) {
+            const roleMap = {
+                'company_contact': 'Company Contact',
+                'capstone_mentor': 'Mentor',
+                'supervisor': 'Mentor',  // Map old supervisor to Mentor
+                'team_member': 'Mentor'   // Map old team_member to Mentor
+            };
+            return roleMap[role] || role;
+        }
+        
+        function getRoleIcon(role) {
+            const iconMap = {
+                'company_contact': 'fa-user-tie',
+                'capstone_mentor': 'fa-chalkboard-teacher',
+                'supervisor': 'fa-chalkboard-teacher',  // Use mentor icon
+                'team_member': 'fa-chalkboard-teacher'   // Use mentor icon
+            };
+            return iconMap[role] || 'fa-user';
+        }
+        
+        // Removed showLoading function - not needed in two-column layout
+        
+        // Check for existing session on page load
+        async function checkExistingSession() {
+            const storedUser = sessionStorage.getItem('currentUser');
+            
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                    
+                    if (currentUser.email && currentUser.companyName) {
+                        showMainContent();
+                    }
+                } catch (e) {
+                    console.error('Error parsing stored user:', e);
+                }
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check existing session
+            checkExistingSession();
+            
+            // Add enter key support for password field
+            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    login();
+                }
+            });
+            
+            // Prevent form submission on enter
+            document.getElementById('projectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
