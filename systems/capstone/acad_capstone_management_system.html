@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <!-- 
     DOCUMENTATION:
-    Date: 2025-09-04 20:15 SGT
+    Date: 2025-09-04 20:18 SGT
     Changes:
-    - Added spinner animation to Save Project button during save operation
-    - Button is disabled and shows "Saving..." text with spinner while processing
-    - Spinner design matches the login button spinner (white color on blue background)
-    - Button state is properly reset in all scenarios (success, error, validation failure)
+    - Elongated View/Edit and Delete buttons from 70px to 100px width
+    - Updated action-buttons-cell container to accommodate wider buttons (110px-140px)
+    - Increased Actions column width from 10% to 12% (min-width 120px, max-width 150px)
+    - Adjusted responsive breakpoints for medium and small screens
 -->
 <html lang="en">
 <head>
@@ -354,7 +354,7 @@
         .btn-edit {
             background-color: var(--nus-orange);
             color: white;
-            width: 70px;  /* Fixed width instead of 100% */
+            width: 100px;  /* Fixed width instead of 100% */
             justify-content: center;
             transition: all 0.2s ease;
         }
@@ -369,7 +369,7 @@
         .btn-delete {
             background-color: var(--danger);
             color: white;
-            width: 70px;  /* Fixed width instead of 100% */
+            width: 100px;  /* Fixed width instead of 100% */
             justify-content: center;
             transition: all 0.2s ease;
         }
@@ -387,10 +387,10 @@
             flex-direction: column;
             gap: var(--space-1);
             align-items: flex-start;  /* Changed from stretch to flex-start */
-            min-width: 90px;
-            max-width: 110px;
+            min-width: 110px;
+            max-width: 140px;
             padding: calc(var(--space-1) / 2) 0;
-            padding-left: 10px;  /* Remove left padding */
+            padding-left: 0.5px;  /* Remove left padding */
         }
         
         /* Form Controls */
@@ -887,9 +887,9 @@
         
         #projectsTable th:nth-child(8), 
         #projectsTable td:nth-child(8) { /* Actions */
-            width: 10%;
-            min-width: 100px;
-            max-width: 120px;
+            width: 12%;
+            min-width: 120px;
+            max-width: 150px;
             padding-left: var(--space-1);  /* Reduce left padding for Actions column */
         }
         
@@ -940,7 +940,7 @@
             }
             
             .action-buttons-cell {
-                min-width: 80px;
+                min-width: 100px;
                 gap: 6px;
             }
         }
@@ -999,7 +999,7 @@
             
             .action-buttons-cell {
                 gap: 2px;
-                min-width: 60px;
+                min-width: 80px;
             }
             
             .action-buttons {
@@ -1379,7 +1379,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label class="form-label">Internship Location <span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="internshipLocation" placeholder="e.g., NUS MD1" required>
+                                    <input type="text" class="form-control" id="internshipLocation" placeholder="e.g., Singapore" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -1473,7 +1473,7 @@
         // Configuration - Replace these with your Power Automate URLs
         const API_CONFIG = {
             // IMPORTANT: Replace this with your authentication flow URL
-            AUTHENTICATE_USER: 'https://prod-70.southeastasia.logic.azure.com:443/workflows/74643a6f6ba14eb2b7ea91db3663cdbd/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=uFzyRblvK_5jrwlUT957OvOqXbegOBpoLV9c6HhMUdg',
+            AUTHENTICATE_USER: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/74643a6f6ba14eb2b7ea91db3663cdbd/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xjtKpe1SAy0r1qCiWw54pgddEv_xDLkr6lp-q1QdFu4',
             
             // Registration and PI Profile URLs - REPLACE WITH YOUR ACTUAL URLS
             REGISTER_USER: 'https://prod-86.southeastasia.logic.azure.com:443/workflows/a387bc1b0ed6419a9e06c7f81a39cd9c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KkJxj7Mt_2GczSMc-H1lv1M3at0Rs_aWnhc2dbP3oco',
@@ -1482,7 +1482,7 @@
             
             // Existing flow URLs
             GET_PROJECTS: 'https://prod-47.southeastasia.logic.azure.com:443/workflows/af46dd43639a4134a35ed2a4f7e3e38a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=XDdXoVdUW-dyFUmujjbqV8O-tBrt8y6eTLHNQkejNCg',
-            ADD_PROJECT: 'https://prod-80.southeastasia.logic.azure.com:443/workflows/82a26bf2ec0b4c508540f9a1248903de/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=elnzYL7HQsFcbf9MUOR27fxGb2hz61rufr6J8FDk_jU',
+            ADD_PROJECT: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/82a26bf2ec0b4c508540f9a1248903de/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=W7OFHrr9sYlRHQLokKLQXwdsDi9FJwfZvbXUmu-rf9w',
             UPDATE_PROJECT: 'https://prod-77.southeastasia.logic.azure.com:443/workflows/4c6119a4c6144e43815dbd14105be195/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iYdAL7_Z1LAxYDx_5PzFGN09mdYltnVPyGU3dfdhcyc',
             DELETE_PROJECT: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b477a511dba244b1b31a3e677579f40d/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=5kstYdbwSG5O2Fa0dVDZejRTEpr9mbJ4t9hgLqTwsIA'
         };
@@ -1704,7 +1704,7 @@
                     <td>
                         <div class="action-buttons-cell">
                             <button class="btn btn-sm btn-edit" onclick='editProject(${JSON.stringify(project).replace(/'/g, "&apos;")})'>
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fas fa-edit"></i> View/Edit
                             </button>
                             <button class="btn btn-sm btn-delete" onclick="deleteProject('${project.project_ID}')">
                                 <i class="fas fa-trash"></i> Delete
@@ -2048,7 +2048,7 @@
                     icon: 'error',
                     title: 'Registration Failed',
                     text: 'Unable to complete registration. Please try again or contact support.',
-                    footer: 'Support: it-support@nus.edu.sg'
+                    footer: 'MScPHM team: mscphm@nus.edu.sg'
                 });
             } finally {
                 submitBtn.disabled = false;
