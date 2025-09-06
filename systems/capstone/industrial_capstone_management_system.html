@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <!-- 
-    DOCUMENTATION:
-    Date: 2025-09-05 08:15:00 SGT
-    Industrial Capstone Management System - Two Column Layout
-    
-    Latest Update (2025-09-05 17:45:00 SGT):
-    - Enhanced saveProject() function with comprehensive error handling and debugging
-    - Added null checks and default values to prevent undefined data issues
-    - Fixed Vacancy field to parse as integer for Excel compatibility
-    - Added detailed console logging for Power Automate request/response debugging
-    - Improved error messages with detailed feedback for troubleshooting
-    - Added safeguards for currentUser.profile access to prevent null reference errors
-    
-    Previous Update (2025-09-05 16:30:00 SGT):
-    - Fixed updateUserRole() function to properly handle Power Automate response format
-    - Added comprehensive error handling and debugging logs
-    - Enhanced response parsing for different Power Automate output formats
-    - Improved success detection logic
-    - Added detailed error messages for troubleshooting
+DOCUMENTATION:
+Date: 2025-01-12 01:25:00 SGT
+Industrial Capstone Management System - Production Version
+
+Latest Update (2025-01-12 01:25:00 SGT):
+- Increased width of Company Contact, Direct Supervisor/Mentor, and Update Role buttons by 25% (from 210px to 263px)
+- Adjusted role selector button widths for better visual consistency
 -->
 <html lang="en">
 <head>
@@ -31,8 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- SweetAlert2 -->
@@ -77,12 +65,17 @@
             --space-4: 32px;
             --space-5: 40px;
             --space-6: 48px;
-            --space-8: 64px;
         }
         
         /* Global box-sizing */
         *, *::before, *::after {
             box-sizing: border-box;
+        }
+        
+        /* Prevent unnecessary scrollbars */
+        html {
+            overflow-y: auto;
+            overflow-x: hidden;
         }
         
         /* ============================================
@@ -103,6 +96,7 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            overflow-y: auto; /* Changed from default to prevent unnecessary scrollbar */
         }
         
         /* Main wrapper for proper footer positioning */
@@ -153,9 +147,7 @@
         .text-small { 
             font-size: 0.875rem; /* 14px */
         }
-        .text-xs { 
-            font-size: 0.75rem;  /* 12px */
-        }
+
         
         /* ============================================
            3. LAYOUT & SPACING - 8px Grid System
@@ -243,41 +235,7 @@
             overflow-x: hidden;
         }
         
-        /* Navigation Tabs */
-        .nav-tabs {
-            border-bottom: 2px solid var(--nus-gray-300);
-            margin-bottom: var(--space-4);
-        }
-        
-        .nav-tabs .nav-link {
-            color: var(--nus-gray-600);
-            border: none;
-            padding: var(--space-2) var(--space-3);
-            font-weight: 500;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        
-        .nav-tabs .nav-link:hover {
-            color: var(--nus-blue);
-        }
-        
-        .nav-tabs .nav-link.active {
-            color: var(--nus-blue);
-            background: none;
-            border: none;
-        }
-        
-        .nav-tabs .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--nus-orange);
-        }
-        
+
         /* Button Styling (Same as Academic) */
         .btn {
             font-weight: 500;
@@ -359,11 +317,19 @@
             font-weight: 500;
         }
         
+        /* Ensure Add Project and Refresh buttons have same height */
+        .btn-add-project.btn-sm, .btn-refresh.btn-sm {
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 12px;
+        }
+        
         /* Edit/Delete Buttons */
         .btn-edit {
             background-color: var(--nus-orange);
             color: white;
-            width: 70px;
+            width: 100px;
             justify-content: center;
             transition: all 0.2s ease;
         }
@@ -378,7 +344,7 @@
         .btn-delete {
             background-color: var(--danger);
             color: white;
-            width: 70px;
+            width: 100px;
             justify-content: center;
             transition: all 0.2s ease;
         }
@@ -423,6 +389,55 @@
             font-size: 0.875rem;
         }
         
+        /* Custom Dropdown Styling with Modern Arrow */
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 6.5 6.5L14 6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px 12px;
+            padding-right: 40px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        
+        .form-select:hover {
+            border-color: var(--nus-blue);
+        }
+        
+        /* Custom Project Type Container */
+        .custom-project-type-container {
+            margin-top: var(--space-2);
+            display: none;
+            animation: fadeInDown 0.3s ease;
+        }
+        
+        .custom-project-type-container.show {
+            display: block;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .custom-project-type-input {
+            border: 2px solid var(--nus-orange);
+            background-color: var(--nus-light-blue);
+            font-weight: 500;
+        }
+        
+        .custom-project-type-input:focus {
+            border-color: var(--nus-dark-blue);
+            box-shadow: 0 0 0 3px rgba(0, 61, 124, 0.15);
+        }
+        
         /* Password toggle button */
         .password-toggle {
             position: absolute;
@@ -440,14 +455,7 @@
             color: var(--nus-blue);
         }
         
-        /* Action Buttons Container */
-        .action-buttons {
-            margin-bottom: var(--space-4);
-            display: flex;
-            gap: var(--space-2);
-            flex-wrap: wrap;
-        }
-        
+
         /* Required Asterisk */
         .required {
             color: var(--danger);
@@ -472,8 +480,7 @@
         
         /* Table Container */
         .table-container {
-            overflow-x: auto;
-            overflow-y: hidden;
+            overflow: hidden; /* Prevent all unnecessary scrollbars */
             background: white;
             border-radius: 8px;
             border: 1px solid var(--nus-gray-200);
@@ -483,42 +490,66 @@
             -webkit-overflow-scrolling: touch;
         }
         
-        /* DataTable Wrapper */
-        .dataTables_wrapper {
-            max-width: 100%;
-            overflow: hidden;
-        }
-        
-        table.dataTable {
-            border-collapse: separate !important;
-            border-spacing: 0;
-            width: 100% !important;
-        }
+
         
         .table {
             margin-bottom: 0;
+            table-layout: fixed; /* Added for consistent column widths */
+            width: 100%;
         }
         
-        .table thead {
-            background-color: var(--nus-blue);
-            color: white;
+        /* Specific column width distribution for the project table */
+        #projectsTableSimple {
+            table-layout: fixed;
+        }
+        
+        #projectsTableSimple thead th:nth-child(1) {
+            width: 50%; /* Title column */
+        }
+        
+        #projectsTableSimple thead th:nth-child(2) {
+            width: 30%; /* Mentors column */
+        }
+        
+        #projectsTableSimple thead th:nth-child(3) {
+            width: 20%; /* Actions column */
+        }
+        
+        /* Force consistent table header styling */
+        .table thead,
+        #projectsTableSimple thead {
+            background-color: var(--nus-blue) !important;
+            color: white !important;
             position: sticky;
             top: 0;
             z-index: 10;
         }
         
-        .table thead th {
-            border: none;
+        .table thead th,
+        #projectsTableSimple thead th {
+            background-color: var(--nus-blue) !important;
+            color: white !important;
+            border: none !important;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.75rem;
             letter-spacing: 0.03em;
-            padding: var(--space-2) var(--space-2);
+            padding: 20px 16px !important; /* Increased padding for consistent height */
+            min-height: 60px; /* Minimum height to match loaded state */
+            height: 60px; /* Fixed height for consistency */
             white-space: normal;
             word-wrap: break-word;
             vertical-align: middle;
             line-height: 1.4;
             text-align: center;
+        }
+        
+        /* Ensure header styling persists during all states */
+        .table-striped thead,
+        .table-striped thead tr,
+        .table-striped thead th {
+            background-color: var(--nus-blue) !important;
+            color: white !important;
         }
         
         /* Add spacing for sort icons */
@@ -568,49 +599,7 @@
             background-color: var(--nus-gray-100);
         }
         
-        /* Action Buttons Cell Styling */
-        .action-buttons-cell {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-1);
-            align-items: flex-start;
-            min-width: 90px;
-            max-width: 110px;
-            padding: calc(var(--space-1) / 2) 0;
-            padding-left: 10px;
-        }
-        
-        /* DataTable Specific Styling */
-        .dataTables_wrapper .dataTables_length,
-        .dataTables_wrapper .dataTables_filter,
-        .dataTables_wrapper .dataTables_info,
-        .dataTables_wrapper .dataTables_paginate {
-            padding: var(--space-2);
-        }
-        
-        .dataTables_wrapper .dataTables_filter input {
-            border: 1px solid var(--nus-gray-300);
-            border-radius: 6px;
-            padding: var(--space-1) var(--space-2);
-            margin-left: var(--space-1);
-        }
-        
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            border-radius: 4px;
-            margin: 0 2px;
-        }
-        
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: var(--nus-blue) !important;
-            color: white !important;
-            border: 1px solid var(--nus-blue) !important;
-        }
-        
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background: var(--nus-light-blue) !important;
-            color: var(--nus-blue) !important;
-            border: 1px solid var(--nus-blue) !important;
-        }
+
         
         /* Modal Styling */
         .modal-content {
@@ -674,11 +663,6 @@
         }
         
         /* Loading Spinner */
-        .spinner-container {
-            text-align: center;
-            padding: var(--space-6);
-        }
-        
         .spinner-border {
             width: 3rem;
             height: 3rem;
@@ -700,6 +684,77 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Projects Table Loading Spinner Container */
+        .projects-loading-container {
+            display: none;
+            padding: 60px 20px;
+            text-align: center;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            min-height: 300px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .projects-loading-container.show {
+            display: flex;
+        }
+        
+        /* Modern Circular Spinner */
+        .projects-spinner {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: 0 auto 20px;
+        }
+        
+        .projects-spinner::before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            margin-top: -25px;
+            margin-left: -25px;
+            border-radius: 50%;
+            border: 3px solid var(--nus-gray-200);
+            border-top-color: var(--nus-blue);
+            animation: projects-spin 0.8s linear infinite;
+        }
+        
+        @keyframes projects-spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Loading Text */
+        .projects-loading-text {
+            color: var(--nus-gray-600);
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        /* Pulsing dots animation */
+        .loading-dots {
+            display: inline-block;
+        }
+        
+        .loading-dots::after {
+            content: '...';
+            display: inline-block;
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+        
         /* Footer */
         .footer {
             margin-top: auto;
@@ -717,34 +772,7 @@
             opacity: 0.9;
         }
         
-        /* Team Cards */
-        .team-card {
-            background: white;
-            border: 1px solid var(--nus-gray-200);
-            border-radius: 8px;
-            padding: var(--space-3);
-            margin-bottom: var(--space-3);
-            transition: all 0.2s ease;
-        }
-        
-        .team-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-        
-        .team-avatar {
-            width: 48px;
-            height: 48px;
-            background: var(--nus-light-blue);
-            color: var(--nus-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1.25rem;
-        }
-        
+
         /* Role Badge Styling */
         .role-badge {
             display: inline-flex;
@@ -761,12 +789,14 @@
             color: var(--nus-blue);
         }
         
-        .role-badge.capstone_mentor {
+        .role-badge.capstone_mentor,
+        .role-badge.supervisor,
+        .role-badge.team_member {
             background: #d4edda;
             color: #155724;
         }
         
-        /* Removed supervisor and team_member styles - all non-company_contact badges use mentor style */
+        /* All mentor-type roles (capstone_mentor, supervisor, team_member) use the same green style */
         
         /* Profile Card */
         .profile-section {
@@ -803,7 +833,9 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
-            min-width: 140px;
+            width: 263px;
+            min-height: 80px;
+            justify-content: center;
         }
         
         .role-option input[type="radio"]:checked + label {
@@ -827,11 +859,80 @@
             border: 1px solid var(--nus-gray-300);
             border-radius: 6px;
             min-height: 40px;
+            padding: 4px 8px;
+            background-color: white;
+            font-size: 1rem;
         }
         
         .select2-container--default.select2-container--focus .select2-selection--multiple {
             border-color: var(--nus-orange);
             box-shadow: 0 0 0 3px rgba(239, 124, 0, 0.15);
+            outline: none;
+        }
+        
+        .select2-container--default .select2-selection--multiple:hover {
+            border-color: var(--nus-blue);
+        }
+        
+        /* Select2 Tags (Selected Items) */
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: var(--nus-blue);
+            border: 1px solid var(--nus-blue);
+            border-radius: 4px;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 2px 8px;
+            margin: 2px;
+        }
+        
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: white;
+            font-size: 1.1rem;
+            margin-right: 6px;
+            opacity: 0.8;
+        }
+        
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            color: white;
+            opacity: 1;
+        }
+        
+        /* Select2 Placeholder */
+        .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
+            color: var(--nus-gray-600);
+            font-size: 0.875rem;
+            margin: 4px;
+        }
+        
+        /* Select2 Search Input */
+        .select2-container--default .select2-search--inline .select2-search__field {
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            margin: 2px;
+        }
+        
+        /* Select2 Dropdown */
+        .select2-dropdown {
+            border: 1px solid var(--nus-gray-300);
+            border-radius: 6px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .select2-container--default .select2-results__option {
+            padding: 8px 12px;
+            font-size: 0.875rem;
+        }
+        
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: var(--nus-light-blue);
+            color: var(--nus-blue);
+        }
+        
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: var(--nus-blue);
+            color: white;
         }
         
         /* Dashboard Stats Cards */
@@ -888,6 +989,20 @@
             display: none;
         }
         
+        /* Table wrapper to handle overflow properly */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden; /* Prevent vertical scrollbar */
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Ensure table doesn't overflow unnecessarily */
+        .card-body .table-wrapper {
+            margin: 0;
+            padding: 0;
+        }
+        
         /* Responsive */
         @media (max-width: 1200px) {
             .table {
@@ -896,7 +1011,9 @@
             
             .table thead th {
                 font-size: 0.7rem;
-                padding: var(--space-1) var(--space-1);
+                padding: 12px 8px !important; /* Adjusted for responsive */
+                min-height: 48px;
+                height: 48px;
             }
             
             .table tbody td {
@@ -906,6 +1023,22 @@
         }
         
         @media (max-width: 768px) {
+            /* Allow horizontal scroll on mobile for tables */
+            .table-wrapper {
+                overflow-x: auto;
+            }
+            
+            /* Reset fixed table layout on mobile for better responsiveness */
+            #projectsTableSimple {
+                table-layout: auto;
+                min-width: 500px; /* Minimum width to maintain readability */
+            }
+            
+            #projectsTableSimple thead th:nth-child(1),
+            #projectsTableSimple thead th:nth-child(2),
+            #projectsTableSimple thead th:nth-child(3) {
+                width: auto; /* Reset widths on mobile */
+            }
             :root {
                 font-size: 14px; /* Slightly smaller base font on mobile */
             }
@@ -931,11 +1064,7 @@
                 margin: 0;
             }
             
-            .nav-tabs .nav-link {
-                padding: var(--space-1) var(--space-2);
-                font-size: 0.875rem;
-            }
-            
+
             .role-option label {
                 min-width: 100px;
                 padding: var(--space-1) var(--space-2);
@@ -944,10 +1073,7 @@
             .stat-card {
                 margin-bottom: var(--space-2);
             }
-            
-            .team-card {
-                padding: var(--space-2);
-            }
+
         }
         
         /* Additional Small Utilities */
@@ -960,14 +1086,7 @@
             color: var(--nus-gray-600) !important;
         }
         
-        .border-warning {
-            border-color: var(--warning) !important;
-        }
-        
-        .is-invalid {
-            border-color: var(--danger) !important;
-        }
-        
+
         .form-check-input:checked {
             background-color: var(--nus-blue);
             border-color: var(--nus-blue);
@@ -1078,19 +1197,19 @@
                                         <label for="role_company_contact">
                                             <i class="fas fa-user-tie role-icon"></i>
                                             <strong>Company Contact</strong>
-                                            <small class="text-muted">Main POC</small>
+                                            <small class="text-muted">For administative matters</small>
                                         </label>
                                     </div>
                                     <div class="role-option">
                                         <input type="radio" name="roleChange" id="role_capstone_mentor" value="capstone_mentor">
                                         <label for="role_capstone_mentor">
                                             <i class="fas fa-chalkboard-teacher role-icon"></i>
-                                            <strong>Mentor</strong>
-                                            <small class="text-muted">Guide students</small>
+                                            <strong>Direct Supervisor/Mentor</strong>
+                                            <small class="text-muted">Guide students in internship</small>
                                         </label>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary btn-sm mt-3" onclick="updateUserRole()">
+                                <button class="btn btn-primary btn-sm mt-3" onclick="updateUserRole()" style="width: 263px; height: 64px;">
                                     <i class="fas fa-save"></i> Update Role
                                 </button>
                             </div>
@@ -1129,13 +1248,22 @@
                                 </div>
                             </div>
                             <div class="card-body p-0">
-                                <div class="table-responsive">
+                                <!-- Loading Spinner Container -->
+                                <div class="projects-loading-container" id="projectsLoadingSpinner">
+                                    <div class="projects-spinner"></div>
+                                    <div class="projects-loading-text">
+                                        Loading your projects<span class="loading-dots"></span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Table Container -->
+                                <div class="table-wrapper" id="projectsTableWrapper" style="overflow-x: auto; overflow-y: hidden; max-width: 100%;">
                                     <table class="table table-striped mb-0" id="projectsTableSimple">
-                                        <thead>
+                                        <thead style="background-color: #003D7C !important; color: white !important;">
                                             <tr>
-                                                <th>Project Title</th>
-                                                <th>Mentors Responsible</th>
-                                                <th>Actions</th>
+                                                <th style="background-color: #003D7C !important; color: white !important; text-transform: uppercase; padding: 20px 16px !important; height: 60px;">Capstone Internship Title</th>
+                                                <th style="background-color: #003D7C !important; color: white !important; text-transform: uppercase; padding: 20px 16px !important; height: 60px;">Mentors Responsible</th>
+                                                <th style="background-color: #003D7C !important; color: white !important; text-transform: uppercase; padding: 20px 16px !important; height: 60px;">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody id="projectsListBody">
@@ -1256,24 +1384,32 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="mb-3">
-                                    <label class="form-label">Project Title <span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="projectTitle" placeholder="Enter project title" required>
+                                    <label class="form-label">Capstone Internship Title <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="projectTitle" placeholder="Enter capstone internship title" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label class="form-label">Project Type <span class="required">*</span></label>
-                                    <select class="form-control" id="projectType" required>
+                                    <label class="form-label">Capstone Internship Type <span class="required">*</span></label>
+                                    <select class="form-select" id="projectType" required onchange="handleProjectTypeChange()">
                                         <option value="">Select Type</option>
-                                        <option value="Dry lab">Dry lab</option>
-                                        <option value="Wet lab">Wet lab</option>
-                                        <option value="Software">Software Development</option>
-                                        <option value="Hardware">Hardware Engineering</option>
-                                        <option value="Data Science">Data Science/AI</option>
-                                        <option value="Research">Research</option>
-                                        <option value="Business">Business Analysis</option>
-                                        <option value="Others">Others</option>
+                                        <option value="Dry lab">RnD - Dry lab</option>
+                                        <option value="Wet lab">RnD - Wet lab</option>
+                                        <option value="Software">Business Development - Administration</option>
+                                        <option value="Hardware">Business Development - Marketing/Sales</option>
+                                        <option value="Data Science">Communication</option>
+                                        <option value="Research">Policy/Regulation</option>
+                                        <option value="Business">Education</option>
+                                        <option value="Others">Others (Please specify)</option>
                                     </select>
+                                    <!-- Custom Project Type Input (Hidden by default) -->
+                                    <div class="custom-project-type-container" id="customProjectTypeContainer">
+                                        <label class="form-label mt-2">Please specify your project type:</label>
+                                        <input type="text" class="form-control custom-project-type-input" id="customProjectType" 
+                                               placeholder="Enter your project type (e.g., Biomedical Engineering, Regulatory Affairs, etc.)" 
+                                               maxlength="100">
+                                        <small class="text-muted">This will be saved as your project type</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1295,12 +1431,7 @@
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label class="form-label">Internship Location <span class="required">*</span></label>
-                                    <select class="form-select" id="internshipLocation" required>
-                                        <option value="">Select Location</option>
-                                        <option value="Singapore">Singapore</option>
-                                        <option value="Remote">Remote</option>
-                                        <option value="Hybrid">Hybrid</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="internshipLocation" placeholder="e.g., Singapore" required>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -1311,14 +1442,14 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <label class="form-label">Capstone Stipend (SGD/month)</label>
-                                    <input type="text" class="form-control" id="stipend" placeholder="e.g., 1000">
+                                    <label class="form-label">Capstone Stipend (per month)</label>
+                                    <input type="text" class="form-control" id="stipend" placeholder="Currency per month">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label class="form-label">Part-time Internship <span class="required">*</span></label>
-                                    <select class="form-control" id="partTimeOption" required>
+                                    <select class="form-select" id="partTimeOption" required>
                                         <option value="">Select Option</option>
                                         <option value="Yes">Yes</option>
                                         <option value="No">No</option>
@@ -1329,37 +1460,98 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label">Project Abstract <span class="required">*</span></label>
-                            <textarea class="form-control" id="projectAbstract" rows="4" placeholder="Describe the project overview" required></textarea>
+                            <label class="form-label">Job Description <span class="required">*</span></label>
+                            <textarea class="form-control" id="projectAbstract" rows="4" placeholder="Describe the nature of the job" required></textarea>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">Expected Deliverables <span class="required">*</span></label>
-                            <textarea class="form-control" id="expectedDeliverables" rows="3" placeholder="What should the student deliver?" required></textarea>
+                            <textarea class="form-control" id="expectedDeliverables" rows="3" placeholder="What students are be expected to accomplish in this internship" required></textarea>
                         </div>
                         
                         <div class="mb-3">
                             <label class="form-label">Learning Outcomes <span class="required">*</span></label>
-                            <textarea class="form-control" id="learningOutcomes" rows="3" placeholder="What will students learn from this project?" required></textarea>
+                            <textarea class="form-control" id="learningOutcomes" rows="3" placeholder="What students will learn from this internship" required></textarea>
                         </div>
                         
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Pre-requisites</label>
-                                    <textarea class="form-control" id="prerequisites" rows="2" placeholder="Required skills/knowledge"></textarea>
+                        <div class="mb-3">
+                            <label class="form-label">Pre-requisites or Qualifications</label>
+                            <textarea class="form-control" id="prerequisites" rows="2" placeholder="Specific pre-requisites or qualifications you expect students to have"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Recommended Courses</label>
+                            <small class="text-muted d-block mb-2">MScPHM elective courses that you recommend interns take for the work</small>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5008 - Clinical Perspective in Precision Medicine" id="course_phm5008">
+                                        <label class="form-check-label" for="course_phm5008" style="font-size: 0.875rem;">
+                                            <strong>PHM5008</strong> - Clinical Perspective in Precision Medicine
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5009 - Precision Oncology" id="course_phm5009">
+                                        <label class="form-check-label" for="course_phm5009" style="font-size: 0.875rem;">
+                                            <strong>PHM5009</strong> - Precision Oncology
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5010 - Precision Biomarkers" id="course_phm5010">
+                                        <label class="form-check-label" for="course_phm5010" style="font-size: 0.875rem;">
+                                            <strong>PHM5010</strong> - Precision Biomarkers
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5011 - Precision Diagnostics" id="course_phm5011">
+                                        <label class="form-check-label" for="course_phm5011" style="font-size: 0.875rem;">
+                                            <strong>PHM5011</strong> - Precision Diagnostics
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5012 - Precision Therapeutics" id="course_phm5012">
+                                        <label class="form-check-label" for="course_phm5012" style="font-size: 0.875rem;">
+                                            <strong>PHM5012</strong> - Precision Therapeutics
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Recommended Courses</label>
-                                    <textarea class="form-control" id="recommendedCourses" rows="2" placeholder="Relevant courses or certifications"></textarea>
+                                <div class="col-md-6">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5013 - Precision Drug Discovery and Development" id="course_phm5013">
+                                        <label class="form-check-label" for="course_phm5013" style="font-size: 0.875rem;">
+                                            <strong>PHM5013</strong> - Precision Drug Discovery and Development
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5014 - Causal Inference in Precision Medicine" id="course_phm5014">
+                                        <label class="form-check-label" for="course_phm5014" style="font-size: 0.875rem;">
+                                            <strong>PHM5014</strong> - Causal Inference in Precision Medicine
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5015 - Technological Innovation in Precision Medicine" id="course_phm5015">
+                                        <label class="form-check-label" for="course_phm5015" style="font-size: 0.875rem;">
+                                            <strong>PHM5015</strong> - Technological Innovation in Precision Medicine
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5018 - Precision Health and Medicine for Cardiometabolic Diseases" id="course_phm5018">
+                                        <label class="form-check-label" for="course_phm5018" style="font-size: 0.875rem;">
+                                            <strong>PHM5018</strong> - Precision Health and Medicine for Cardiometabolic Diseases
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input recommended-course" type="checkbox" value="PHM5019 - Human Population Health" id="course_phm5019">
+                                        <label class="form-check-label" for="course_phm5019" style="font-size: 0.875rem;">
+                                            <strong>PHM5019</strong> - Human Population Health
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label">Remarks</label>
+                            <label class="form-label">Additional Remarks </label>
                             <textarea class="form-control" id="remarks" rows="2" placeholder="Additional information about the project"></textarea>
                         </div>
                     </form>
@@ -1382,8 +1574,7 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
@@ -1398,7 +1589,6 @@
             GET_COMPANY_USERS: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b87bbf64e8df4f5684e993e1290ab38d/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2ztyGp1FC6iqBtEZ3qC5uululAUodwvHmCqRuGAr334',
             
             // Project Management
-            GET_ALL_PROJECTS: 'YOUR_GET_ALL_PROJECTS_FLOW_URL',
             GET_COMPANY_PROJECTS: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/f5be9084253f4ca0a002d8d61e519fed/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v3IyBAqO4nx34dH0_ytpD7l8DbfsNSk2_JnrPb_CzV4',
             ADD_PROJECT: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/95ad816ea7ad412dbacae99138dc29cc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PT6qQDBo6-INh3rfEycITgKM56HezcT-BhQwTYf2eOc',
             UPDATE_PROJECT: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/683edac54c554756bd40be693b89a9ac/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Lg8clbMZSRNJiKVobP0nG1Yv0YFLTvnTcnXaj4QQkdA',
@@ -1422,9 +1612,6 @@
         
         let companyUsers = [];
         let companyProjects = [];
-        let allProjectsList = [];
-        let projectsDataTable = null;
-        let allProjectsDataTable = null;
         
         // Toggle Password Visibility
         function togglePassword() {
@@ -1488,35 +1675,23 @@
                         const profileData = profileResult.body || profileResult;
                         
                         if (profileData.success && profileData.profile) {
-                            // Set current user data
+                            // Set current user data with proper role normalization
                             currentUser = {
                                 email: email,
                                 name: profileData.profile.Company_contact_name || '',
-                                role: profileData.profile.System_role || 'team_member',
+                                role: profileData.profile.System_role || 'capstone_mentor', // Default to mentor if no role specified
                                 companyName: profileData.profile.Company_name || '',
                                 jobTitle: profileData.profile.Company_contact_job_title || '',
                                 profile: profileData.profile
                             };
+                            
+                            // Log user data for debugging
+                            console.log('User logged in with role:', currentUser.role);
                         } else {
                             throw new Error('User profile not found');
                         }
                     } else {
-                        // Use mock data when profile URL not configured
-                        console.warn('GET_USER_PROFILE URL not configured, using mock data');
-                        currentUser = {
-                            email: authData.email || email,
-                            name: 'Demo User',
-                            role: 'company_contact',
-                            companyName: 'Demo Company',
-                            jobTitle: 'Demo Job Title',
-                            profile: {
-                                Company_name: 'Demo Company',
-                                Company_contact_name: 'Demo User',
-                                Company_contact_job_title: 'Demo Job Title',
-                                Company_contact_email_address: authData.email || email,
-                                System_role: 'company_contact'
-                            }
-                        };
+                        throw new Error('User profile service not available. Please contact administrator.');
                     }
                     
                     // Store in session
@@ -1563,16 +1738,6 @@
             document.getElementById('mainContent').style.display = 'none';
             document.getElementById('emailInput').value = '';
             document.getElementById('passwordInput').value = '';
-            
-            // Destroy DataTables
-            if (projectsDataTable) {
-                projectsDataTable.destroy();
-                projectsDataTable = null;
-            }
-            if (allProjectsDataTable) {
-                allProjectsDataTable.destroy();
-                allProjectsDataTable = null;
-            }
         }
         
         // Show Main Content
@@ -1589,21 +1754,26 @@
             document.getElementById('profileEmail').textContent = currentUser.email;
             document.getElementById('profileJobTitle').textContent = currentUser.jobTitle;
             
-            // Update role badge
+            // Update role badge with proper role
+            console.log('Updating role badge for user with role:', currentUser.role);
             updateRoleBadge(currentUser.role);
             
-            // Set current role in selector
-            document.querySelector(`input[name="roleChange"][value="${currentUser.role}"]`).checked = true;
+            // Set current role in selector - handle case where role might not match exactly
+            const roleRadio = document.querySelector(`input[name="roleChange"][value="${currentUser.role}"]`);
+            if (roleRadio) {
+                roleRadio.checked = true;
+            } else {
+                // If exact role not found, default to mentor
+                const mentorRadio = document.querySelector('input[name="roleChange"][value="capstone_mentor"]');
+                if (mentorRadio) mentorRadio.checked = true;
+            }
             
             // Load initial data
             loadCompanyProjects();
             loadCompanyUsers();
-            
-            // Show warning about unconfigured URLs
-            setTimeout(showUrlWarning, 1000);
         }
         
-        // Update Role Badge - Fixed with null checks
+        // Update Role Badge - Fixed to properly display role based on user type
         function updateRoleBadge(role) {
             const badge = document.getElementById('currentRoleBadge');
             const roleText = document.getElementById('roleText');
@@ -1614,7 +1784,9 @@
                 return;
             }
             
-            badge.className = `role-badge ${role}`;
+            // Normalize role for proper class assignment
+            const normalizedRole = role || 'team_member';
+            badge.className = `role-badge ${normalizedRole}`;
             
             const roleMap = {
                 'company_contact': 'Company Contact',
@@ -1630,9 +1802,14 @@
                 'team_member': 'fa-chalkboard-teacher'   // Use mentor icon
             };
             
-            const roleDisplayText = roleMap[role] || role;
-            roleText.textContent = roleDisplayText;
-            badge.innerHTML = `<i class="fas ${iconMap[role] || 'fa-user'}"></i> <span>${roleDisplayText}</span>`;
+            const roleDisplayText = roleMap[normalizedRole] || 'Mentor';
+            const roleIcon = iconMap[normalizedRole] || 'fa-user';
+            
+            // Update the badge content with proper role display
+            badge.innerHTML = `<i class="fas ${roleIcon}"></i> <span id="roleText">${roleDisplayText}</span>`;
+            
+            // Log for debugging
+            console.log('Role badge updated:', { role: normalizedRole, displayText: roleDisplayText });
         }
         
         // Update User Role - Fixed for Power Automate Response
@@ -1644,23 +1821,22 @@
                 return;
             }
             
+            // Get button and show spinner
+            const updateBtn = document.querySelector('button[onclick="updateUserRole()"]');
+            const originalText = updateBtn.innerHTML;
+            updateBtn.disabled = true;
+            updateBtn.innerHTML = '<span class="spinner-border spinner-border-sm text-white me-2"></span>Updating Role...';
+            
             if (!isUrlConfigured(API_CONFIG.UPDATE_USER_ROLE)) {
-                // Mock update when URL not configured
-                currentUser.role = selectedRole;
-                currentUser.profile.System_role = selectedRole;
-                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-                
-                updateRoleBadge(selectedRole);
-                loadCompanyUsers();
-                updateMentorDropdown();
-                
                 Swal.fire({
-                    icon: 'info',
-                    title: 'Demo Mode',
-                    text: 'Role updated locally (UPDATE_USER_ROLE URL not configured)',
-                    timer: 2000,
-                    showConfirmButton: false
+                    icon: 'error',
+                    title: 'Service Unavailable',
+                    text: 'Role update service is not available. Please contact administrator.'
                 });
+                
+                // Restore button
+                updateBtn.disabled = false;
+                updateBtn.innerHTML = originalText;
                 return;
             }
             
@@ -1722,7 +1898,8 @@
                 currentUser.profile.System_role = selectedRole;
                 sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
                 
-                // Update UI
+                // Update UI with new role
+                console.log('Role changed to:', selectedRole);
                 updateRoleBadge(selectedRole);
                 
                 // Refresh data
@@ -1750,6 +1927,10 @@
                     text: error.message || 'An unexpected error occurred',
                     footer: 'Check the browser console for more details'
                 });
+            } finally {
+                // Always restore button state
+                updateBtn.disabled = false;
+                updateBtn.innerHTML = originalText;
             }
         }
         
@@ -1851,36 +2032,18 @@
                 registerBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Complete Registration';
             }
         }
-        
-        // Removed loadDashboard - now using updateStatistics directly
+
         
         // Projects Management
         async function loadCompanyProjects() {
+            // Show loading spinner
+            showProjectsLoadingSpinner();
+            
             if (!isUrlConfigured(API_CONFIG.GET_COMPANY_PROJECTS)) {
-                // Use mock data when URL not configured
-                companyProjects = [
-                    {
-                        Project_ID: 'DEMO-001',
-                        Project_title: 'Demo Healthcare AI Project',
-                        Project_type: 'Software',
-                        Internship_location: 'Singapore',
-                        Vacancy: 2,
-                        Mentors_name: 'Demo Mentor',
-                        Capstone_stipend_per_month: '1000',
-                        Company_name: currentUser.companyName
-                    },
-                    {
-                        Project_ID: 'DEMO-002',
-                        Project_title: 'Demo Biomedical Research',
-                        Project_type: 'Wet lab',
-                        Internship_location: 'Hybrid',
-                        Vacancy: 1,
-                        Mentors_name: 'Demo Supervisor',
-                        Capstone_stipend_per_month: '1200',
-                        Company_name: currentUser.companyName
-                    }
-                ];
-                
+                console.error('GET_COMPANY_PROJECTS URL not configured');
+                companyProjects = [];
+                // Hide spinner before displaying
+                hideProjectsLoadingSpinner();
                 displayCompanyProjects();
                 return;
             }
@@ -1898,11 +2061,43 @@
                 const data = response_data.body || response_data;
                 companyProjects = data.projects || [];
                 
+                // Hide spinner before displaying
+                hideProjectsLoadingSpinner();
                 displayCompanyProjects();
                 
             } catch (error) {
                 console.error('Error loading projects:', error);
+                // Hide spinner on error
+                hideProjectsLoadingSpinner();
                 Swal.fire('Error', 'Failed to load projects', 'error');
+                // Still display empty table
+                displayCompanyProjects();
+            }
+        }
+        
+        // Show loading spinner for projects table
+        function showProjectsLoadingSpinner() {
+            const spinner = document.getElementById('projectsLoadingSpinner');
+            const tableWrapper = document.getElementById('projectsTableWrapper');
+            
+            if (spinner) {
+                spinner.classList.add('show');
+            }
+            if (tableWrapper) {
+                tableWrapper.style.display = 'none';
+            }
+        }
+        
+        // Hide loading spinner for projects table
+        function hideProjectsLoadingSpinner() {
+            const spinner = document.getElementById('projectsLoadingSpinner');
+            const tableWrapper = document.getElementById('projectsTableWrapper');
+            
+            if (spinner) {
+                spinner.classList.remove('show');
+            }
+            if (tableWrapper) {
+                tableWrapper.style.display = 'block';
             }
         }
         
@@ -1928,11 +2123,11 @@
                         <small class="text-muted">${project.Project_type || ''} • ${project.Internship_location || ''}</small>
                     </td>
                     <td>${project.Mentors_name || '<em class="text-muted">Not assigned</em>'}</td>
-                    <td>
-                        <button class="btn btn-sm btn-edit me-1" onclick='editProject(${JSON.stringify(project).replace(/'/g, "&apos;")})' title="View/Edit">
-                            <i class="fas fa-edit"></i> Edit
+                    <td style="text-align: center;">
+                        <button class="btn btn-sm btn-edit" data-project-id="${project.Project_ID}" onclick="editProjectById(this.dataset.projectId)" title="View/Edit" style="display: block; margin: 0 auto 3px auto;">
+                            <i class="fas fa-edit"></i> View/Edit
                         </button>
-                        <button class="btn btn-sm btn-delete" onclick="deleteProject('${project.Project_ID}')" title="Delete">
+                        <button class="btn btn-sm btn-delete" data-project-id="${project.Project_ID}" onclick="deleteProject(this.dataset.projectId)" title="Delete" style="display: block; margin: 0 auto;">
                             <i class="fas fa-trash"></i> Delete
                         </button>
                     </td>
@@ -1955,11 +2150,29 @@
             document.getElementById('projectForm').reset();
             document.getElementById('projectId').value = '';
             
+            // Clear all recommended course checkboxes
+            document.querySelectorAll('.recommended-course').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
             // Update mentor dropdown
             updateMentorDropdown();
             
             const modal = new bootstrap.Modal(document.getElementById('projectModal'));
             modal.show();
+        }
+        
+        // New function to edit project by ID
+        function editProjectById(projectId) {
+            // Find the project in the companyProjects array
+            const project = companyProjects.find(p => p.Project_ID === projectId);
+            
+            if (!project) {
+                Swal.fire('Error', 'Project not found', 'error');
+                return;
+            }
+            
+            editProject(project);
         }
         
         function editProject(project) {
@@ -1968,7 +2181,23 @@
             // Fill form
             document.getElementById('projectId').value = project.Project_ID || '';
             document.getElementById('projectTitle').value = project.Project_title || '';
-            document.getElementById('projectType').value = project.Project_type || '';
+            
+            // Handle project type - check if it's a custom type or predefined
+            const projectType = project.Project_type || '';
+            const projectTypeSelect = document.getElementById('projectType');
+            const predefinedTypes = ['Dry lab', 'Wet lab', 'Software', 'Hardware', 'Data Science', 'Research', 'Business'];
+            
+            if (predefinedTypes.includes(projectType)) {
+                projectTypeSelect.value = projectType;
+            } else if (projectType) {
+                // Custom type - set to "Others" and populate custom input
+                projectTypeSelect.value = 'Others';
+                document.getElementById('customProjectType').value = projectType;
+                handleProjectTypeChange(); // Show the custom input
+            } else {
+                projectTypeSelect.value = '';
+            }
+            
             document.getElementById('internshipLocation').value = project.Internship_location || '';
             document.getElementById('vacancy').value = project.Vacancy || '';
             document.getElementById('stipend').value = project.Capstone_stipend_per_month || '';
@@ -1977,7 +2206,23 @@
             document.getElementById('expectedDeliverables').value = project.Expected_deliverables || '';
             document.getElementById('learningOutcomes').value = project.Learning_outcome || '';
             document.getElementById('prerequisites').value = project['Pre-requisites'] || '';
-            document.getElementById('recommendedCourses').value = project.Recommended_courses || '';
+            
+            // Handle recommended courses checkboxes
+            // First clear all checkboxes
+            document.querySelectorAll('.recommended-course').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Then check the ones that are in the saved data
+            if (project.Recommended_courses) {
+                const recommendedCourses = project.Recommended_courses.split(',').map(course => course.trim());
+                document.querySelectorAll('.recommended-course').forEach(checkbox => {
+                    if (recommendedCourses.some(course => checkbox.value.includes(course) || course.includes(checkbox.value))) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            
             document.getElementById('remarks').value = project.Remark || '';
             
             // Update mentor dropdown and set selected values
@@ -2000,32 +2245,43 @@
             
             try {
                 const selectedMentors = $('#mentorSelect').val() || [];
+                const isEdit = document.getElementById('projectId').value !== '';
+                
+                // Get selected recommended courses
+                const selectedCourses = [];
+                document.querySelectorAll('.recommended-course:checked').forEach(checkbox => {
+                    selectedCourses.push(checkbox.value);
+                });
+                const recommendedCoursesString = selectedCourses.join(', ');
+                
+                // Handle different data type requirements for ADD vs UPDATE flows
+                // ADD_PROJECT expects strings, UPDATE_PROJECT expects integers for numeric fields
+                const finalProjectType = getFinalProjectType();
                 
                 const projectData = {
-                    Project_ID: document.getElementById('projectId').value || generateProjectId(),
-                    Project_title: document.getElementById('projectTitle').value,
-                    Project_type: document.getElementById('projectType').value,
-                    Mentors_name: selectedMentors.join(', '),
-                    Designation: currentUser.jobTitle || '',
-                    Email_address: currentUser.email || '',
-                    Company_name: currentUser.companyName || '',
-                    company_contact_name: currentUser.name || '',
-                    Company_contact_job_title: currentUser.jobTitle || '',
-                    Company_contact_email_address: currentUser.email || '',
-                    Company_website: (currentUser.profile && currentUser.profile.Company_website) || '',
-                    Internship_location: document.getElementById('internshipLocation').value,
-                    Vacancy: parseInt(document.getElementById('vacancy').value) || 1,
-                    Capstone_stipend_per_month: document.getElementById('stipend').value || '',
-                    Part_time_internship_option: document.getElementById('partTimeOption').value,
-                    Project_abstract: document.getElementById('projectAbstract').value,
-                    'Pre-requisites': document.getElementById('prerequisites').value || '',
-                    Recommended_courses: document.getElementById('recommendedCourses').value || '',
-                    Expected_deliverables: document.getElementById('expectedDeliverables').value,
-                    Learning_outcome: document.getElementById('learningOutcomes').value,
-                    Remark: document.getElementById('remarks').value || ''
+                    Project_ID: String(document.getElementById('projectId').value || generateProjectId()),
+                    Project_title: String(document.getElementById('projectTitle').value || ''),
+                    Project_type: String(finalProjectType || ''),
+                    Mentors_name: String(selectedMentors.join(', ')),
+                    Designation: String(currentUser.jobTitle || ''),
+                    Email_address: String(currentUser.email || ''),
+                    Company_name: String(currentUser.companyName || ''),
+                    company_contact_name: String(currentUser.name || ''),
+                    Company_contact_job_title: String(currentUser.jobTitle || ''),
+                    Company_contact_email_address: String(currentUser.email || ''),
+                    Company_website: String((currentUser.profile && currentUser.profile.Company_website) || ''),
+                    Internship_location: String(document.getElementById('internshipLocation').value || ''),
+                    // Vacancy: String for ADD, Integer for UPDATE
+                    Vacancy: isEdit ? parseInt(document.getElementById('vacancy').value) || 1 : String(document.getElementById('vacancy').value || '1'),
+                    Capstone_stipend_per_month: String(document.getElementById('stipend').value || ''),
+                    Part_time_internship_option: String(document.getElementById('partTimeOption').value || ''),
+                    Job_description: String(document.getElementById('projectAbstract').value || ''),
+                    'Pre-requisites': String(document.getElementById('prerequisites').value || ''),
+                    Recommended_courses: String(recommendedCoursesString || ''),
+                    Expected_deliverables: String(document.getElementById('expectedDeliverables').value || ''),
+                    Learning_outcome: String(document.getElementById('learningOutcomes').value || ''),
+                    Remark: String(document.getElementById('remarks').value || '')
                 };
-                
-                const isEdit = document.getElementById('projectId').value !== '';
                 const apiUrl = isEdit ? API_CONFIG.UPDATE_PROJECT : API_CONFIG.ADD_PROJECT;
                 
                 // Debug logging
@@ -2209,7 +2465,7 @@
             const select = document.getElementById('mentorSelect');
             
             select.innerHTML = mentors.map(mentor => 
-                `<option value="${mentor.Company_contact_name}">${mentor.Company_contact_name} - ${mentor.Company_contact_job_title}</option>`
+                `<option value="${mentor.Company_contact_name}">${mentor.Company_contact_name}</option>`
             ).join('');
             
             // Initialize Select2
@@ -2219,42 +2475,34 @@
                 dropdownParent: $('#projectModal')
             });
         }
+
         
-        // Removed All Projects View functionality - not needed in two-column layout
-        
-        // Show URL Configuration Warning
-        function showUrlWarning() {
-            const unconfiguredUrls = [];
-            for (const [key, url] of Object.entries(API_CONFIG)) {
-                if (!isUrlConfigured(url) && key !== 'AUTHENTICATE_USER') {
-                    unconfiguredUrls.push(key);
-                }
-            }
+        // Handle Project Type Change
+        function handleProjectTypeChange() {
+            const projectTypeSelect = document.getElementById('projectType');
+            const customContainer = document.getElementById('customProjectTypeContainer');
+            const customInput = document.getElementById('customProjectType');
             
-            if (unconfiguredUrls.length > 0) {
-                console.warn('Unconfigured Power Automate URLs:', unconfiguredUrls);
-                
-                // Show warning banner once
-                if (!sessionStorage.getItem('urlWarningShown')) {
-                    sessionStorage.setItem('urlWarningShown', 'true');
-                    
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Demo Mode Active',
-                        html: `
-                            <div class="text-start">
-                                <p>The following features are using mock data because their Power Automate URLs are not configured:</p>
-                                <ul class="text-start">
-                                    ${unconfiguredUrls.map(url => `<li>${url.replace(/_/g, ' ')}</li>`).join('')}
-                                </ul>
-                                <p class="mt-3">Configure these URLs in the API_CONFIG to enable full functionality.</p>
-                            </div>
-                        `,
-                        confirmButtonText: 'OK, I understand',
-                        confirmButtonColor: '#003D7C'
-                    });
-                }
+            if (projectTypeSelect.value === 'Others') {
+                customContainer.classList.add('show');
+                customInput.required = true;
+                customInput.focus();
+            } else {
+                customContainer.classList.remove('show');
+                customInput.required = false;
+                customInput.value = '';
             }
+        }
+        
+        // Get Final Project Type Value
+        function getFinalProjectType() {
+            const projectTypeSelect = document.getElementById('projectType');
+            const customInput = document.getElementById('customProjectType');
+            
+            if (projectTypeSelect.value === 'Others' && customInput.value.trim()) {
+                return customInput.value.trim();
+            }
+            return projectTypeSelect.value;
         }
         
         // Utility Functions
@@ -2263,28 +2511,6 @@
             const random = Math.floor(Math.random() * 1000);
             return `IND-${timestamp}-${random}`;
         }
-        
-        function formatRoleName(role) {
-            const roleMap = {
-                'company_contact': 'Company Contact',
-                'capstone_mentor': 'Mentor',
-                'supervisor': 'Mentor',  // Map old supervisor to Mentor
-                'team_member': 'Mentor'   // Map old team_member to Mentor
-            };
-            return roleMap[role] || role;
-        }
-        
-        function getRoleIcon(role) {
-            const iconMap = {
-                'company_contact': 'fa-user-tie',
-                'capstone_mentor': 'fa-chalkboard-teacher',
-                'supervisor': 'fa-chalkboard-teacher',  // Use mentor icon
-                'team_member': 'fa-chalkboard-teacher'   // Use mentor icon
-            };
-            return iconMap[role] || 'fa-user';
-        }
-        
-        // Removed showLoading function - not needed in two-column layout
         
         // Check for existing session on page load
         async function checkExistingSession() {
@@ -2295,6 +2521,11 @@
                     currentUser = JSON.parse(storedUser);
                     
                     if (currentUser.email && currentUser.companyName) {
+                        console.log('Restored user session:', {
+                            email: currentUser.email,
+                            role: currentUser.role,
+                            company: currentUser.companyName
+                        });
                         showMainContent();
                     }
                 } catch (e) {
