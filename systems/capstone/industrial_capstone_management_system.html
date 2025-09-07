@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <!-- 
 DOCUMENTATION:
-Date: 2025-01-12 01:25:00 SGT
+Date: 2025-01-12 03:45:00 SGT
 Industrial Capstone Management System - Production Version
 
-Latest Update (2025-01-12 01:25:00 SGT):
-- Increased width of Company Contact, Direct Supervisor/Mentor, and Update Role buttons by 25% (from 210px to 263px)
-- Adjusted role selector button widths for better visual consistency
+Latest Update (2025-01-12 03:45:00 SGT):
+- Added "Forgotten password?" link in NUS Orange color next to Password field
+- Created Forgot Password Modal for email input
+- Added sendPassword() function to trigger Power Automate flow for password recovery
+- Added FORGOT_PASSWORD configuration in API_CONFIG for Power Automate URL
 -->
 <html lang="en">
 <head>
@@ -1123,7 +1125,11 @@ Latest Update (2025-01-12 01:25:00 SGT):
                                 <small class="text-muted">Use your registered company email address</small>
                             </div>
                             <div class="mb-3 position-relative">
-                                <label for="passwordInput" class="form-label">Password <span class="required">*</span></label>
+                                <label for="passwordInput" class="form-label">Password <span class="required">*</span> 
+                                    <a href="#" onclick="event.preventDefault(); showForgotPasswordModal()" style="color: var(--nus-orange); font-weight: 500; font-size: 0.875rem; text-decoration: none; margin-left: 8px;">
+                                        Forgotten password?
+                                    </a>
+                                </label>
                                 <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password" required>
                                 <button type="button" class="password-toggle" onclick="togglePassword()">
                                     <i class="fas fa-eye" id="passwordToggleIcon"></i>
@@ -1283,6 +1289,40 @@ Latest Update (2025-01-12 01:25:00 SGT):
         <!-- End Container -->
     </div>
     <!-- End Main Wrapper -->
+    
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-key me-2"></i>Forgot Password
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Enter your registered email address below. We'll send your password to your email.
+                    </div>
+                    
+                    <form id="forgotPasswordForm">
+                        <div class="mb-3">
+                            <label for="forgotEmail" class="form-label">Email Address <span class="required">*</span></label>
+                            <input type="email" class="form-control" id="forgotEmail" placeholder="Enter your registered email" required>
+                            <small class="text-muted">Please enter the email address associated with your account</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="sendPasswordBtn" onclick="sendPassword()">
+                        <i class="fas fa-envelope me-2"></i>Send Password
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Registration Modal -->
     <div class="modal fade" id="registrationModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -1581,6 +1621,8 @@ Latest Update (2025-01-12 01:25:00 SGT):
     <script>
         // Configuration - Replace these with your Power Automate URLs
         const API_CONFIG = {
+            // Password Recovery
+            FORGOT_PASSWORD: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/fe72f0f2f0314a5ebe205c681d3d1734/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=NoiIeAPrmPjOGSn3XIp7DKo0tSmMt9r3Fw7YQLKqNRc',
             // Authentication & User Management
             AUTHENTICATE_USER: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/63e4571832754796b9a0989587a7a4a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FQkAteaFmT14UDlekTif9yGsWYMwNMOYZcRBF9liR_E',
             REGISTER_USER: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/835590d6bd0b41fb8af5d3bbbb666783/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wcwqnoz8t-75nV1gtVQWrGOmIycscOD-ptH9oCnx9dA',
@@ -1612,6 +1654,109 @@ Latest Update (2025-01-12 01:25:00 SGT):
         
         let companyUsers = [];
         let companyProjects = [];
+        
+        // Show Forgot Password Modal
+        function showForgotPasswordModal() {
+            document.getElementById('forgotPasswordForm').reset();
+            const modal = new bootstrap.Modal(document.getElementById('forgotPasswordModal'));
+            modal.show();
+        }
+        
+        // Send Password Function
+        async function sendPassword() {
+            const email = document.getElementById('forgotEmail').value.trim();
+            const sendBtn = document.getElementById('sendPasswordBtn');
+            
+            if (!email) {
+                Swal.fire('Error', 'Please enter your email address', 'error');
+                return;
+            }
+            
+            // Check if URL is configured
+            if (!isUrlConfigured(API_CONFIG.FORGOT_PASSWORD)) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Service Not Available',
+                    html: `
+                        <div class="text-start">
+                            <p>The password recovery service is not yet configured.</p>
+                            <div class="alert alert-info mt-3">
+                                <strong>Power Automate Setup Required:</strong><br>
+                                Please configure the FORGOT_PASSWORD URL in the API_CONFIG.
+                            </div>
+                            <p>Contact your administrator to set up the password recovery flow.</p>
+                        </div>
+                    `,
+                    confirmButtonColor: '#003D7C'
+                });
+                return;
+            }
+            
+            // Disable button and show loading
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+            
+            try {
+                const response = await fetch(API_CONFIG.FORGOT_PASSWORD, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email.toLowerCase() })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Service unavailable');
+                }
+                
+                const result = await response.json();
+                const data = result.body || result;
+                
+                if (data.success) {
+                    // Close modal
+                    bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal')).hide();
+                    
+                    // Show success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Password Sent!',
+                        html: `
+                            <div class="text-start">
+                                <p>Your password has been sent to:</p>
+                                <p class="fw-bold">${email}</p>
+                                <div class="alert alert-warning mt-3">
+                                    <small>Please check your spam/junk folder if you don't see the email in your inbox.</small>
+                                </div>
+                            </div>
+                        `,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#003D7C'
+                    });
+                } else {
+                    // Check if it's a "not found" error
+                    if (data.message && data.message.toLowerCase().includes('not found')) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Email Not Found',
+                            text: 'This email address is not registered in our system. Please check your email or register a new account.',
+                            confirmButtonColor: '#003D7C'
+                        });
+                    } else {
+                        throw new Error(data.message || 'Failed to send password');
+                    }
+                }
+            } catch (error) {
+                console.error('Password recovery error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message || 'Unable to send password. Please try again later.',
+                    footer: 'If the problem persists, contact support'
+                });
+            } finally {
+                // Restore button
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<i class="fas fa-envelope me-2"></i>Send Password';
+            }
+        }
         
         // Toggle Password Visibility
         function togglePassword() {
