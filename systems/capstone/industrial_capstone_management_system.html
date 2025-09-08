@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <!-- 
 DOCUMENTATION:
-Date: 2025-01-12 03:45:00 SGT
+Date: 2025-09-08 16:45:00 SGT
 Industrial Capstone Management System - Production Version
 
-Latest Update (2025-01-12 03:45:00 SGT):
-- Added "Forgotten password?" link in NUS Orange color next to Password field
-- Created Forgot Password Modal for email input
-- Added sendPassword() function to trigger Power Automate flow for password recovery
-- Added FORGOT_PASSWORD configuration in API_CONFIG for Power Automate URL
+Latest Update (2025-09-08 16:45:00 SGT):
+- Enhanced "Send Invitations" button with validation animation
+- Button now shows "Validating..." with spinner during email validation
+- Automatically validates all emails before sending invitations
+- Disables button during validation to prevent multiple submissions
+- Restores button to "Send Invitations" after validation completes
 -->
 <html lang="en">
 <head>
@@ -1140,7 +1141,7 @@ Latest Update (2025-01-12 03:45:00 SGT):
                                 <i class="fas fa-sign-in-alt me-2"></i>Sign In
                             </button>
                             <div class="mt-3">
-                                <p class="text-muted">New company to the system? 
+                                <p class="text-muted">New company/user to the system? 
                                     <a href="#" onclick="showRegistrationModal()" class="text-decoration-none" style="color: var(--nus-orange); font-weight: 500;">
                                         <i class="fas fa-user-plus me-1"></i>Register here
                                     </a>
@@ -1151,7 +1152,7 @@ Latest Update (2025-01-12 03:45:00 SGT):
                     <div class="col-md-6">
                         <div class="alert alert-info">
                             <h5><i class="fas fa-info-circle"></i> Welcome to Industrial Partnerships</h5>
-                            <p class="mb-0">Manage your capstone projects and team members through this portal</p>
+                            <p class="mb-0">Manage offered capstone internships through this portal</p>
                         </div>
                         <div class="alert alert-warning mt-3">
                             <i class="fas fa-exclamation-triangle me-2"></i>
@@ -1217,6 +1218,9 @@ Latest Update (2025-01-12 03:45:00 SGT):
                                 </div>
                                 <button class="btn btn-primary btn-sm mt-3" onclick="updateUserRole()" style="width: 263px; height: 64px;">
                                     <i class="fas fa-save"></i> Update Role
+                                </button>
+                                <button class="btn btn-orange btn-sm mt-2" onclick="showInviteUsersModal()" style="width: 263px; height: 64px;">
+                                    <i class="fas fa-user-plus"></i> Invite Users to System
                                 </button>
                             </div>
                         </div>
@@ -1289,6 +1293,51 @@ Latest Update (2025-01-12 03:45:00 SGT):
         <!-- End Container -->
     </div>
     <!-- End Main Wrapper -->
+    
+    <!-- Invite Users Modal -->
+    <div class="modal fade" id="inviteUsersModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-user-plus me-2"></i>Invite Users to System
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Enter email addresses to invite users to your company's system. New users will receive an email asking them to self-register. Your name and email will be automatically included as the inviter.
+                    </div>
+                    
+                    <div id="inviteEmailsContainer">
+                        <!-- Dynamic email input rows will be added here -->
+                        <div class="email-input-row mb-2" data-row-id="1">
+                            <div class="d-flex align-items-center">
+                                <input type="email" class="form-control flex-grow-1" placeholder="Enter email address" onblur="checkUserExists(this)" onkeyup="handleEmailInput(this)">
+                                <div class="ms-2" style="width: 40px;">
+                                    <span class="email-status"></span>
+                                </div>
+                            </div>
+                            <small class="status-message text-muted"></small>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle"></i> New rows will automatically appear as you type email addresses.
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="sendInvitesBtn" onclick="sendInvitations()">
+                        <i class="fas fa-paper-plane me-2"></i>Send Invitations
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Forgot Password Modal -->
     <div class="modal fade" id="forgotPasswordModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -1372,7 +1421,7 @@ Latest Update (2025-01-12 03:45:00 SGT):
                                     <label class="form-label">Initial Role <span class="required">*</span></label>
                                     <select class="form-select" id="regRole" required>
                                         <option value="">Select your role</option>
-                                        <option value="company_contact">Company Contact (Main POC)</option>
+                                        <option value="company_contact">Company Contact</option>
                                         <option value="capstone_mentor">Mentor</option>
                                     </select>
                                     <small class="text-muted">You can change this later</small>
@@ -1621,6 +1670,10 @@ Latest Update (2025-01-12 03:45:00 SGT):
     <script>
         // Configuration - Replace these with your Power Automate URLs
         const API_CONFIG = {
+            // User Invitation System
+            CHECK_USER_EXISTS: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/19a614550a7d402b9aeb8379d9bc3933/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=k2dq7QzfsVdACXReZguldP62WGUnssWaOoXyknAOBZM', // Configure this with your Power Automate flow
+            INVITE_USERS: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ba3eef721b63400083aa253270174566/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GThW1Gc5zXy9bCsGS7QHDlPXzJbYRTRrrBvyNQS3g4k', // Configure this with your Power Automate flow
+            
             // Password Recovery
             FORGOT_PASSWORD: 'https://default5ba5ef5e31094e7785bdcfeb0d347e.82.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/fe72f0f2f0314a5ebe205c681d3d1734/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=NoiIeAPrmPjOGSn3XIp7DKo0tSmMt9r3Fw7YQLKqNRc',
             // Authentication & User Management
@@ -1652,8 +1705,371 @@ Latest Update (2025-01-12 03:45:00 SGT):
             profile: {}
         };
         
+        // Track invite modal state
+        let inviteEmailRows = 1;
+        let emailCheckTimers = {};
+        
         let companyUsers = [];
         let companyProjects = [];
+        
+        // Show Invite Users Modal
+        function showInviteUsersModal() {
+            // Reset the modal
+            inviteEmailRows = 1;
+            emailCheckTimers = {};
+            document.getElementById('inviteEmailsContainer').innerHTML = `
+                <div class="email-input-row mb-2" data-row-id="1">
+                    <div class="d-flex align-items-center">
+                        <input type="email" class="form-control flex-grow-1" placeholder="Enter email address" onblur="checkUserExists(this)" onkeyup="handleEmailInput(this)">
+                        <div class="ms-2" style="width: 40px;">
+                            <span class="email-status"></span>
+                        </div>
+                    </div>
+                    <small class="status-message text-muted"></small>
+                </div>
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('inviteUsersModal'));
+            modal.show();
+        }
+        
+        // Handle email input - add new row when user types
+        function handleEmailInput(input) {
+            const row = input.closest('.email-input-row');
+            const rowId = parseInt(row.dataset.rowId);
+            
+            // Clear any existing timer for this row
+            if (emailCheckTimers[rowId]) {
+                clearTimeout(emailCheckTimers[rowId]);
+            }
+            
+            // If this is the last row and has value, add a new row
+            if (rowId === inviteEmailRows && input.value.trim() !== '') {
+                addNewEmailRow();
+            }
+            
+            // Set a timer to check user after user stops typing
+            if (input.value.includes('@')) {
+                emailCheckTimers[rowId] = setTimeout(() => {
+                    checkUserExists(input);
+                }, 1000); // Check after 1 second of no typing
+            }
+        }
+        
+        // Add new email input row
+        function addNewEmailRow() {
+            inviteEmailRows++;
+            const container = document.getElementById('inviteEmailsContainer');
+            const newRow = document.createElement('div');
+            newRow.className = 'email-input-row mb-2';
+            newRow.dataset.rowId = inviteEmailRows;
+            newRow.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <input type="email" class="form-control flex-grow-1" placeholder="Enter email address" onblur="checkUserExists(this)" onkeyup="handleEmailInput(this)">
+                    <div class="ms-2" style="width: 40px;">
+                        <span class="email-status"></span>
+                    </div>
+                </div>
+                <small class="status-message text-muted"></small>
+            `;
+            container.appendChild(newRow);
+        }
+        
+        // Check if user exists in the system
+        async function checkUserExists(input) {
+            const email = input.value.trim();
+            const row = input.closest('.email-input-row');
+            const statusSpan = row.querySelector('.email-status');
+            const statusMessage = row.querySelector('.status-message');
+            
+            // Clear status if email is empty
+            if (!email) {
+                statusSpan.innerHTML = '';
+                statusMessage.textContent = '';
+                return;
+            }
+            
+            // Validate email format
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                statusSpan.innerHTML = '<i class="fas fa-times-circle text-danger"></i>';
+                statusMessage.textContent = 'Invalid email format';
+                statusMessage.className = 'status-message text-danger';
+                return;
+            }
+            
+            // Show spinner
+            statusSpan.innerHTML = '<span class="spinner-border spinner-border-sm text-primary"></span>';
+            statusMessage.textContent = 'Checking...';
+            statusMessage.className = 'status-message text-muted';
+            
+            // Check if CHECK_USER_EXISTS URL is configured
+            if (!isUrlConfigured(API_CONFIG.CHECK_USER_EXISTS)) {
+                // Simulate check (for demo purposes)
+                setTimeout(() => {
+                    // For demo, randomly decide if user exists
+                    const exists = Math.random() > 0.7;
+                    
+                    if (exists) {
+                        statusSpan.innerHTML = '<i class="fas fa-check-circle text-warning"></i>';
+                        statusMessage.textContent = 'User already exists in the system';
+                        statusMessage.className = 'status-message text-warning';
+                    } else {
+                        statusSpan.innerHTML = '<i class="fas fa-check-circle text-success"></i>';
+                        statusMessage.textContent = 'New user - will receive registration invitation';
+                        statusMessage.className = 'status-message text-success';
+                    }
+                }, 1000);
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_CONFIG.CHECK_USER_EXISTS, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                });
+                
+                if (!response.ok) throw new Error('Check failed');
+                
+                const result = await response.json();
+                const data = result.body || result;
+                
+                if (data.exists) {
+                    statusSpan.innerHTML = '<i class="fas fa-check-circle text-warning"></i>';
+                    statusMessage.textContent = 'User already exists in the system';
+                    statusMessage.className = 'status-message text-warning';
+                } else {
+                    statusSpan.innerHTML = '<i class="fas fa-check-circle text-success"></i>';
+                    statusMessage.textContent = 'New user - will receive registration invitation';
+                    statusMessage.className = 'status-message text-success';
+                }
+            } catch (error) {
+                console.error('Error checking user:', error);
+                statusSpan.innerHTML = '<i class="fas fa-exclamation-circle text-danger"></i>';
+                statusMessage.textContent = 'Error checking user';
+                statusMessage.className = 'status-message text-danger';
+            }
+        }
+        
+        // Send invitations to new users
+        async function sendInvitations() {
+            const sendBtn = document.getElementById('sendInvitesBtn');
+            const emailRows = document.querySelectorAll('.email-input-row');
+            const invitations = [];
+            const emailsToValidate = [];
+            
+            // First collect all emails that need validation
+            emailRows.forEach(row => {
+                const input = row.querySelector('input[type="email"]');
+                const statusMessage = row.querySelector('.status-message');
+                const email = input.value.trim();
+                
+                if (email) {
+                    // Check if this email hasn't been validated yet
+                    if (!statusMessage.textContent.includes('already exists') && 
+                        !statusMessage.textContent.includes('will receive')) {
+                        emailsToValidate.push({ email, row });
+                    } else if (statusMessage.textContent.includes('will receive')) {
+                        invitations.push(email);
+                    }
+                }
+            });
+            
+            // If there are emails to validate, show validating state
+            if (emailsToValidate.length > 0) {
+                // Disable button and show validating state
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Validating...';
+                
+                // Validate all pending emails
+                for (const item of emailsToValidate) {
+                    const input = item.row.querySelector('input[type="email"]');
+                    await checkUserExists(input);
+                    
+                    // Check the result and add to invitations if it's a new user
+                    const statusMessage = item.row.querySelector('.status-message');
+                    if (statusMessage.textContent.includes('will receive')) {
+                        invitations.push(item.email);
+                    }
+                }
+                
+                // After validation, restore button state
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send Invitations';
+            }
+            
+            // Now collect all valid email addresses that are new users
+            emailRows.forEach(row => {
+                const input = row.querySelector('input[type="email"]');
+                const statusMessage = row.querySelector('.status-message');
+                const email = input.value.trim();
+                
+                if (email && statusMessage.textContent.includes('will receive') && !invitations.includes(email)) {
+                    invitations.push(email);
+                }
+            });
+            
+            if (invitations.length === 0) {
+                Swal.fire('Info', 'No new users to invite. Please enter email addresses for new users.', 'info');
+                return;
+            }
+            
+            // Disable button and show sending state
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+            
+            // Check if INVITE_USERS URL is configured
+            if (!isUrlConfigured(API_CONFIG.INVITE_USERS)) {
+                console.warn('INVITE_USERS URL not properly configured. Using demo mode.');
+                // Show demo success message
+                setTimeout(() => {
+                    bootstrap.Modal.getInstance(document.getElementById('inviteUsersModal')).hide();
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Invitations Sent!',
+                        html: `
+                            <div class="text-start">
+                                <p>Successfully sent registration invitations to ${invitations.length} new user(s):</p>
+                                <ul class="mb-3">
+                                    ${invitations.map(email => `<li>${email}</li>`).join('')}
+                                </ul>
+                                <div class="alert alert-info">
+                                    <strong>What happens next:</strong><br>
+                                    • Each user will receive an email asking them to self-register<br>
+                                    • The email includes your name (${currentUser.name}) as the inviter<br>
+                                    • You have been CC'd on all invitation emails
+                                </div>
+                                <div class="alert alert-warning mt-2">
+                                    <small><strong>Demo Mode:</strong> Configure Power Automate URLs in API_CONFIG to enable actual email sending.</small>
+                                </div>
+                            </div>
+                        `,
+                        confirmButtonColor: '#003D7C'
+                    });
+                    
+                    // Restore button
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send Invitations';
+                }, 1500);
+                return;
+            }
+            
+            // Prepare the request data
+            const requestData = {
+                emails: invitations,
+                invitedBy: currentUser.email || '',         // Changed from inviterEmail to invitedBy
+                inviterName: currentUser.name || '',         // Auto-filled from logged-in user
+                companyName: currentUser.companyName || '',  // Auto-filled from logged-in user
+                ccEmail: currentUser.email || ''             // CC email (same as inviter)
+            };
+            
+            // Debug: Log what we're sending
+            console.log('Sending invitation request with data:', requestData);
+            console.log('Current user info:', currentUser);
+            
+            try {
+                // Note: Inviter information is automatically taken from the logged-in user
+                // No need for the inviter to enter their own details
+                const response = await fetch(API_CONFIG.INVITE_USERS, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestData)
+                });
+                
+                // Check for errors
+                if (!response.ok) {
+                    // Try to get error details from response
+                    let errorMessage = 'Failed to send invitations';
+                    try {
+                        const errorData = await response.json();
+                        console.error('Power Automate error response:', errorData);
+                        
+                        // Extract error message from various possible formats
+                        if (typeof errorData === 'string') {
+                            errorMessage = errorData;
+                        } else if (errorData.error) {
+                            if (typeof errorData.error === 'string') {
+                                errorMessage = errorData.error;
+                            } else if (errorData.error.message) {
+                                errorMessage = errorData.error.message;
+                            } else if (errorData.error.details) {
+                                errorMessage = errorData.error.details;
+                            } else {
+                                errorMessage = JSON.stringify(errorData.error);
+                            }
+                        } else if (errorData.message) {
+                            errorMessage = errorData.message;
+                        } else {
+                            errorMessage = JSON.stringify(errorData);
+                        }
+                        
+                        console.error('Extracted error message:', errorMessage);
+                    } catch (e) {
+                        // If response isn't JSON, try text
+                        try {
+                            const errorText = await response.text();
+                            console.error('Power Automate error text:', errorText);
+                            errorMessage = errorText || errorMessage;
+                        } catch (e2) {
+                            console.error('Could not parse error response');
+                        }
+                    }
+                    throw new Error(errorMessage);
+                }
+                
+                const result = await response.json();
+                const data = result.body || result;
+                
+                if (data.success) {
+                    bootstrap.Modal.getInstance(document.getElementById('inviteUsersModal')).hide();
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Invitations Sent!',
+                        html: `
+                            <div class="text-start">
+                                <p>Successfully sent registration invitations to ${invitations.length} new user(s).</p>
+                                <div class="alert alert-info">
+                                    <strong>What happens next:</strong><br>
+                                    • Each user will receive an email with a registration link<br>
+                                    • They will self-register using the link provided<br>
+                                    • You have been CC'd on all invitation emails
+                                </div>
+                            </div>
+                        `,
+                        confirmButtonColor: '#003D7C'
+                    });
+                } else {
+                    throw new Error(data.message || 'Failed to send invitations');
+                }
+            } catch (error) {
+                console.error('Error sending invitations:', error);
+                
+                // Show detailed error message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Send Invitations',
+                    html: `
+                        <div class="text-start">
+                            <p>${error.message}</p>
+                            <div class="alert alert-warning mt-3">
+                                <strong>Troubleshooting Tips:</strong><br>
+                                1. Check the browser console for detailed error logs<br>
+                                2. Verify Power Automate flow is turned ON<br>
+                                3. Ensure the JSON schema in Power Automate matches the expected format<br>
+                                4. Check if all required fields have values (inviterEmail, inviterName, companyName)
+                            </div>
+                            <small>Error 400 usually means the request format doesn't match what Power Automate expects.</small>
+                        </div>
+                    `,
+                    confirmButtonColor: '#003D7C'
+                });
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send Invitations';
+            }
+        }
         
         // Show Forgot Password Modal
         function showForgotPasswordModal() {
@@ -1704,7 +2120,7 @@ Latest Update (2025-01-12 03:45:00 SGT):
                 });
                 
                 if (!response.ok) {
-                    throw new Error('Service unavailable');
+                    throw new Error('Email not found in system');
                 }
                 
                 const result = await response.json();
@@ -1749,7 +2165,7 @@ Latest Update (2025-01-12 03:45:00 SGT):
                     icon: 'error',
                     title: 'Error',
                     text: error.message || 'Unable to send password. Please try again later.',
-                    footer: 'If the problem persists, contact support'
+                    footer: 'If the problem persists, contact MscPHM team at mscphm@nus.edu.sg'
                 });
             } finally {
                 // Restore button
@@ -1836,7 +2252,7 @@ Latest Update (2025-01-12 03:45:00 SGT):
                             throw new Error('User profile not found');
                         }
                     } else {
-                        throw new Error('User profile service not available. Please contact administrator.');
+                        throw new Error('User profile service not available. Please contact MscPHM team at mscphm@nus.edu.sg.');
                     }
                     
                     // Store in session
@@ -1865,7 +2281,7 @@ Latest Update (2025-01-12 03:45:00 SGT):
                     icon: 'error',
                     title: 'Login Failed',
                     text: error.message || 'Unable to authenticate. Please try again.',
-                    footer: 'If the problem persists, contact support'
+                    footer: 'If the problem persists, contact MscPHM team at mscphm@nus.edu.sg'
                 });
             } finally {
                 loginButton.disabled = false;
