@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <!-- 
-    CHANGE LOG - Last Updated: October 09, 2025 - 16:30 UTC+8
+    CHANGE LOG - Last Updated: January 09, 2025 - 23:30 UTC+8
     ============================================
     
     Recent Changes:
-    - Added Google Analytics tracking tag (gtag.js) with ID G-XG7TXS63LJ immediately after <head> element
+    - Added Google Analytics tag (gtag.js) immediately after <head> element for tracking
+    - Updated navigation bar structure to match homepage.html exactly (desktop and mobile)
+    - Synchronized mobile menu functionality with homepage.html
 -->
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) --> 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XG7TXS63LJ"></script> 
-    <script> 
-    window.dataLayer = window.dataLayer || []; 
-    function gtag(){dataLayer.push(arguments);} 
-    gtag('js', new Date()); 
-
-    gtag('config', 'G-XG7TXS63LJ'); 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XG7TXS63LJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        gtag('config', 'G-XG7TXS63LJ');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
@@ -160,7 +162,7 @@
         
         /* Dropdown arrow for items with submenus */
         .has-dropdown > a::after {
-            content: '\25BC';
+            content: '▼';
             font-size: 10px;
             margin-left: 5px;
             display: inline-block;
@@ -192,7 +194,7 @@
             width: 80%;
         }
         
-        /* Dropdown Menu Styles - Updated to match homepage.html */
+        /* Dropdown Menu Styles */
         .dropdown-menu {
             position: absolute;
             top: 100%;
@@ -1686,8 +1688,8 @@
                 padding: 0 40px;
             }
             
-            .nav-links a {
-                padding: 20px 6px;
+            .nav-links > li > a {
+                padding: 20px 8px;
                 font-size: 12px;
             }
         }
@@ -1763,6 +1765,39 @@
             .reveal-card:active {
                 transform: scale(0.98);
                 box-shadow: 0 1px 5px rgba(0, 61, 124, 0.15);
+            }
+            
+            /* Mobile hamburger menu button styling */
+            .mobile-menu-toggle {
+                display: none;
+                background: none;
+                border: none;
+                color: #003D7C;
+                font-size: 28px;
+                cursor: pointer;
+                padding: 10px;
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1001;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-menu-toggle:active {
+                transform: translateY(-50%) scale(0.95);
+            }
+            
+            #menu-icon {
+                display: block;
+                font-family: 'Lucida Console', Monaco, monospace;
+                font-weight: normal;
+                line-height: 1;
             }
             
             /* Mobile navigation */
@@ -1881,7 +1916,7 @@
     <!-- Top Banner with Biochem Logo -->
     <div class="top-banner">
         <div class="top-banner-content">
-            <a href="https://xavierchee.github.io/website/homepage.html">
+            <a href="https://medicine.nus.edu.sg/bch/">
                 <img src="https://xavierchee.github.io/website/website_assets/homepage/logo_biochem.png" alt="Department of Biochemistry Logo" class="biochem-logo">
             </a>
         </div>
@@ -1897,7 +1932,7 @@
                 <li><a href="https://xavierchee.github.io/website/homepage.html">Home</a></li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Programme structure</a>
+                    <a href="#programme">Programme structure</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/course_pathway.html">Programme pathways</a>
                         <a href="https://xavierchee.github.io/website/ecgc.html">Graduate certificate</a>
@@ -1905,7 +1940,7 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Courses</a>
+                    <a href="#courses">Courses</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/core_courses.html">Core courses</a>
                         <a href="https://xavierchee.github.io/website/elective_courses.html">Elective courses</a>
@@ -1914,14 +1949,14 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Capstone projects</a>
+                    <a href="#capstone">Capstone projects</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/capstone.html">Capstone pathways</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Admissions</a>
+                    <a href="#admissions">Admissions</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/eligibility.html">Eligibility</a>
                         <a href="https://xavierchee.github.io/website/application.html">Application</a>
@@ -1931,15 +1966,28 @@
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">Student stories and photos</a>
+                    <a href="#stories">Student stories</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/student_stories.html">Student stories</a>
+                    </div>
+                </li>
+                
+                <li class="has-dropdown">
+                    <a href="#journey">Students' journey</a>
+                    <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/photo.html">Photos</a>
                     </div>
                 </li>
                 
                 <li class="has-dropdown">
-                    <a href="#">About us</a>
+                    <a href="#press">Featured in</a>
+                    <div class="dropdown-menu">
+                        <a href="https://xavierchee.github.io/website/in_the_press.html">Featured in</a>
+                    </div>
+                </li>
+                
+                <li class="has-dropdown">
+                    <a href="#about">About us</a>
                     <div class="dropdown-menu">
                         <a href="https://xavierchee.github.io/website/vision_mission.html">Vision and mission</a>
                         <a href="https://xavierchee.github.io/website/precision_med.html">What is precision medicine?</a>
@@ -2505,30 +2553,157 @@
             }
         }
         
-        // Journey card hover functionality
+        // Journey card hover functionality - show/hide prompt and details
         function showJourneyDetail(card) {
+            // Update the white overlay on hover
             const overlay = card.querySelector('.journey-overlay');
-            const prompt = card.querySelector('.hover-prompt');
-            const detail = card.querySelector('.journey-detail');
+            if (overlay) {
+                overlay.style.background = 'rgba(255, 255, 255, 0.85)'; // Less opaque on hover
+            }
             
-            overlay.style.background = 'rgba(255, 255, 255, 0.85)';
-            prompt.style.opacity = '0';
-            prompt.style.transform = 'translateY(-10px)';
+            card.style.borderColor = '#FF6B35';
+            card.style.transform = 'translateY(-5px) scale(1.02)';
+            card.style.boxShadow = '0 10px 30px rgba(255, 107, 53, 0.2)';
+            
+            const title = card.querySelector('h3');
+            title.style.color = '#FF6B35';
+            
+            // Hide the hover prompt
+            const prompt = card.querySelector('.hover-prompt');
+            if (prompt) {
+                prompt.style.opacity = '0';
+                prompt.style.transform = 'translateY(-10px)';
+                prompt.style.pointerEvents = 'none';
+            }
+            
+            // Show the detail
+            const detail = card.querySelector('.journey-detail');
             detail.style.opacity = '1';
             detail.style.transform = 'translateY(0)';
         }
         
         function hideJourneyDetail(card) {
+            // Reset the white overlay
             const overlay = card.querySelector('.journey-overlay');
-            const prompt = card.querySelector('.hover-prompt');
-            const detail = card.querySelector('.journey-detail');
+            if (overlay) {
+                overlay.style.background = 'rgba(255, 255, 255, 0.92)'; // Back to original opacity
+            }
             
-            overlay.style.background = 'rgba(255, 255, 255, 0.92)';
-            prompt.style.opacity = '1';
-            prompt.style.transform = 'translateY(0)';
+            card.style.borderColor = '#003D7C';
+            card.style.transform = 'translateY(0) scale(1)';
+            card.style.boxShadow = '0 4px 15px rgba(0, 61, 124, 0.1)';
+            
+            const title = card.querySelector('h3');
+            title.style.color = '#003D7C';
+            
+            // Show the hover prompt
+            const prompt = card.querySelector('.hover-prompt');
+            if (prompt) {
+                prompt.style.opacity = '1';
+                prompt.style.transform = 'translateY(0)';
+                prompt.style.pointerEvents = 'auto';
+            }
+            
+            // Hide the detail
+            const detail = card.querySelector('.journey-detail');
             detail.style.opacity = '0';
             detail.style.transform = 'translateY(15px)';
         }
+        
+        // Enhanced click-to-reveal with ripple effect (keeping for any existing reveal cards)
+        function toggleReveal(card) {
+            // Add ripple effect
+            card.classList.add('ripple');
+            setTimeout(() => {
+                card.classList.remove('ripple');
+            }, 600);
+            
+            // Close other active cards with staggered animation
+            const container = card.parentElement;
+            const otherCards = container.querySelectorAll('.reveal-card.active');
+            otherCards.forEach((otherCard, index) => {
+                if (otherCard !== card) {
+                    setTimeout(() => {
+                        otherCard.classList.remove('active');
+                    }, index * 50);
+                }
+            });
+            
+            // Toggle current card with slight delay for better UX
+            setTimeout(() => {
+                card.classList.toggle('active');
+            }, 100);
+        }
+        
+        // Magnetic hover effect
+        document.querySelectorAll('.reveal-card').forEach(card => {
+            let bounds;
+            
+            card.addEventListener('mouseenter', (e) => {
+                bounds = card.getBoundingClientRect();
+                card.classList.add('magnetic');
+            });
+            
+            card.addEventListener('mousemove', (e) => {
+                if (!card.classList.contains('magnetic')) return;
+                
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                const leftX = mouseX - bounds.x;
+                const topY = mouseY - bounds.y;
+                const center = {
+                    x: leftX - bounds.width / 2,
+                    y: topY - bounds.height / 2
+                };
+                
+                const distance = Math.sqrt(center.x**2 + center.y**2);
+                
+                if (distance < bounds.width / 2) {
+                    const translateX = center.x * 0.15;
+                    const translateY = center.y * 0.15;
+                    const rotateX = -center.y * 0.05;
+                    const rotateY = center.x * 0.05;
+                    
+                    card.style.transform = `
+                        translate3d(${translateX}px, ${translateY}px, 20px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.02)
+                    `;
+                }
+            });
+            
+            card.addEventListener('mouseleave', (e) => {
+                card.classList.remove('magnetic');
+                card.style.transform = '';
+            });
+        });
+        
+        // Parallax effect removed for better stability
+        
+        // Initialize entrance animations on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.reveal-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+        
+        // Close cards when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.reveal-card')) {
+                document.querySelectorAll('.reveal-card.active').forEach(card => {
+                    card.classList.remove('active');
+                });
+            }
+        });
+        
+        // Prevent card from closing when clicking inside it
+        document.querySelectorAll('.reveal-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
     </script>
 </body>
 </html>
