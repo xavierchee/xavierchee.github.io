@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>functions_return_values - Error Correction Exercise</title>
+    <style>
+        /* 
+        DOCUMENTATION:
+        - Visual Design: Modular type scale (1.25 ratio), enhanced line-height (1.7-1.8), font weights 300-700
+        - Color Scheme: Theory (blue), Practice (green), Warnings (amber/red), Success (emerald)
+        - Card Layout: Elevation-based shadows, glassmorphism effects, gradient borders for active states
+        - Difficulty Colors: Easy (green), Medium (yellow), Hard (red)
+        */
+        
+        :root {
+            /* Type Scale (1.25 ratio) */
+            --font-size-xs: 0.64rem;
+            --font-size-sm: 0.8rem;
+            --font-size-base: 1rem;
+            --font-size-md: 1.25rem;
+            --font-size-lg: 1.563rem;
+            --font-size-xl: 1.953rem;
+            --font-size-2xl: 2.441rem;
+            --font-size-3xl: 3.052rem;
+            
+            /* Colors by Content Type */
+            --color-theory: #2563eb;     /* Blue for theory/concepts */
+            --color-practice: #10b981;   /* Green for practice */
+            --color-warning: #f59e0b;    /* Amber for warnings */
+            --color-error: #ef4444;      /* Red for errors */
+            --color-success: #10b981;    /* Emerald for success */
+            
+            /* Difficulty Colors */
+            --difficulty-easy: #22c55e;   /* Green */
+            --difficulty-medium: #eab308; /* Yellow */
+            --difficulty-hard: #ef4444;   /* Red */
+            
+            /* Shadows for elevation */
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.08);
+            --shadow-xl: 0 10px 40px rgba(0,0,0,0.08);
+            --shadow-2xl: 0 25px 50px rgba(0,0,0,0.12);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 400;
+            line-height: 1.75; /* Enhanced line height */
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* Typography enhancements */
+        h1 { 
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        h2 { 
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        h3 { 
+            font-size: var(--font-size-lg);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+        p {
+            margin-bottom: 1.5em; /* Enhanced paragraph spacing */
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        /* Gradient border on focus/active */
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--color-theory), var(--color-practice), var(--color-warning));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .container:hover::before {
+            opacity: 0.5;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, rgba(0, 61, 124, 0.95), rgba(0, 40, 85, 0.95));
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+
+        .header h1 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            letter-spacing: -0.02em;
+        }
+
+        .header h1:hover {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        
+        /* Default difficulty badge style */
+        .difficulty-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        /* Difficulty color coding */
+        .difficulty-badge.easy {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+        
+        .difficulty-badge.medium {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .difficulty-badge.hard {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .difficulty-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(239, 124, 0, 0.4);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .objective {
+            font-size: var(--font-size-base);
+            font-weight: 300;
+            opacity: 0.95;
+            line-height: 1.8; /* Enhanced line height */
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .prompt-section {
+            background: rgba(248, 249, 250, 0.6);
+            backdrop-filter: blur(10px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 4px solid var(--color-practice); /* Green for practice */
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prompt-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(239, 124, 0, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .prompt-section:hover::before {
+            transform: translateX(100%);
+        }
+
+        .prompt-section:hover {
+            transform: translateX(2px);
+            box-shadow: var(--shadow-xl);
+            background: rgba(248, 249, 250, 0.8);
+            border-left-color: var(--color-success);
+        }
+
+        .prompt-section h2 {
+            color: var(--color-theory);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .prompt-section:hover h2 {
+            color: #002855;
+        }
+
+        .prompt-text {
+            color: #495057;
+            line-height: 1.75;
+            font-weight: 400;
+        }
+
+        .code-section {
+            margin-bottom: 25px;
+        }
+
+        .code-label {
+            color: var(--color-theory);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: var(--font-size-md);
+            transition: all 0.3s ease;
+        }
+
+        .editable-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--color-success);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            color: var(--color-success);
+            animation: gentlePulse 3s ease-in-out infinite;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            backdrop-filter: blur(10px) saturate(150%);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+        }
+
+        .editable-indicator:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 4px 12px rgba(39, 201, 63, 0.2);
+            background: linear-gradient(135deg, rgba(39, 201, 63, 0.15), rgba(39, 201, 63, 0.08));
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.02);
+            }
+        }
+
+        .edit-icon {
+            width: 16px;
+            height: 16px;
+            position: relative;
+            animation: pencilWrite 4s ease-in-out infinite;
+        }
+
+        @keyframes pencilWrite {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-5deg);
+            }
+            75% {
+                transform: rotate(5deg);
+            }
+        }
+
+        .edit-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .code-editor {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .code-editor:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(var(--color-practice), 0.3);
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .dot:hover {
+            transform: scale(1.2);
+        }
+
+        .dot:hover::after {
+            opacity: 0.3;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        .dot-red { 
+            background: #ff5f56;
+            box-shadow: 0 0 5px rgba(255, 95, 86, 0.5);
+        }
+        .dot-yellow { 
+            background: #ffbd2e;
+            box-shadow: 0 0 5px rgba(255, 189, 46, 0.5);
+        }
+        .dot-green { 
+            background: #27c93f;
+            box-shadow: 0 0 5px rgba(39, 201, 63, 0.5);
+        }
+
+        .file-name {
+            margin-left: auto;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3px 10px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .file-name:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            transform: translateX(-2px);
+        }
+
+        #codeInput {
+            width: 100%;
+            min-height: 60px;
+            background: transparent;
+            border: none;
+            color: #f8f8f2;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: var(--font-size-base);
+            line-height: 1.75;
+            font-weight: 400;
+            resize: vertical;
+            outline: none;
+            white-space: pre;
+            tab-size: 4;
+            transition: all 0.3s ease;
+            cursor: text;
+        }
+
+        #codeInput:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        #codeInput:focus {
+            text-shadow: 0 0 3px rgba(248, 248, 242, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .code-editor:hover {
+            border-color: rgba(39, 201, 63, 0.2);
+        }
+
+        .code-editor:has(#codeInput:focus) {
+            border-color: rgba(39, 201, 63, 0.4);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 1px rgba(39, 201, 63, 0.2),
+                0 0 20px rgba(39, 201, 63, 0.05);
+        }
+
+        .line-numbers {
+            position: absolute;
+            left: 20px;
+            top: 65px;
+            color: #6c6c6c;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        .code-editor:hover .line-numbers {
+            color: #888;
+        }
+
+        #codeInput {
+            padding-left: 30px;
+        }
+
+        .hint-section {
+            background: linear-gradient(135deg, 
+                rgba(245, 158, 11, 0.05), 
+                rgba(245, 158, 11, 0.02));
+            backdrop-filter: blur(10px) saturate(150%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-left: 4px solid var(--color-warning); /* Amber for hints */
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hint-section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, 
+                rgba(245, 158, 11, 0.08), 
+                rgba(245, 158, 11, 0.04));
+        }
+
+        .hint-toggle {
+            background: linear-gradient(135deg, var(--color-warning), rgba(245, 158, 11, 0.9));
+            backdrop-filter: blur(10px);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: var(--font-size-base);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .hint-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .hint-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 124, 0, 0.3);
+        }
+
+        .hint-toggle:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .hint-toggle:active {
+            transform: translateY(0);
+        }
+
+        .hint-content {
+            display: none;
+            color: #495057;
+            line-height: 1.75;
+            font-weight: 400;
+            animation: fadeSlideIn 0.4s ease;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            border-left: 3px solid var(--color-warning);
+        }
+
+        .hint-content.show {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .action-section {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:active::before {
+            transition: width 0.1s ease, height 0.1s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--color-theory), rgba(37, 99, 235, 0.9));
+            color: white;
+            flex: 1;
+            box-shadow: var(--shadow-md);
+            font-weight: 500;
+            font-size: var(--font-size-base);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, var(--color-theory), rgba(37, 99, 235, 1));
+        }
+
+        .btn-reset {
+            background: rgba(233, 236, 239, 0.5);
+            backdrop-filter: blur(5px);
+            color: #495057;
+            border: 1px solid rgba(206, 212, 218, 0.3);
+            box-shadow: 
+                0 2px 10px rgba(0, 0, 0, 0.05),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-reset:hover {
+            background: rgba(233, 236, 239, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+        }
+
+        .btn:hover {
+            transition-delay: 0s;
+        }
+
+        .feedback {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .feedback.success {
+            background: linear-gradient(135deg, 
+                rgba(16, 185, 129, 0.1), 
+                rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--color-success);
+            color: #064e3b;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+        }
+
+        .feedback.error {
+            background: linear-gradient(135deg, 
+                rgba(239, 68, 68, 0.1), 
+                rgba(239, 68, 68, 0.05));
+            border: 1px solid var(--color-error);
+            color: #7f1d1d;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            font-size: var(--font-size-lg);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            line-height: 1.4;
+        }
+
+        .feedback.success .feedback-title::before {
+            content: '✅';
+            margin-right: 10px;
+            animation: checkmark 0.5s ease;
+        }
+
+        @keyframes checkmark {
+            0% { 
+                transform: scale(0) rotate(-45deg);
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1.2) rotate(0deg);
+            }
+            100% { 
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .feedback.error .feedback-title::before {
+            content: '❌';
+            margin-right: 10px;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+            20%, 40%, 60%, 80% { transform: translateX(3px); }
+        }
+
+        .error-details {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(3px);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .confetti-piece {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: confettiFall 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        *:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(239, 124, 0, 0.1);
+        }
+
+        button, input, textarea, a {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes loadingDots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-modal {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.7) translateY(30px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-2xl);
+            position: relative;
+            overflow: visible;
+            background-image: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95), 
+                rgba(255, 255, 255, 0.85));
+        }
+
+        .modal-overlay.active .success-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .success-icon-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            position: relative;
+            animation: iconPulse 0.8s ease-out;
+        }
+
+        @keyframes iconPulse {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(39, 201, 63, 0.1), rgba(39, 201, 63, 0.05));
+            border: 3px solid #27c93f;
+            position: relative;
+            animation: circleExpand 0.6s ease-out;
+            box-shadow: 
+                0 0 0 10px rgba(39, 201, 63, 0.05),
+                0 0 0 20px rgba(39, 201, 63, 0.03),
+                0 10px 30px rgba(39, 201, 63, 0.2);
+        }
+
+        @keyframes circleExpand {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+        }
+
+        .checkmark-path {
+            stroke: #27c93f;
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawCheckmark 0.8s 0.3s ease-out forwards;
+        }
+
+        @keyframes drawCheckmark {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .modal-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-theory), var(--color-success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            animation: titleFadeIn 0.8s 0.4s ease-out both;
+            line-height: 1.2;
+        }
+
+        @keyframes titleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-message {
+            font-size: var(--font-size-base);
+            color: #495057;
+            line-height: 1.75;
+            font-weight: 400;
+            margin-bottom: 24px;
+            animation: messageFadeIn 0.8s 0.5s ease-out both;
+        }
+
+        @keyframes messageFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .key-learning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.03));
+            border: 1px solid var(--color-warning);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 24px 0;
+            animation: learningFadeIn 0.8s 0.6s ease-out both;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes learningFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .key-learning-title {
+            font-weight: 600;
+            color: var(--color-warning);
+            margin-bottom: 8px;
+            font-size: var(--font-size-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .key-learning-text {
+            color: #495057;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .modal-continue-btn {
+            background: linear-gradient(135deg, var(--color-theory), rgba(37, 99, 235, 0.9));
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 12px;
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: btnFadeIn 0.8s 0.7s ease-out both;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        @keyframes btnFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-continue-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .modal-continue-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 30px rgba(0, 61, 124, 0.4),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-continue-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .modal-continue-btn:active {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .modal-close svg {
+            width: 20px;
+            height: 20px;
+            stroke: #495057;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        .error-modal {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.7) translateY(30px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-2xl);
+            position: relative;
+            overflow: visible;
+            background-image: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95), 
+                rgba(255, 255, 255, 0.85));
+        }
+
+        .modal-overlay.active .error-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .error-icon-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            position: relative;
+            animation: iconShake 0.8s ease-out;
+        }
+
+        @keyframes iconShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+
+        .error-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05));
+            border: 3px solid #dc3545;
+            position: relative;
+            animation: circleExpand 0.6s ease-out;
+            box-shadow: 
+                0 0 0 10px rgba(220, 53, 69, 0.05),
+                0 0 0 20px rgba(220, 53, 69, 0.03),
+                0 10px 30px rgba(220, 53, 69, 0.2);
+        }
+
+        .error-x {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+        }
+
+        .error-line {
+            stroke: #dc3545;
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round;
+            stroke-dasharray: 30;
+            stroke-dashoffset: 30;
+        }
+
+        .error-line-1 {
+            animation: drawErrorLine 0.4s 0.3s ease-out forwards;
+        }
+
+        .error-line-2 {
+            animation: drawErrorLine 0.4s 0.5s ease-out forwards;
+        }
+
+        @keyframes drawErrorLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .error-title {
+            background: linear-gradient(135deg, var(--color-error), var(--color-warning));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .error-learning {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.05), rgba(220, 53, 69, 0.02));
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        .error-learning .key-learning-title {
+            color: #dc3545;
+        }
+
+        .error-btn {
+            background: linear-gradient(135deg, var(--color-error), rgba(220, 53, 69, 0.9));
+        }
+
+        .error-btn:hover {
+            background: linear-gradient(135deg, var(--color-error), rgba(220, 53, 69, 1));
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-decoration {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .modal-decoration-1 {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(39, 201, 63, 0.2), transparent);
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
+        }
+
+        .modal-decoration-2 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(239, 124, 0, 0.2), transparent);
+            bottom: -40px;
+            right: -40px;
+            animation-delay: 2s;
+        }
+
+        .modal-decoration-3 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(0, 61, 124, 0.2), transparent);
+            top: 50%;
+            left: -30px;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-10px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(10px) rotate(240deg);
+            }
+        }
+
+        /* Hide the gamify XML data */
+        gamify {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Error Modal Pop-up -->
+    <div class="modal-overlay" id="errorModal">
+        <div class="error-modal">
+            <div class="modal-decoration modal-decoration-1"></div>
+            <div class="modal-decoration modal-decoration-2"></div>
+            <div class="modal-decoration modal-decoration-3"></div>
+            
+            <button class="modal-close" onclick="closeErrorModal()">
+                <svg viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="error-icon-container">
+                <div class="error-circle">
+                    <svg class="error-x" viewBox="0 0 52 52">
+                        <line class="error-line error-line-1" x1="16" y1="16" x2="36" y2="36"/>
+                        <line class="error-line error-line-2" x1="36" y1="16" x2="16" y2="36"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <h2 class="modal-title error-title">Not Quite Right</h2>
+            
+            <p class="modal-message">
+                Your answer isn't correct yet. Don't worry - making mistakes is part of the learning process!
+            </p>
+            
+            <button class="modal-continue-btn error-btn" onclick="closeErrorModal()">
+                Try Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Modal Pop-up -->
+    <div class="modal-overlay" id="successModal">
+        <div class="success-modal">
+            <div class="modal-decoration modal-decoration-1"></div>
+            <div class="modal-decoration modal-decoration-2"></div>
+            <div class="modal-decoration modal-decoration-3"></div>
+            
+            <button class="modal-close" onclick="closeSuccessModal()">
+                <svg viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="success-icon-container">
+                <div class="success-circle">
+                    <svg class="checkmark" viewBox="0 0 52 52">
+                        <path class="checkmark-path" d="M14 27l10 10 20-20"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <h2 class="modal-title">Excellent Work!</h2>
+            
+            <p class="modal-message">
+                Congratulations! You've successfully solved the exercise. Your code is now working correctly.
+            </p>
+            
+            <button class="modal-continue-btn" onclick="closeSuccessModal()">
+                Continue Learning
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="difficulty-badge" id="difficultyBadge">Basic</div>
+            <h1>Error Correction</h1>
+            <p class="objective" id="objective">Learn to recognize and correct improper indentation that leads to an IndentationError.</p>
+        </div>
+
+        <div class="content">
+            <div class="prompt-section">
+                <h2>Your Task</h2>
+                <p class="prompt-text" id="promptText">The code below has a structural error common for beginners. Fix the indentation to make the code run correctly.</p>
+            </div>
+
+            <div class="code-section">
+                <div class="code-label">
+                    <span>Fix This Code:</span>
+                    <div class="editable-indicator">
+                        <div class="edit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </div>
+                        <span>EDITABLE CODE</span>
+                    </div>
+                </div>
+                <div class="code-editor">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <span class="file-name">exercise.py</span>
+                    </div>
+                    <div style="position: relative;">
+                        <div class="line-numbers" id="lineNumbers">1</div>
+                        <textarea id="codeInput" spellcheck="false"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hint-section" id="hintSection">
+                <button class="hint-toggle" onclick="toggleHint()">
+                    Show Hint →
+                </button>
+                <div class="hint-content" id="hintContent">
+                    <strong>Hint:</strong> <span id="hintText"></span>
+                </div>
+            </div>
+
+            <div class="action-section">
+                <button class="btn btn-submit" onclick="checkAnswer()">
+                    Submit Answer
+                </button>
+                <button class="btn btn-reset" onclick="resetCode()">
+                    Reset Code
+                </button>
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+        </div>
+    </div>
+
+    <!-- Add the gamify XML configuration here -->
+    
+
+    <script>
+        // Parse the gamify XML configuration
+        function parseGamifyConfig() {
+            const gamify = document.querySelector('gamify');
+            if (!gamify) return null;
+            
+            const config = {
+                type: gamify.getAttribute('type'),
+                difficulty: gamify.getAttribute('difficulty'),
+                objective: gamify.getAttribute('objective'),
+                prompt: gamify.querySelector('prompt')?.textContent.trim(),
+                buggyCode: gamify.querySelector('buggy-code')?.textContent,
+                correctCode: gamify.querySelector('correct-code')?.textContent,
+                hints: []
+            };
+            
+            // Parse hints
+            const hints = gamify.querySelectorAll('hint');
+            hints.forEach(hint => {
+                config.hints.push(hint.textContent.trim());
+            });
+            
+            return config;
+        }
+        
+        // Initialize the page with config
+        function initializePage() {
+            const config = parseGamifyConfig();
+            if (!config) return;
+            
+            // Update page title
+            document.title = `Python Error Correction - ${config.type}`;
+            
+            // Update difficulty badge with dynamic color
+            const difficultyBadge = document.getElementById('difficultyBadge');
+            if (difficultyBadge && config.difficulty) {
+                // Normalize difficulty levels
+                let normalizedDifficulty = config.difficulty;
+                if (normalizedDifficulty.toLowerCase() === 'beginner' || normalizedDifficulty.toLowerCase() === 'basic') {
+                    normalizedDifficulty = 'Easy';
+                } else if (normalizedDifficulty.toLowerCase() === 'intermediate') {
+                    normalizedDifficulty = 'Medium';
+                } else if (normalizedDifficulty.toLowerCase() === 'advanced' || normalizedDifficulty.toLowerCase() === 'expert') {
+                    normalizedDifficulty = 'Hard';
+                }
+                // Capitalize first letter
+                normalizedDifficulty = normalizedDifficulty.charAt(0).toUpperCase() + normalizedDifficulty.slice(1).toLowerCase();
+                difficultyBadge.textContent = normalizedDifficulty;
+                difficultyBadge.className = 'difficulty-badge ' + normalizedDifficulty.toLowerCase();
+            }
+            
+            // Update objective
+            const objective = document.getElementById('objective');
+            if (objective && config.objective) {
+                objective.textContent = config.objective;
+            }
+            
+            // Update prompt
+            const promptText = document.getElementById('promptText');
+            if (promptText && config.prompt) {
+                promptText.textContent = config.prompt;
+            }
+            
+            // Set buggy code
+            const codeInput = document.getElementById('codeInput');
+            if (codeInput && config.buggyCode) {
+                codeInput.value = config.buggyCode;
+                // Update line numbers
+                updateLineNumbers();
+            }
+            
+            // Set hint (using first hint if available)
+            const hintText = document.getElementById('hintText');
+            if (hintText && config.hints.length > 0) {
+                hintText.textContent = config.hints[0];
+            } else {
+                // Hide hint section if no hints
+                const hintSection = document.getElementById('hintSection');
+                if (hintSection) {
+                    hintSection.style.display = 'none';
+                }
+            }
+            
+            // Store config globally for use in other functions
+            window.exerciseConfig = config;
+        }
+        
+        // Update line numbers based on code content
+        function updateLineNumbers() {
+            const codeInput = document.getElementById('codeInput');
+            const lineNumbers = document.getElementById('lineNumbers');
+            if (!codeInput || !lineNumbers) return;
+            
+            const lines = codeInput.value.split('\n');
+            const numbers = [];
+            for (let i = 1; i <= lines.length; i++) {
+                numbers.push(i);
+            }
+            lineNumbers.textContent = numbers.join('\n');
+        }
+        
+        // Global variables
+        let hintShown = false;
+        let attempts = 0;
+
+        function toggleHint() {
+            const hintContent = document.getElementById('hintContent');
+            const hintToggle = document.querySelector('.hint-toggle');
+            
+            hintContent.classList.toggle('show');
+            hintShown = true;
+            
+            if (hintContent.classList.contains('show')) {
+                hintToggle.textContent = 'Hide Hint ↑';
+            } else {
+                hintToggle.textContent = 'Show Hint →';
+            }
+        }
+
+        function checkAnswer() {
+            const userCode = document.getElementById('codeInput').value;
+            const feedback = document.getElementById('feedback');
+            attempts++;
+            
+            // Get correct code from config
+            const correctCode = window.exerciseConfig?.correctCode || '';
+            
+            // Remove trailing whitespace for comparison but keep leading spaces
+            const normalizedUserCode = userCode.trimEnd();
+            const normalizedCorrectCode = correctCode.trimEnd();
+            
+            if (normalizedUserCode === normalizedCorrectCode) {
+                // Show success modal
+                showSuccessModal();
+                
+                // Celebrate success
+                enhancedConfetti();
+            } else {
+                // Show error modal
+                showErrorModal();
+            }
+        }
+
+        function resetCode() {
+            const buggyCode = window.exerciseConfig?.buggyCode || '';
+            document.getElementById('codeInput').value = buggyCode;
+            document.getElementById('feedback').style.display = 'none';
+            attempts = 0;
+            updateLineNumbers();
+        }
+
+        function showSuccessModal() {
+            const modal = document.getElementById('successModal');
+            modal.classList.add('active');
+            
+            // Auto-close after 10 seconds if user doesn't interact
+            setTimeout(() => {
+                if (modal.classList.contains('active')) {
+                    closeSuccessModal();
+                }
+            }, 10000);
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('successModal');
+            modal.classList.remove('active');
+            
+            // Hide any inline feedback that might be showing
+            document.getElementById('feedback').style.display = 'none';
+        }
+
+        function showErrorModal() {
+            const modal = document.getElementById('errorModal');
+            modal.classList.add('active');
+            
+            // Auto-close after 8 seconds if user doesn't interact
+            setTimeout(() => {
+                if (modal.classList.contains('active')) {
+                    closeErrorModal();
+                }
+            }, 8000);
+        }
+
+        function closeErrorModal() {
+            const modal = document.getElementById('errorModal');
+            modal.classList.remove('active');
+            
+            // Hide any inline feedback that might be showing
+            document.getElementById('feedback').style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSuccessModal();
+            }
+        });
+
+        document.getElementById('errorModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeErrorModal();
+            }
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const successModal = document.getElementById('successModal');
+                const errorModal = document.getElementById('errorModal');
+                
+                if (successModal.classList.contains('active')) {
+                    closeSuccessModal();
+                }
+                if (errorModal.classList.contains('active')) {
+                    closeErrorModal();
+                }
+            }
+        });
+
+        function enhancedConfetti() {
+            const colors = ['#003D7C', '#EF7C00', '#27c93f', '#ffbd2e', '#ff5f56', '#764ba2'];
+            const shapes = ['square', 'circle'];
+            
+            for (let i = 0; i < 80; i++) {
+                const confettiPiece = document.createElement('div');
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                const size = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                confettiPiece.className = 'confetti-piece';
+                confettiPiece.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    left: ${Math.random() * 100}%;
+                    top: -20px;
+                    border-radius: ${shape === 'circle' ? '50%' : '2px'};
+                    animation-delay: ${Math.random() * 3}s;
+                    animation-duration: ${3 + Math.random() * 2}s;
+                    transform: rotate(${Math.random() * 360}deg);
+                `;
+                document.body.appendChild(confettiPiece);
+                
+                setTimeout(() => confettiPiece.remove(), 5000);
+            }
+        }
+
+        // Auto-adjust textarea height
+        const textarea = document.getElementById('codeInput');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+            updateLineNumbers();
+        });
+
+        // Handle tab key in textarea
+        textarea.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
+                this.selectionStart = this.selectionEnd = start + 4;
+            }
+        });
+
+        // Add magnetic hover effect to buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                this.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // Add hover sound effect (visual feedback instead of actual sound)
+        document.querySelectorAll('.btn, .hint-toggle').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        });
+
+        // Add typing animation effect
+        let typingTimer;
+        textarea.addEventListener('input', function() {
+            clearTimeout(typingTimer);
+            this.style.boxShadow = '0 0 5px rgba(239, 124, 0, 0.2)';
+            typingTimer = setTimeout(() => {
+                this.style.boxShadow = '';
+            }, 500);
+        });
+        
+        // Initialize page on load
+        window.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+
+    <!-- Iframe Resize Helper Script -->
+    <script src="iframe_resize_helper.js"></script>
+<gamify type="error-correction" difficulty="intermediate" objective="Differentiate between displaying a value (`print`) and returning a value (`return`) by correcting faulty code." section="main-content">
+  <prompt>The function `calculate_subtotal` incorrectly uses `print` and causes an error in the final calculation. Fix the function by changing one keyword so that it properly returns the subtotal and the program can calculate the final price.</prompt>
+  <buggy-code>
+def calculate_subtotal(price, quantity):
+  # This should return the result, not just display it.
+  print price * quantity
+
+sub = calculate_subtotal(10, 4)
+# The next line will cause a TypeError because 'sub' is None.
+total = sub + 5 # Adding 5 for tax
+  </buggy-code>
+  <correct-code>
+def calculate_subtotal(price, quantity):
+  # This should return the result, not just display it.
+  return price * quantity
+
+sub = calculate_subtotal(10, 4)
+# The next line will now work correctly.
+total = sub + 5 # Adding 5 for tax
+  </correct-code>
+  <errors>
+    <error type="Logical" line="3" description="The function uses 'print', which only displays a value to the console and causes the function to return `None`. The calculation `sub + 5` fails because you cannot perform math with `None`. Change `print` to `return`."/>
+  </errors>
+  <hints>
+    <hint>Focus on the keyword inside the `calculate_subtotal` function. Which keyword sends a value back to the caller, and which one just shows it on the screen?</hint>
+  </hints>
+</gamify>
+</body>
+</html>

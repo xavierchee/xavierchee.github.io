@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<!--
+    HTML Template Documentation
+    ==========================
+    Last Updated: September 30, 2025
+    
+    Purpose: Educational template for Python course modules
+    
+    Recent Changes:
+    - Converted to template structure with section placeholders
+    - Sections populated dynamically by specialized agents
+    - Interactive Python code editor support via CodeMirror and Pyodide
+    - Removed hardcoded exercise content - now comes from gamified materials
+    
+    Features:
+    - Interactive Python code editor with Pyodide integration
+    - Responsive design with breakpoints at 768px, 1024px, and 1920px
+    - Glassmorphism effects on key UI elements
+    - Sticky sidebar navigation with progress tracking
+    - Dark/light mode support
+    - CodeMirror integration for syntax highlighting
+    - Full-width layout optimized for modern displays
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section - The Grammar of Computational Medicine</title>
+    
+    <!-- Google Fonts for better typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CodeMirror CSS for code editor -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Core NUS Colors */
+            --nus-primary: #003D7C;
+            --nus-secondary: #EF7C00;
+            --nus-light: #F5F7FA;
+            --nus-gray: #495057;
+            --nus-success: #27C93F;
+            --nus-error: #DC3545;
+            --nus-dark-blue: #002855;
+            --nus-light-orange: #FF9A44;
+            
+            /* Content Type Accent Colors */
+            --color-theory: #2563EB;      /* Blue for theory/concepts */
+            --color-practice: #10B981;     /* Green for practice */
+            --color-warning: #F59E0B;      /* Amber for warnings */
+            --color-success: #059669;      /* Emerald for success */
+            --color-info: #8B5CF6;         /* Purple for info */
+            
+            /* Difficulty Indicators */
+            --difficulty-easy: #34D399;
+            --difficulty-medium: #FCD34D;
+            --difficulty-hard: #F87171;
+            
+            /* Typography Scale (1.25 ratio) */
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.25rem;
+            --text-xl: 1.563rem;
+            --text-2xl: 1.953rem;
+            --text-3xl: 2.441rem;
+            --text-4xl: 3.052rem;
+            
+            /* Elevation Shadows */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            
+            /* Dark Mode Variables */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --border-color: #e2e8f0;
+        }
+        
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1a202c;
+                --bg-secondary: #2d3748;
+                --text-primary: #f7fafc;
+                --text-secondary: #cbd5e0;
+                --border-color: #4a5568;
+                --glass-bg: rgba(45, 55, 72, 0.7);
+                --glass-border: rgba(74, 85, 104, 0.3);
+            }
+        }
+        
+        /* Dark Mode Toggle Class */
+        body.dark-mode {
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --text-primary: #f7fafc;
+            --text-secondary: #cbd5e0;
+            --border-color: #4a5568;
+            --glass-bg: rgba(45, 55, 72, 0.7);
+            --glass-border: rgba(74, 85, 104, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.75;
+            font-weight: 400;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--nus-light) 0%, var(--bg-primary) 100%);
+            min-height: 100vh;
+            font-size: var(--text-base);
+            transition: background 0.3s ease, color 0.3s ease;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100vw;
+        }
+        
+        /* Enhanced Paragraph Spacing */
+        p {
+            margin-bottom: 1.5em;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        /* Strong text with better weight */
+        strong {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Header with Enhanced Design - Full Width */
+        .header {
+            background: linear-gradient(135deg, var(--nus-primary), var(--nus-dark-blue));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,61,124,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-content {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .section-title {
+            font-size: var(--text-3xl);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff, rgba(255,255,255,0.8));
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #e0e0e0, #f0f0f0);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--nus-secondary), var(--nus-light-orange));
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Main Content - Full Width */
+        .main-container {
+            display: flex;
+            width: 100%;
+            margin: 2rem 0;
+            padding: 0 3rem;
+            gap: 2.5rem;
+        }
+
+        .sidebar {
+            flex: 0 0 280px;
+            position: sticky;
+            top: 140px;
+            height: fit-content;
+        }
+
+        .content {
+            flex: 1;
+            width: 100%;
+            max-width: calc(100vw - 380px);
+        }
+
+        /* Sidebar Styles with Glassmorphism */
+        .toc {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .toc-title {
+            font-weight: 700;
+            color: var(--nus-primary);
+            margin-bottom: 1.25rem;
+            font-size: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.75px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .toc-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: var(--text-sm);
+            font-weight: 500;
+            display: block;
+            padding: 0.5rem 0;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .toc-link:hover {
+            color: var(--nus-primary);
+            border-left-color: var(--nus-secondary);
+        }
+
+        .toc-link.active {
+            color: var(--nus-primary);
+            font-weight: 600;
+            border-left-color: var(--nus-primary);
+            background: linear-gradient(90deg, rgba(0, 61, 124, 0.05), transparent);
+        }
+
+        /* Content Sections with Elevation - Optimized for Full Width */
+        .section {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--nus-primary), var(--nus-secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .section:hover::before {
+            opacity: 1;
+        }
+
+        .section-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--nus-light);
+        }
+
+        h2 {
+            color: var(--nus-primary);
+            font-size: var(--text-2xl);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            color: var(--nus-primary);
+            font-size: var(--text-xl);
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        h4 {
+            color: var(--nus-dark-blue);
+            font-size: var(--text-lg);
+            font-weight: 500;
+            margin-top: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Learning Objectives */
+        .objectives-list {
+            list-style: none;
+            counter-reset: objective;
+            margin-top: 1rem;
+        }
+
+        .objectives-list li {
+            counter-increment: objective;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .objectives-list li::before {
+            content: counter(objective);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--nus-secondary), var(--nus-light-orange));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--text-sm);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease;
+        }
+        
+        .objectives-list li:hover::before {
+            transform: scale(1.1);
+        }
+
+        /* Key Terms Box with Glassmorphism - Full Width */
+        .key-terms {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            background-image: linear-gradient(135deg, rgba(239, 124, 0, 0.05), transparent);
+            width: 100%;
+        }
+        
+        .key-terms::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--nus-secondary), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
+        }
+
+        .key-terms-title {
+            color: var(--nus-secondary);
+            font-weight: 700;
+            font-size: var(--text-lg);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.01em;
+        }
+
+        .key-terms-title::before {
+            content: "";
+            display: none;
+        }
+
+        .term {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border-left: 3px solid var(--nus-secondary);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .term:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .term strong {
+            color: var(--nus-primary);
+            font-weight: 600;
+        }
+
+        /* Code Blocks with Better Typography - Full Width Optimized */
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 2.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-family: 'JetBrains Mono', 'Monaco', 'Courier New', monospace;
+            font-size: var(--text-sm);
+            line-height: 1.8;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .code-block::before {
+            content: "Python";
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .code-comment {
+            color: #6A9955;
+        }
+
+        .code-string {
+            color: #CE9178;
+        }
+
+        .code-keyword {
+            color: #569CD6;
+        }
+
+        .code-output {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            color: #9CDCFE;
+        }
+
+        /* Exercise Iframe Placeholder with Glassmorphism - Full Width */
+        .exercise-placeholder {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px dashed var(--nus-secondary);
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+        }
+        
+        .exercise-placeholder:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .exercise-placeholder::before {
+            content: "";
+            display: none;
+        }
+
+        .exercise-label {
+            background: var(--nus-secondary);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+        }
+
+        .exercise-info {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .exercise-type {
+            font-weight: 700;
+            color: var(--nus-primary);
+            font-size: var(--text-lg);
+            letter-spacing: -0.01em;
+        }
+
+        /* Exercise Container for Iframes */
+        .exercise-container {
+            margin: 2rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .exercise-header {
+            background: linear-gradient(135deg, var(--nus-primary), var(--nus-dark-blue));
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exercise-number {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .expand-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .expand-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .exercise-iframe {
+            width: 100%;
+            min-height: 1100px;
+            border: none;
+            display: block;
+            overflow: visible;
+            transition: height 0.3s ease;
+        }
+
+        /* Pro Tips with Theory Color Accent - Full Width */
+        .pro-tip {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), var(--bg-primary));
+            border-left: 4px solid var(--color-theory);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .pro-tip::after {
+            content: '💡';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .pro-tip-title {
+            color: var(--color-theory);
+            font-weight: 700;
+            font-size: var(--text-lg);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.01em;
+        }
+
+        .pro-tip-title::before {
+            content: "";
+            display: none;
+        }
+
+        /* Practice Exercises with Practice Color Accent */
+        .exercise-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.03), var(--bg-primary));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .exercise-box:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .exercise-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-practice), var(--color-success));
+        }
+
+        .exercise-title {
+            font-weight: 600;
+            color: var(--nus-primary);
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+        
+        .exercise-meta span:first-child {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .exercise-meta span:last-child {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        /* Difficulty badges styling */
+        .difficulty-basic {
+            background: linear-gradient(135deg, var(--difficulty-easy), #22C55E) !important;
+            color: white !important;
+        }
+        
+        .difficulty-medium {
+            background: linear-gradient(135deg, var(--difficulty-medium), #F59E0B) !important;
+            color: #7C2D12 !important;
+        }
+        
+        .difficulty-hard {
+            background: linear-gradient(135deg, var(--difficulty-hard), #EF4444) !important;
+            color: white !important;
+        }
+
+        /* Details/Summary (Solution) with Modern Design */
+        details {
+            background: linear-gradient(135deg, rgba(0, 61, 124, 0.03), var(--bg-primary));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        details[open] {
+            box-shadow: var(--shadow-md);
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--nus-primary);
+            padding: 0.75rem;
+            transition: color 0.2s ease;
+            position: relative;
+            list-style: none;
+        }
+        
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        summary::before {
+            content: '▶';
+            position: absolute;
+            left: -0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        summary:hover {
+            color: var(--nus-secondary);
+        }
+
+        /* Interactive Code Editor with Modern Design - Full Width */
+        .interactive-code-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-md);
+            transition: box-shadow 0.3s ease;
+            width: 100%;
+        }
+        
+        .interactive-code-container:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .editor-header {
+            background: linear-gradient(135deg, var(--nus-primary), var(--nus-dark-blue));
+            color: white;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .editor-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .editor-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: var(--text-sm);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .editor-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .editor-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .editor-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .editor-btn:active {
+            transform: translateY(0);
+        }
+
+        .editor-btn.run {
+            background: linear-gradient(135deg, var(--nus-secondary), var(--nus-light-orange));
+            border-color: var(--nus-secondary);
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(239, 124, 0, 0.3);
+        }
+
+        .editor-btn.run:hover {
+            background: linear-gradient(135deg, var(--nus-light-orange), var(--nus-secondary));
+            box-shadow: 0 4px 12px rgba(239, 124, 0, 0.4);
+        }
+
+        .code-editor-wrapper {
+            position: relative;
+            min-height: 250px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .CodeMirror {
+            height: auto;
+            min-height: 250px;
+            font-family: 'JetBrains Mono', 'Monaco', 'Courier New', monospace;
+            font-size: var(--text-sm);
+            line-height: 1.8;
+        }
+
+        .output-panel {
+            background: linear-gradient(180deg, #1e1e1e, #252525);
+            color: #d4d4d4;
+            padding: 1.25rem;
+            min-height: 100px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', 'Monaco', 'Courier New', monospace;
+            font-size: var(--text-sm);
+            line-height: 1.6;
+            border-top: 2px solid var(--nus-secondary);
+            position: relative;
+        }
+
+        .output-label {
+            color: #9CDCFE;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.75px;
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: rgba(156, 220, 254, 0.1);
+            border-radius: 4px;
+        }
+
+        .output-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .output-error {
+            color: #f48771;
+        }
+
+        .output-success {
+            color: #9CDCFE;
+        }
+
+        .pyodide-loading {
+            background: #f8f9fa;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .pyodide-loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--nus-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .exercise-instructions {
+            background: linear-gradient(135deg, rgba(239, 124, 0, 0.05), var(--bg-primary));
+            border-left: 4px solid var(--color-practice);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .exercise-instructions strong {
+            color: var(--nus-primary);
+        }
+
+        /* Responsive Design - Optimized for all screen sizes */
+        @media (max-width: 1024px) {
+            .main-container {
+                padding: 0 2rem;
+            }
+            
+            .sidebar {
+                flex: 0 0 240px;
+            }
+            
+            .content {
+                max-width: calc(100vw - 320px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                padding: 0 1.5rem;
+            }
+            
+            .sidebar {
+                position: static;
+                flex: 1;
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+            
+            .content {
+                max-width: 100%;
+            }
+            
+            .section {
+                padding: 2rem;
+            }
+            
+            .header-content {
+                padding: 0 1.5rem;
+            }
+            
+            h2 {
+                font-size: var(--text-xl);
+            }
+            
+            h3 {
+                font-size: var(--text-lg);
+            }
+            
+            .section-title {
+                font-size: var(--text-2xl);
+            }
+        }
+        
+        /* Extra large screens */
+        @media (min-width: 1920px) {
+            .main-container {
+                padding: 0 4rem;
+            }
+            
+            .sidebar {
+                flex: 0 0 320px;
+            }
+            
+            .content {
+                max-width: calc(100vw - 440px);
+            }
+            
+            .section {
+                padding: 3.5rem;
+            }
+        }
+
+        /* Loading Animation for Exercises */
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <!-- SECTION:header -->
+            <h1 class="section-title">Section 1.1: Functions – The `return` Statement: Delivering the Diagnosis</h1>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="toc">
+                <h3 class="toc-title">On This Page</h3>
+                <div class="progress-indicator" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.875rem; color: var(--nus-gray);">Progress</span>
+                        <span id="progress-percentage" style="font-size: 0.875rem; color: var(--nus-gray);">0%</span>
+                    </div>
+                    <div class="progress-bar" style="margin-top: 0.5rem;">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+                <ul class="toc-list">
+                    <li class="toc-item">
+                        <a href="#learning-objectives" class="toc-link">Learning Objectives</a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#introduction" class="toc-link active">Introduction</a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#key-concepts" class="toc-link">Key Concepts</a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#main-content" class="toc-link">Core Content</a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#practice-exercises" class="toc-link">Practice Exercises</a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#practical-applications" class="toc-link">Applications</a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#summary" class="toc-link">Summary</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Content -->
+        <main class="content">
+            <!-- Learning Objectives Section -->
+            <section class="section" id="learning-objectives">
+                <!-- SECTION:learning_objectives -->
+            </section>
+
+            <!-- Introduction Section -->
+            <section class="section" id="introduction">
+                <div class="section-header">
+    <h2>1. Introduction</h2>
+</div>
+<p>Imagine you're a clinical researcher, Dr. Lena Hanson. You've just run a Polymerase Chain Reaction (PCR) test to measure the viral load in a patient's blood sample. You put the sample into the machine (your function's input), the machine runs its protocol (the function's logic), but what happens next? The machine would be useless if it didn't give you a result—a number, a graph, a clear "positive" or "negative." You need that output to make a diagnosis, decide on a treatment, or continue your research. In Python, the <code>return</code> statement is that crucial final step. It's how a function delivers its findings back to the main program.</p>
+<p>This section establishes the learning journey for making your functions powerful, modular tools. By the end, you will be able to use the <code>return</code> statement to send a value back from a function, store that returned value in a variable for use in conditional logic, write functions that return diverse data types to represent clinical outcomes, distinguish between explicit and implicit returns, and explain why <code>return</code> is essential for creating reusable code in any clinical or research workflow.</p>
+            </section>
+
+            <!-- Key Concepts Section -->
+            <section class="section" id="key-concepts">
+                <div class="section-header">
+    <h2>2. Key Concepts and Definitions</h2>
+</div>
+<p>In our work, precision is everything. Let's define our terms with that same clarity.</p>
+
+<div class="key-terms">
+    <div class="key-terms-title">Key Terms</div>
+    <div class="term">
+        <strong><code>return</code> statement:</strong> A special keyword in Python (<code>return</code>) that does two things: it immediately exits the current function and sends a specified value back to the code that called it.
+    </div>
+    <div class="term">
+        <strong>Return Value:</strong> The piece of data that a function sends back. This can be any Python object: a number (like a patient's BMI), a string (like a gene name), a boolean (<code>True</code>/<code>False</code>), or even multiple values packaged together.
+    </div>
+    <div class="term">
+        <strong><code>None</code>:</strong> A special value in Python that represents the absence of a value. If a function completes without an explicit <code>return</code> statement, Python automatically returns <code>None</code>. This is Python's way of saying, "The function ran, but no specific result was reported."
+    </div>
+</div>
+            </section>
+
+            <!-- Main Content Section -->
+            <section class="section" id="main-content">
+                <div class="section-header">
+    <h2>3. Main Content</h2>
+</div>
+
+<p>The true power of <code>return</code> comes from its ability to make your code modular and reusable. A function performs one specific task and reports the result, which can then be used in many different contexts.</p>
+
+<h3>3.1</h3>
+<p>Let's look at a simple function that adds two numbers. The key is using <code>return</code> to send the result back. Complete the function below by dragging the correct keyword into the blank space.</p>
+
+
+<div class="exercise-container" id="exercise-container-1">
+    <div class="exercise-header">
+        <span class="exercise-number">Exercise 1</span>
+        <button class="expand-btn" onclick="toggleFullscreen('exercise-frame-1')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+        </button>
+    </div>
+    <iframe
+        id="exercise-frame-1"
+        src="exercises/exercise_1.1_01_drag-drop-blanks.html"
+        class="exercise-iframe"
+        frameborder="0"
+        scrolling="no"
+        onload="resizeIframe(this)"
+    ></iframe>
+</div>
+
+<h3>3.2</h3>
+<p>Once a function returns a value, you can capture it in a variable and use it in your program. This is what makes functions so reusable. Now, practice calling the function you just learned about.</p>
+
+
+<div class="exercise-container" id="exercise-container-2">
+    <div class="exercise-header">
+        <span class="exercise-number">Exercise 2</span>
+        <button class="expand-btn" onclick="toggleFullscreen('exercise-frame-2')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+        </button>
+    </div>
+    <iframe
+        id="exercise-frame-2"
+        src="exercises/exercise_1.1_02_code-typing.html"
+        class="exercise-iframe"
+        frameborder="0"
+        scrolling="no"
+        onload="resizeIframe(this)"
+    ></iframe>
+</div>
+
+<h3>3.3</h3>
+<p>A common mistake is confusing <code>print</code> with <code>return</code>. <code>print</code> only displays a value, but <code>return</code> sends it back for your program to use. Let's see this in action and fix a common error.</p>
+
+
+<div class="exercise-container" id="exercise-container-3">
+    <div class="exercise-header">
+        <span class="exercise-number">Exercise 3</span>
+        <button class="expand-btn" onclick="toggleFullscreen('exercise-frame-3')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+        </button>
+    </div>
+    <iframe
+        id="exercise-frame-3"
+        src="exercises/exercise_1.1_03_error-correction.html"
+        class="exercise-iframe"
+        frameborder="0"
+        scrolling="no"
+        onload="resizeIframe(this)"
+    ></iframe>
+</div>
+            </section>
+
+            <!-- Practice Exercises Section -->
+            <section class="section" id="practice-exercises">
+                <div class="section-header">
+    <h2>4. Practice Exercises</h2>
+</div>
+
+<div class="exercise-box">
+    <div class="exercise-header" style="border-radius: 8px;">
+        <div class="exercise-title">Exercise 1: Basic Renal Function Check</div>
+        <div class="exercise-meta">
+            <span style="color: white;">5 minutes</span>
+            <span class="difficulty-basic">Basic</span>
+        </div>
+    </div>
+    <p><strong>Objective:</strong> Write a function that returns a boolean value based on a simple condition.</p>
+    <p><strong>Medical Context:</strong> A patient's creatinine level is a key indicator of kidney function. A value above 1.2 mg/dL is a common threshold used to prompt further investigation.</p>
+    
+    <div class="exercise-instructions">
+        <p>Write a function <code>is_renal_function_normal</code> that takes a <code>creatinine_level</code> as an argument. It should <code>return</code> <code>False</code> if the level is above 1.2, and <code>True</code> otherwise.</p>
+    </div>
+    
+    <details>
+        <summary>View Solution</summary>
+        <div class="code-block" data-language="python">
+            <pre><code>def is_renal_function_normal_v1(creatinine_level: float) -> bool:
+    """Checks if creatinine level is normal using an if/else block."""
+    if creatinine_level <= 1.2:
+        return True
+    else:
+        return False
+
+# Pro Tip: Returning the result of a boolean expression directly
+# (e.g., `return creatinine_level <= 1.2`) is considered more 'Pythonic.'
+# It is more concise and readable than using an `if/else` block to
+# return `True` or `False` explicitly.
+
+def is_renal_function_normal_v2(creatinine_level: float) -> bool:
+    """Checks if creatinine level is normal by returning the boolean expression directly."""
+    return creatinine_level <= 1.2
+
+# --- Test Case ---
+patient_creatinine = 1.4
+is_normal = is_renal_function_normal_v2(patient_creatinine)
+print(f"Is renal function normal? {is_normal}")
+# Output: Is renal function normal? False</code></pre>
+        </div>
+        <p><strong>Explanation:</strong> The function <code>is_renal_function_normal_v2</code> directly returns the result of the comparison <code>creatinine_level <= 1.2</code>. When <code>patient_creatinine</code> is 1.4, this comparison is <code>False</code>, so the function returns <code>False</code>.</p>
+        <p><strong>Key Learning:</strong> You can directly return the result of a boolean expression for more concise code.</p>
+    </details>
+</div>
+
+<div class="exercise-box">
+    <div class="exercise-header" style="border-radius: 8px;">
+        <div class="exercise-title">Exercise 2: Using a Return Value to Trigger an Action</div>
+        <div class="exercise-meta">
+            <span style="color: white;">10 minutes</span>
+            <span class="difficulty-medium">Intermediate</span>
+        </div>
+    </div>
+    <p><strong>Objective:</strong> Use the returned value from a function to make a decision and call another function.</p>
+    <p><strong>Medical Context:</strong> In a clinical system, an abnormal test result should trigger a follow-up action, such as logging an alert for a nurse or doctor to review.</p>
+    
+    <div class="exercise-instructions">
+        <p>Using your function from Exercise 1, if the creatinine level is abnormal, print an alert and call the provided <code>log_renal_alert</code> function.</p>
+    </div>
+    
+    <details>
+        <summary>View Solution</summary>
+        <div class="code-block" data-language="python">
+            <pre><code>def log_renal_alert(patient_id: str) -> None:
+    """Logs an alert for a specific patient."""
+    print(f"--- ALERT LOGGED: Patient {patient_id} requires renal function follow-up. ---")
+
+def is_renal_function_normal(creatinine_level: float) -> bool:
+    """Checks if creatinine level is within the normal range (<= 1.2)."""
+    return creatinine_level <= 1.2
+
+# --- Main Program ---
+patient_id = "PT078901"
+patient_creatinine = 1.4
+
+is_normal = is_renal_function_normal(patient_creatinine)
+
+if is_normal:
+    print("Creatinine level is within the normal range.")
+else:
+    print("ALERT: Creatinine level is elevated. Recommend further kidney function tests.")
+    # Output: ALERT: Creatinine level is elevated. Recommend further kidney function tests.
+    log_renal_alert(patient_id)
+    # Output: --- ALERT LOGGED: Patient PT078901 requires renal function follow-up. ---</code></pre>
+        </div>
+        <p><strong>Explanation:</strong> The boolean value returned by <code>is_renal_function_normal</code> is stored in the <code>is_normal</code> variable. The <code>if</code> statement evaluates this variable. Since it's <code>False</code>, the <code>else</code> block is executed, which prints the alert and calls the <code>log_renal_alert</code> function.</p>
+        <p><strong>Key Learning:</strong> Storing a return value in a variable allows it to be used in conditional logic to control program flow.</p>
+    </details>
+</div>
+
+<div class="exercise-box">
+    <div class="exercise-header" style="border-radius: 8px;">
+        <div class="exercise-title">Exercise 3: Updating a Function for New Clinical Guidelines</div>
+        <div class="exercise-meta">
+            <span style="color: white;">10 minutes</span>
+            <span class="difficulty-medium">Intermediate</span>
+        </div>
+    </div>
+    <p><strong>Objective:</strong> Modify a function to handle an edge case by returning a specific value early.</p>
+    <p><strong>Medical Context:</strong> A new guideline states that for patients with triglycerides > 400 mg/dL, the Friedewald equation for LDL is inaccurate. The risk assessment should be "Indeterminate" and calculation should be skipped.</p>
+    
+    <div class="exercise-instructions">
+        <p>Modify the <code>analyze_lipid_panel</code> function to handle this. If triglycerides are over 400, the function should immediately <code>return</code> a calculated LDL of <code>None</code> and a risk level of <code>"Indeterminate"</code>.</p>
+    </div>
+    
+    <details>
+        <summary>View Solution</summary>
+        <div class="code-block" data-language="python">
+            <pre><code>def analyze_lipid_panel_updated(
+    total_cholesterol: int, hdl: int, triglycerides: int
+) -> tuple[float | None, str]:
+    """
+    Analyzes a lipid panel, handling high triglyceride levels.
+
+    Args:
+        total_cholesterol (int): Total cholesterol in mg/dL.
+        hdl (int): HDL cholesterol in mg/dL.
+        triglycerides (int): Triglycerides in mg/dL.
+
+    Returns:
+        tuple[float | None, str]: A tuple with the LDL estimate (or None) and risk level.
+    """
+    if triglycerides > 400:
+        return None, "Indeterminate"
+
+    ldl_estimate = total_cholesterol - hdl - (triglycerides / 5) 
+    
+    if ldl_estimate < 100:
+        risk_level = "Optimal"
+    elif ldl_estimate < 130:
+        risk_level = "Near Optimal"
+    else:
+        risk_level = "High"
+    
+    return ldl_estimate, risk_level
+
+# --- Test Case ---
+patient_ldl, patient_risk = analyze_lipid_panel_updated(280, 40, 450)
+
+print(f"Calculated LDL: {patient_ldl}")
+# Output: Calculated LDL: None
+print(f"Cardiovascular Risk Assessment: {patient_risk}")
+# Output: Cardiovascular Risk Assessment: Indeterminate</code></pre>
+        </div>
+        <p><strong>Explanation:</strong> The function now has a "guard clause." The <code>if triglycerides > 400:</code> check runs first. If true, it immediately executes <code>return None, "Indeterminate"</code> and stops, ensuring compliance with the new guideline.</p>
+        <p><strong>Key Learning:</strong> Using an early <code>return</code> is an effective way to handle special cases or invalid inputs before performing a function's main logic.</p>
+    </details>
+</div>
+            </section>
+
+            <!-- Applications Section -->
+            <section class="section" id="practical-applications">
+                <div class="section-header">
+    <h2>5. Practical Applications in Precision Medicine</h2>
+</div>
+
+<div class="application-item">
+    <h3>In Practice: Bioinformatics Pipelines</h3>
+    <div class="application-description">
+        <p>In genomics, a pipeline is a series of programs where the output of one becomes the input of the next. A function that aligns DNA sequences will <code>return</code> the aligned data, which is then passed to another function that <code>return</code>s a list of genetic variants. The <code>return</code> statement is the essential link in this chain.</p>
+    </div>
+</div>
+
+<div class="application-item">
+    <h3>In Practice: Pharmacokinetics Modeling</h3>
+    <div class="application-description">
+        <p>Functions are used to model how a drug is processed by the body. A function might take a patient's age, weight, and kidney function as input and <code>return</code> the drug's predicted half-life in their system. This returned value is critical for designing a safe and effective dosing schedule.</p>
+    </div>
+</div>
+
+<div class="application-item">
+    <h3>In Practice: Clinical Decision Support Systems</h3>
+    <div class="application-description">
+        <p>An AI tool integrated into an EHR might have a function that analyzes a patient's symptoms and lab results. It could <code>return</code> a list of possible diagnoses, ranked by probability, helping a doctor to consider all possibilities and avoid cognitive biases.</p>
+    </div>
+</div>
+            </section>
+
+            <!-- Summary Section -->
+            <section class="section" id="summary">
+                <div class="section-header">
+    <h2>6. Summary and Key Takeaways</h2>
+</div>
+
+<div class="summary-text">
+    <p>In this section, we've explored how the <code>return</code> statement transforms a function from a simple command into a powerful tool for generating data. Just as Dr. Hanson needs the output from her PCR machine to make a diagnosis, your programs need <code>return</code> values to make decisions. The <code>return</code> statement is the bridge that carries data from your specialized "lab test" functions to the main "clinic" where actionable insights are made.</p>
+</div>
+
+<div class="key-takeaways">
+    <h3>Key Takeaways</h3>
+    <ul class="takeaways-list">
+        <li class="takeaway-item">
+            <strong>return Delivers Results:</strong> It is the keyword used to send a function's calculated results back to the main program for further use.
+        </li>
+        <li class="takeaway-item">
+            <strong>Enable Modular Workflows:</strong> By returning values, functions become reusable tools. The same <code>calculate_bmi()</code> function can be used for thousands of patients.
+        </li>
+        <li class="takeaway-item">
+            <strong>Any Data Type Can Be Returned:</strong> A function can return a single number, a string, a <code>True</code>/<code>False</code> value, or even multiple values packaged together as a <code>tuple</code>.
+        </li>
+        <li class="takeaway-item">
+            <strong>The Bridge Between Calculation and Action:</strong> In medical programming, the <code>return</code> value is what transforms a calculation into an actionable insight, driving clinical workflows and research discoveries.
+        </li>
+    </ul>
+</div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Update active state
+                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Function to update progress based on scroll position
+        function updateProgress() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            
+            // Update progress bar fill
+            const progressFill = document.querySelector('.progress-fill');
+            if (progressFill) {
+                progressFill.style.width = scrolled + '%';
+            }
+            
+            // Update percentage text
+            const percentageElement = document.getElementById('progress-percentage');
+            if (percentageElement) {
+                percentageElement.textContent = Math.round(scrolled) + '%';
+            }
+        }
+        
+        // Update progress bar and percentage based on scroll
+        window.addEventListener('scroll', updateProgress);
+        
+        // Set initial progress on page load
+        document.addEventListener('DOMContentLoaded', updateProgress);
+        
+        // Intersection Observer for scroll-based navigation highlighting
+        function setupScrollNavigation() {
+            // Get all sections that have IDs matching the navigation links
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.toc-link');
+            
+            // Create a map of section IDs to their corresponding nav links
+            const navMap = {};
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    navMap[href.substring(1)] = link;
+                }
+            });
+            
+            // Options for the Intersection Observer
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '-20% 0px -70% 0px', // Trigger when section is in the upper portion of viewport
+                threshold: 0 // Trigger as soon as any part enters the defined area
+            };
+            
+            // Callback function for the Intersection Observer
+            const observerCallback = (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        
+                        // Remove active class from all nav links
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        
+                        // Add active class to the corresponding nav link
+                        if (navMap[sectionId]) {
+                            navMap[sectionId].classList.add('active');
+                        }
+                    }
+                });
+            };
+            
+            // Create and start the Intersection Observer
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+            
+            // Observe all sections
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Alternative fallback for browsers with poor Intersection Observer support
+            // or for more precise scroll tracking
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    updateActiveNavOnScroll();
+                }, 10);
+            });
+            
+            // Fallback function using scroll position
+            function updateActiveNavOnScroll() {
+                const scrollPosition = window.scrollY + 100; // Offset for header
+                
+                // Find the current section
+                let currentSection = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        currentSection = section.id;
+                    }
+                });
+                
+                // If we found a current section and Intersection Observer hasn't already handled it
+                if (currentSection && navMap[currentSection]) {
+                    // Check if this nav link is not already active
+                    if (!navMap[currentSection].classList.contains('active')) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        navMap[currentSection].classList.add('active');
+                    }
+                }
+            }
+        }
+        
+        // Initialize scroll navigation when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupScrollNavigation);
+        } else {
+            setupScrollNavigation();
+        }
+
+        // Auto-resize iframes based on content
+        function resizeIframe(iframe) {
+            try {
+                // First try to access the content directly (same-origin)
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                const contentHeight = Math.max(
+                    iframeDoc.body.scrollHeight,
+                    iframeDoc.body.offsetHeight,
+                    iframeDoc.documentElement.scrollHeight,
+                    iframeDoc.documentElement.offsetHeight
+                );
+                iframe.style.height = (contentHeight + 50) + 'px'; // Add some padding
+            } catch (e) {
+                // Cross-origin or other error - use message passing
+                console.log('Using postMessage for iframe resize');
+            }
+        }
+
+        // Initialize exercises and set up iframe resizing
+        function initializeExercises() {
+            // Find all exercise iframes
+            const iframes = document.querySelectorAll('.exercise-iframe');
+
+            iframes.forEach(iframe => {
+                // Try to resize on load
+                iframe.addEventListener('load', function() {
+                    resizeIframe(this);
+
+                    // Also request the iframe to send its height via postMessage
+                    try {
+                        this.contentWindow.postMessage('getHeight', '*');
+                    } catch (e) {
+                        console.log('Could not post message to iframe');
+                    }
+                });
+
+                // Also resize when window resizes
+                window.addEventListener('resize', () => resizeIframe(iframe));
+            });
+
+            console.log('Exercise iframes initialized with auto-resize');
+        }
+
+        // Listen for messages from iframes about their height
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'iframeHeight') {
+                // Find the iframe that sent the message
+                const iframes = document.querySelectorAll('.exercise-iframe');
+                iframes.forEach(iframe => {
+                    if (iframe.contentWindow === e.source) {
+                        iframe.style.height = (e.data.height + 50) + 'px';
+                    }
+                });
+            }
+        });
+
+        // Expand/fullscreen functionality for exercise iframes
+        function toggleFullscreen(iframeId) {
+            const iframe = document.getElementById(iframeId);
+            if (!iframe) return;
+
+            if (!document.fullscreenElement) {
+                iframe.requestFullscreen().catch(err => {
+                    console.log('Error attempting fullscreen:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Call initialization when page loads
+        document.addEventListener('DOMContentLoaded', initializeExercises);
+    </script>
+
+    <!-- CodeMirror JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+
+    <!-- Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+
+    <script>
+        let pyodideReady = false;
+        let pyodide;
+        let codeEditors = {};
+        let originalCode = {};
+
+        // Initialize Pyodide
+        async function initPyodide() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'pyodide-loading';
+            loadingDiv.innerHTML = `
+                <div class="pyodide-loading-spinner"></div>
+                <div>Loading Python interpreter...</div>
+                <div style="font-size: 0.875rem; color: #6c757d; margin-top: 0.5rem;">This may take a few seconds on first load</div>
+            `;
+            
+            // Find the first interactive code container
+            const firstContainer = document.querySelector('.interactive-code-container');
+            if (firstContainer) {
+                firstContainer.parentNode.insertBefore(loadingDiv, firstContainer);
+            }
+
+            try {
+                pyodide = await loadPyodide({
+                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.24.1/full/"
+                });
+                
+                // Redirect Python output
+                pyodide.runPython(`
+                    import sys
+                    from io import StringIO
+                    import traceback
+                    
+                    class OutputCapture:
+                        def __init__(self):
+                            self.output = []
+                        
+                        def write(self, text):
+                            self.output.append(text)
+                        
+                        def flush(self):
+                            pass
+                        
+                        def get_output(self):
+                            return ''.join(self.output)
+                        
+                        def clear(self):
+                            self.output = []
+                `);
+                
+                pyodideReady = true;
+                loadingDiv.remove();
+                console.log('Pyodide is ready!');
+                
+                // Initialize code editors after Pyodide is ready
+                initializeCodeEditors();
+                
+            } catch (error) {
+                console.error('Failed to load Pyodide:', error);
+                loadingDiv.innerHTML = `
+                    <div style="color: #dc3545;">Failed to load Python interpreter. Please refresh the page to try again.</div>
+                `;
+            }
+        }
+
+        // Initialize CodeMirror editors
+        function initializeCodeEditors() {
+            // Find all textareas with class 'code-editor' and initialize them
+            document.querySelectorAll('.code-editor').forEach(textarea => {
+                const containerId = textarea.closest('.interactive-code-container').id;
+                if (!containerId) return;
+                
+                const editor = CodeMirror.fromTextArea(textarea, {
+                    mode: 'python',
+                    theme: 'monokai',
+                    lineNumbers: true,
+                    indentUnit: 4,
+                    indentWithTabs: false,
+                    lineWrapping: true,
+                    extraKeys: {
+                        'Tab': function(cm) {
+                            cm.replaceSelection('    ', 'end');
+                        },
+                        'Ctrl-Enter': function(cm) {
+                            runCode(containerId);
+                        },
+                        'Cmd-Enter': function(cm) {
+                            runCode(containerId);
+                        }
+                    }
+                });
+                
+                codeEditors[containerId] = editor;
+                originalCode[containerId] = editor.getValue();
+                
+                // Set initial size
+                editor.setSize(null, 'auto');
+            });
+        }
+
+        // Run Python code
+        async function runCode(exerciseId) {
+            if (!pyodideReady) {
+                alert('Python interpreter is still loading. Please wait...');
+                return;
+            }
+
+            const editor = codeEditors[exerciseId];
+            if (!editor) {
+                console.error('Editor not found for:', exerciseId);
+                return;
+            }
+
+            const code = editor.getValue();
+            const outputElement = document.querySelector(`#${exerciseId} .output-content`);
+            
+            if (!outputElement) {
+                console.error('Output element not found for:', exerciseId);
+                return;
+            }
+            
+            try {
+                // Clear previous output
+                pyodide.runPython(`
+                    output_capture = OutputCapture()
+                    sys.stdout = output_capture
+                    sys.stderr = output_capture
+                `);
+                
+                // Run the user's code
+                pyodide.runPython(code);
+                
+                // Get the output
+                const output = pyodide.runPython(`output_capture.get_output()`);
+                
+                if (output) {
+                    outputElement.innerHTML = `<span class="output-success">${escapeHtml(output)}</span>`;
+                } else {
+                    outputElement.innerHTML = '<span style="color: #6c757d;">Code executed successfully (no output)</span>';
+                }
+                
+            } catch (error) {
+                // Format error message
+                let errorMsg = error.message || error.toString();
+                
+                // Extract just the relevant error information
+                if (errorMsg.includes('PythonError:')) {
+                    errorMsg = errorMsg.split('PythonError:')[1] || errorMsg;
+                }
+                
+                outputElement.innerHTML = `<span class="output-error">Error:\n${escapeHtml(errorMsg)}</span>`;
+            } finally {
+                // Reset stdout/stderr
+                pyodide.runPython(`
+                    sys.stdout = sys.__stdout__
+                    sys.stderr = sys.__stderr__
+                `);
+            }
+        }
+
+        // Reset code to original
+        function resetCode(exerciseId) {
+            const editor = codeEditors[exerciseId];
+            if (editor && originalCode[exerciseId]) {
+                editor.setValue(originalCode[exerciseId]);
+                const outputElement = document.querySelector(`#${exerciseId} .output-content`);
+                if (outputElement) {
+                    outputElement.innerHTML = 'Click "Run Code" to see the output...';
+                }
+            }
+        }
+
+        // Escape HTML for safe display
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Initialize Pyodide when DOM is ready (only if there are code editors)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Only initialize Pyodide if there are interactive code containers
+            if (document.querySelector('.interactive-code-container')) {
+                initPyodide();
+            }
+        });
+    </script>
+</body>
+</html>
